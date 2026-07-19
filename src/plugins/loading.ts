@@ -38,14 +38,17 @@ export function setupLoading() {
     .join("\n");
 
   const loading = `
-<div class="fixed-center flex-col bg-layout" style="${cssVars}">
-  <div class="w-50px h-50px my-36px">
-    <div class="relative h-full animate-spin">
-      ${dot}
+  <div class="fixed-center flex-col bg-layout" style="${cssVars}">
+    <div class="w-100px h-100px">
+      ${getLogoSvg()}
     </div>
-  </div>
-  <h2 class="text-24px font-500 text-primary">${$t("system.title")}</h2>
-</div>`;
+    <div class="w-50px h-50px my-36px">
+      <div class="relative h-full animate-spin">
+        ${dot}
+      </div>
+    </div>
+    <h2 class="text-24px font-500 text-primary">${$t("system.title")}</h2>
+  </div>`;
 
   const app = document.getElementById("app");
 
@@ -54,22 +57,13 @@ export function setupLoading() {
   }
 }
 
-// function getLogoSvg() {
-//   const logoSvg = `
-//     <svg
-//       t="1784386556396"
-//       class="logo"
-//       viewBox="0 0 1024 1024"
-//       version="1.1"
-//       xmlns="http://www.w3.org/2000/svg"
-//       p-id="4777"
-//       width="100%"
-//       height="100%"
-//     >
-//       <path d="M16.40220445 95.07195222L512 950.43811556 1007.59779555 99.19829334v-4.12634112H814.92195555L514.91271111 610.4276389 216.1656411 95.12049778z" fill="#42B883" p-id="4778"></path>
-//       <path d="M216.21418667 95.07195222l298.64997888 515.40423111L814.92195555 95.07195222h-180.73372444L516.07779555 297.9422811 398.40426667 95.02340779z" fill="#35495E" p-id="4779"></path>
-//     </svg>
-//   `;
+function getLogoSvg() {
+  const logoSvg = `
+    <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <path d="M508.8 0L70.4 252.8v505.6l438.4 252.8 438.4-252.8V252.8L508.8 0z m96 160l-99.2 54.4-96-51.2 99.2-57.6 96 54.4zM163.2 588.8l67.2 38.4v118.4l-67.2-38.4v-118.4z m160 211.2V419.2l86.4-44.8-96-51.2-80 44.8v156.8L163.2 480V307.2l153.6-89.6 371.2 201.6v44.8l92.8-57.6v-41.6l-176-96 96-54.4 156.8 92.8v160l-348.8 214.4-92.8-54.4v105.6l92.8 54.4 176-108.8v128l-176 102.4L323.2 800z m454.4-48v-131.2l76.8-48V704l-76.8 48z" fill="rgb(var(--primary-color))" />
+      <path d="M595.2 540.8v-99.2l-86.4-48-86.4 48v99.2l86.4 48z" fill="rgb(var(--primary-color))" />
+    </svg>
+  `;
 
-//   return logoSvg;
-// }
+  return logoSvg;
+}

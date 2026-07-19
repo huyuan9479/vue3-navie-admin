@@ -12,29 +12,33 @@ export {};
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    AdminAvatar: typeof import('./../components/custom/admin-avatar.vue')['default']
-    AppProvider: typeof import('./../components/common/app-provider.vue')['default']
-    BetterScroll: typeof import('./../components/custom/better-scroll.vue')['default']
-    ButtonIcon: typeof import('./../components/custom/button-icon.vue')['default']
-    CountTo: typeof import('./../components/custom/count-to.vue')['default']
-    DarkModeContainer: typeof import('./../components/common/dark-mode-container.vue')['default']
-    ExceptionBase: typeof import('./../components/common/exception-base.vue')['default']
-    FullScreen: typeof import('./../components/common/full-screen.vue')['default']
+    AdminAvatar: typeof import('./../components/custom/AdminAvatar.vue')['default']
+    AppProvider: typeof import('./../components/common/AppProvider.vue')['default']
+    BetterScroll: typeof import('./../components/custom/BetterScroll.vue')['default']
+    ButtonIcon: typeof import('./../components/custom/ButtonIcon.vue')['default']
+    CountTo: typeof import('./../components/custom/CountTo.vue')['default']
+    DarkModeContainer: typeof import('./../components/common/DarkModeContainer.vue')['default']
+    ExceptionBase: typeof import('./../components/common/ExceptionBase.vue')['default']
+    FullScreen: typeof import('./../components/common/FullScreen.vue')['default']
     IconAntDesignEnterOutlined: typeof import('~icons/ant-design/enter-outlined')['default']
+    IconAntDesignFullscreen: typeof import('~icons/ant-design/fullscreen')['default']
+    IconAntDesignFullscreenExit: typeof import('~icons/ant-design/fullscreen-exit')['default']
     IconAntDesignReloadOutlined: typeof import('~icons/ant-design/reload-outlined')['default']
+    IconAntDesignSearch: typeof import('~icons/ant-design/search')['default']
     IconGridiconsFullscreen: typeof import('~icons/gridicons/fullscreen')['default']
     IconGridiconsFullscreenExit: typeof import('~icons/gridicons/fullscreen-exit')['default']
     IconLocalBanner: typeof import('~icons/local/banner')['default']
     IconLocalLogo: typeof import('~icons/local/logo')['default']
+    'IconMdi:magnify': typeof import('~icons/mdi/magnify')['default']
     IconMdiArrowDownThin: typeof import('~icons/mdi/arrow-down-thin')['default']
     IconMdiArrowUpThin: typeof import('~icons/mdi/arrow-up-thin')['default']
     IconMdiKeyboardEsc: typeof import('~icons/mdi/keyboard-esc')['default']
     IconMdiKeyboardReturn: typeof import('~icons/mdi/keyboard-return')['default']
-    IconTooltip: typeof import('./../components/common/icon-tooltip.vue')['default']
+    IconTooltip: typeof import('./../components/common/IconTooltip.vue')['default']
     IconUilSearch: typeof import('~icons/uil/search')['default']
-    LangSwitch: typeof import('./../components/common/lang-switch.vue')['default']
-    LookForward: typeof import('./../components/custom/look-forward.vue')['default']
-    MenuToggler: typeof import('./../components/common/menu-toggler.vue')['default']
+    LangSwitch: typeof import('./../components/common/LangSwitch.vue')['default']
+    LookForward: typeof import('./../components/custom/LookForward.vue')['default']
+    MenuToggler: typeof import('./../components/common/MenuToggler.vue')['default']
     NAlert: typeof import('naive-ui')['NAlert']
     NBadge: typeof import('naive-ui')['NBadge']
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
@@ -70,35 +74,39 @@ declare module 'vue' {
     NStatistic: typeof import('naive-ui')['NStatistic']
     NSwitch: typeof import('naive-ui')['NSwitch']
     NTab: typeof import('naive-ui')['NTab']
+    NTabPane: typeof import('naive-ui')['NTabPane']
     NTabs: typeof import('naive-ui')['NTabs']
     NThing: typeof import('naive-ui')['NThing']
     NTooltip: typeof import('naive-ui')['NTooltip']
     NWatermark: typeof import('naive-ui')['NWatermark']
-    PinToggler: typeof import('./../components/common/pin-toggler.vue')['default']
-    ReloadButton: typeof import('./../components/common/reload-button.vue')['default']
+    PinToggler: typeof import('./../components/common/PinToggler.vue')['default']
+    ReloadButton: typeof import('./../components/common/ReloadButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SvgIcon: typeof import('./../components/custom/svg-icon.vue')['default']
-    SystemLogo: typeof import('./../components/common/system-logo.vue')['default']
+    SvgIcon: typeof import('./../components/custom/SvgIcon.vue')['default']
+    SystemLogo: typeof import('./../components/common/SystemLogo.vue')['default']
     TableColumnSetting: typeof import('./../components/advanced/table-column-setting.vue')['default']
     TableHeaderOperation: typeof import('./../components/advanced/table-header-operation.vue')['default']
-    ThemeSchemaSwitch: typeof import('./../components/common/theme-schema-switch.vue')['default']
-    WaveBg: typeof import('./../components/custom/wave-bg.vue')['default']
+    ThemeSchemaSwitch: typeof import('./../components/common/ThemeSchemaSwitch.vue')['default']
+    WaveBg: typeof import('./../components/custom/WaveBg.vue')['default']
   }
 }
 
 // For TSX support
 declare global {
-  const AdminAvatar: (typeof import("./../components/custom/admin-avatar.vue"))["default"];
-  const AppProvider: (typeof import("./../components/common/app-provider.vue"))["default"];
-  const BetterScroll: (typeof import("./../components/custom/better-scroll.vue"))["default"];
-  const ButtonIcon: (typeof import("./../components/custom/button-icon.vue"))["default"];
-  const CountTo: (typeof import("./../components/custom/count-to.vue"))["default"];
-  const DarkModeContainer: (typeof import("./../components/common/dark-mode-container.vue"))["default"];
-  const ExceptionBase: (typeof import("./../components/common/exception-base.vue"))["default"];
-  const FullScreen: (typeof import("./../components/common/full-screen.vue"))["default"];
+  const AdminAvatar: (typeof import("./../components/custom/AdminAvatar.vue"))["default"];
+  const AppProvider: (typeof import("./../components/common/AppProvider.vue"))["default"];
+  const BetterScroll: (typeof import("./../components/custom/BetterScroll.vue"))["default"];
+  const ButtonIcon: (typeof import("./../components/custom/ButtonIcon.vue"))["default"];
+  const CountTo: (typeof import("./../components/custom/CountTo.vue"))["default"];
+  const DarkModeContainer: (typeof import("./../components/common/DarkModeContainer.vue"))["default"];
+  const ExceptionBase: (typeof import("./../components/common/ExceptionBase.vue"))["default"];
+  const FullScreen: (typeof import("./../components/common/FullScreen.vue"))["default"];
   const IconAntDesignEnterOutlined: (typeof import("~icons/ant-design/enter-outlined"))["default"];
+  const IconAntDesignFullscreen: (typeof import("~icons/ant-design/fullscreen"))["default"];
+  const IconAntDesignFullscreenExit: (typeof import("~icons/ant-design/fullscreen-exit"))["default"];
   const IconAntDesignReloadOutlined: (typeof import("~icons/ant-design/reload-outlined"))["default"];
+  const IconAntDesignSearch: (typeof import("~icons/ant-design/search"))["default"];
   const IconGridiconsFullscreen: (typeof import("~icons/gridicons/fullscreen"))["default"];
   const IconGridiconsFullscreenExit: (typeof import("~icons/gridicons/fullscreen-exit"))["default"];
   const IconLocalBanner: (typeof import("~icons/local/banner"))["default"];
@@ -107,11 +115,11 @@ declare global {
   const IconMdiArrowUpThin: (typeof import("~icons/mdi/arrow-up-thin"))["default"];
   const IconMdiKeyboardEsc: (typeof import("~icons/mdi/keyboard-esc"))["default"];
   const IconMdiKeyboardReturn: (typeof import("~icons/mdi/keyboard-return"))["default"];
-  const IconTooltip: (typeof import("./../components/common/icon-tooltip.vue"))["default"];
+  const IconTooltip: (typeof import("./../components/common/IconTooltip.vue"))["default"];
   const IconUilSearch: (typeof import("~icons/uil/search"))["default"];
-  const LangSwitch: (typeof import("./../components/common/lang-switch.vue"))["default"];
-  const LookForward: (typeof import("./../components/custom/look-forward.vue"))["default"];
-  const MenuToggler: (typeof import("./../components/common/menu-toggler.vue"))["default"];
+  const LangSwitch: (typeof import("./../components/common/LangSwitch.vue"))["default"];
+  const LookForward: (typeof import("./../components/custom/LookForward.vue"))["default"];
+  const MenuToggler: (typeof import("./../components/common/MenuToggler.vue"))["default"];
   const NAlert: (typeof import("naive-ui"))["NAlert"];
   const NBadge: (typeof import("naive-ui"))["NBadge"];
   const NBreadcrumb: (typeof import("naive-ui"))["NBreadcrumb"];
@@ -147,18 +155,19 @@ declare global {
   const NStatistic: (typeof import("naive-ui"))["NStatistic"];
   const NSwitch: (typeof import("naive-ui"))["NSwitch"];
   const NTab: (typeof import("naive-ui"))["NTab"];
+  const NTabPane: (typeof import("naive-ui"))["NTabPane"];
   const NTabs: (typeof import("naive-ui"))["NTabs"];
   const NThing: (typeof import("naive-ui"))["NThing"];
   const NTooltip: (typeof import("naive-ui"))["NTooltip"];
   const NWatermark: (typeof import("naive-ui"))["NWatermark"];
-  const PinToggler: (typeof import("./../components/common/pin-toggler.vue"))["default"];
-  const ReloadButton: (typeof import("./../components/common/reload-button.vue"))["default"];
+  const PinToggler: (typeof import("./../components/common/PinToggler.vue"))["default"];
+  const ReloadButton: (typeof import("./../components/common/ReloadButton.vue"))["default"];
   const RouterLink: (typeof import("vue-router"))["RouterLink"];
   const RouterView: (typeof import("vue-router"))["RouterView"];
-  const SvgIcon: (typeof import("./../components/custom/svg-icon.vue"))["default"];
-  const SystemLogo: (typeof import("./../components/common/system-logo.vue"))["default"];
+  const SvgIcon: (typeof import("./../components/custom/SvgIcon.vue"))["default"];
+  const SystemLogo: (typeof import("./../components/common/SystemLogo.vue"))["default"];
   const TableColumnSetting: (typeof import("./../components/advanced/table-column-setting.vue"))["default"];
   const TableHeaderOperation: (typeof import("./../components/advanced/table-header-operation.vue"))["default"];
-  const ThemeSchemaSwitch: (typeof import("./../components/common/theme-schema-switch.vue"))["default"];
-  const WaveBg: (typeof import("./../components/custom/wave-bg.vue"))["default"];
+  const ThemeSchemaSwitch: (typeof import("./../components/common/ThemeSchemaSwitch.vue"))["default"];
+  const WaveBg: (typeof import("./../components/custom/WaveBg.vue"))["default"];
 }
