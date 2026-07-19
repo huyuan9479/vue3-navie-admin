@@ -111,6 +111,7 @@ declare global {
   const IconGridiconsFullscreenExit: (typeof import("~icons/gridicons/fullscreen-exit"))["default"];
   const IconLocalBanner: (typeof import("~icons/local/banner"))["default"];
   const IconLocalLogo: (typeof import("~icons/local/logo"))["default"];
+  const IconMdiMagnify: (typeof import("~icons/mdi/magnify"))["default"];
   const IconMdiArrowDownThin: (typeof import("~icons/mdi/arrow-down-thin"))["default"];
   const IconMdiArrowUpThin: (typeof import("~icons/mdi/arrow-up-thin"))["default"];
   const IconMdiKeyboardEsc: (typeof import("~icons/mdi/keyboard-esc"))["default"];
