@@ -29,7 +29,7 @@ declare module 'vue' {
     IconGridiconsFullscreenExit: typeof import('~icons/gridicons/fullscreen-exit')['default']
     IconLocalBanner: typeof import('~icons/local/banner')['default']
     IconLocalLogo: typeof import('~icons/local/logo')['default']
-    'IconMdi:magnify': typeof import('~icons/mdi/magnify')['default']
+    IconMdiMagnify: typeof import('~icons/mdi/magnify')['default']
     IconMdiArrowDownThin: typeof import('~icons/mdi/arrow-down-thin')['default']
     IconMdiArrowUpThin: typeof import('~icons/mdi/arrow-up-thin')['default']
     IconMdiKeyboardEsc: typeof import('~icons/mdi/keyboard-esc')['default']

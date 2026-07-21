@@ -33,7 +33,7 @@ function handleClickMenu(key: RouteKey) {
         <component
           :is="breadcrumb.icon"
           v-if="themeStore.header.breadcrumb.showIcon"
-          class="mr-4px text-icon"
+          class="mr-4px text-18px! line-height-1"
         />
         {{ breadcrumb.label }}
       </div>
