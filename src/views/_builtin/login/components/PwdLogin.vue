@@ -141,7 +141,7 @@ async function handleAccountLogin(account: Account) {
           v-for="item in accounts"
           :key="item.key"
           type="primary"
-          tertiary
+          secondary
           @click="handleAccountLogin(item)"
         >
           {{ item.label }}

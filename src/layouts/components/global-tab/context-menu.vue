@@ -149,7 +149,8 @@ function handleDropdown(optionKey: App.Global.DropdownKey) {
     :options="options"
     @clickoutside="hideDropdown"
     @select="handleDropdown"
-  />
+  >
+  </NDropdown>
 </template>
 
 <style scoped></style>

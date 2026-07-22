@@ -240,16 +240,16 @@ init();
       </BetterScroll>
     </div>
     <ReloadButton :loading="!appStore.reloadFlag" @click="refresh" />
-    <!-- <FullScreen :full="appStore.fullContent" @click="appStore.toggleFullContent" /> -->
+
+    <ContextMenu
+      :visible="dropdown.visible"
+      :x="dropdown.x"
+      :y="dropdown.y"
+      :tab-id="dropdown.tabId"
+      :disabled-keys="getContextMenuDisabledKeys(dropdown.tabId)"
+      @update:visible="handleDropdownVisible"
+    />
   </DarkModeContainer>
-  <ContextMenu
-    :visible="dropdown.visible"
-    :tab-id="dropdown.tabId"
-    :disabled-keys="getContextMenuDisabledKeys(dropdown.tabId)"
-    :x="dropdown.x"
-    :y="dropdown.y"
-    @update:visible="handleDropdownVisible"
-  />
 </template>
 
 <style scoped></style>
