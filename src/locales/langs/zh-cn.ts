@@ -263,6 +263,7 @@ const local: App.I18n.Schema = {
       },
       register: {
         title: "注册账号",
+        subTitle: "还没有账号？去注册",
         agreement: "我已经仔细阅读并接受",
         protocol: "《用户协议》",
         policy: "《隐私权政策》",

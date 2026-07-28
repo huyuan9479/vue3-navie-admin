@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import type { Component } from "vue";
 import { getPaletteColorByNumber, mixColor } from "@sa/color";
 import { loginModuleRecord } from "@/constants/app";
@@ -7,7 +7,6 @@ import { useAppStore } from "@/store/modules/app";
 import { useThemeStore } from "@/store/modules/theme";
 import { $t } from "@/locales";
 import PwdLogin from "./components/PwdLogin.vue";
-import CodeLogin from "./components/CodeLogin.vue";
 import Register from "./components/Register.vue";
 import ResetPwd from "./components/ResetPwd.vue";
 import BindWechat from "./components/BindWechat.vue";
@@ -29,24 +28,10 @@ interface LoginModule {
 
 const moduleMap: Record<UnionKey.LoginModule, LoginModule> = {
   "pwd-login": { label: loginModuleRecord["pwd-login"], component: PwdLogin },
-  "code-login": { label: loginModuleRecord["code-login"], component: CodeLogin },
   register: { label: loginModuleRecord.register, component: Register },
   "reset-pwd": { label: loginModuleRecord["reset-pwd"], component: ResetPwd },
   "bind-wechat": { label: loginModuleRecord["bind-wechat"], component: BindWechat },
 };
-
-const loginModules = ref([
-  {
-    name: "pwd-login",
-    label: loginModuleRecord["pwd-login"],
-    component: PwdLogin,
-  },
-  {
-    name: "code-login",
-    label: loginModuleRecord["code-login"],
-    component: CodeLogin,
-  },
-]);
 
 const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
 
@@ -87,32 +72,9 @@ const bgColor = computed(() => {
           <h3 class="text-28px text-primary font-500 lt-sm:text-22px">{{ $t("system.title") }}</h3>
         </header>
         <main class="pt-24px">
-          <NTabs
-            v-if="module === 'pwd-login'"
-            class="card-tabs"
-            default-value="pwd-login"
-            size="large"
-            animated
-          >
-            <NTabPane
-              v-for="item in loginModules"
-              :key="item.name"
-              :name="item.name"
-              :tab="$t(item.label)"
-            >
-              <Transition :name="themeStore.page.animateMode" mode="out-in" appear>
-                <component :is="item.component" />
-              </Transition>
-            </NTabPane>
-          </NTabs>
-          <div v-else>
-            <h3 class="text-18px text-primary font-medium">{{ $t(activeModule.label) }}</h3>
-            <div class="pt-24px">
-              <Transition :name="themeStore.page.animateMode" mode="out-in" appear>
-                <component :is="activeModule.component" />
-              </Transition>
-            </div>
-          </div>
+          <Transition :name="themeStore.page.animateMode" mode="out-in" appear>
+            <component :is="activeModule.component" />
+          </Transition>
         </main>
       </div>
     </NCard>

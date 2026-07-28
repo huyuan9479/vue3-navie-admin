@@ -523,6 +523,7 @@ declare namespace App {
           };
           register: {
             title: string;
+            subTitle: string;
             agreement: string;
             protocol: string;
             policy: string;

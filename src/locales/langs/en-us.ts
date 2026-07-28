@@ -270,6 +270,7 @@ const local: App.I18n.Schema = {
       },
       register: {
         title: "Register",
+        subTitle: "Don't have an account? Go to register",
         agreement: "I have read and agree to",
         protocol: "《User Agreement》",
         policy: "《Privacy Policy》",
