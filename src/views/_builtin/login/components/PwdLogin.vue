@@ -105,8 +105,9 @@ async function handleCodeLoginSubmit() {
 
 <template>
   <div>
-    <NTabs class="card-tabs" default-value="pwd-login" size="large" animated>
-      <NTabPane name="pwd-login" :tab="$t('page.login.pwdLogin.title')">
+    <h3 class="text-26px font-bold mb-24px">{{ $t("page.login.pwdLogin.title") }}</h3>
+    <NTabs class="card-tabs" default-value="pwd-login" size="large" animated type="segment">
+      <NTabPane name="pwd-login" :tab="$t('page.login.pwdLogin.passwordLogin')">
         <Transition :name="themeStore.page.animateMode" mode="out-in" appear>
           <NForm
             ref="pwdLoginFormRef"
@@ -138,7 +139,7 @@ async function handleCodeLoginSubmit() {
                 </template>
               </NInput>
             </NFormItem>
-            <NSpace vertical :size="16">
+            <NSpace vertical :size="24">
               <div class="flex-y-center justify-between">
                 <NCheckbox>{{ $t("page.login.pwdLogin.rememberMe") }}</NCheckbox>
                 <div class="cursor-pointer" @click="toggleLoginModule('reset-pwd')">
@@ -199,7 +200,7 @@ async function handleCodeLoginSubmit() {
                 </NButton>
               </div>
             </NFormItem>
-            <NSpace vertical :size="16">
+            <NSpace vertical :size="24">
               <div class="flex-y-center justify-between">
                 <NCheckbox>{{ $t("page.login.pwdLogin.rememberMe") }}</NCheckbox>
               </div>
@@ -218,29 +219,37 @@ async function handleCodeLoginSubmit() {
         </Transition>
       </NTabPane>
     </NTabs>
-    <!--
- <div class="flex-y-center justify-between gap-12px px-8px">
-      <div class="flex-y-center flex-1 user-login-other">
-        <span class="mr-6px">{{ $t("page.login.pwdLogin.otherLoginMode") }}</span>
-        <SvgIcon icon="ant-design:alipay-circle-outlined" class="item-icon" />
-        <SvgIcon icon="ant-design:github-outlined" class="item-icon" />
-        <SvgIcon icon="ant-design:wechat-filled" class="item-icon" />
+    <NSpace vertical :size="16">
+      <div class="cursor-pointer text-center mt-16px" @click="toggleLoginModule('register')">
+        <span>{{ $t("page.login.pwdLogin.noRegister") }}</span>
+        <span class="text-primary">{{ $t("page.login.pwdLogin.register") }}</span>
       </div>
-      <div class="cursor-pointer" @click="toggleLoginModule('register')">
-        {{ $t(loginModuleRecord.register) }}
+      <div class="w-full flex justify-center">
+        <NDivider class="w-2/3 text-14px text-#666 !m-0">
+          {{ $t("page.login.pwdLogin.otherLoginMode") }}
+        </NDivider>
       </div>
-    </div>
--->
-    <div class="mt-16px">
-      <NDivider class="text-14px text-#666 !m-0">
-        {{ $t("page.login.pwdLogin.otherLoginMode") }}
-      </NDivider>
-      <div class="flex-center gap-12px text-#999 mt-8px">
-        <SvgIcon icon="ant-design:wechat-filled" class="text-22px" />
-        <SvgIcon icon="ant-design:alipay-circle-outlined" class="text-22px" />
-        <SvgIcon icon="ant-design:github-outlined" class="text-22px" />
+      <div class="flex justify-between mx-auto w w-2/3 gap-12px">
+        <NButton circle size="small">
+          <template #icon>
+            <SvgIcon icon="ant-design:wechat-filled" class="text-22px cursor-pointer text-#666" />
+          </template>
+        </NButton>
+        <NButton circle size="small">
+          <template #icon>
+            <SvgIcon
+              icon="ant-design:alipay-circle-outlined"
+              class="text-22px cursor-pointer text-#666"
+            />
+          </template>
+        </NButton>
+        <NButton circle size="small">
+          <template #icon>
+            <SvgIcon icon="ant-design:github-outlined" class="text-22px cursor-pointer text-#666" />
+          </template>
+        </NButton>
       </div>
-    </div>
+    </NSpace>
   </div>
 </template>
 

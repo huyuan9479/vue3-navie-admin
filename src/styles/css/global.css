@@ -6,10 +6,31 @@ html,
 body,
 #app {
   height: 100%;
-  text-autospace: normal;
 }
 
 html {
   overflow-x: hidden;
   color: rgb(var(--base-text-color));
+}
+/* 设置暗黑模式过渡动画 */
+::view-transition-new(root),
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+
+html.dark::view-transition-old(root) {
+  z-index: 2147483646;
+}
+
+html.dark::view-transition-new(root) {
+  z-index: 1;
 }

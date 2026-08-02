@@ -1,6 +1,6 @@
 const local: App.I18n.Schema = {
   system: {
-    title: "Vue3NavieAdmin",
+    title: "Vue3 Navie Admin",
     updateTitle: "系统版本更新通知",
     updateContent: "检测到系统有新版本发布，是否立即刷新页面？",
     updateConfirm: "立即刷新",
@@ -71,7 +71,6 @@ const local: App.I18n.Schema = {
         title: "主题模式",
         light: "亮色模式",
         dark: "暗黑模式",
-        auto: "跟随系统",
       },
       grayscale: "灰色模式",
       colourWeakness: "色弱模式",
@@ -244,12 +243,14 @@ const local: App.I18n.Schema = {
         welcomeBack: "欢迎回来，{userName} ！",
       },
       pwdLogin: {
-        title: "密码登录",
+        title: "Hi, 欢迎登录",
+        passwordLogin: "密码登录",
         rememberMe: "记住我",
         forgetPassword: "忘记密码？",
-        register: "注册账号",
+        noRegister: "还没有账号？",
+        register: "去注册",
         otherAccountLogin: "其他账号登录",
-        otherLoginMode: "其他登录方式",
+        otherLoginMode: "快捷登录",
         superAdmin: "超级管理员",
         admin: "管理员",
         user: "普通用户",
@@ -263,7 +264,6 @@ const local: App.I18n.Schema = {
       },
       register: {
         title: "注册账号",
-        subTitle: "还没有账号？去注册",
         agreement: "我已经仔细阅读并接受",
         protocol: "《用户协议》",
         policy: "《隐私权政策》",

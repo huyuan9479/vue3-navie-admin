@@ -1,6 +1,6 @@
-import { computed, effectScope, onScopeDispose, ref, toRefs, watch } from "vue";
+import { computed, effectScope, onScopeDispose, ref, toRefs, watch, nextTick } from "vue";
 import type { Ref } from "vue";
-import { useDateFormat, useEventListener, useNow, usePreferredColorScheme } from "@vueuse/core";
+import { useDateFormat, useEventListener, useNow } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { getPaletteColorByNumber } from "@sa/color";
 import { localStg } from "@/utils/storage";
@@ -18,7 +18,6 @@ import {
 /** Theme store */
 export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   const scope = effectScope();
-  const osTheme = usePreferredColorScheme();
   const authStore = useAuthStore();
 
   /** Theme settings */
@@ -36,9 +35,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
   /** Dark mode */
   const darkMode = computed(() => {
-    if (settings.value.themeScheme === "auto") {
-      return osTheme.value === "dark";
-    }
     return settings.value.themeScheme === "dark";
   });
 
@@ -104,9 +100,43 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
    * Set theme scheme
    *
    * @param themeScheme
+   * @param [event] Mouse event for view transition origin
    */
-  function setThemeScheme(themeScheme: UnionKey.ThemeScheme) {
-    settings.value.themeScheme = themeScheme;
+  function setThemeScheme(themeScheme: UnionKey.ThemeScheme, event?: MouseEvent) {
+    const isAppearanceTransition =
+      // @ts-expect-error - startViewTransition is not available in the current DOM lib target
+      document.startViewTransition &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!isAppearanceTransition || !event) {
+      settings.value.themeScheme = themeScheme;
+      return;
+    }
+    const x = event.clientX;
+    const y = event.clientY;
+    const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    const transition = document.startViewTransition(async () => {
+      settings.value.themeScheme = themeScheme;
+      await nextTick();
+    });
+    transition.ready.then(() => {
+      const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`];
+      const animate = document.documentElement.animate(
+        {
+          clipPath: settings.value.themeScheme === "dark" ? [...clipPath].toReversed() : clipPath,
+        },
+        {
+          duration: 450,
+          easing: "ease-in",
+          pseudoElement:
+            settings.value.themeScheme === "dark"
+              ? "::view-transition-old(root)"
+              : "::view-transition-new(root)",
+        },
+      );
+      animate.onfinish = () => {
+        transition.skipTransition();
+      };
+    });
   }
 
   /**
@@ -128,16 +158,12 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   }
 
   /** Toggle theme scheme */
-  function toggleThemeScheme() {
-    const themeSchemes: UnionKey.ThemeScheme[] = ["light", "dark", "auto"];
-
+  function toggleThemeScheme(event?: MouseEvent) {
+    const themeSchemes: UnionKey.ThemeScheme[] = ["light", "dark"];
     const index = themeSchemes.findIndex((item) => item === settings.value.themeScheme);
-
     const nextIndex = index === themeSchemes.length - 1 ? 0 : index + 1;
-
     const nextThemeScheme = themeSchemes[nextIndex];
-
-    setThemeScheme(nextThemeScheme);
+    setThemeScheme(nextThemeScheme, event);
   }
 
   /**

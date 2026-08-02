@@ -20,19 +20,18 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 interface Emits {
-  (e: "switch"): void;
+  (e: "switch", event: MouseEvent): void;
 }
 
 const emit = defineEmits<Emits>();
 
-function handleSwitch() {
-  emit("switch");
+function handleSwitch(event: MouseEvent) {
+  emit("switch", event);
 }
 
 const icons: Record<UnionKey.ThemeScheme, string> = {
-  light: "material-symbols:sunny",
-  dark: "material-symbols:nightlight-rounded",
-  auto: "material-symbols:hdr-auto",
+  light: "material-symbols:sunny-outline-rounded",
+  dark: "material-symbols:dark-mode-outline-rounded",
 };
 
 const icon = computed(() => icons[props.themeSchema]);

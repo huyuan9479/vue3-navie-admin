@@ -10,7 +10,6 @@ export const GLOBAL_TAB_WHEEL_SPEED_RATIO = 0.3;
 export const themeSchemaRecord: Record<UnionKey.ThemeScheme, App.I18n.I18nKey> = {
   light: "theme.appearance.themeSchema.light",
   dark: "theme.appearance.themeSchema.dark",
-  auto: "theme.appearance.themeSchema.auto",
 };
 
 export const themeSchemaOptions = transformRecordToOption(themeSchemaRecord);

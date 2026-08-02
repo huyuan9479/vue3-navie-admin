@@ -11,7 +11,7 @@ declare namespace UnionKey {
   type LoginModule = "pwd-login" | "register" | "reset-pwd" | "bind-wechat";
 
   /** Theme scheme */
-  type ThemeScheme = "light" | "dark" | "auto";
+  type ThemeScheme = "light" | "dark";
 
   /**
    * The layout mode

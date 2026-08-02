@@ -505,8 +505,10 @@ declare namespace App {
           };
           pwdLogin: {
             title: string;
+            passwordLogin: string;
             rememberMe: string;
             forgetPassword: string;
+            noRegister: string;
             register: string;
             otherAccountLogin: string;
             otherLoginMode: string;
@@ -523,7 +525,6 @@ declare namespace App {
           };
           register: {
             title: string;
-            subTitle: string;
             agreement: string;
             protocol: string;
             policy: string;

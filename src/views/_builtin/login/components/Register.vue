@@ -47,7 +47,7 @@ async function handleSubmit() {
 
 <template>
   <div>
-    <h3 class="text-18px text-primary font-500 mb-24px">{{ $t("page.login.register.title") }}</h3>
+    <h3 class="text-26px font-bold mb-24px">{{ $t("page.login.register.title") }}</h3>
     <NForm
       ref="formRef"
       :model="model"
