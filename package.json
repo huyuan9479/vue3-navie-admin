@@ -50,6 +50,7 @@
     "dayjs": "1.11.20",
     "defu": "6.1.7",
     "echarts": "6.0.0",
+    "fast-glob": "^3.3.3",
     "json5": "2.2.3",
     "naive-ui": "2.44.1",
     "nprogress": "0.2.0",
