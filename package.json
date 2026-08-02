@@ -62,7 +62,6 @@
     "vue-router": "5.0.7"
   },
   "devDependencies": {
-    "@elegant-router/vue": "0.3.8",
     "@iconify/json": "2.2.472",
     "@sa/scripts": "workspace:*",
     "@sa/uno-preset": "workspace:*",

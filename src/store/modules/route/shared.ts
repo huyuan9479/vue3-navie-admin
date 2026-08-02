@@ -1,13 +1,8 @@
-import type { RouteLocationNormalizedLoaded, RouteRecordRaw, _RouteRecordBase } from "vue-router";
-import type {
-  ElegantConstRoute,
-  LastLevelRouteKey,
-  RouteKey,
-  RouteMap,
-} from "@elegant-router/types";
-import { isDev } from "@/constants/env";
-import { useSvgIcon } from "@/hooks/common/icon";
-import { $t } from "@/locales";
+import type { RouteLocationNormalizedLoaded, RouteRecordRaw, _RouteRecordBase } from 'vue-router';
+import type { LastLevelRouteKey, PageConstRoute, RouteKey, RouteMap } from '@page-router/types';
+import { isDev } from '@/constants/env';
+import { useSvgIcon } from '@/hooks/common/icon';
+import { $t } from '@/locales';
 
 /**
  * Filter auth routes by roles
@@ -15,8 +10,8 @@ import { $t } from "@/locales";
  * @param routes Auth routes
  * @param roles Roles
  */
-export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: string[]) {
-  return routes.flatMap((route) => filterAuthRouteByRoles(route, roles));
+export function filterAuthRoutesByRoles(routes: PageConstRoute[], roles: string[]) {
+  return routes.flatMap(route => filterAuthRouteByRoles(route, roles));
 }
 
 /**
@@ -25,21 +20,19 @@ export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: stri
  * @param route Auth route
  * @param roles Roles
  */
-function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): ElegantConstRoute[] {
+function filterAuthRouteByRoles(route: PageConstRoute, roles: string[]): PageConstRoute[] {
   const routeRoles = (route.meta && route.meta.roles) || [];
 
   // if the route's "roles" is empty, then it is allowed to access
   const isEmptyRoles = !routeRoles.length;
 
   // if the user's role is included in the route's "roles", then it is allowed to access
-  const hasPermission = routeRoles.some((role) => roles.includes(role));
+  const hasPermission = routeRoles.some(role => roles.includes(role));
 
   const filterRoute = { ...route };
 
   if (filterRoute.children?.length) {
-    filterRoute.children = filterRoute.children.flatMap((item) =>
-      filterAuthRouteByRoles(item, roles),
-    );
+    filterRoute.children = filterRoute.children.flatMap(item => filterAuthRouteByRoles(item, roles));
   }
 
   // Exclude the route if it has no children after filtering
@@ -57,13 +50,13 @@ function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): Eleg
  *
  * @param routes Auth routes
  */
-export function filterRoutesByDev(routes: ElegantConstRoute[]) {
+export function filterRoutesByDev(routes: PageConstRoute[]) {
   // in the development environment, all routes are loaded
   if (isDev) {
     return routes;
   }
 
-  return routes.flatMap((route) => filterRouteByDev(route));
+  return routes.flatMap(route => filterRouteByDev(route));
 }
 
 /**
@@ -71,7 +64,7 @@ export function filterRoutesByDev(routes: ElegantConstRoute[]) {
  *
  * @param route Auth route
  */
-function filterRouteByDev(route: ElegantConstRoute): ElegantConstRoute[] {
+function filterRouteByDev(route: PageConstRoute): PageConstRoute[] {
   // exclude the route configured with `meta.isDev` outside the development environment
   if (route.meta?.isDev) {
     return [];
@@ -80,7 +73,7 @@ function filterRouteByDev(route: ElegantConstRoute): ElegantConstRoute[] {
   const filterRoute = { ...route };
 
   if (filterRoute.children?.length) {
-    filterRoute.children = filterRoute.children.flatMap((item) => filterRouteByDev(item));
+    filterRoute.children = filterRoute.children.flatMap(item => filterRouteByDev(item));
   }
 
   // Exclude the route if it has no children after filtering
@@ -96,11 +89,9 @@ function filterRouteByDev(route: ElegantConstRoute): ElegantConstRoute[] {
  *
  * @param route route
  */
-function sortRouteByOrder(route: ElegantConstRoute) {
+function sortRouteByOrder(route: PageConstRoute) {
   if (route.children?.length) {
-    route.children.sort(
-      (next, prev) => (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0),
-    );
+    route.children.sort((next, prev) => (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0));
     route.children.forEach(sortRouteByOrder);
   }
 
@@ -112,7 +103,7 @@ function sortRouteByOrder(route: ElegantConstRoute) {
  *
  * @param routes routes
  */
-export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
+export function sortRoutesByOrder(routes: PageConstRoute[]) {
   routes.sort((next, prev) => (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0));
   routes.forEach(sortRouteByOrder);
 
@@ -124,14 +115,14 @@ export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
  *
  * @param routes Auth routes
  */
-export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
+export function getGlobalMenusByAuthRoutes(routes: PageConstRoute[]) {
   const menus: App.Global.Menu[] = [];
 
-  routes.forEach((route) => {
+  routes.forEach(route => {
     if (!route.meta?.hideInMenu) {
       const menu = getGlobalMenuByBaseRoute(route);
 
-      if (route.children?.some((child) => !child.meta?.hideInMenu)) {
+      if (route.children?.some(child => !child.meta?.hideInMenu)) {
         menu.children = getGlobalMenusByAuthRoutes(route.children);
       }
 
@@ -150,14 +141,14 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
 export function updateLocaleOfGlobalMenus(menus: App.Global.Menu[]) {
   const result: App.Global.Menu[] = [];
 
-  menus.forEach((menu) => {
+  menus.forEach(menu => {
     const { i18nKey, label, children } = menu;
 
     const newLabel = i18nKey ? $t(i18nKey) : label;
 
     const newMenu: App.Global.Menu = {
       ...menu,
-      label: newLabel,
+      label: newLabel
     };
 
     if (children?.length) {
@@ -175,17 +166,11 @@ export function updateLocaleOfGlobalMenus(menus: App.Global.Menu[]) {
  *
  * @param route
  */
-function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | ElegantConstRoute) {
+function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | PageConstRoute) {
   const { SvgIconVNode } = useSvgIcon();
 
   const { name, path } = route;
-  const {
-    title,
-    i18nKey,
-    icon = import.meta.env.VITE_MENU_ICON,
-    localIcon,
-    iconFontSize,
-  } = route.meta ?? {};
+  const { title, i18nKey, icon = import.meta.env.VITE_MENU_ICON, localIcon, iconFontSize } = route.meta ?? {};
 
   const label = i18nKey ? $t(i18nKey) : title!;
 
@@ -195,7 +180,7 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
     i18nKey,
     routeKey: name as RouteKey,
     routePath: path as RouteMap[RouteKey],
-    icon: SvgIconVNode({ icon, localIcon, fontSize: iconFontSize || 20 }),
+    icon: SvgIconVNode({ icon, localIcon, fontSize: iconFontSize || 20 })
   };
 
   return menu;
@@ -209,9 +194,9 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
 export function getCacheRouteNames(routes: RouteRecordRaw[]) {
   const cacheNames: LastLevelRouteKey[] = [];
 
-  routes.forEach((route) => {
+  routes.forEach(route => {
     // only get last two level route, which has component
-    route.children?.forEach((child) => {
+    route.children?.forEach(child => {
       if (child.component && child.meta?.keepAlive) {
         cacheNames.push(child.name as LastLevelRouteKey);
       }
@@ -227,8 +212,8 @@ export function getCacheRouteNames(routes: RouteRecordRaw[]) {
  * @param routeName
  * @param routes
  */
-export function isRouteExistByRouteName(routeName: RouteKey, routes: ElegantConstRoute[]) {
-  return routes.some((route) => recursiveGetIsRouteExistByRouteName(route, routeName));
+export function isRouteExistByRouteName(routeName: RouteKey, routes: PageConstRoute[]) {
+  return routes.some(route => recursiveGetIsRouteExistByRouteName(route, routeName));
 }
 
 /**
@@ -237,7 +222,7 @@ export function isRouteExistByRouteName(routeName: RouteKey, routes: ElegantCons
  * @param route
  * @param routeName
  */
-function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName: RouteKey) {
+function recursiveGetIsRouteExistByRouteName(route: PageConstRoute, routeName: RouteKey) {
   let isExist = route.name === routeName;
 
   if (isExist) {
@@ -245,7 +230,7 @@ function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName
   }
 
   if (route.children && route.children.length) {
-    isExist = route.children.some((item) => recursiveGetIsRouteExistByRouteName(item, routeName));
+    isExist = route.children.some(item => recursiveGetIsRouteExistByRouteName(item, routeName));
   }
 
   return isExist;
@@ -260,7 +245,7 @@ function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName
 export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: App.Global.Menu[]) {
   const keyPath: string[] = [];
 
-  menus.some((menu) => {
+  menus.some(menu => {
     const path = findMenuPath(selectedKey, menu);
 
     const find = Boolean(path?.length);
@@ -320,7 +305,7 @@ function transformMenuToBreadcrumb(menu: App.Global.Menu) {
   const { children, ...rest } = menu;
 
   const breadcrumb: App.Global.Breadcrumb = {
-    ...rest,
+    ...rest
   };
 
   if (children?.length) {
@@ -338,7 +323,7 @@ function transformMenuToBreadcrumb(menu: App.Global.Menu) {
  */
 export function getBreadcrumbsByRoute(
   route: RouteLocationNormalizedLoaded,
-  menus: App.Global.Menu[],
+  menus: App.Global.Menu[]
 ): App.Global.Breadcrumb[] {
   const key = route.name as string;
   const activeKey = route.meta?.activeMenu;
@@ -349,7 +334,7 @@ export function getBreadcrumbsByRoute(
     }
 
     if (menu.key === activeKey) {
-      const ROUTE_DEGREE_SPLITTER = "_";
+      const ROUTE_DEGREE_SPLITTER = '_';
 
       const parentKey = key.split(ROUTE_DEGREE_SPLITTER).slice(0, -1).join(ROUTE_DEGREE_SPLITTER);
 
@@ -378,10 +363,7 @@ export function getBreadcrumbsByRoute(
  * @param menus - menus
  * @param treeMap
  */
-export function transformMenuToSearchMenus(
-  menus: App.Global.Menu[],
-  treeMap: App.Global.Menu[] = [],
-) {
+export function transformMenuToSearchMenus(menus: App.Global.Menu[], treeMap: App.Global.Menu[] = []) {
   if (menus && menus.length === 0) return [];
   return menus.reduce((acc, cur) => {
     if (!cur.children) {

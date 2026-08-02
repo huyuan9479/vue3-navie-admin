@@ -1,7 +1,7 @@
-import type { CustomRoute, ElegantConstRoute, ElegantRoute } from "@elegant-router/types";
-import { generatedRoutes } from "../elegant/routes";
-import { layouts, views } from "../elegant/imports";
-import { transformElegantRoutesToVueRoutes } from "../elegant/transform";
+import type { CustomRoute, PageConstRoute } from '@page-router/types';
+import { generatedRoutes } from '../elegant/routes';
+import { layouts, views } from '../elegant/imports';
+import { transformElegantRoutesToVueRoutes } from '../elegant/transform';
 
 /**
  * custom routes
@@ -11,11 +11,11 @@ const customRoutes: CustomRoute[] = [];
 
 /** create routes when the auth route mode is static */
 export function createStaticRoutes() {
-  const constantRoutes: ElegantRoute[] = [];
+  const constantRoutes: PageConstRoute[] = [];
 
-  const authRoutes: ElegantRoute[] = [];
+  const authRoutes: PageConstRoute[] = [];
 
-  [...customRoutes, ...generatedRoutes].forEach((item) => {
+  [...customRoutes, ...generatedRoutes].forEach(item => {
     if (item.meta?.constant) {
       constantRoutes.push(item);
     } else {
@@ -25,7 +25,7 @@ export function createStaticRoutes() {
 
   return {
     constantRoutes,
-    authRoutes,
+    authRoutes
   };
 }
 
@@ -34,6 +34,6 @@ export function createStaticRoutes() {
  *
  * @param routes Elegant routes
  */
-export function getAuthVueRoutes(routes: ElegantConstRoute[]) {
+export function getAuthVueRoutes(routes: PageConstRoute[]) {
   return transformElegantRoutesToVueRoutes(routes, layouts, views);
 }

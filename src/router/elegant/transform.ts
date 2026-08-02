@@ -4,8 +4,8 @@
 // Read more: https://github.com/soybeanjs/elegant-router
 
 import type { RouteRecordRaw, RouteComponent } from 'vue-router';
-import type { ElegantConstRoute } from "@elegant-router/vue";
-import type { RouteMap, RouteKey, RoutePath } from "@elegant-router/types";
+import type { PageConstRoute } from "@page-router/types";
+import type { RouteMap, RouteKey, RoutePath } from "@page-router/types";
 
 /**
  * transform elegant const routes to vue routes
@@ -14,7 +14,7 @@ import type { RouteMap, RouteKey, RoutePath } from "@elegant-router/types";
  * @param views view components
  */
 export function transformElegantRoutesToVueRoutes(
-  routes: ElegantConstRoute[],
+  routes: PageConstRoute[],
   layouts: Record<string, RouteComponent | (() => Promise<RouteComponent>)>,
   views: Record<string, RouteComponent | (() => Promise<RouteComponent>)>,
 ) {
@@ -28,7 +28,7 @@ export function transformElegantRoutesToVueRoutes(
  * @param views view components
  */
 function transformElegantRouteToVueRoute(
-  route: ElegantConstRoute,
+  route: PageConstRoute,
   layouts: Record<string, RouteComponent | (() => Promise<RouteComponent>)>,
   views: Record<string, RouteComponent | (() => Promise<RouteComponent>)>,
 ) {
@@ -65,11 +65,11 @@ function transformElegantRouteToVueRoute(
     return view;
   }
 
-  function isFirstLevelRoute(item: ElegantConstRoute) {
+  function isFirstLevelRoute(item: PageConstRoute) {
     return !item.name.includes(ROUTE_DEGREE_SPLITTER);
   }
 
-  function isSingleLevelRoute(item: ElegantConstRoute) {
+  function isSingleLevelRoute(item: PageConstRoute) {
     return isFirstLevelRoute(item) && !item.children?.length;
   }
 
