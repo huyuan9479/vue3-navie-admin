@@ -1,4 +1,5 @@
 import { $t } from "@/locales";
+import { isObject } from "@/utils/is";
 
 /**
  * Transform record to option
@@ -21,7 +22,7 @@ import { $t } from "@/locales";
 export function transformRecordToOption<T extends Record<string, string>>(record: T) {
   return Object.entries(record).map(([value, label]) => ({
     value,
-    label,
+    label
   })) as CommonType.Option<keyof T, T[keyof T]>[];
 }
 
@@ -31,9 +32,9 @@ export function transformRecordToOption<T extends Record<string, string>>(record
  * @param options
  */
 export function translateOptions(options: CommonType.Option<string, App.I18n.I18nKey>[]) {
-  return options.map((option) => ({
+  return options.map(option => ({
     ...option,
-    label: $t(option.label),
+    label: $t(option.label)
   }));
 }
 
@@ -53,6 +54,18 @@ export function toggleHtmlClass(className: string) {
 
   return {
     add,
-    remove,
+    remove
   };
+}
+
+export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
+  let key: string;
+  for (key in target) {
+    src[key] = isObject(src[key]) ? deepMerge(src[key], target[key]) : (src[key] = target[key]);
+  }
+  return src;
+}
+
+export function isProdMode() {
+  return import.meta.env.ENV_MODE === "prod";
 }

@@ -22,11 +22,11 @@
   "type": "module",
   "scripts": {
     "build": "vite build --mode prod",
-    "build:test": "vite build --mode test",
+    "build:sit": "vite build --mode sit",
     "cleanup": "sa cleanup",
     "commit": "sa git-commit",
     "commit:zh": "sa git-commit -l=zh-cn",
-    "dev": "vite --mode test",
+    "dev": "vite --mode sit",
     "dev:prod": "vite --mode prod",
     "fmt": "oxfmt",
     "gen-route": "sa gen-route",
@@ -59,7 +59,8 @@
     "vue": "3.5.34",
     "vue-draggable-plus": "0.6.1",
     "vue-i18n": "11.4.2",
-    "vue-router": "5.0.7"
+    "vue-router": "5.0.7",
+    "vue-types": "^7.0.0"
   },
   "devDependencies": {
     "@elegant-router/vue": "0.3.8",
