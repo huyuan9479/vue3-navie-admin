@@ -6,7 +6,7 @@ import { useRouteStore } from "@/store/modules/route";
 import { useRouterPush } from "@/hooks/common/router";
 
 defineOptions({
-  name: "GlobalBreadcrumb",
+  name: "GlobalBreadcrumb"
 });
 
 const themeStore = useThemeStore();
@@ -17,8 +17,7 @@ interface BreadcrumbContentProps {
   breadcrumb: App.Global.Menu;
 }
 
-const [DefineBreadcrumbContent, BreadcrumbContent] =
-  createReusableTemplate<BreadcrumbContentProps>();
+const [DefineBreadcrumbContent, BreadcrumbContent] = createReusableTemplate<BreadcrumbContentProps>();
 
 function handleClickMenu(key: RouteKey) {
   routerPushByKey(key);

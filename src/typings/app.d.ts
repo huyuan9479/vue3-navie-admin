@@ -285,14 +285,7 @@ declare namespace App {
     type FormRule = import("naive-ui").FormItemRule;
 
     /** The global dropdown key */
-    type DropdownKey =
-      | "closeCurrent"
-      | "closeOther"
-      | "closeLeft"
-      | "closeRight"
-      | "closeAll"
-      | "pin"
-      | "unpin";
+    type DropdownKey = "closeCurrent" | "closeOther" | "closeLeft" | "closeRight" | "closeAll" | "pin" | "unpin";
   }
 
   /**
@@ -597,10 +590,7 @@ declare namespace App {
       };
     };
 
-    type GetI18nKey<
-      T extends Record<string, unknown>,
-      K extends keyof T = keyof T,
-    > = K extends string
+    type GetI18nKey<T extends Record<string, unknown>, K extends keyof T = keyof T> = K extends string
       ? T[K] extends Record<string, unknown>
         ? `${K}.${GetI18nKey<T[K]>}`
         : K

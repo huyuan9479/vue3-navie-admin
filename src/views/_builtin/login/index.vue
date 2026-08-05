@@ -29,7 +29,7 @@ const moduleMap: Record<UnionKey.LoginModule, LoginModule> = {
   "pwd-login": { label: loginModuleRecord["pwd-login"], component: PwdLogin },
   register: { label: loginModuleRecord.register, component: Register },
   "reset-pwd": { label: loginModuleRecord["reset-pwd"], component: ResetPwd },
-  "bind-wechat": { label: loginModuleRecord["bind-wechat"], component: BindWechat },
+  "bind-wechat": { label: loginModuleRecord["bind-wechat"], component: BindWechat }
 };
 
 const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
@@ -51,9 +51,7 @@ const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
       </div>
     </div>
     <!-- 右侧登录 -->
-    <div
-      class="login-container-right relative flex-col-center lg:flex-initial min-h-full w-2/5 flex-1"
-    >
+    <div class="login-container-right relative flex-col-center lg:flex-initial min-h-full w-2/5 flex-1">
       <NCard :bordered="false" class="relative z-4 size-full">
         <div class="w-full p-32px lt-sm:w-300px lt-sm:p-0 2xl:w-500px">
           <Transition :name="themeStore.page.animateMode" mode="out-in" appear>
@@ -83,8 +81,8 @@ const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
 .login-container {
   .login-bg {
     background:
-      radial-gradient(600px at 80% 20%, #90caf933, #0000 70%),
-      radial-gradient(700px at 50% 80%, #611df133, #0000 60%), oklch(98% 0 0);
+      radial-gradient(600px at 80% 20%, #90caf933, #0000 70%), radial-gradient(700px at 50% 80%, #611df133, #0000 60%),
+      oklch(98% 0 0);
   }
   .login-container-right {
     :deep(.n-card) {
@@ -102,12 +100,7 @@ const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
 .dark {
   .login-container {
     .login-bg {
-      background: linear-gradient(
-        154deg,
-        #07070915 30%,
-        hsl(var(--primary) / 20%) 48%,
-        #07070915 64%
-      );
+      background: linear-gradient(154deg, #07070915 30%, hsl(var(--primary) / 20%) 48%, #07070915 64%);
     }
   }
 }

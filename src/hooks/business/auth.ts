@@ -12,10 +12,10 @@ export function useAuth() {
       return authStore.userInfo.buttons.includes(codes);
     }
 
-    return codes.some((code) => authStore.userInfo.buttons.includes(code));
+    return codes.some(code => authStore.userInfo.buttons.includes(code));
   }
 
   return {
-    hasAuth,
+    hasAuth
   };
 }

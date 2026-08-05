@@ -12,7 +12,7 @@ import BetterScroll from "@/components/custom/BetterScroll.vue";
 import ContextMenu from "./context-menu.vue";
 
 defineOptions({
-  name: "GlobalTab",
+  name: "GlobalTab"
 });
 
 const route = useRoute();
@@ -133,7 +133,7 @@ const dropdown: DropdownConfig = reactive({
   visible: false,
   x: 0,
   y: 0,
-  tabId: "",
+  tabId: ""
 });
 
 function setDropdown(config: Partial<DropdownConfig>) {
@@ -164,7 +164,7 @@ async function handleContextMenu(e: MouseEvent, tabId: string) {
       visible: true,
       x: clientX,
       y: clientY,
-      tabId,
+      tabId
     });
     isClickContextMenu = false;
   }, DURATION);
@@ -183,13 +183,13 @@ watch(
   () => route.fullPath,
   () => {
     tabStore.addTab(route);
-  },
+  }
 );
 watch(
   () => tabStore.activeTabId,
   () => {
     scrollToActiveTab();
-  },
+  }
 );
 
 // init
@@ -199,18 +199,12 @@ init();
 <template>
   <DarkModeContainer class="size-full flex-y-center pr-12px shadow-tab">
     <div ref="bsWrapper" class="h-full flex-1-hidden" @wheel="handleWheel">
-      <BetterScroll
-        ref="bsScroll"
-        :options="{ scrollX: true, scrollY: false, click: !isPCFlag }"
-        @click="removeFocus"
-      >
+      <BetterScroll ref="bsScroll" :options="{ scrollX: true, scrollY: false, click: !isPCFlag }" @click="removeFocus">
         <div
           ref="tabRef"
           class="h-full flex pr-18px"
           :class="[
-            themeStore.tab.mode === 'chrome' || themeStore.tab.mode === 'slider'
-              ? 'items-end'
-              : 'items-center gap-12px',
+            themeStore.tab.mode === 'chrome' || themeStore.tab.mode === 'slider' ? 'items-end' : 'items-center gap-12px'
           ]"
         >
           <PageTab
@@ -228,11 +222,7 @@ init();
             @contextmenu="handleContextMenu($event, tab.id)"
           >
             <template #prefix>
-              <SvgIcon
-                :icon="tab.icon"
-                :local-icon="tab.localIcon"
-                class="inline-block align-text-bottom text-16px"
-              />
+              <SvgIcon :icon="tab.icon" :local-icon="tab.localIcon" class="inline-block align-text-bottom text-16px" />
             </template>
             <div class="max-w-240px ellipsis-text">{{ tab.label }}</div>
           </PageTab>

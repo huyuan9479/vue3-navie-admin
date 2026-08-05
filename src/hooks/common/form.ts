@@ -9,28 +9,28 @@ export function useFormRules() {
     userName: {
       pattern: REG_USER_NAME,
       message: $t("form.userName.invalid"),
-      trigger: "change",
+      trigger: "change"
     },
     phone: {
       pattern: REG_PHONE,
       message: $t("form.phone.invalid"),
-      trigger: "change",
+      trigger: "change"
     },
     pwd: {
       pattern: REG_PWD,
       message: $t("form.pwd.invalid"),
-      trigger: "change",
+      trigger: "change"
     },
     code: {
       pattern: REG_CODE_SIX,
       message: $t("form.code.invalid"),
-      trigger: "change",
+      trigger: "change"
     },
     email: {
       pattern: REG_EMAIL,
       message: $t("form.email.invalid"),
-      trigger: "change",
-    },
+      trigger: "change"
+    }
   } satisfies Record<string, App.Global.FormRule>;
 
   const formRules = {
@@ -38,7 +38,7 @@ export function useFormRules() {
     phone: [createRequiredRule($t("form.phone.required")), patternRules.phone],
     pwd: [createRequiredRule($t("form.pwd.required")), patternRules.pwd],
     code: [createRequiredRule($t("form.code.required")), patternRules.code],
-    email: [createRequiredRule($t("form.email.required")), patternRules.email],
+    email: [createRequiredRule($t("form.email.required")), patternRules.email]
   } satisfies Record<string, App.Global.FormRule[]>;
 
   /** the default required rule */
@@ -47,7 +47,7 @@ export function useFormRules() {
   function createRequiredRule(message: string): App.Global.FormRule {
     return {
       required: true,
-      message,
+      message
     };
   }
 
@@ -63,8 +63,8 @@ export function useFormRules() {
           return Promise.resolve();
         },
         message: $t("form.confirmPwd.invalid"),
-        trigger: "input",
-      },
+        trigger: "input"
+      }
     ];
     return confirmPwdRule;
   }
@@ -74,7 +74,7 @@ export function useFormRules() {
     formRules,
     defaultRequiredRule,
     createRequiredRule,
-    createConfirmPwdRule,
+    createConfirmPwdRule
   };
 }
 
@@ -92,6 +92,6 @@ export function useNaiveForm() {
   return {
     formRef,
     validate,
-    restoreValidation,
+    restoreValidation
   };
 }

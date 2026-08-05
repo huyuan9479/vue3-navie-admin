@@ -11,14 +11,9 @@ declare namespace NaiveUI {
 
   type SetTableColumnKey<C, T> = Omit<C, "key"> & { key: keyof T | (string & {}) };
 
-  type TableColumnWithKey<T> =
-    | SetTableColumnKey<DataTableBaseColumn<T>, T>
-    | SetTableColumnKey<TableColumnGroup<T>, T>;
+  type TableColumnWithKey<T> = SetTableColumnKey<DataTableBaseColumn<T>, T> | SetTableColumnKey<TableColumnGroup<T>, T>;
 
-  type TableColumn<T> =
-    | TableColumnWithKey<T>
-    | DataTableSelectionColumn<T>
-    | DataTableExpandColumn<T>;
+  type TableColumn<T> = TableColumnWithKey<T> | DataTableSelectionColumn<T> | DataTableExpandColumn<T>;
 
   /**
    * the type of table operation

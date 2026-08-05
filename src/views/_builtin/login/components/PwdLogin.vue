@@ -8,7 +8,7 @@ import { useFormRules, useNaiveForm } from "@/hooks/common/form";
 import { $t } from "@/locales";
 
 defineOptions({
-  name: "PwdLogin",
+  name: "PwdLogin"
 });
 
 const authStore = useAuthStore();
@@ -23,7 +23,7 @@ interface FormModel {
 
 const model: FormModel = reactive({
   userName: "admin",
-  password: "123456",
+  password: "123456"
 });
 
 const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
@@ -32,7 +32,7 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
 
   return {
     userName: formRules.userName,
-    password: formRules.pwd,
+    password: formRules.pwd
   };
 });
 
@@ -84,7 +84,7 @@ interface CodeLoginFormModel {
 
 const codeLoginModel: CodeLoginFormModel = reactive({
   phone: "",
-  code: "",
+  code: ""
 });
 
 const codeLoginRules = computed<Record<keyof CodeLoginFormModel, App.Global.FormRule[]>>(() => {
@@ -92,7 +92,7 @@ const codeLoginRules = computed<Record<keyof CodeLoginFormModel, App.Global.Form
 
   return {
     phone: formRules.phone,
-    code: formRules.code,
+    code: formRules.code
   };
 });
 
@@ -118,10 +118,7 @@ async function handleCodeLoginSubmit() {
             @keyup.enter="handleSubmit"
           >
             <NFormItem path="userName">
-              <NInput
-                v-model:value="model.userName"
-                :placeholder="$t('page.login.common.userNamePlaceholder')"
-              >
+              <NInput v-model:value="model.userName" :placeholder="$t('page.login.common.userNamePlaceholder')">
                 <template #prefix>
                   <SvgIcon icon="ant-design:user-outlined" class="text-18px color-#999" />
                 </template>
@@ -146,14 +143,7 @@ async function handleCodeLoginSubmit() {
                   {{ $t("page.login.pwdLogin.forgetPassword") }}
                 </div>
               </div>
-              <NButton
-                type="primary"
-                size="large"
-                round
-                block
-                :loading="authStore.loginLoading"
-                @click="handleSubmit"
-              >
+              <NButton type="primary" size="large" round block :loading="authStore.loginLoading" @click="handleSubmit">
                 {{ $t("common.confirm") }}
               </NButton>
             </NSpace>
@@ -171,10 +161,7 @@ async function handleCodeLoginSubmit() {
             @keyup.enter="handleSubmit"
           >
             <NFormItem path="phone">
-              <NInput
-                v-model:value="codeLoginModel.phone"
-                :placeholder="$t('page.login.common.phonePlaceholder')"
-              >
+              <NInput v-model:value="codeLoginModel.phone" :placeholder="$t('page.login.common.phonePlaceholder')">
                 <template #prefix>
                   <SvgIcon icon="ant-design:mobile-outlined" class="text-18px color-#999" />
                 </template>
@@ -182,10 +169,7 @@ async function handleCodeLoginSubmit() {
             </NFormItem>
             <NFormItem path="code">
               <div class="w-full flex-y-center gap-16px">
-                <NInput
-                  v-model:value="codeLoginModel.code"
-                  :placeholder="$t('page.login.common.codePlaceholder')"
-                >
+                <NInput v-model:value="codeLoginModel.code" :placeholder="$t('page.login.common.codePlaceholder')">
                   <template #prefix>
                     <SvgIcon icon="ant-design:mail-outlined" class="text-18px color-#999" />
                   </template>
@@ -237,10 +221,7 @@ async function handleCodeLoginSubmit() {
         </NButton>
         <NButton circle size="small">
           <template #icon>
-            <SvgIcon
-              icon="ant-design:alipay-circle-outlined"
-              class="text-22px cursor-pointer text-#666"
-            />
+            <SvgIcon icon="ant-design:alipay-circle-outlined" class="text-22px cursor-pointer text-#666" />
           </template>
         </NButton>
         <NButton circle size="small">

@@ -6,18 +6,13 @@ export function setupElegantRouter() {
   return ElegantVueRouter({
     layouts: {
       base: "src/layouts/base-layout/index.vue",
-      blank: "src/layouts/blank-layout/index.vue",
+      blank: "src/layouts/blank-layout/index.vue"
     },
     routePathTransformer(routeName, routePath) {
       const key = routeName as RouteKey;
 
       if (key === "login") {
-        const modules: UnionKey.LoginModule[] = [
-          "pwd-login",
-          "register",
-          "reset-pwd",
-          "bind-wechat",
-        ];
+        const modules: UnionKey.LoginModule[] = ["pwd-login", "register", "reset-pwd", "bind-wechat"];
 
         const moduleReg = modules.join("|");
 
@@ -33,7 +28,7 @@ export function setupElegantRouter() {
 
       const meta: Partial<RouteMeta> = {
         title: key,
-        i18nKey: `route.${key}` as App.I18n.I18nKey,
+        i18nKey: `route.${key}` as App.I18n.I18nKey
       };
 
       if (constantRoutes.includes(key)) {
@@ -41,6 +36,6 @@ export function setupElegantRouter() {
       }
 
       return meta;
-    },
+    }
   });
 }

@@ -7,7 +7,7 @@ import { useSvgIcon } from "@/hooks/common/icon";
 import { $t } from "@/locales";
 
 defineOptions({
-  name: "UserAvatar",
+  name: "UserAvatar"
 });
 
 const authStore = useAuthStore();
@@ -41,8 +41,8 @@ const options = computed(() => {
     {
       label: $t("common.logout"),
       key: "logout",
-      icon: SvgIconVNode({ icon: "ant-design:logout-outlined", fontSize: 18 }),
-    },
+      icon: SvgIconVNode({ icon: "ant-design:logout-outlined", fontSize: 18 })
+    }
   ];
 
   return opts;
@@ -56,7 +56,7 @@ function logout() {
     negativeText: $t("common.cancel"),
     onPositiveClick: () => {
       authStore.resetStore();
-    },
+    }
   });
 }
 
