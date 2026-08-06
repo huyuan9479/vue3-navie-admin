@@ -8,7 +8,7 @@ import { $t } from "@/locales";
 import PwdLogin from "./components/PwdLogin.vue";
 import Register from "./components/Register.vue";
 import ResetPwd from "./components/ResetPwd.vue";
-import BindWechat from "./components/BindWechat.vue";
+import ExpressLogin from "./components/ExpressLogin.vue";
 
 interface Props {
   /** The login module */
@@ -29,7 +29,7 @@ const moduleMap: Record<UnionKey.LoginModule, LoginModule> = {
   "pwd-login": { label: loginModuleRecord["pwd-login"], component: PwdLogin },
   register: { label: loginModuleRecord.register, component: Register },
   "reset-pwd": { label: loginModuleRecord["reset-pwd"], component: ResetPwd },
-  "bind-wechat": { label: loginModuleRecord["bind-wechat"], component: BindWechat }
+  "express-login": { label: loginModuleRecord["express-login"], component: ExpressLogin }
 };
 
 const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
@@ -60,18 +60,10 @@ const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
         </div>
       </NCard>
       <div class="flex-y-center position-absolute right-0 top-0 h-15 pr-12px z-9">
-        <ThemeSchemaSwitch
-          :theme-schema="themeStore.themeScheme"
-          :show-tooltip="false"
-          @switch="themeStore.toggleThemeScheme"
-        />
-        <LangSwitch
-          v-if="themeStore.header.multilingual.visible"
-          :lang="appStore.locale"
-          :lang-options="appStore.localeOptions"
-          :show-tooltip="false"
-          @change-lang="appStore.changeLocale"
-        />
+        <ThemeSchemaSwitch :theme-schema="themeStore.themeScheme" :show-tooltip="false"
+          @switch="themeStore.toggleThemeScheme" />
+        <LangSwitch v-if="themeStore.header.multilingual.visible" :lang="appStore.locale"
+          :lang-options="appStore.localeOptions" :show-tooltip="false" @change-lang="appStore.changeLocale" />
       </div>
     </div>
   </div>
@@ -84,6 +76,7 @@ const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
       radial-gradient(600px at 80% 20%, #90caf933, #0000 70%), radial-gradient(700px at 50% 80%, #611df133, #0000 60%),
       oklch(98% 0 0);
   }
+
   .login-container-right {
     :deep(.n-card) {
       .n-card-content {
