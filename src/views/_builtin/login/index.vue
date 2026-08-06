@@ -60,10 +60,18 @@ const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
         </div>
       </NCard>
       <div class="flex-y-center position-absolute right-0 top-0 h-15 pr-12px z-9">
-        <ThemeSchemaSwitch :theme-schema="themeStore.themeScheme" :show-tooltip="false"
-          @switch="themeStore.toggleThemeScheme" />
-        <LangSwitch v-if="themeStore.header.multilingual.visible" :lang="appStore.locale"
-          :lang-options="appStore.localeOptions" :show-tooltip="false" @change-lang="appStore.changeLocale" />
+        <ThemeSchemaSwitch
+          :theme-schema="themeStore.themeScheme"
+          :show-tooltip="false"
+          @switch="themeStore.toggleThemeScheme"
+        />
+        <LangSwitch
+          v-if="themeStore.header.multilingual.visible"
+          :lang="appStore.locale"
+          :lang-options="appStore.localeOptions"
+          :show-tooltip="false"
+          @change-lang="appStore.changeLocale"
+        />
       </div>
     </div>
   </div>
