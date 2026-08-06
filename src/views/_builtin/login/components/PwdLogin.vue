@@ -202,7 +202,7 @@ async function handleCodeLoginSubmit() {
         </NDivider>
       </div>
       <div class="flex justify-between mx-auto w w-2/3 gap-12px">
-        <NButton v-for="item in expressLoginWays" :key="item.value" circle size="small">
+        <NButton v-for="item in expressLoginWays" :key="item.value" circle size="small" @click="toggleLoginModule('express-login')">
           <template #icon>
             <SvgIcon :icon="item.icon" class="text-22px cursor-pointer text-#666" />
           </template>

@@ -277,8 +277,8 @@ const local: App.I18n.Schema = {
       resetPwd: {
         title: "Reset Password"
       },
-      bindWeChat: {
-        title: "Bind WeChat"
+      expressLogin: {
+        title: "Mobile Scan Secure Login"
       }
     },
     home: {

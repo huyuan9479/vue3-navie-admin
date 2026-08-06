@@ -273,8 +273,8 @@ const local: App.I18n.Schema = {
       resetPwd: {
         title: "重置密码"
       },
-      bindWeChat: {
-        title: "绑定微信"
+      expressLogin: {
+        title: "手机扫码安全登录"
       }
     },
     home: {

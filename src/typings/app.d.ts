@@ -525,7 +525,7 @@ declare namespace App {
           resetPwd: {
             title: string;
           };
-          bindWeChat: {
+          expressLogin: {
             title: string;
           };
         };
