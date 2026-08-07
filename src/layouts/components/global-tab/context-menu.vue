@@ -41,12 +41,12 @@ const options = computed(() => {
     {
       key: "closeCurrent",
       label: $t("dropdown.closeCurrent"),
-      icon: SvgIconVNode({ icon: "ant-design:close-outlined", fontSize: 18 })
+      icon: SvgIconVNode({ icon: "mdi:close", fontSize: 18 })
     },
     {
       key: "closeOther",
       label: $t("dropdown.closeOther"),
-      icon: SvgIconVNode({ icon: "ant-design:column-width-outlined", fontSize: 18 })
+      icon: SvgIconVNode({ icon: "mdi:arrow-expand-horizontal", fontSize: 18 })
     },
     {
       key: "closeLeft",
@@ -61,7 +61,7 @@ const options = computed(() => {
     {
       key: "closeAll",
       label: $t("dropdown.closeAll"),
-      icon: SvgIconVNode({ icon: "ant-design:line-outlined", fontSize: 18 })
+      icon: SvgIconVNode({ icon: "mdi:arrow-collapse-horizontal", fontSize: 18 })
     }
   ];
 

@@ -17,25 +17,13 @@ const props = withDefaults(defineProps<Props>(), {
   zIndex: 98
 });
 
-type NumberBool = 0 | 1;
-
 const icon = computed(() => {
-  const icons: Record<NumberBool, Record<NumberBool, string>> = {
-    0: {
-      0: "ant-design:menu-fold-outlined",
-      1: "ant-design:menu-unfold-outlined"
-    },
-    1: {
-      0: "ph-caret-double-left-bold",
-      1: "ph-caret-double-right-bold"
-    }
+  const icons: Record<number, string> = {
+    0: "ant-design:menu-fold-outlined",
+    1: "ant-design:menu-unfold-outlined"
   };
-
-  const arrowIcon = Number(props.arrowIcon || false) as NumberBool;
-
-  const collapsed = Number(props.collapsed || false) as NumberBool;
-
-  return icons[arrowIcon][collapsed];
+  const collapsed = Number(props.collapsed || false);
+  return icons[collapsed];
 });
 </script>
 
