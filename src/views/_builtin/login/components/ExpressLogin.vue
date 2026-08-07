@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import QrcodeVue from 'qrcode.vue';
+import { ref } from "vue";
+import QrcodeVue from "qrcode.vue";
 
 defineOptions({
   name: "ExpressLogin"
 });
 
-const qrContent = ref('https://gitcode.com/gh_mirrors/qr/qrcode.vue');
-const backgroundColor = ref('#ffffff');
-const foregroundColor = ref('#000000');
+const qrContent = ref("https://gitcode.com/gh_mirrors/qr/qrcode.vue");
+const backgroundColor = ref("#ffffff");
+const foregroundColor = ref("#000000");
 </script>
 
 <template>
