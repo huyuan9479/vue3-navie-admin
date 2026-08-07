@@ -101,7 +101,7 @@ async function handleCodeLoginSubmit() {
             <NFormItem path="userName">
               <NInput v-model:value="model.userName" :placeholder="$t('page.login.common.userNamePlaceholder')">
                 <template #prefix>
-                  <SvgIcon icon="ant-design:user-outlined" class="text-18px color-#999" />
+                  <SvgIcon icon="material-symbols:person-outline" class="text-18px color-#999" />
                 </template>
               </NInput>
             </NFormItem>
@@ -113,7 +113,7 @@ async function handleCodeLoginSubmit() {
                 :placeholder="$t('page.login.common.passwordPlaceholder')"
               >
                 <template #prefix>
-                  <SvgIcon icon="ant-design:lock-outlined" class="text-18px color-#999" />
+                  <SvgIcon icon="material-symbols:lock-outline" class="text-18px color-#999" />
                 </template>
               </NInput>
             </NFormItem>
@@ -151,7 +151,7 @@ async function handleCodeLoginSubmit() {
             <NFormItem path="phone">
               <NInput v-model:value="codeLoginModel.phone" :placeholder="$t('page.login.common.phonePlaceholder')">
                 <template #prefix>
-                  <SvgIcon icon="ant-design:mobile-outlined" class="text-18px color-#999" />
+                  <SvgIcon icon="material-symbols:mobile-outline" class="text-18px color-#999" />
                 </template>
               </NInput>
             </NFormItem>
@@ -159,7 +159,7 @@ async function handleCodeLoginSubmit() {
               <div class="w-full flex-y-center gap-16px">
                 <NInput v-model:value="codeLoginModel.code" :placeholder="$t('page.login.common.codePlaceholder')">
                   <template #prefix>
-                    <SvgIcon icon="ant-design:mail-outlined" class="text-18px color-#999" />
+                    <SvgIcon icon="material-symbols:mail-outline" class="text-18px color-#999" />
                   </template>
                 </NInput>
                 <NButton

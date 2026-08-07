@@ -12,7 +12,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  icon: "mdi-help-circle",
+  icon: "material-symbols:help-rounded",
   localIcon: "",
   desc: "",
   placement: "top"

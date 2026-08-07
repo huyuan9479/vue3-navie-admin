@@ -10,7 +10,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const icon = computed(() => (props.pin ? "mdi-pin-off" : "mdi-pin"));
+const icon = computed(() => (props.pin ? "material-symbols:keep" : "material-symbols:keep-off"));
 </script>
 
 <template>

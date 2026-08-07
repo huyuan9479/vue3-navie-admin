@@ -211,7 +211,7 @@ onMounted(() => {
               {{ schema.label }}
               <NTooltip trigger="hover" :style="schema.labelMessageStyle">
                 <template #trigger>
-                  <icon-material-symbols:help-outline-rounded class="text-16px ml-2px" />
+                  <icon-material-symbols-help-outline class="text-16px ml-2px" />
                 </template>
                 {{ schema.labelMessage }}
               </NTooltip>
