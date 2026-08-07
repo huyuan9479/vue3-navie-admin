@@ -18,7 +18,7 @@ export const loginModuleRecord: Record<UnionKey.LoginModule, App.I18n.I18nKey> =
   "pwd-login": "page.login.pwdLogin.title",
   register: "page.login.register.title",
   "reset-pwd": "page.login.resetPwd.title",
-  "bind-wechat": "page.login.bindWeChat.title"
+  "express-login": "page.login.expressLogin.title"
 };
 
 export const themeLayoutModeRecord: Record<UnionKey.ThemeLayoutMode, App.I18n.I18nKey> = {

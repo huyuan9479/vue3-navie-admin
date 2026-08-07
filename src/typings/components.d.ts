@@ -31,6 +31,7 @@ declare module 'vue' {
     IconLocalBanner: typeof import('~icons/local/banner')['default']
     IconLocalLogo: typeof import('~icons/local/logo')['default']
     'IconMaterialSymbols:helpOutlineRounded': typeof import('~icons/material-symbols/help-outline-rounded')['default']
+    IconMaterialSymbolsHelpOutlineRounded: typeof import('~icons/material-symbols/help-outline-rounded')['default']
     IconMdiArrowDownThin: typeof import('~icons/mdi/arrow-down-thin')['default']
     IconMdiArrowUpThin: typeof import('~icons/mdi/arrow-up-thin')['default']
     IconMdiKeyboardEsc: typeof import('~icons/mdi/keyboard-esc')['default']
@@ -119,6 +120,10 @@ declare global {
   const IconLocalBanner: typeof import('~icons/local/banner')['default']
   const IconLocalLogo: typeof import('~icons/local/logo')['default']
   const 'IconMaterialSymbols:helpOutlineRounded': typeof import('~icons/material-symbols/help-outline-rounded')['default']
+<<<<<<< HEAD
+=======
+  const IconMaterialSymbolsHelpOutlineRounded: typeof import('~icons/material-symbols/help-outline-rounded')['default']
+>>>>>>> da4860fb32b29cbab4011de287316c52af27bf6e
   const IconMdiArrowDownThin: typeof import('~icons/mdi/arrow-down-thin')['default']
   const IconMdiArrowUpThin: typeof import('~icons/mdi/arrow-up-thin')['default']
   const IconMdiKeyboardEsc: typeof import('~icons/mdi/keyboard-esc')['default']

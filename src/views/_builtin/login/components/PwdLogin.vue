@@ -26,6 +26,20 @@ const model: FormModel = reactive({
   password: "123456"
 });
 
+const expressLoginWays = [
+  {
+    icon: "ant-design:wechat-filled",
+    value: "wechat"
+  },
+  {
+    icon: "ant-design:alipay-circle-outlined",
+    value: "alipay"
+  },
+  {
+    icon: "ant-design:github-outlined",
+    value: "github"
+  }
+];
 const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
   // inside computed to make locale reactive, if not apply i18n, you can define it without computed
   const { formRules } = useFormRules();
@@ -36,44 +50,11 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
   };
 });
 
-async function handleSubmit() {
+async function handlePwdLoginSubmit() {
   await validate();
   await authStore.login(model.userName, model.password);
 }
 
-// type AccountKey = "super" | "admin" | "user";
-
-// interface Account {
-//   key: AccountKey;
-//   label: string;
-//   userName: string;
-//   password: string;
-// }
-
-// const accounts = computed<Account[]>(() => [
-//   {
-//     key: "super",
-//     label: $t("page.login.pwdLogin.superAdmin"),
-//     userName: "Super",
-//     password: "123456",
-//   },
-//   {
-//     key: "admin",
-//     label: $t("page.login.pwdLogin.admin"),
-//     userName: "Admin",
-//     password: "123456",
-//   },
-//   {
-//     key: "user",
-//     label: $t("page.login.pwdLogin.user"),
-//     userName: "User",
-//     password: "123456",
-//   },
-// ]);
-
-// async function handleAccountLogin(account: Account) {
-//   await authStore.login(account.userName, account.password);
-// }
 // 短信登录
 const { label, isCounting, loading, getCaptcha } = useCaptcha();
 
@@ -115,7 +96,7 @@ async function handleCodeLoginSubmit() {
             :rules="rules"
             size="large"
             :show-label="false"
-            @keyup.enter="handleSubmit"
+            @keyup.enter="handlePwdLoginSubmit"
           >
             <NFormItem path="userName">
               <NInput v-model:value="model.userName" :placeholder="$t('page.login.common.userNamePlaceholder')">
@@ -143,7 +124,14 @@ async function handleCodeLoginSubmit() {
                   {{ $t("page.login.pwdLogin.forgetPassword") }}
                 </div>
               </div>
-              <NButton type="primary" size="large" round block :loading="authStore.loginLoading" @click="handleSubmit">
+              <NButton
+                type="primary"
+                size="large"
+                round
+                block
+                :loading="authStore.loginLoading"
+                @click="handlePwdLoginSubmit"
+              >
                 {{ $t("common.confirm") }}
               </NButton>
             </NSpace>
@@ -158,7 +146,7 @@ async function handleCodeLoginSubmit() {
             :rules="codeLoginRules"
             size="large"
             :show-label="false"
-            @keyup.enter="handleSubmit"
+            @keyup.enter="handleCodeLoginSubmit"
           >
             <NFormItem path="phone">
               <NInput v-model:value="codeLoginModel.phone" :placeholder="$t('page.login.common.phonePlaceholder')">
@@ -203,8 +191,8 @@ async function handleCodeLoginSubmit() {
         </Transition>
       </NTabPane>
     </NTabs>
-    <NSpace vertical :size="16">
-      <div class="cursor-pointer text-center mt-16px" @click="toggleLoginModule('register')">
+    <NSpace vertical :size="24">
+      <div class="cursor-pointer text-center mt-24px" @click="toggleLoginModule('register')">
         <span>{{ $t("page.login.pwdLogin.noRegister") }}</span>
         <span class="text-primary">{{ $t("page.login.pwdLogin.register") }}</span>
       </div>
@@ -214,19 +202,9 @@ async function handleCodeLoginSubmit() {
         </NDivider>
       </div>
       <div class="flex justify-between mx-auto w w-2/3 gap-12px">
-        <NButton circle size="small">
+        <NButton v-for="item in expressLoginWays" :key="item.value" circle size="small" @click="toggleLoginModule('express-login')">
           <template #icon>
-            <SvgIcon icon="ant-design:wechat-filled" class="text-22px cursor-pointer text-#666" />
-          </template>
-        </NButton>
-        <NButton circle size="small">
-          <template #icon>
-            <SvgIcon icon="ant-design:alipay-circle-outlined" class="text-22px cursor-pointer text-#666" />
-          </template>
-        </NButton>
-        <NButton circle size="small">
-          <template #icon>
-            <SvgIcon icon="ant-design:github-outlined" class="text-22px cursor-pointer text-#666" />
+            <SvgIcon :icon="item.icon" class="text-22px cursor-pointer text-#666" />
           </template>
         </NButton>
       </div>
