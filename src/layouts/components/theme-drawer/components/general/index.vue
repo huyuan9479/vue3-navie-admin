@@ -3,7 +3,7 @@ import GlobalSettings from "./components/GlobalSettings.vue";
 import WatermarkSettings from "./components/WatermarkSettings.vue";
 
 defineOptions({
-  name: "GeneralSettings",
+  name: "GeneralSettings"
 });
 </script>
 

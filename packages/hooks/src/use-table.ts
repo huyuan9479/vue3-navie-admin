@@ -10,12 +10,10 @@ export interface PaginationData<T> {
   total: number;
 }
 
-type GetApiData<ApiData, Pagination extends boolean> = Pagination extends true
-  ? PaginationData<ApiData>
-  : ApiData[];
+type GetApiData<ApiData, Pagination extends boolean> = Pagination extends true ? PaginationData<ApiData> : ApiData[];
 
 type Transform<ResponseData, ApiData, Pagination extends boolean> = (
-  response: ResponseData,
+  response: ResponseData
 ) => GetApiData<ApiData, Pagination>;
 
 export type TableColumnCheckTitle = string | ((...args: any) => VNodeChild);
@@ -66,21 +64,12 @@ export interface UseTableOptions<ResponseData, ApiData, Column, Pagination exten
 }
 
 export default function useTable<ResponseData, ApiData, Column, Pagination extends boolean>(
-  options: UseTableOptions<ResponseData, ApiData, Column, Pagination>,
+  options: UseTableOptions<ResponseData, ApiData, Column, Pagination>
 ) {
   const { loading, startLoading, endLoading } = useLoading();
   const { bool: empty, setBool: setEmpty } = useBoolean();
 
-  const {
-    api,
-    pagination,
-    transform,
-    columns,
-    getColumnChecks,
-    getColumns,
-    onFetched,
-    immediate = true,
-  } = options;
+  const { api, pagination, transform, columns, getColumnChecks, getColumns, onFetched, immediate = true } = options;
 
   const data = ref([]) as Ref<ApiData[]>;
 
@@ -89,15 +78,15 @@ export default function useTable<ResponseData, ApiData, Column, Pagination exten
   const $columns = computed(() => getColumns(columns(), columnChecks.value));
 
   function reloadColumns() {
-    const checkMap = new Map(columnChecks.value.map((col) => [col.key, col.checked]));
-    const fixedMap = new Map(columnChecks.value.map((col) => [col.key, col.fixed]));
+    const checkMap = new Map(columnChecks.value.map(col => [col.key, col.checked]));
+    const fixedMap = new Map(columnChecks.value.map(col => [col.key, col.fixed]));
 
     const defaultChecks = getColumnChecks(columns());
 
-    columnChecks.value = defaultChecks.map((col) => ({
+    columnChecks.value = defaultChecks.map(col => ({
       ...col,
       checked: checkMap.get(col.key) ?? col.checked,
-      fixed: (fixedMap.get(col.key) !== "unFixed" ? fixedMap.get(col.key) : undefined) ?? col.fixed,
+      fixed: (fixedMap.get(col.key) !== "unFixed" ? fixedMap.get(col.key) : undefined) ?? col.fixed
     }));
   }
 
@@ -130,13 +119,13 @@ export default function useTable<ResponseData, ApiData, Column, Pagination exten
     columns: $columns,
     columnChecks,
     reloadColumns,
-    getData,
+    getData
   };
 }
 
 function getTableData<ApiData, Pagination extends boolean>(
   data: GetApiData<ApiData, Pagination>,
-  pagination?: Pagination,
+  pagination?: Pagination
 ) {
   if (pagination) {
     return (data as PaginationData<ApiData>).data;

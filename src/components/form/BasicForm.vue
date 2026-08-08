@@ -45,19 +45,19 @@ const props = withDefaults(defineProps<FormProps>(), {
   // 重置按钮配置
   resetButtonOptions: (): Partial<ButtonProps> => ({
     size: "medium",
-    type: "default",
+    type: "default"
   }),
   // 查询按钮配置
   submitButtonOptions: (): Partial<ButtonProps> => ({
     size: "medium",
-    type: "primary",
+    type: "primary"
   }),
   // 折叠行数
   collapsedRows: 2,
   // 是否折叠
   collapsed: true,
   //grid 配置
-  gridProps: () => ({ cols: "1 s:1 m:2 l:3 xl:4 2xl:4" }),
+  gridProps: () => ({ cols: "1 s:1 m:2 l:3 xl:4 2xl:4" })
 });
 
 const emit = defineEmits<{
@@ -77,18 +77,18 @@ const isUpdateDefaultRef = ref(false);
 const getSubmitBtnOptions = computed((): Partial<ButtonProps> => {
   return Object.assign(
     {
-      size: props.size as unknown as ButtonProps["size"],
+      size: props.size as unknown as ButtonProps["size"]
     },
-    props.submitButtonOptions,
+    props.submitButtonOptions
   );
 });
 
 const getResetBtnOptions = computed((): Partial<ButtonProps> => {
   return Object.assign(
     {
-      size: props.size as unknown as ButtonProps["size"],
+      size: props.size as unknown as ButtonProps["size"]
     },
-    props.resetButtonOptions,
+    props.resetButtonOptions
   );
 });
 
@@ -98,14 +98,14 @@ function getComponentProps(schema: FormSchema) {
   return {
     clearable: true,
     placeholder: createPlaceholderMessage(unref(component) as ComponentType),
-    ...compProps,
+    ...compProps
   };
 }
 
 const getProps = computed((): FormProps => {
   const formProps = { ...props, ...unref(propsRef) } as FormProps;
   const rulesObj: any = {
-    rules: {},
+    rules: {}
   };
   const schemas: any = formProps.schemas || [];
   schemas.forEach((item: FormSchema) => {
@@ -127,7 +127,7 @@ const getGrid = computed((): GridProps => {
     ...gridProps,
     collapsed: isInline.value ? gridCollapsed.value : false,
     responsive: "screen",
-    collapsedRows: props.collapsedRows,
+    collapsedRows: props.collapsedRows
   };
 });
 
@@ -149,20 +149,19 @@ const getSchema = computed((): FormSchema[] => {
 const { handleFormValues, initDefault } = useFormValues({
   defaultFormModel,
   getSchema,
-  formModel,
+  formModel
 });
 
-const { handleSubmit, validate, resetFields, getFieldsValue, clearValidate, setFieldsValue } =
-  useFormEvents({
-    emit: emit as (event: string, ...args: any[]) => void,
-    getProps,
-    formModel,
-    getSchema,
-    formElRef: formElRef as Ref<FormActionType>,
-    defaultFormModel,
-    loadingSub,
-    handleFormValues,
-  });
+const { handleSubmit, validate, resetFields, getFieldsValue, clearValidate, setFieldsValue } = useFormEvents({
+  emit: emit as (event: string, ...args: any[]) => void,
+  getProps,
+  formModel,
+  getSchema,
+  formElRef: formElRef as Ref<FormActionType>,
+  defaultFormModel,
+  loadingSub,
+  handleFormValues
+});
 
 function unfoldToggle() {
   gridCollapsed.value = !gridCollapsed.value;
@@ -179,12 +178,12 @@ const formActionType: Partial<FormActionType> = {
   validate,
   clearValidate,
   setProps,
-  submit: handleSubmit,
+  submit: handleSubmit
 };
 
 watch(
   () => getSchema.value,
-  (schema) => {
+  schema => {
     if (unref(isUpdateDefaultRef)) {
       return;
     }
@@ -192,7 +191,7 @@ watch(
       initDefault();
       isUpdateDefaultRef.value = true;
     }
-  },
+  }
 );
 
 onMounted(() => {
@@ -221,12 +220,7 @@ onMounted(() => {
 
           <!--判断插槽-->
           <template v-if="schema.slot">
-            <slot
-              :name="schema.slot"
-              :model="formModel"
-              :field="schema.field"
-              :value="formModel[schema.field]"
-            ></slot>
+            <slot :name="schema.slot" :model="formModel" :field="schema.field" :value="formModel[schema.field]"></slot>
           </template>
 
           <!--NCheckbox-->
@@ -247,11 +241,7 @@ onMounted(() => {
           <template v-else-if="schema.component === 'NRadioGroup'">
             <NRadioGroup v-model:value="formModel[schema.field]">
               <NSpace>
-                <NRadio
-                  v-for="item in schema.componentProps.options"
-                  :key="item.value"
-                  :value="item.value"
-                >
+                <NRadio v-for="item in schema.componentProps.options" :key="item.value" :value="item.value">
                   {{ item.label }}
                 </NRadio>
               </NSpace>

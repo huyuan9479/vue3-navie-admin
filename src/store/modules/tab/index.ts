@@ -20,7 +20,7 @@ import {
   isTabInTabs,
   reorderFixedTabs,
   updateTabByI18nKey,
-  updateTabsByI18nKey,
+  updateTabsByI18nKey
 } from "./shared";
 
 export const useTabStore = defineStore(SetupStoreId.Tab, () => {
@@ -96,15 +96,14 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param tabId Tab id
    */
   async function removeTab(tabId: string) {
-    const removeTabIndex = tabs.value.findIndex((tab) => tab.id === tabId);
+    const removeTabIndex = tabs.value.findIndex(tab => tab.id === tabId);
     if (removeTabIndex === -1) return;
 
     const removedTabRouteKey = tabs.value[removeTabIndex].routeKey;
     const isRemoveActiveTab = activeTabId.value === tabId;
 
     // if remove the last tab, then switch to the second last tab
-    const nextTab =
-      tabs.value[removeTabIndex + 1] || tabs.value[removeTabIndex - 1] || homeTab.value;
+    const nextTab = tabs.value[removeTabIndex + 1] || tabs.value[removeTabIndex - 1] || homeTab.value;
 
     // remove tab
     tabs.value.splice(removeTabIndex, 1);
@@ -144,14 +143,14 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     const remainTabIds = [...getFixedTabIds(tabs.value), ...excludes];
 
     // Identify tabs to be removed and collect their routeKeys if strategy is 'close'
-    const tabsToRemove = tabs.value.filter((tab) => !remainTabIds.includes(tab.id));
+    const tabsToRemove = tabs.value.filter(tab => !remainTabIds.includes(tab.id));
     const routeKeysToReset: RouteKey[] = [];
 
     for (const tab of tabsToRemove) {
       routeKeysToReset.push(tab.routeKey);
     }
 
-    const removedTabsIds = tabsToRemove.map((tab) => tab.id);
+    const removedTabsIds = tabsToRemove.map(tab => tab.id);
 
     // If no tabs are actually being removed based on excludes and fixed tabs, exit
     if (removedTabsIds.length === 0) {
@@ -222,7 +221,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param tabId
    */
   async function clearLeftTabs(tabId: string) {
-    const tabIds = tabs.value.map((tab) => tab.id);
+    const tabIds = tabs.value.map(tab => tab.id);
     const index = tabIds.indexOf(tabId);
     if (index === -1) return;
 
@@ -242,7 +241,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
       return;
     }
 
-    const tabIds = tabs.value.map((tab) => tab.id);
+    const tabIds = tabs.value.map(tab => tab.id);
     const index = tabIds.indexOf(tabId);
     if (index === -1) return;
 
@@ -256,7 +255,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param tabId
    */
   function fixTab(tabId: string) {
-    const tabIndex = tabs.value.findIndex((t) => t.id === tabId);
+    const tabIndex = tabs.value.findIndex(t => t.id === tabId);
     if (tabIndex === -1) return;
 
     const tab = tabs.value[tabIndex];
@@ -277,7 +276,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param tabId
    */
   function unfixTab(tabId: string) {
-    const tabIndex = tabs.value.findIndex((t) => t.id === tabId);
+    const tabIndex = tabs.value.findIndex(t => t.id === tabId);
     if (tabIndex === -1) return;
 
     const tab = tabs.value[tabIndex];
@@ -302,7 +301,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   function setTabLabel(label: string, tabId?: string) {
     const id = tabId || activeTabId.value;
 
-    const tab = tabs.value.find((item) => item.id === id);
+    const tab = tabs.value.find(item => item.id === id);
     if (!tab) return;
 
     tab.oldLabel = tab.label;
@@ -318,7 +317,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   function resetTabLabel(tabId?: string) {
     const id = tabId || activeTabId.value;
 
-    const tab = tabs.value.find((item) => item.id === id);
+    const tab = tabs.value.find(item => item.id === id);
     if (!tab) return;
 
     tab.newLabel = undefined;
@@ -381,6 +380,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     isTabRetain,
     updateTabsByLocale,
     getTabIdByRoute,
-    cacheTabs,
+    cacheTabs
   };
 });

@@ -14,7 +14,7 @@ import FirstLevelMenu from "../components/FirstLevelMenu.vue";
 import GlobalLogo from "../../global-logo/index.vue";
 
 defineOptions({
-  name: "VerticalHybridHeaderFirst",
+  name: "VerticalHybridHeaderFirst"
 });
 
 const route = useRoute();
@@ -35,15 +35,13 @@ const {
   getActiveSecondLevelMenuKey,
   childLevelMenus,
   hasChildLevelMenus,
-  activeDeepestLevelMenuKey,
+  activeDeepestLevelMenuKey
 } = useMixMenuContext("VerticalHybridHeaderFirst");
 const { selectedKey } = useMenu();
 
 const inverted = computed(() => !themeStore.darkMode && themeStore.sider.inverted);
 
-const showDrawer = computed(
-  () => hasChildLevelMenus.value && (drawerVisible.value || appStore.mixSiderFixed),
-);
+const showDrawer = computed(() => hasChildLevelMenus.value && (drawerVisible.value || appStore.mixSiderFixed));
 
 function handleSelectMixMenu(key: RouteKey) {
   handleSelectSecondLevelMenu(key);
@@ -68,8 +66,7 @@ function handleSelectMenu(key: RouteKey) {
   // Case 1: autoSelectFirstMenu disabled - only activate menu for display
   if (!themeStore.sider.autoSelectFirstMenu) {
     // Check if there are third-level menus
-    const hasChildren = secondLevelMenus.value.find((menu) => menu.key === secondFirstMenuKey)
-      ?.children?.length;
+    const hasChildren = secondLevelMenus.value.find(menu => menu.key === secondFirstMenuKey)?.children?.length;
 
     // If there are third-level menus, expand them
     if (hasChildren) {
@@ -107,7 +104,7 @@ watch(
   () => {
     updateExpandedKeys();
   },
-  { immediate: true },
+  { immediate: true }
 );
 </script>
 
@@ -139,10 +136,7 @@ watch(
       <div
         class="relative h-full transition-width-300"
         :style="{
-          width:
-            appStore.mixSiderFixed && hasChildLevelMenus
-              ? themeStore.sider.mixChildMenuWidth + 'px'
-              : '0px',
+          width: appStore.mixSiderFixed && hasChildLevelMenus ? themeStore.sider.mixChildMenuWidth + 'px' : '0px'
         }"
       >
         <DarkModeContainer
@@ -150,10 +144,7 @@ watch(
           :inverted="inverted"
           :style="{ width: showDrawer ? themeStore.sider.mixChildMenuWidth + 'px' : '0px' }"
         >
-          <header
-            class="flex-y-center justify-between px-12px"
-            :style="{ height: themeStore.header.height + 'px' }"
-          >
+          <header class="flex-y-center justify-between px-12px" :style="{ height: themeStore.header.height + 'px' }">
             <h2 class="text-16px text-primary font-bold">{{ $t("system.title") }}</h2>
             <PinToggler
               :pin="appStore.mixSiderFixed"

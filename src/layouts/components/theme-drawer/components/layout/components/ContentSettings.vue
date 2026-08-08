@@ -7,7 +7,7 @@ import { $t } from "@/locales";
 import SettingItem from "../../../components/SettingItem.vue";
 
 defineOptions({
-  name: "ContentSettings",
+  name: "ContentSettings"
 });
 
 const themeStore = useThemeStore();
@@ -32,11 +32,7 @@ const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === "wra
     <SettingItem key="2" :label="$t('theme.layout.content.page.animate')">
       <NSwitch v-model:value="themeStore.page.animate" />
     </SettingItem>
-    <SettingItem
-      v-if="themeStore.page.animate"
-      key="3"
-      :label="$t('theme.layout.content.page.mode.title')"
-    >
+    <SettingItem v-if="themeStore.page.animate" key="3" :label="$t('theme.layout.content.page.mode.title')">
       <NSelect
         v-model:value="themeStore.page.animateMode"
         :options="translateOptions(themePageAnimationModeOptions)"
@@ -44,11 +40,7 @@ const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === "wra
         class="w-120px"
       />
     </SettingItem>
-    <SettingItem
-      v-if="isWrapperScrollMode"
-      key="4"
-      :label="$t('theme.layout.content.fixedHeaderAndTab')"
-    >
+    <SettingItem v-if="isWrapperScrollMode" key="4" :label="$t('theme.layout.content.fixedHeaderAndTab')">
       <NSwitch v-model:value="themeStore.fixedHeaderAndTab" />
     </SettingItem>
   </TransitionGroup>

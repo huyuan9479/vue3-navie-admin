@@ -3,7 +3,7 @@ import { ref } from "vue";
 import QrcodeVue from "qrcode.vue";
 
 defineOptions({
-  name: "ExpressLogin",
+  name: "ExpressLogin"
 });
 
 const qrContent = ref("https://gitcode.com/gh_mirrors/qr/qrcode.vue");

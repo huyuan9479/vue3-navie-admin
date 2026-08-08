@@ -25,7 +25,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     userId: "",
     userName: "",
     roles: [],
-    buttons: [],
+    buttons: []
   });
 
   /** is super role in static route */
@@ -118,7 +118,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
         window.$notification?.success({
           title: $t("page.login.common.loginSuccess"),
           content: $t("page.login.common.welcomeBack", { userName: userInfo.userName }),
-          duration: 4500,
+          duration: 4500
         });
       }
     } else {
@@ -179,6 +179,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     loginLoading,
     resetStore,
     login,
-    initUserInfo,
+    initUserInfo
   };
 });

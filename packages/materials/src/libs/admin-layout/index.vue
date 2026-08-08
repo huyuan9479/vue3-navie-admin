@@ -5,7 +5,7 @@ import { LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID, createLayoutCssVars } from "./
 import style from "./index.module.css";
 
 defineOptions({
-  name: "AdminLayout",
+  name: "AdminLayout"
 });
 
 const props = withDefaults(defineProps<AdminLayoutProps>(), {
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<AdminLayoutProps>(), {
   siderCollapsedWidth: 64,
   footerVisible: true,
   footerHeight: 48,
-  rightFooter: false,
+  rightFooter: false
 });
 
 interface Emits {
@@ -58,9 +58,7 @@ const cssVars = computed(() => createLayoutCssVars(props));
 const showHeader = computed(() => Boolean(slots.header) && props.headerVisible);
 const showTab = computed(() => Boolean(slots.tab) && props.tabVisible);
 const showSider = computed(() => !props.isMobile && Boolean(slots.sider) && props.siderVisible);
-const showMobileSider = computed(
-  () => props.isMobile && Boolean(slots.sider) && props.siderVisible,
-);
+const showMobileSider = computed(() => props.isMobile && Boolean(slots.sider) && props.siderVisible);
 const showFooter = computed(() => Boolean(slots.footer) && props.footerVisible);
 
 // scroll mode
@@ -71,9 +69,7 @@ const isContentScroll = computed(() => props.scrollMode === "content");
 const isVertical = computed(() => props.mode === "vertical");
 const isHorizontal = computed(() => props.mode === "horizontal");
 
-const fixedHeaderAndTab = computed(
-  () => props.fixedTop || (isHorizontal.value && isWrapperScroll.value),
-);
+const fixedHeaderAndTab = computed(() => props.fixedTop || (isHorizontal.value && isWrapperScroll.value));
 
 // css
 const leftGapClass = computed(() => {
@@ -132,7 +128,7 @@ function handleClickMask() {
             style['layout-header'],
             commonClass,
             headerLeftGapClass,
-            { 'absolute top-0 left-0 w-full': fixedHeaderAndTab },
+            { 'absolute top-0 left-0 w-full': fixedHeaderAndTab }
           ]"
         >
           <slot name="header"></slot>
@@ -154,7 +150,7 @@ function handleClickMask() {
             tabClass,
             { 'top-0!': fullContent || !showHeader },
             leftGapClass,
-            { 'absolute left-0 w-full': fixedHeaderAndTab },
+            { 'absolute left-0 w-full': fixedHeaderAndTab }
           ]"
         >
           <slot name="tab"></slot>
@@ -175,7 +171,7 @@ function handleClickMask() {
             commonClass,
             siderClass,
             siderPaddingClass,
-            siderCollapse ? style['layout-sider_collapsed'] : style['layout-sider'],
+            siderCollapse ? style['layout-sider_collapsed'] : style['layout-sider']
           ]"
         >
           <slot name="sider"></slot>
@@ -190,7 +186,7 @@ function handleClickMask() {
             commonClass,
             mobileSiderClass,
             style['layout-mobile-sider'],
-            siderCollapse ? 'w-0 overflow-hidden' : style['layout-sider'],
+            siderCollapse ? 'w-0 overflow-hidden' : style['layout-sider']
           ]"
         >
           <slot name="sider"></slot>
@@ -222,7 +218,7 @@ function handleClickMask() {
             commonClass,
             footerClass,
             footerLeftGapClass,
-            { 'absolute left-0 bottom-0 w-full': fixedFooter },
+            { 'absolute left-0 bottom-0 w-full': fixedFooter }
           ]"
         >
           <slot name="footer"></slot>

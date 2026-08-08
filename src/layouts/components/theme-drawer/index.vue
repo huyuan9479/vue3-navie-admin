@@ -9,7 +9,7 @@ import ConfigOperation from "./components/ConfigOperation.vue";
 import PresetSettings from "./components/preset/index.vue";
 
 defineOptions({
-  name: "ThemeDrawer",
+  name: "ThemeDrawer"
 });
 
 const appStore = useAppStore();

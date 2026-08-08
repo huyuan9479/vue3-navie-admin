@@ -9,7 +9,7 @@ export const GLOBAL_TAB_WHEEL_SPEED_RATIO = 0.3;
 
 export const themeSchemaRecord: Record<UnionKey.ThemeScheme, App.I18n.I18nKey> = {
   light: "theme.appearance.themeSchema.light",
-  dark: "theme.appearance.themeSchema.dark",
+  dark: "theme.appearance.themeSchema.dark"
 };
 
 export const themeSchemaOptions = transformRecordToOption(themeSchemaRecord);
@@ -18,7 +18,7 @@ export const loginModuleRecord: Record<UnionKey.LoginModule, App.I18n.I18nKey> =
   "pwd-login": "page.login.pwdLogin.title",
   register: "page.login.register.title",
   "reset-pwd": "page.login.resetPwd.title",
-  "express-login": "page.login.expressLogin.title",
+  "express-login": "page.login.expressLogin.title"
 };
 
 export const themeLayoutModeRecord: Record<UnionKey.ThemeLayoutMode, App.I18n.I18nKey> = {
@@ -27,14 +27,14 @@ export const themeLayoutModeRecord: Record<UnionKey.ThemeLayoutMode, App.I18n.I1
   "vertical-hybrid-header-first": "theme.layout.layoutMode.vertical-hybrid-header-first",
   horizontal: "theme.layout.layoutMode.horizontal",
   "top-hybrid-sidebar-first": "theme.layout.layoutMode.top-hybrid-sidebar-first",
-  "top-hybrid-header-first": "theme.layout.layoutMode.top-hybrid-header-first",
+  "top-hybrid-header-first": "theme.layout.layoutMode.top-hybrid-header-first"
 };
 
 export const themeLayoutModeOptions = transformRecordToOption(themeLayoutModeRecord);
 
 export const themeScrollModeRecord: Record<UnionKey.ThemeScrollMode, App.I18n.I18nKey> = {
   wrapper: "theme.layout.content.scrollMode.wrapper",
-  content: "theme.layout.content.scrollMode.content",
+  content: "theme.layout.content.scrollMode.content"
 };
 
 export const themeScrollModeOptions = transformRecordToOption(themeScrollModeRecord);
@@ -42,21 +42,20 @@ export const themeScrollModeOptions = transformRecordToOption(themeScrollModeRec
 export const themeTabModeRecord: Record<UnionKey.ThemeTabMode, App.I18n.I18nKey> = {
   chrome: "theme.layout.tab.mode.chrome",
   button: "theme.layout.tab.mode.button",
-  slider: "theme.layout.tab.mode.slider",
+  slider: "theme.layout.tab.mode.slider"
 };
 
 export const themeTabModeOptions = transformRecordToOption(themeTabModeRecord);
 
-export const themePageAnimationModeRecord: Record<UnionKey.ThemePageAnimateMode, App.I18n.I18nKey> =
-  {
-    "fade-slide": "theme.layout.content.page.mode.fade-slide",
-    fade: "theme.layout.content.page.mode.fade",
-    "fade-bottom": "theme.layout.content.page.mode.fade-bottom",
-    "fade-scale": "theme.layout.content.page.mode.fade-scale",
-    "zoom-fade": "theme.layout.content.page.mode.zoom-fade",
-    "zoom-out": "theme.layout.content.page.mode.zoom-out",
-    none: "theme.layout.content.page.mode.none",
-  };
+export const themePageAnimationModeRecord: Record<UnionKey.ThemePageAnimateMode, App.I18n.I18nKey> = {
+  "fade-slide": "theme.layout.content.page.mode.fade-slide",
+  fade: "theme.layout.content.page.mode.fade",
+  "fade-bottom": "theme.layout.content.page.mode.fade-bottom",
+  "fade-scale": "theme.layout.content.page.mode.fade-scale",
+  "zoom-fade": "theme.layout.content.page.mode.zoom-fade",
+  "zoom-out": "theme.layout.content.page.mode.zoom-out",
+  none: "theme.layout.content.page.mode.none"
+};
 
 export const themePageAnimationModeOptions = transformRecordToOption(themePageAnimationModeRecord);
 
@@ -69,5 +68,5 @@ export const watermarkTimeFormatOptions = [
   { label: "YYYY/MM/DD HH:mm:ss", value: "YYYY/MM/DD HH:mm:ss" },
   { label: "HH:mm", value: "HH:mm" },
   { label: "HH:mm:ss", value: "HH:mm:ss" },
-  { label: "MM-DD HH:mm", value: "MM-DD HH:mm" },
+  { label: "MM-DD HH:mm", value: "MM-DD HH:mm" }
 ];

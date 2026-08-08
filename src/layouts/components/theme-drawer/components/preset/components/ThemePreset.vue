@@ -6,7 +6,7 @@ import { themeSettings } from "@/theme/settings";
 import { $t } from "@/locales";
 
 defineOptions({
-  name: "ThemePreset",
+  name: "ThemePreset"
 });
 
 type ThemePreset = Pick<
@@ -48,14 +48,14 @@ const presets = computed(() =>
       const fileName = path.split("/").pop()?.replace(".json", "") || "";
       return {
         id: fileName,
-        ...(presetData as ThemePreset),
+        ...(presetData as ThemePreset)
       };
     })
     .sort((a, b) => {
       if (a.name === "default") return -1;
       if (b.name === "default") return 1;
       return a.name.localeCompare(b.name);
-    }),
+    })
 );
 
 const getPresetName = (preset: ThemePreset): string => {
@@ -82,8 +82,7 @@ const getPresetDesc = (preset: ThemePreset): string => {
 
 const applyPreset = (preset: ThemePreset): void => {
   const mergedPreset = defu(preset, themeSettings);
-  const { themeScheme, grayscale, colourWeakness, layout, watermark, naiveui, ...rest } =
-    mergedPreset;
+  const { themeScheme, grayscale, colourWeakness, layout, watermark, naiveui, ...rest } = mergedPreset;
   themeStore.setThemeScheme(themeScheme);
   themeStore.setGrayscale(grayscale);
   themeStore.setColourWeakness(colourWeakness);
@@ -100,7 +99,7 @@ const applyPreset = (preset: ThemePreset): void => {
     sider: { ...rest.sider },
     footer: { ...rest.footer },
     watermark: { ...watermark },
-    tokens: { ...rest.tokens },
+    tokens: { ...rest.tokens }
   });
 
   // Apply NaiveUI theme overrides if present
@@ -124,21 +123,9 @@ const applyPreset = (preset: ThemePreset): void => {
           <h5 class="m-0 truncate text-sm text-primary font-600">
             {{ getPresetName(preset) }}
           </h5>
-          <NBadge
-            :value="`v${preset.version}`"
-            type="info"
-            size="small"
-            class="flex-shrink-0 opacity-80"
-          />
+          <NBadge :value="`v${preset.version}`" type="info" size="small" class="flex-shrink-0 opacity-80" />
         </div>
-        <NButton
-          type="primary"
-          size="tiny"
-          ghost
-          round
-          class="ml-2 flex-shrink-0"
-          @click="applyPreset(preset)"
-        >
+        <NButton type="primary" size="tiny" ghost round class="ml-2 flex-shrink-0" @click="applyPreset(preset)">
           {{ $t("theme.appearance.preset.apply") }}
         </NButton>
       </div>

@@ -19,12 +19,7 @@ export function useFormValues({ defaultFormModel, getSchema, formModel }: UseFor
     for (const item of Object.entries(values)) {
       let [, value] = item;
       const [key] = item;
-      if (
-        !key ||
-        (isArray(value) && value.length === 0) ||
-        isFunction(value) ||
-        isNullOrUnDef(value)
-      ) {
+      if (!key || (isArray(value) && value.length === 0) || isFunction(value) || isNullOrUnDef(value)) {
         continue;
       }
       // 删除空格
@@ -40,7 +35,7 @@ export function useFormValues({ defaultFormModel, getSchema, formModel }: UseFor
   function initDefault() {
     const schemas = unref(getSchema);
     const obj: Recordable = {};
-    schemas.forEach((item) => {
+    schemas.forEach(item => {
       const { defaultValue } = item;
       if (!isNullOrUnDef(defaultValue)) {
         obj[item.field] = defaultValue;

@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
   icon: "material-symbols:help-rounded",
   localIcon: "",
   desc: "",
-  placement: "top",
+  placement: "top"
 });
 
 const slots = useSlots();

@@ -9,9 +9,9 @@ import { useRouterPush } from "@/hooks/common/router";
 export const [provideMixMenuContext, useMixMenuContext] = useContext(
   {
     name: "MixMenu",
-    key: Symbol.for("MixMenu"),
+    key: Symbol.for("MixMenu")
   },
-  useMixMenu,
+  useMixMenu
 );
 
 function useMixMenu() {
@@ -24,11 +24,11 @@ function useMixMenu() {
   const allMenus = computed<App.Global.Menu[]>(() => routeStore.menus);
 
   const firstLevelMenus = computed<App.Global.Menu[]>(() =>
-    routeStore.menus.map((menu) => {
+    routeStore.menus.map(menu => {
       const { children: _, ...rest } = menu;
 
       return rest;
-    }),
+    })
   );
 
   const activeFirstLevelMenuKey = ref("");
@@ -48,7 +48,7 @@ function useMixMenu() {
       return false;
     }
 
-    const findItem = allMenus.value.find((item) => item.key === activeFirstLevelMenuKey.value);
+    const findItem = allMenus.value.find(item => item.key === activeFirstLevelMenuKey.value);
 
     return Boolean(findItem?.children?.length);
   });
@@ -62,7 +62,7 @@ function useMixMenu() {
   }
 
   const secondLevelMenus = computed<App.Global.Menu[]>(
-    () => allMenus.value.find((menu) => menu.key === activeFirstLevelMenuKey.value)?.children || [],
+    () => allMenus.value.find(menu => menu.key === activeFirstLevelMenuKey.value)?.children || []
   );
 
   const activeSecondLevelMenuKey = ref("");
@@ -91,9 +91,7 @@ function useMixMenu() {
       return false;
     }
 
-    const findItem = secondLevelMenus.value.find(
-      (item) => item.key === activeSecondLevelMenuKey.value,
-    );
+    const findItem = secondLevelMenus.value.find(item => item.key === activeSecondLevelMenuKey.value);
 
     return Boolean(findItem?.children?.length);
   });
@@ -107,9 +105,7 @@ function useMixMenu() {
   }
 
   const childLevelMenus = computed<App.Global.Menu[]>(
-    () =>
-      secondLevelMenus.value.find((menu) => menu.key === activeSecondLevelMenuKey.value)
-        ?.children || [],
+    () => secondLevelMenus.value.find(menu => menu.key === activeSecondLevelMenuKey.value)?.children || []
   );
 
   const hasChildLevelMenus = computed(() => childLevelMenus.value.length > 0);
@@ -153,7 +149,7 @@ function useMixMenu() {
         getActiveSecondLevelMenuKey();
       }
     },
-    { immediate: true },
+    { immediate: true }
   );
 
   return {
@@ -172,7 +168,7 @@ function useMixMenu() {
     childLevelMenus,
     hasChildLevelMenus,
     getDeepestLevelMenuKey,
-    activeDeepestLevelMenuKey,
+    activeDeepestLevelMenuKey
   };
 }
 
@@ -189,6 +185,6 @@ export function useMenu() {
   });
 
   return {
-    selectedKey,
+    selectedKey
   };
 }

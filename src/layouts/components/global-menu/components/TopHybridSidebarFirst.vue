@@ -8,7 +8,7 @@ import FirstLevelMenu from "../components/FirstLevelMenu.vue";
 import { useMenu, useMixMenuContext } from "../context/index.js";
 
 defineOptions({
-  name: "TopHybridSidebarFirst",
+  name: "TopHybridSidebarFirst"
 });
 
 const appStore = useAppStore();
@@ -19,7 +19,7 @@ const {
   secondLevelMenus,
   activeFirstLevelMenuKey,
   handleSelectFirstLevelMenu,
-  activeDeepestLevelMenuKey,
+  activeDeepestLevelMenuKey
 } = useMixMenuContext("TopHybridSidebarFirst");
 const { selectedKey } = useMenu();
 

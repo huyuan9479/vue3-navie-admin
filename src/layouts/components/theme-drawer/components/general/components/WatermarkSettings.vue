@@ -6,16 +6,13 @@ import { $t } from "@/locales";
 import SettingItem from "../../../components/SettingItem.vue";
 
 defineOptions({
-  name: "WatermarkSettings",
+  name: "WatermarkSettings"
 });
 
 const themeStore = useThemeStore();
 
 const isWatermarkTextVisible = computed(
-  () =>
-    themeStore.watermark.visible &&
-    !themeStore.watermark.enableUserName &&
-    !themeStore.watermark.enableTime,
+  () => themeStore.watermark.visible && !themeStore.watermark.enableUserName && !themeStore.watermark.enableTime
 );
 </script>
 
@@ -25,25 +22,11 @@ const isWatermarkTextVisible = computed(
     <SettingItem key="1" :label="$t('theme.general.watermark.visible')">
       <NSwitch v-model:value="themeStore.watermark.visible" />
     </SettingItem>
-    <SettingItem
-      v-if="themeStore.watermark.visible"
-      key="2"
-      :label="$t('theme.general.watermark.enableUserName')"
-    >
-      <NSwitch
-        :value="themeStore.watermark.enableUserName"
-        @update:value="themeStore.setWatermarkEnableUserName"
-      />
+    <SettingItem v-if="themeStore.watermark.visible" key="2" :label="$t('theme.general.watermark.enableUserName')">
+      <NSwitch :value="themeStore.watermark.enableUserName" @update:value="themeStore.setWatermarkEnableUserName" />
     </SettingItem>
-    <SettingItem
-      v-if="themeStore.watermark.visible"
-      key="3"
-      :label="$t('theme.general.watermark.enableTime')"
-    >
-      <NSwitch
-        :value="themeStore.watermark.enableTime"
-        @update:value="themeStore.setWatermarkEnableTime"
-      />
+    <SettingItem v-if="themeStore.watermark.visible" key="3" :label="$t('theme.general.watermark.enableTime')">
+      <NSwitch :value="themeStore.watermark.enableTime" @update:value="themeStore.setWatermarkEnableTime" />
     </SettingItem>
     <SettingItem
       v-if="themeStore.watermark.visible && themeStore.watermark.enableTime"

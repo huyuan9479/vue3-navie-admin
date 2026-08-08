@@ -1,9 +1,4 @@
-import type {
-  LocationQueryRaw,
-  RouteLocationNormalized,
-  RouteLocationRaw,
-  Router,
-} from "vue-router";
+import type { LocationQueryRaw, RouteLocationNormalized, RouteLocationRaw, Router } from "vue-router";
 import type { RouteKey, RoutePath } from "@elegant-router/types";
 import { useAuthStore } from "@/store/modules/auth";
 import { useRouteStore } from "@/store/modules/route";
@@ -33,7 +28,7 @@ export function createRouteGuard(router: Router) {
     const needLogin = !to.meta.constant;
     const routeRoles = to.meta.roles || [];
 
-    const hasRole = authStore.userInfo.roles.some((role) => routeRoles.includes(role));
+    const hasRole = authStore.userInfo.roles.some(role => routeRoles.includes(role));
     const hasAuth = authStore.isStaticSuper || !routeRoles.length || hasRole;
 
     // if it is login route when logged in, then switch to the root page
@@ -83,7 +78,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
       path,
       replace: true,
       query: to.query,
-      hash: to.hash,
+      hash: to.hash
     };
 
     return location;
@@ -105,7 +100,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
 
     const location: RouteLocationRaw = {
       name: loginRoute,
-      query,
+      query
     };
 
     return location;
@@ -125,7 +120,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
         path,
         replace: true,
         query: to.query,
-        hash: to.hash,
+        hash: to.hash
       };
 
       return location;
@@ -146,7 +141,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
 
   if (exist) {
     const location: RouteLocationRaw = {
-      name: noPermissionRoute,
+      name: noPermissionRoute
     };
 
     return location;

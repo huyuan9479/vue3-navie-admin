@@ -5,8 +5,8 @@ import { themeVars } from "./src/theme/vars";
 export default defineConfig({
   content: {
     pipeline: {
-      exclude: ["node_modules", "dist"],
-    },
+      exclude: ["node_modules", "dist"]
+    }
   },
   theme: {
     ...themeVars,
@@ -15,12 +15,12 @@ export default defineConfig({
       "icon-small": "1rem",
       icon: "1.125rem",
       "icon-large": "1.5rem",
-      "icon-xl": "2rem",
-    },
+      "icon-xl": "2rem"
+    }
   },
   shortcuts: {
-    "card-wrapper": "rd-8px shadow-sm",
+    "card-wrapper": "rd-8px shadow-sm"
   },
   transformers: [transformerDirectives(), transformerVariantGroup()],
-  presets: [presetWind3({ dark: "class" }), presetAdmin()],
+  presets: [presetWind3({ dark: "class" }), presetAdmin()]
 });

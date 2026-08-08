@@ -8,7 +8,7 @@ import FooterSettings from "./components/FooterSettings.vue";
 import ContentSettings from "./components/ContentSettings.vue";
 
 defineOptions({
-  name: "LayoutSettings",
+  name: "LayoutSettings"
 });
 
 const themeStore = useThemeStore();

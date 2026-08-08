@@ -1,10 +1,4 @@
-import type {
-  AlovaGenerics,
-  AlovaOptions,
-  AlovaRequestAdapter,
-  Method,
-  ResponseCompleteHandler,
-} from "alova";
+import type { AlovaGenerics, AlovaOptions, AlovaRequestAdapter, Method, ResponseCompleteHandler } from "alova";
 
 export type CustomAlovaConfig<AG extends AlovaGenerics> = Omit<
   AlovaOptions<AG>,
@@ -48,11 +42,7 @@ export interface RequestOptions<AG extends AlovaGenerics> {
    *
    * @param error
    */
-  onError?: (
-    error: any,
-    response: AG["Response"] | null,
-    methodInstance: Method<AG>,
-  ) => any | Promise<any>;
+  onError?: (error: any, response: AG["Response"] | null, methodInstance: Method<AG>) => any | Promise<any>;
   /**
    * transform backend response when the responseType is json
    *
