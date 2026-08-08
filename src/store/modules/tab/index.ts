@@ -1,13 +1,13 @@
-import { computed, ref } from "vue";
-import { useEventListener } from "@vueuse/core";
-import { defineStore } from "pinia";
-import type { RouteKey } from "@elegant-router/types";
-import { router } from "@/router";
-import { useRouteStore } from "@/store/modules/route";
-import { useRouterPush } from "@/hooks/common/router";
-import { localStg } from "@/utils/storage";
-import { SetupStoreId } from "@/enum";
-import { useThemeStore } from "../theme";
+import { computed, ref } from 'vue';
+import { useEventListener } from '@vueuse/core';
+import { defineStore } from 'pinia';
+import type { RouteKey } from '@elegant-router/types';
+import { router } from '@/router';
+import { useRouteStore } from '@/store/modules/route';
+import { useRouterPush } from '@/hooks/common/router';
+import { localStg } from '@/utils/storage';
+import { SetupStoreId } from '@/enum';
+import { useThemeStore } from '../theme';
 import {
   extractTabsByAllRoutes,
   filterTabsByIds,
@@ -21,7 +21,7 @@ import {
   reorderFixedTabs,
   updateTabByI18nKey,
   updateTabsByI18nKey
-} from "./shared";
+} from './shared';
 
 export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   const routeStore = useRouteStore();
@@ -43,7 +43,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   const allTabs = computed(() => getAllTabs(tabs.value, homeTab.value));
 
   /** Active tab id */
-  const activeTabId = ref<string>("");
+  const activeTabId = ref<string>('');
 
   /**
    * Set active tab id
@@ -60,7 +60,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param currentRoute Current route
    */
   function initTabStore(currentRoute: App.Global.TabRoute) {
-    const storageTabs = localStg.get("globalTabs");
+    const storageTabs = localStg.get('globalTabs');
 
     if (themeStore.tab.cache && storageTabs) {
       const extractedTabs = extractTabsByAllRoutes(router, storageTabs);
@@ -349,11 +349,11 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   function cacheTabs() {
     if (!themeStore.tab.cache) return;
 
-    localStg.set("globalTabs", tabs.value);
+    localStg.set('globalTabs', tabs.value);
   }
 
   // cache tabs when page is closed or refreshed
-  useEventListener(window, "beforeunload", () => {
+  useEventListener(window, 'beforeunload', () => {
     cacheTabs();
   });
 

@@ -1,7 +1,7 @@
-import type { ComputedRef, Ref } from "vue";
-import type { FormProps, FormSchema, FormActionType } from "../types/form";
-import { unref, toRaw } from "vue";
-import { isFunction } from "@/utils/is";
+import type { ComputedRef, Ref } from 'vue';
+import type { FormProps, FormSchema, FormActionType } from '../types/form';
+import { unref, toRaw } from 'vue';
+import { isFunction } from '@/utils/is';
 
 declare type EmitType = (event: string, ...args: any[]) => void;
 
@@ -49,10 +49,10 @@ export function useFormEvents({
       await validate();
       const values = getFieldsValue();
       loadingSub.value = false;
-      emit("submit", values);
+      emit('submit', values);
       return values;
     } catch (error: any) {
-      emit("submit", false);
+      emit('submit', false);
       loadingSub.value = false;
       console.error(error);
       return false;
@@ -79,7 +79,7 @@ export function useFormEvents({
     });
     await clearValidate();
     const fromValues = handleFormValues(toRaw(unref(formModel)));
-    emit("reset", fromValues);
+    emit('reset', fromValues);
     if (submitOnReset) {
       await handleSubmit();
     }

@@ -1,4 +1,4 @@
-import { inject, provide } from "vue";
+import { inject, provide } from 'vue';
 
 type ContextName = string | { name: string; key: string | symbol };
 
@@ -23,9 +23,9 @@ export default function useContext<T>(
 ) {
   type Context = ContextValue<T>;
 
-  const name = typeof contextName === "string" ? contextName : contextName.name;
+  const name = typeof contextName === 'string' ? contextName : contextName.name;
 
-  const key = typeof contextName === "string" ? Symbol(contextName) : contextName.key;
+  const key = typeof contextName === 'string' ? Symbol(contextName) : contextName.key;
 
   /**
    * Injects the context value.

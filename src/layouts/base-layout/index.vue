@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent } from "vue";
-import { AdminLayout, LAYOUT_SCROLL_EL_ID } from "@sa/materials";
-import type { LayoutMode } from "@sa/materials";
-import { useAppStore } from "@/store/modules/app";
-import { useThemeStore } from "@/store/modules/theme";
-import GlobalHeader from "../components/global-header/index.vue";
-import GlobalSider from "../components/global-sider/index.vue";
-import GlobalTab from "../components/global-tab/index.vue";
-import GlobalContent from "../components/global-content/index.vue";
-import GlobalFooter from "../components/global-footer/index.vue";
-import ThemeDrawer from "../components/theme-drawer/index.vue";
-import { provideMixMenuContext } from "../components/global-menu/context";
+import { computed, defineAsyncComponent } from 'vue';
+import { AdminLayout, LAYOUT_SCROLL_EL_ID } from '@sa/materials';
+import type { LayoutMode } from '@sa/materials';
+import { useAppStore } from '@/store/modules/app';
+import { useThemeStore } from '@/store/modules/theme';
+import GlobalHeader from '../components/global-header/index.vue';
+import GlobalSider from '../components/global-sider/index.vue';
+import GlobalTab from '../components/global-tab/index.vue';
+import GlobalContent from '../components/global-content/index.vue';
+import GlobalFooter from '../components/global-footer/index.vue';
+import ThemeDrawer from '../components/theme-drawer/index.vue';
+import { provideMixMenuContext } from '../components/global-menu/context';
 
 defineOptions({
-  name: "BaseLayout"
+  name: 'BaseLayout'
 });
 
 const appStore = useAppStore();
 const themeStore = useThemeStore();
 const { secondLevelMenus, childLevelMenus, isActiveFirstLevelMenuHasChildren } = provideMixMenuContext();
 
-const GlobalMenu = defineAsyncComponent(() => import("../components/global-menu/index.vue"));
+const GlobalMenu = defineAsyncComponent(() => import('../components/global-menu/index.vue'));
 
 const layoutMode = computed(() => {
-  const vertical: LayoutMode = "vertical";
-  const horizontal: LayoutMode = "horizontal";
+  const vertical: LayoutMode = 'vertical';
+  const horizontal: LayoutMode = 'horizontal';
   return themeStore.layout.mode.includes(vertical) ? vertical : horizontal;
 });
 
@@ -37,12 +37,12 @@ const headerProps = computed(() => {
       showMenu: false,
       showMenuToggler: true
     },
-    "vertical-mix": {
+    'vertical-mix': {
       showLogo: false,
       showMenu: false,
       showMenuToggler: false
     },
-    "vertical-hybrid-header-first": {
+    'vertical-hybrid-header-first': {
       showLogo: !isActiveFirstLevelMenuHasChildren.value,
       showMenu: true,
       showMenuToggler: false
@@ -52,12 +52,12 @@ const headerProps = computed(() => {
       showMenu: true,
       showMenuToggler: false
     },
-    "top-hybrid-sidebar-first": {
+    'top-hybrid-sidebar-first': {
       showLogo: true,
       showMenu: true,
       showMenuToggler: false
     },
-    "top-hybrid-header-first": {
+    'top-hybrid-header-first': {
       showLogo: true,
       showMenu: true,
       showMenuToggler: isActiveFirstLevelMenuHasChildren.value
@@ -67,15 +67,15 @@ const headerProps = computed(() => {
   return headerPropsConfig[mode];
 });
 
-const siderVisible = computed(() => themeStore.layout.mode !== "horizontal");
+const siderVisible = computed(() => themeStore.layout.mode !== 'horizontal');
 
-const isVerticalMix = computed(() => themeStore.layout.mode === "vertical-mix");
+const isVerticalMix = computed(() => themeStore.layout.mode === 'vertical-mix');
 
-const isVerticalHybridHeaderFirst = computed(() => themeStore.layout.mode === "vertical-hybrid-header-first");
+const isVerticalHybridHeaderFirst = computed(() => themeStore.layout.mode === 'vertical-hybrid-header-first');
 
-const isTopHybridSidebarFirst = computed(() => themeStore.layout.mode === "top-hybrid-sidebar-first");
+const isTopHybridSidebarFirst = computed(() => themeStore.layout.mode === 'top-hybrid-sidebar-first');
 
-const isTopHybridHeaderFirst = computed(() => themeStore.layout.mode === "top-hybrid-header-first");
+const isTopHybridHeaderFirst = computed(() => themeStore.layout.mode === 'top-hybrid-header-first');
 
 const siderWidth = computed(() => getSiderAndCollapsedWidth(false));
 

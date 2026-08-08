@@ -1,8 +1,8 @@
-import type { RouteLocationNormalizedLoaded, RouteRecordRaw, _RouteRecordBase } from "vue-router";
-import type { ElegantConstRoute, LastLevelRouteKey, RouteKey, RouteMap } from "@elegant-router/types";
-import { isDev } from "@/constants/env";
-import { useSvgIcon } from "@/hooks/common/icon";
-import { $t } from "@/locales";
+import type { RouteLocationNormalizedLoaded, RouteRecordRaw, _RouteRecordBase } from 'vue-router';
+import type { ElegantConstRoute, LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
+import { isDev } from '@/constants/env';
+import { useSvgIcon } from '@/hooks/common/icon';
+import { $t } from '@/locales';
 
 /**
  * Filter auth routes by roles
@@ -334,7 +334,7 @@ export function getBreadcrumbsByRoute(
     }
 
     if (menu.key === activeKey) {
-      const ROUTE_DEGREE_SPLITTER = "_";
+      const ROUTE_DEGREE_SPLITTER = '_';
 
       const parentKey = key.split(ROUTE_DEGREE_SPLITTER).slice(0, -1).join(ROUTE_DEGREE_SPLITTER);
 

@@ -1,15 +1,15 @@
-import { computed, ref, watch } from "vue";
-import { useRoute } from "vue-router";
-import { useContext } from "@sa/hooks";
-import type { RouteKey } from "@elegant-router/types";
-import { useRouteStore } from "@/store/modules/route";
-import { useThemeStore } from "@/store/modules/theme";
-import { useRouterPush } from "@/hooks/common/router";
+import { computed, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { useContext } from '@sa/hooks';
+import type { RouteKey } from '@elegant-router/types';
+import { useRouteStore } from '@/store/modules/route';
+import { useThemeStore } from '@/store/modules/theme';
+import { useRouterPush } from '@/hooks/common/router';
 
 export const [provideMixMenuContext, useMixMenuContext] = useContext(
   {
-    name: "MixMenu",
-    key: Symbol.for("MixMenu")
+    name: 'MixMenu',
+    key: Symbol.for('MixMenu')
   },
   useMixMenu
 );
@@ -31,14 +31,14 @@ function useMixMenu() {
     })
   );
 
-  const activeFirstLevelMenuKey = ref("");
+  const activeFirstLevelMenuKey = ref('');
 
   function setActiveFirstLevelMenuKey(key: string) {
     activeFirstLevelMenuKey.value = key;
   }
 
   function getActiveFirstLevelMenuKey() {
-    const [firstLevelRouteName] = selectedKey.value.split("_");
+    const [firstLevelRouteName] = selectedKey.value.split('_');
 
     setActiveFirstLevelMenuKey(firstLevelRouteName);
   }
@@ -65,17 +65,17 @@ function useMixMenu() {
     () => allMenus.value.find(menu => menu.key === activeFirstLevelMenuKey.value)?.children || []
   );
 
-  const activeSecondLevelMenuKey = ref("");
+  const activeSecondLevelMenuKey = ref('');
 
   function setActiveSecondLevelMenuKey(key: string) {
     activeSecondLevelMenuKey.value = key;
   }
 
   function getActiveSecondLevelMenuKey() {
-    const keys = selectedKey.value.split("_");
+    const keys = selectedKey.value.split('_');
 
     if (keys.length < 2) {
-      setActiveSecondLevelMenuKey("");
+      setActiveSecondLevelMenuKey('');
       return;
     }
 

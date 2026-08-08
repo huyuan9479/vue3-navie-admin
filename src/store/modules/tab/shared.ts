@@ -1,7 +1,7 @@
-import type { Router } from "vue-router";
-import type { LastLevelRouteKey, RouteKey, RouteMap } from "@elegant-router/types";
-import { $t } from "@/locales";
-import { getRoutePath } from "@/router/elegant/transform";
+import type { Router } from 'vue-router';
+import type { LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
+import { $t } from '@/locales';
+import { getRoutePath } from '@/router/elegant/transform';
 
 /**
  * Get all tabs
@@ -46,7 +46,7 @@ export function getTabIdByRoute(route: App.Global.TabRoute) {
 
   if (meta.multiTab) {
     const queryKeys = Object.keys(query).sort();
-    const qs = queryKeys.map(key => `${key}=${query[key]}`).join("&");
+    const qs = queryKeys.map(key => `${key}=${query[key]}`).join('&');
 
     id = `${path}?${qs}`;
   }

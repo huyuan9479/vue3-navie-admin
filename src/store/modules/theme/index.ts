@@ -1,11 +1,11 @@
-import { computed, effectScope, onScopeDispose, ref, toRefs, watch, nextTick } from "vue";
-import type { Ref } from "vue";
-import { useDateFormat, useEventListener, useNow } from "@vueuse/core";
-import { defineStore } from "pinia";
-import { getPaletteColorByNumber } from "@sa/color";
-import { localStg } from "@/utils/storage";
-import { SetupStoreId } from "@/enum";
-import { useAuthStore } from "../auth";
+import { computed, effectScope, onScopeDispose, ref, toRefs, watch, nextTick } from 'vue';
+import type { Ref } from 'vue';
+import { useDateFormat, useEventListener, useNow } from '@vueuse/core';
+import { defineStore } from 'pinia';
+import { getPaletteColorByNumber } from '@sa/color';
+import { localStg } from '@/utils/storage';
+import { SetupStoreId } from '@/enum';
+import { useAuthStore } from '../auth';
 import {
   addThemeVarsToGlobal,
   createThemeToken,
@@ -13,7 +13,7 @@ import {
   initThemeSettings,
   toggleAuxiliaryColorModes,
   toggleCssDarkMode
-} from "./shared";
+} from './shared';
 
 /** Theme store */
 export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
@@ -31,7 +31,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
   /** Dark mode */
   const darkMode = computed(() => {
-    return settings.value.themeScheme === "dark";
+    return settings.value.themeScheme === 'dark';
   });
 
   /** grayscale mode */
@@ -99,7 +99,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   function setThemeScheme(themeScheme: UnionKey.ThemeScheme, event?: MouseEvent) {
     const isAppearanceTransition =
       // @ts-expect-error - startViewTransition is not available in the current DOM lib target
-      document.startViewTransition && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!isAppearanceTransition || !event) {
       settings.value.themeScheme = themeScheme;
       return;
@@ -115,13 +115,13 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`];
       const animate = document.documentElement.animate(
         {
-          clipPath: settings.value.themeScheme === "dark" ? [...clipPath].toReversed() : clipPath
+          clipPath: settings.value.themeScheme === 'dark' ? [...clipPath].toReversed() : clipPath
         },
         {
           duration: 450,
-          easing: "ease-in",
+          easing: 'ease-in',
           pseudoElement:
-            settings.value.themeScheme === "dark" ? "::view-transition-old(root)" : "::view-transition-new(root)"
+            settings.value.themeScheme === 'dark' ? '::view-transition-old(root)' : '::view-transition-new(root)'
         }
       );
       animate.onfinish = () => {
@@ -150,7 +150,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
   /** Toggle theme scheme */
   function toggleThemeScheme(event?: MouseEvent) {
-    const themeSchemes: UnionKey.ThemeScheme[] = ["light", "dark"];
+    const themeSchemes: UnionKey.ThemeScheme[] = ['light', 'dark'];
     const index = themeSchemes.findIndex(item => item === settings.value.themeScheme);
     const nextIndex = index === themeSchemes.length - 1 ? 0 : index + 1;
     const nextThemeScheme = themeSchemes[nextIndex];
@@ -172,7 +172,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       colorValue = getPaletteColorByNumber(color, 500, true);
     }
 
-    if (key === "primary") {
+    if (key === 'primary') {
       settings.value.themeColor = colorValue;
     } else {
       settings.value.otherColor[key] = colorValue;
@@ -251,11 +251,11 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
     if (!isProd) return;
 
-    localStg.set("themeSettings", settings.value);
+    localStg.set('themeSettings', settings.value);
   }
 
   // cache theme settings when page is closed or refreshed
-  useEventListener(window, "beforeunload", () => {
+  useEventListener(window, 'beforeunload', () => {
     cacheThemeSettings();
   });
 
@@ -266,7 +266,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       darkMode,
       val => {
         toggleCssDarkMode(val);
-        localStg.set("darkMode", val);
+        localStg.set('darkMode', val);
       },
       { immediate: true }
     );
@@ -284,7 +284,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       themeColors,
       val => {
         setupThemeVarsToGlobal();
-        localStg.set("themeColor", val.primary);
+        localStg.set('themeColor', val.primary);
       },
       { immediate: true }
     );

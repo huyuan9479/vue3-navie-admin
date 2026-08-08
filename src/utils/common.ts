@@ -1,5 +1,5 @@
-import { $t } from "@/locales";
-import { isObject } from "@/utils/is";
+import { $t } from '@/locales';
+import { isObject } from '@/utils/is';
 
 /**
  * Transform record to option
@@ -67,5 +67,5 @@ export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
 }
 
 export function isProdMode() {
-  return import.meta.env.ENV_MODE === "prod";
+  return import.meta.env.ENV_MODE === 'prod';
 }

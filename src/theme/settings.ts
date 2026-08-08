@@ -1,25 +1,25 @@
 /** Default theme settings */
 export const themeSettings: App.Theme.ThemeSetting = {
-  themeScheme: "light",
+  themeScheme: 'light',
   grayscale: false,
   colourWeakness: false,
   recommendColor: false,
-  themeColor: "#1677ff",
+  themeColor: '#1677ff',
   themeRadius: 6,
   otherColor: {
-    info: "#1677ff",
-    success: "#52c41a",
-    warning: "#faad14",
-    error: "#f5222d"
+    info: '#1677ff',
+    success: '#52c41a',
+    warning: '#faad14',
+    error: '#f5222d'
   },
   isInfoFollowPrimary: true,
   layout: {
-    mode: "vertical",
-    scrollMode: "content"
+    mode: 'vertical',
+    scrollMode: 'content'
   },
   page: {
     animate: true,
-    animateMode: "fade-slide"
+    animateMode: 'fade-slide'
   },
   header: {
     height: 50,
@@ -38,7 +38,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
     visible: true,
     cache: true,
     height: 36,
-    mode: "chrome",
+    mode: 'chrome',
     closeTabByMiddleClick: false
   },
   fixedHeaderAndTab: true,
@@ -59,30 +59,30 @@ export const themeSettings: App.Theme.ThemeSetting = {
   },
   watermark: {
     visible: false,
-    text: "Vue3NavieAdmin",
+    text: 'Vue3NavieAdmin',
     enableUserName: false,
     enableTime: false,
-    timeFormat: "YYYY-MM-DD HH:mm"
+    timeFormat: 'YYYY-MM-DD HH:mm'
   },
   tokens: {
     light: {
       colors: {
-        container: "rgb(255, 255, 255)",
-        layout: "rgb(247, 250, 252)",
-        inverted: "rgb(0, 20, 40)",
-        "base-text": "rgb(31, 31, 31)"
+        container: 'rgb(255, 255, 255)',
+        layout: 'rgb(247, 250, 252)',
+        inverted: 'rgb(0, 20, 40)',
+        'base-text': 'rgb(31, 31, 31)'
       },
       boxShadow: {
-        header: "0 1px 2px rgb(0, 21, 41, 0.08)",
-        sider: "2px 0 8px 0 rgb(29, 35, 41, 0.05)",
-        tab: "0 1px 2px rgb(0, 21, 41, 0.08)"
+        header: '0 1px 2px rgb(0, 21, 41, 0.08)',
+        sider: '2px 0 8px 0 rgb(29, 35, 41, 0.05)',
+        tab: '0 1px 2px rgb(0, 21, 41, 0.08)'
       }
     },
     dark: {
       colors: {
-        container: "rgb(28, 28, 28)",
-        layout: "rgb(18, 18, 18)",
-        "base-text": "rgb(224, 224, 224)"
+        container: 'rgb(28, 28, 28)',
+        layout: 'rgb(18, 18, 18)',
+        'base-text': 'rgb(224, 224, 224)'
       }
     }
   }

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed, reactive } from "vue";
-import { useAuthStore } from "@/store/modules/auth";
-import { useThemeStore } from "@/store/modules/theme";
-import { useRouterPush } from "@/hooks/common/router";
-import { useCaptcha } from "@/hooks/business/captcha";
-import { useFormRules, useNaiveForm } from "@/hooks/common/form";
-import { $t } from "@/locales";
+import { computed, reactive } from 'vue';
+import { useAuthStore } from '@/store/modules/auth';
+import { useThemeStore } from '@/store/modules/theme';
+import { useRouterPush } from '@/hooks/common/router';
+import { useCaptcha } from '@/hooks/business/captcha';
+import { useFormRules, useNaiveForm } from '@/hooks/common/form';
+import { $t } from '@/locales';
 
 defineOptions({
-  name: "PwdLogin"
+  name: 'PwdLogin'
 });
 
 const authStore = useAuthStore();
@@ -22,22 +22,22 @@ interface FormModel {
 }
 
 const model: FormModel = reactive({
-  userName: "admin",
-  password: "123456"
+  userName: 'admin',
+  password: '123456'
 });
 
 const expressLoginWays = [
   {
-    icon: "ant-design:wechat-filled",
-    value: "wechat"
+    icon: 'ant-design:wechat-filled',
+    value: 'wechat'
   },
   {
-    icon: "ant-design:alipay-circle-outlined",
-    value: "alipay"
+    icon: 'ant-design:alipay-circle-outlined',
+    value: 'alipay'
   },
   {
-    icon: "ant-design:github-outlined",
-    value: "github"
+    icon: 'ant-design:github-outlined',
+    value: 'github'
   }
 ];
 const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
@@ -64,8 +64,8 @@ interface CodeLoginFormModel {
 }
 
 const codeLoginModel: CodeLoginFormModel = reactive({
-  phone: "",
-  code: ""
+  phone: '',
+  code: ''
 });
 
 const codeLoginRules = computed<Record<keyof CodeLoginFormModel, App.Global.FormRule[]>>(() => {
@@ -80,13 +80,13 @@ const codeLoginRules = computed<Record<keyof CodeLoginFormModel, App.Global.Form
 async function handleCodeLoginSubmit() {
   await validate();
   // request
-  window.$message?.success($t("page.login.common.validateSuccess"));
+  window.$message?.success($t('page.login.common.validateSuccess'));
 }
 </script>
 
 <template>
   <div>
-    <h3 class="text-26px font-bold mb-24px">{{ $t("page.login.pwdLogin.title") }}</h3>
+    <h3 class="text-26px font-bold mb-24px">{{ $t('page.login.pwdLogin.title') }}</h3>
     <NTabs class="card-tabs" default-value="pwd-login" size="large" animated type="segment">
       <NTabPane name="pwd-login" :tab="$t('page.login.pwdLogin.passwordLogin')">
         <Transition :name="themeStore.page.animateMode" mode="out-in" appear>
@@ -119,9 +119,9 @@ async function handleCodeLoginSubmit() {
             </NFormItem>
             <NSpace vertical :size="24">
               <div class="flex-y-center justify-between">
-                <NCheckbox>{{ $t("page.login.pwdLogin.rememberMe") }}</NCheckbox>
+                <NCheckbox>{{ $t('page.login.pwdLogin.rememberMe') }}</NCheckbox>
                 <div class="cursor-pointer" @click="toggleLoginModule('reset-pwd')">
-                  {{ $t("page.login.pwdLogin.forgetPassword") }}
+                  {{ $t('page.login.pwdLogin.forgetPassword') }}
                 </div>
               </div>
               <NButton
@@ -132,7 +132,7 @@ async function handleCodeLoginSubmit() {
                 :loading="authStore.loginLoading"
                 @click="handlePwdLoginSubmit"
               >
-                {{ $t("common.confirm") }}
+                {{ $t('common.confirm') }}
               </NButton>
             </NSpace>
           </NForm>
@@ -174,7 +174,7 @@ async function handleCodeLoginSubmit() {
             </NFormItem>
             <NSpace vertical :size="24">
               <div class="flex-y-center justify-between">
-                <NCheckbox>{{ $t("page.login.pwdLogin.rememberMe") }}</NCheckbox>
+                <NCheckbox>{{ $t('page.login.pwdLogin.rememberMe') }}</NCheckbox>
               </div>
               <NButton
                 type="primary"
@@ -184,7 +184,7 @@ async function handleCodeLoginSubmit() {
                 :loading="authStore.loginLoading"
                 @click="handleCodeLoginSubmit"
               >
-                {{ $t("common.confirm") }}
+                {{ $t('common.confirm') }}
               </NButton>
             </NSpace>
           </NForm>
@@ -193,12 +193,12 @@ async function handleCodeLoginSubmit() {
     </NTabs>
     <NSpace vertical :size="24">
       <div class="cursor-pointer text-center mt-24px" @click="toggleLoginModule('register')">
-        <span>{{ $t("page.login.pwdLogin.noRegister") }}</span>
-        <span class="text-primary">{{ $t("page.login.pwdLogin.register") }}</span>
+        <span>{{ $t('page.login.pwdLogin.noRegister') }}</span>
+        <span class="text-primary">{{ $t('page.login.pwdLogin.register') }}</span>
       </div>
       <div class="w-full flex justify-center">
         <NDivider class="w-2/3 text-14px text-#666 !m-0">
-          {{ $t("page.login.pwdLogin.otherLoginMode") }}
+          {{ $t('page.login.pwdLogin.otherLoginMode') }}
         </NDivider>
       </div>
       <div class="flex justify-between mx-auto w w-2/3 gap-12px">

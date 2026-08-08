@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
 
-defineOptions({ name: "SearchResult" });
+defineOptions({ name: 'SearchResult' });
 
 interface Props {
   options: App.Global.Menu[];
@@ -11,21 +11,21 @@ interface Props {
 defineProps<Props>();
 
 interface Emits {
-  (e: "enter"): void;
+  (e: 'enter'): void;
 }
 
 const emit = defineEmits<Emits>();
 
 const theme = useThemeStore();
 
-const active = defineModel<string>("path", { required: true });
+const active = defineModel<string>('path', { required: true });
 
 async function handleMouseEnter(item: App.Global.Menu) {
   active.value = item.routePath;
 }
 
 function handleTo() {
-  emit("enter");
+  emit('enter');
 }
 </script>
 

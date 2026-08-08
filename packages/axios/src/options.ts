@@ -1,8 +1,8 @@
-import type { CreateAxiosDefaults } from "axios";
-import type { IAxiosRetryConfig } from "axios-retry";
-import { stringify } from "qs";
-import { isHttpSuccess } from "./shared";
-import type { RequestOption } from "./type";
+import type { CreateAxiosDefaults } from 'axios';
+import type { IAxiosRetryConfig } from 'axios-retry';
+import { stringify } from 'qs';
+import { isHttpSuccess } from './shared';
+import type { RequestOption } from './type';
 
 export function createDefaultOptions<
   ResponseData,
@@ -46,7 +46,7 @@ export function createAxiosConfig(config?: Partial<CreateAxiosDefaults>) {
   const axiosConfig: CreateAxiosDefaults = {
     timeout: TEN_SECONDS,
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     },
     validateStatus: isHttpSuccess,
     paramsSerializer: params => {

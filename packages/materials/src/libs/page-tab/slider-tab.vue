@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { PageTabProps } from "../../types";
-import style from "./index.module.css";
+import type { PageTabProps } from '../../types';
+import style from './index.module.css';
 
 defineOptions({
-  name: "SliderTab"
+  name: 'SliderTab'
 });
 
 defineProps<PageTabProps>();

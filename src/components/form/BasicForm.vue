@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { reactive, ref, computed, unref, onMounted, watch, useAttrs } from "vue";
-import { createPlaceholderMessage, getComponent } from "./utils/helper";
-import { useFormEvents } from "./hooks/use-form-events";
-import { useFormValues } from "./hooks/use-form-values";
-import type { Ref } from "vue";
-import type { GridProps } from "naive-ui/lib/grid";
-import type { ButtonProps } from "naive-ui/lib/button";
-import type { FormSchema, FormProps, FormActionType } from "./types/form";
-import type { ComponentType } from "./types/form";
-import { isArray } from "@/utils/is";
-import { deepMerge } from "@/utils/common";
+import { reactive, ref, computed, unref, onMounted, watch, useAttrs } from 'vue';
+import { createPlaceholderMessage, getComponent } from './utils/helper';
+import { useFormEvents } from './hooks/use-form-events';
+import { useFormValues } from './hooks/use-form-values';
+import type { Ref } from 'vue';
+import type { GridProps } from 'naive-ui/lib/grid';
+import type { ButtonProps } from 'naive-ui/lib/button';
+import type { FormSchema, FormProps, FormActionType } from './types/form';
+import type { ComponentType } from './types/form';
+import { isArray } from '@/utils/is';
+import { deepMerge } from '@/utils/common';
 
-defineOptions({ name: "BasicForm" });
+defineOptions({ name: 'BasicForm' });
 
 const props = withDefaults(defineProps<FormProps>(), {
   // 标签宽度  固定宽度
@@ -19,15 +19,15 @@ const props = withDefaults(defineProps<FormProps>(), {
   // 表单配置规则
   schemas: () => [],
   // 布局方式
-  layout: "inline",
+  layout: 'inline',
   // 是否展示为行内表单
   inline: false,
   // 表单大小
-  size: "medium",
+  size: 'medium',
   // 标签位置
-  labelPlacement: "left",
+  labelPlacement: 'left',
   // 必填项位置
-  requireMarkPlacement: "left",
+  requireMarkPlacement: 'left',
   // 组件是否width 100%
   isFull: true,
   // 是否显示操作按钮（查询/重置）
@@ -39,29 +39,29 @@ const props = withDefaults(defineProps<FormProps>(), {
   // 是否展开收起按钮
   showAdvancedButton: true,
   // 查询按钮文本
-  submitButtonText: "查询",
+  submitButtonText: '查询',
   // 重置按钮文本
-  resetButtonText: "重置",
+  resetButtonText: '重置',
   // 重置按钮配置
   resetButtonOptions: (): Partial<ButtonProps> => ({
-    size: "medium",
-    type: "default"
+    size: 'medium',
+    secondary: true
   }),
   // 查询按钮配置
   submitButtonOptions: (): Partial<ButtonProps> => ({
-    size: "medium",
-    type: "primary"
+    size: 'medium',
+    type: 'primary'
   }),
   // 折叠行数
   collapsedRows: 2,
   // 是否折叠
   collapsed: true,
   //grid 配置
-  gridProps: () => ({ cols: "1 s:1 m:2 l:3 xl:4 2xl:4" })
+  gridProps: () => ({ cols: '1 s:1 m:2 l:3 xl:4 2xl:4' })
 });
 
 const emit = defineEmits<{
-  (e: "register", action: Partial<FormActionType>): void;
+  (e: 'register', action: Partial<FormActionType>): void;
 }>();
 
 const attrs = useAttrs();
@@ -77,7 +77,7 @@ const isUpdateDefaultRef = ref(false);
 const getSubmitBtnOptions = computed((): Partial<ButtonProps> => {
   return Object.assign(
     {
-      size: props.size as unknown as ButtonProps["size"]
+      size: props.size as unknown as ButtonProps['size']
     },
     props.submitButtonOptions
   );
@@ -86,7 +86,7 @@ const getSubmitBtnOptions = computed((): Partial<ButtonProps> => {
 const getResetBtnOptions = computed((): Partial<ButtonProps> => {
   return Object.assign(
     {
-      size: props.size as unknown as ButtonProps["size"]
+      size: props.size as unknown as ButtonProps['size']
     },
     props.resetButtonOptions
   );
@@ -118,7 +118,7 @@ const getProps = computed((): FormProps => {
 
 const isInline = computed(() => {
   const { layout } = unref(getProps);
-  return layout === "inline";
+  return layout === 'inline';
 });
 
 const getGrid = computed((): GridProps => {
@@ -126,7 +126,7 @@ const getGrid = computed((): GridProps => {
   return {
     ...gridProps,
     collapsed: isInline.value ? gridCollapsed.value : false,
-    responsive: "screen",
+    responsive: 'screen',
     collapsedRows: props.collapsedRows
   };
 });
@@ -196,7 +196,7 @@ watch(
 
 onMounted(() => {
   initDefault();
-  emit("register", formActionType);
+  emit('register', formActionType);
 });
 </script>
 
@@ -211,7 +211,7 @@ onMounted(() => {
               {{ schema.label }}
               <NTooltip trigger="hover" :style="schema.labelMessageStyle">
                 <template #trigger>
-                  <icon-material-symbols-help-outline class="text-16px ml-2px" />
+                  <icon-material-symbols-help-outline class="text-16px ml-2px cursor-pointer" />
                 </template>
                 {{ schema.labelMessage }}
               </NTooltip>
@@ -285,28 +285,17 @@ onMounted(() => {
             attr-type="submit"
             @click="handleSubmit"
           >
+            <icon-material-symbols-search class="text-16px mr-2px" />
             {{ getProps.submitButtonText }}
           </NButton>
           <NButton v-if="getProps.showResetButton" v-bind="getResetBtnOptions" @click="resetFields">
+            <icon-material-symbols-refresh class="text-16px mr-2px" />
             {{ getProps.resetButtonText }}
           </NButton>
-          <NButton
-            v-if="isInline && getProps.showAdvancedButton"
-            type="primary"
-            text
-            icon-placement="right"
-            @click="unfoldToggle"
-          >
-            <template #icon>
-              <NIcon v-if="overflow" size="14" class="unfold-icon">
-                <DownOutlined />
-              </NIcon>
-              <NIcon v-else size="14" class="unfold-icon">
-                <UpOutlined />
-              </NIcon>
-            </template>
-
-            {{ overflow ? "展开" : "收起" }}
+          <NButton v-if="isInline && getProps.showAdvancedButton" type="default" @click="unfoldToggle">
+            {{ overflow ? '展开' : '收起' }}
+            <icon-mdi-chevron-down v-if="overflow" class="unfold-icon" />
+            <icon-mdi-chevron-up v-else class="unfold-icon" />
           </NButton>
         </NSpace>
       </NGi>
@@ -324,6 +313,6 @@ onMounted(() => {
   display: flex;
   align-items: center;
   height: 100%;
-  margin-left: -3px;
+  font-size: 16px;
 }
 </style>

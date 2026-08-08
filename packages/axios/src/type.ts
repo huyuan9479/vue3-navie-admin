@@ -1,12 +1,12 @@
-import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 export type ContentType =
-  | "text/html"
-  | "text/plain"
-  | "multipart/form-data"
-  | "application/json"
-  | "application/x-www-form-urlencoded"
-  | "application/octet-stream";
+  | 'text/html'
+  | 'text/plain'
+  | 'multipart/form-data'
+  | 'application/json'
+  | 'application/x-www-form-urlencoded'
+  | 'application/octet-stream';
 
 export type ResponseTransform<Input = any, Output = any> = (input: Input) => Output | Promise<Output>;
 
@@ -75,13 +75,13 @@ interface ResponseMap {
   stream: ReadableStream<Uint8Array>;
   document: Document;
 }
-export type ResponseType = keyof ResponseMap | "json";
+export type ResponseType = keyof ResponseMap | 'json';
 
 export type MappedType<R extends ResponseType, JsonType = any> = R extends keyof ResponseMap
   ? ResponseMap[R]
   : JsonType;
 
-export type CustomAxiosRequestConfig<R extends ResponseType = "json"> = Omit<AxiosRequestConfig, "responseType"> & {
+export type CustomAxiosRequestConfig<R extends ResponseType = 'json'> = Omit<AxiosRequestConfig, 'responseType'> & {
   responseType?: R;
 };
 
@@ -98,7 +98,7 @@ export interface RequestInstanceCommon<State extends Record<string, unknown>> {
 
 /** The request instance */
 export interface RequestInstance<ApiData, State extends Record<string, unknown>> extends RequestInstanceCommon<State> {
-  <T extends ApiData = ApiData, R extends ResponseType = "json">(
+  <T extends ApiData = ApiData, R extends ResponseType = 'json'>(
     config: CustomAxiosRequestConfig<R>
   ): Promise<MappedType<R, T>>;
 }
@@ -124,7 +124,7 @@ export interface FlatRequestInstance<
   ApiData,
   State extends Record<string, unknown>
 > extends RequestInstanceCommon<State> {
-  <T extends ApiData = ApiData, R extends ResponseType = "json">(
+  <T extends ApiData = ApiData, R extends ResponseType = 'json'>(
     config: CustomAxiosRequestConfig<R>
   ): Promise<FlatResponseData<ResponseData, MappedType<R, T>>>;
 }

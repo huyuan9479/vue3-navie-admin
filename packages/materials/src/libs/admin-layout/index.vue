@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import type { AdminLayoutProps } from "../../types";
-import { LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID, createLayoutCssVars } from "./shared";
-import style from "./index.module.css";
+import { computed } from 'vue';
+import type { AdminLayoutProps } from '../../types';
+import { LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID, createLayoutCssVars } from './shared';
+import style from './index.module.css';
 
 defineOptions({
-  name: "AdminLayout"
+  name: 'AdminLayout'
 });
 
 const props = withDefaults(defineProps<AdminLayoutProps>(), {
-  mode: "vertical",
-  scrollMode: "content",
+  mode: 'vertical',
+  scrollMode: 'content',
   scrollElId: LAYOUT_SCROLL_EL_ID,
-  commonClass: "transition-all-300",
+  commonClass: 'transition-all-300',
   fixedTop: true,
   maxZIndex: LAYOUT_MAX_Z_INDEX,
   headerVisible: true,
@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<AdminLayoutProps>(), {
 
 interface Emits {
   /** Update siderCollapse */
-  (e: "update:siderCollapse", collapse: boolean): void;
+  (e: 'update:siderCollapse', collapse: boolean): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -62,25 +62,25 @@ const showMobileSider = computed(() => props.isMobile && Boolean(slots.sider) &&
 const showFooter = computed(() => Boolean(slots.footer) && props.footerVisible);
 
 // scroll mode
-const isWrapperScroll = computed(() => props.scrollMode === "wrapper");
-const isContentScroll = computed(() => props.scrollMode === "content");
+const isWrapperScroll = computed(() => props.scrollMode === 'wrapper');
+const isContentScroll = computed(() => props.scrollMode === 'content');
 
 // layout direction
-const isVertical = computed(() => props.mode === "vertical");
-const isHorizontal = computed(() => props.mode === "horizontal");
+const isVertical = computed(() => props.mode === 'vertical');
+const isHorizontal = computed(() => props.mode === 'horizontal');
 
 const fixedHeaderAndTab = computed(() => props.fixedTop || (isHorizontal.value && isWrapperScroll.value));
 
 // css
 const leftGapClass = computed(() => {
   if (!props.fullContent && showSider.value) {
-    return props.siderCollapse ? style["left-gap_collapsed"] : style["left-gap"];
+    return props.siderCollapse ? style['left-gap_collapsed'] : style['left-gap'];
   }
 
-  return "";
+  return '';
 });
 
-const headerLeftGapClass = computed(() => (isVertical.value ? leftGapClass.value : ""));
+const headerLeftGapClass = computed(() => (isVertical.value ? leftGapClass.value : ''));
 
 const footerLeftGapClass = computed(() => {
   const condition1 = isVertical.value;
@@ -91,24 +91,24 @@ const footerLeftGapClass = computed(() => {
     return leftGapClass.value;
   }
 
-  return "";
+  return '';
 });
 
 const siderPaddingClass = computed(() => {
-  let cls = "";
+  let cls = '';
 
   if (showHeader.value && !headerLeftGapClass.value) {
-    cls += style["sider-padding-top"];
+    cls += style['sider-padding-top'];
   }
   if (showFooter.value && !footerLeftGapClass.value) {
-    cls += ` ${style["sider-padding-bottom"]}`;
+    cls += ` ${style['sider-padding-bottom']}`;
   }
 
   return cls;
 });
 
 function handleClickMask() {
-  emit("update:siderCollapse", true);
+  emit('update:siderCollapse', true);
 }
 </script>
 

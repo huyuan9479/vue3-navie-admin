@@ -1,24 +1,33 @@
 <script setup lang="ts">
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
-import SettingItem from "../../../components/SettingItem.vue";
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
+import SettingItem from '../../../components/SettingItem.vue';
 
 defineOptions({
-  name: "GlobalSettings"
+  name: 'GlobalSettings'
 });
 
 const themeStore = useThemeStore();
 </script>
 
 <template>
-  <NDivider>{{ $t("theme.general.title") }}</NDivider>
-  <SettingItem :label="$t('theme.general.multilingual.visible')">
-    <NSwitch v-model:value="themeStore.header.multilingual.visible" />
-  </SettingItem>
+  <NCard
+    :title="$t('theme.general.title')"
+    :segmented="{
+      content: true
+    }"
+    size="small"
+  >
+    <NSpace vertical :size="[12, 12]">
+      <SettingItem :label="$t('theme.general.multilingual.visible')">
+        <NSwitch v-model:value="themeStore.header.multilingual.visible" />
+      </SettingItem>
 
-  <SettingItem :label="$t('theme.general.globalSearch.visible')">
-    <NSwitch v-model:value="themeStore.header.globalSearch.visible" />
-  </SettingItem>
+      <SettingItem :label="$t('theme.general.globalSearch.visible')">
+        <NSwitch v-model:value="themeStore.header.globalSearch.visible" />
+      </SettingItem>
+    </NSpace>
+  </NCard>
 </template>
 
 <style scoped>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import type { PopoverPlacement } from "naive-ui";
-import { $t } from "@/locales";
+import { computed } from 'vue';
+import type { PopoverPlacement } from 'naive-ui';
+import { $t } from '@/locales';
 
-defineOptions({ name: "ThemeSchemaSwitch" });
+defineOptions({ name: 'ThemeSchemaSwitch' });
 
 interface Props {
   /** Theme schema */
@@ -16,30 +16,30 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   showTooltip: true,
-  tooltipPlacement: "bottom"
+  tooltipPlacement: 'bottom'
 });
 
 interface Emits {
-  (e: "switch", event: MouseEvent): void;
+  (e: 'switch', event: MouseEvent): void;
 }
 
 const emit = defineEmits<Emits>();
 
 function handleSwitch(event: MouseEvent) {
-  emit("switch", event);
+  emit('switch', event);
 }
 
 const icons: Record<UnionKey.ThemeScheme, string> = {
-  light: "material-symbols:sunny-outline-rounded",
-  dark: "material-symbols:dark-mode-outline-rounded"
+  light: 'material-symbols:sunny-outline-rounded',
+  dark: 'material-symbols:dark-mode-outline-rounded'
 };
 
 const icon = computed(() => icons[props.themeSchema]);
 
 const tooltipContent = computed(() => {
-  if (!props.showTooltip) return "";
+  if (!props.showTooltip) return '';
 
-  return $t("icon.themeSchema");
+  return $t('icon.themeSchema');
 });
 </script>
 

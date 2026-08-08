@@ -1,5 +1,5 @@
-import { computed, onScopeDispose, ref } from "vue";
-import { useRafFn } from "@vueuse/core";
+import { computed, onScopeDispose, ref } from 'vue';
+import { useRafFn } from '@vueuse/core';
 
 /**
  * A hook for implementing a countdown timer. It uses `requestAnimationFrame` for smooth and accurate timing,

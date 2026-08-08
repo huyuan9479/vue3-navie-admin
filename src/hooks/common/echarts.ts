@@ -1,7 +1,7 @@
-import { computed, effectScope, nextTick, onScopeDispose, shallowRef, watch } from "vue";
-import { useElementSize } from "@vueuse/core";
-import * as echarts from "echarts/core";
-import { BarChart, GaugeChart, LineChart, PictorialBarChart, PieChart, RadarChart, ScatterChart } from "echarts/charts";
+import { computed, effectScope, nextTick, onScopeDispose, shallowRef, watch } from 'vue';
+import { useElementSize } from '@vueuse/core';
+import * as echarts from 'echarts/core';
+import { BarChart, GaugeChart, LineChart, PictorialBarChart, PieChart, RadarChart, ScatterChart } from 'echarts/charts';
 import type {
   BarSeriesOption,
   GaugeSeriesOption,
@@ -10,7 +10,7 @@ import type {
   PieSeriesOption,
   RadarSeriesOption,
   ScatterSeriesOption
-} from "echarts/charts";
+} from 'echarts/charts';
 import {
   DatasetComponent,
   GridComponent,
@@ -19,7 +19,7 @@ import {
   ToolboxComponent,
   TooltipComponent,
   TransformComponent
-} from "echarts/components";
+} from 'echarts/components';
 import type {
   DatasetComponentOption,
   GridComponentOption,
@@ -27,10 +27,10 @@ import type {
   TitleComponentOption,
   ToolboxComponentOption,
   TooltipComponentOption
-} from "echarts/components";
-import { LabelLayout, UniversalTransition } from "echarts/features";
-import { CanvasRenderer } from "echarts/renderers";
-import { useThemeStore } from "@/store/modules/theme";
+} from 'echarts/components';
+import { LabelLayout, UniversalTransition } from 'echarts/features';
+import { CanvasRenderer } from 'echarts/renderers';
+import { useThemeStore } from '@/store/modules/theme';
 
 export type ECOption = echarts.ComposeOption<
   | BarSeriesOption
@@ -95,8 +95,8 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
 
   const {
     onRender = instance => {
-      const textColor = darkMode.value ? "rgb(224, 224, 224)" : "rgb(31, 31, 31)";
-      const maskColor = darkMode.value ? "rgba(0, 0, 0, 0.4)" : "rgba(255, 255, 255, 0.8)";
+      const textColor = darkMode.value ? 'rgb(224, 224, 224)' : 'rgb(31, 31, 31)';
+      const maskColor = darkMode.value ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.8)';
 
       instance.showLoading({
         color: themeStore.themeColor,
@@ -134,7 +134,7 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
       chart.value?.clear();
     }
 
-    chart.value?.setOption({ ...updatedOpts, backgroundColor: "transparent" });
+    chart.value?.setOption({ ...updatedOpts, backgroundColor: 'transparent' });
 
     await onUpdated?.(chart.value!);
   }
@@ -147,11 +147,11 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
   async function render() {
     if (isRendered()) return;
 
-    const chartTheme = darkMode.value ? "dark" : "light";
+    const chartTheme = darkMode.value ? 'dark' : 'light';
 
     chart.value = echarts.init(domRef.value, chartTheme);
 
-    chart.value?.setOption({ ...chartOptions, backgroundColor: "transparent" });
+    chart.value?.setOption({ ...chartOptions, backgroundColor: 'transparent' });
 
     await onRender?.(chart.value!);
   }
@@ -208,7 +208,7 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
       ([newWidth, newHeight]) => {
         renderChartBySize(newWidth, newHeight);
       },
-      { flush: "post" }
+      { flush: 'post' }
     );
 
     watch(darkMode, () => {

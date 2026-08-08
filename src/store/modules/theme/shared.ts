@@ -1,11 +1,11 @@
-import type { GlobalThemeOverrides } from "naive-ui";
-import { defu } from "defu";
-import { addColorAlpha, getColorPalette, getPaletteColorByNumber, getRgb } from "@sa/color";
-import { DARK_CLASS } from "@/constants/app";
-import { toggleHtmlClass } from "@/utils/common";
-import { localStg } from "@/utils/storage";
-import { overrideThemeSettings, themeSettings } from "@/theme/settings";
-import { themeVars } from "@/theme/vars";
+import type { GlobalThemeOverrides } from 'naive-ui';
+import { defu } from 'defu';
+import { addColorAlpha, getColorPalette, getPaletteColorByNumber, getRgb } from '@sa/color';
+import { DARK_CLASS } from '@/constants/app';
+import { toggleHtmlClass } from '@/utils/common';
+import { localStg } from '@/utils/storage';
+import { overrideThemeSettings, themeSettings } from '@/theme/settings';
+import { themeVars } from '@/theme/vars';
 
 /** Init theme settings */
 export function initThemeSettings() {
@@ -17,16 +17,16 @@ export function initThemeSettings() {
   // if it is production mode, the theme settings will be cached in localStorage
   // if want to update theme settings when publish new version, please update `overrideThemeSettings` in `src/theme/settings.ts`
 
-  const localSettings = localStg.get("themeSettings");
+  const localSettings = localStg.get('themeSettings');
 
   let settings = defu(localSettings, themeSettings);
 
-  const isOverride = localStg.get("overrideThemeFlag") === BUILD_TIME;
+  const isOverride = localStg.get('overrideThemeFlag') === BUILD_TIME;
 
   if (!isOverride) {
     settings = defu(overrideThemeSettings, settings);
 
-    localStg.set("overrideThemeFlag", BUILD_TIME);
+    localStg.set('overrideThemeFlag', BUILD_TIME);
   }
 
   return settings;
@@ -41,7 +41,7 @@ export function initThemeSettings() {
  */
 export function createThemeToken(
   colors: App.Theme.ThemeColor,
-  tokens?: App.Theme.ThemeSetting["tokens"],
+  tokens?: App.Theme.ThemeSetting['tokens'],
   recommended = false
 ) {
   const paletteColors = createThemePaletteColors(colors, recommended);
@@ -108,11 +108,11 @@ function getCssVarByTokens(tokens: App.Theme.BaseToken) {
   const styles: string[] = [];
 
   function removeVarPrefix(value: string) {
-    return value.replace("var(", "").replace(")", "");
+    return value.replace('var(', '').replace(')', '');
   }
 
   function removeRgbPrefix(value: string) {
-    return value.replace("rgb(", "").replace(")", "");
+    return value.replace('rgb(', '').replace(')', '');
   }
 
   for (const [key, tokenValues] of Object.entries(themeVars)) {
@@ -120,7 +120,7 @@ function getCssVarByTokens(tokens: App.Theme.BaseToken) {
       let cssVarsKey = removeVarPrefix(tokenValue);
       let cssValue = tokens[key][tokenKey];
 
-      if (key === "colors") {
+      if (key === 'colors') {
         cssVarsKey = removeRgbPrefix(cssVarsKey);
         const { r, g, b } = getRgb(cssValue);
         cssValue = `${r} ${g} ${b}`;
@@ -130,7 +130,7 @@ function getCssVarByTokens(tokens: App.Theme.BaseToken) {
     }
   }
 
-  const styleStr = styles.join(";");
+  const styleStr = styles.join(';');
 
   return styleStr;
 }
@@ -156,9 +156,9 @@ export function addThemeVarsToGlobal(tokens: App.Theme.BaseToken, darkTokens: Ap
     }
   `;
 
-  const styleId = "theme-vars";
+  const styleId = 'theme-vars';
 
-  const style = document.querySelector(`#${styleId}`) || document.createElement("style");
+  const style = document.querySelector(`#${styleId}`) || document.createElement('style');
 
   style.id = styleId;
 
@@ -190,12 +190,12 @@ export function toggleCssDarkMode(darkMode = false) {
  */
 export function toggleAuxiliaryColorModes(grayscaleMode = false, colourWeakness = false) {
   const htmlElement = document.documentElement;
-  htmlElement.style.filter = [grayscaleMode ? "grayscale(100%)" : "", colourWeakness ? "invert(80%)" : ""]
+  htmlElement.style.filter = [grayscaleMode ? 'grayscale(100%)' : '', colourWeakness ? 'invert(80%)' : '']
     .filter(Boolean)
-    .join(" ");
+    .join(' ');
 }
 
-type NaiveColorScene = "" | "Suppl" | "Hover" | "Pressed" | "Active";
+type NaiveColorScene = '' | 'Suppl' | 'Hover' | 'Pressed' | 'Active';
 type NaiveColorKey = `${App.Theme.ThemeColorKey}Color${NaiveColorScene}`;
 type NaiveThemeColor = Partial<Record<NaiveColorKey, string>>;
 interface NaiveColorAction {
@@ -211,11 +211,11 @@ interface NaiveColorAction {
  */
 function getNaiveThemeColors(colors: App.Theme.ThemeColor, recommended = false) {
   const colorActions: NaiveColorAction[] = [
-    { scene: "", handler: color => color },
-    { scene: "Suppl", handler: color => color },
-    { scene: "Hover", handler: color => getPaletteColorByNumber(color, 500, recommended) },
-    { scene: "Pressed", handler: color => getPaletteColorByNumber(color, 700, recommended) },
-    { scene: "Active", handler: color => addColorAlpha(color, 0.1) }
+    { scene: '', handler: color => color },
+    { scene: 'Suppl', handler: color => color },
+    { scene: 'Hover', handler: color => getPaletteColorByNumber(color, 500, recommended) },
+    { scene: 'Pressed', handler: color => getPaletteColorByNumber(color, 700, recommended) },
+    { scene: 'Active', handler: color => addColorAlpha(color, 0.1) }
   ];
 
   const themeColors: NaiveThemeColor = {};

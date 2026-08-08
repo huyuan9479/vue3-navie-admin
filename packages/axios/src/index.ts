@@ -1,10 +1,10 @@
-import { create, AxiosError } from "axios";
-import type { AxiosResponse, CreateAxiosDefaults, InternalAxiosRequestConfig } from "axios";
-import axiosRetry from "axios-retry";
-import { nanoid } from "@sa/utils";
-import { createAxiosConfig, createDefaultOptions, createRetryOptions } from "./options";
-import { transformResponse } from "./shared";
-import { BACKEND_ERROR_CODE, REQUEST_ID_KEY } from "./constant";
+import { create, AxiosError } from 'axios';
+import type { AxiosResponse, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios';
+import axiosRetry from 'axios-retry';
+import { nanoid } from '@sa/utils';
+import { createAxiosConfig, createDefaultOptions, createRetryOptions } from './options';
+import { transformResponse } from './shared';
+import { BACKEND_ERROR_CODE, REQUEST_ID_KEY } from './constant';
 import type {
   CustomAxiosRequestConfig,
   FlatRequestInstance,
@@ -12,7 +12,7 @@ import type {
   RequestInstance,
   RequestOption,
   ResponseType
-} from "./type";
+} from './type';
 
 function createCommonRequest<
   ResponseData,
@@ -52,11 +52,11 @@ function createCommonRequest<
 
   instance.interceptors.response.use(
     async response => {
-      const responseType: ResponseType = (response.config?.responseType as ResponseType) || "json";
+      const responseType: ResponseType = (response.config?.responseType as ResponseType) || 'json';
 
       await transformResponse(response);
 
-      if (responseType !== "json" || opts.isBackendSuccess(response)) {
+      if (responseType !== 'json' || opts.isBackendSuccess(response)) {
         return Promise.resolve(response);
       }
 
@@ -66,7 +66,7 @@ function createCommonRequest<
       }
 
       const backendError = new AxiosError<ResponseData>(
-        "the backend request error",
+        'the backend request error',
         BACKEND_ERROR_CODE,
         response.config,
         response.request,
@@ -112,13 +112,13 @@ export function createRequest<ResponseData, ApiData, State extends Record<string
 
   const request: RequestInstance<ApiData, State> = async function request<
     T extends ApiData = ApiData,
-    R extends ResponseType = "json"
+    R extends ResponseType = 'json'
   >(config: CustomAxiosRequestConfig) {
     const response: AxiosResponse<ResponseData> = await instance(config);
 
-    const responseType = response.config?.responseType || "json";
+    const responseType = response.config?.responseType || 'json';
 
-    if (responseType === "json") {
+    if (responseType === 'json') {
       return opts.transform(response);
     }
 
@@ -147,14 +147,14 @@ export function createFlatRequest<ResponseData, ApiData, State extends Record<st
 
   const flatRequest: FlatRequestInstance<ResponseData, ApiData, State> = async function flatRequest<
     T extends ApiData = ApiData,
-    R extends ResponseType = "json"
+    R extends ResponseType = 'json'
   >(config: CustomAxiosRequestConfig) {
     try {
       const response: AxiosResponse<ResponseData> = await instance(config);
 
-      const responseType = response.config?.responseType || "json";
+      const responseType = response.config?.responseType || 'json';
 
-      if (responseType === "json") {
+      if (responseType === 'json') {
         const data = await opts.transform(response);
 
         return { data, error: null, response };
@@ -175,5 +175,5 @@ export function createFlatRequest<ResponseData, ApiData, State extends Record<st
 }
 
 export { BACKEND_ERROR_CODE, REQUEST_ID_KEY };
-export type * from "./type";
+export type * from './type';
 export type { CreateAxiosDefaults, AxiosError };

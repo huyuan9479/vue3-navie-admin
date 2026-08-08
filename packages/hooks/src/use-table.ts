@@ -1,7 +1,7 @@
-import { computed, ref } from "vue";
-import type { Ref, VNodeChild } from "vue";
-import useBoolean from "./use-boolean";
-import useLoading from "./use-loading";
+import { computed, ref } from 'vue';
+import type { Ref, VNodeChild } from 'vue';
+import useBoolean from './use-boolean';
+import useLoading from './use-loading';
 
 export interface PaginationData<T> {
   data: T[];
@@ -23,7 +23,7 @@ export type TableColumnCheck = {
   title: TableColumnCheckTitle;
   checked: boolean;
   visible: boolean;
-  fixed: "left" | "right" | "unFixed";
+  fixed: 'left' | 'right' | 'unFixed';
 };
 
 export interface UseTableOptions<ResponseData, ApiData, Column, Pagination extends boolean> {
@@ -86,7 +86,7 @@ export default function useTable<ResponseData, ApiData, Column, Pagination exten
     columnChecks.value = defaultChecks.map(col => ({
       ...col,
       checked: checkMap.get(col.key) ?? col.checked,
-      fixed: (fixedMap.get(col.key) !== "unFixed" ? fixedMap.get(col.key) : undefined) ?? col.fixed
+      fixed: (fixedMap.get(col.key) !== 'unFixed' ? fixedMap.get(col.key) : undefined) ?? col.fixed
     }));
   }
 

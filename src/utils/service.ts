@@ -1,4 +1,4 @@
-import json5 from "json5";
+import json5 from 'json5';
 
 /**
  * Create service config by current env
@@ -13,7 +13,7 @@ export function createServiceConfig(env: Env.ImportMeta) {
     other = json5.parse(VITE_OTHER_SERVICE_BASE_URL);
   } catch {
     // eslint-disable-next-line no-console
-    console.error("VITE_OTHER_SERVICE_BASE_URL is not a valid json5 string");
+    console.error('VITE_OTHER_SERVICE_BASE_URL is not a valid json5 string');
   }
 
   const httpConfig: App.Service.SimpleServiceConfig = {
@@ -68,7 +68,7 @@ export function getServiceBaseURL(env: Env.ImportMeta, isProxy: boolean) {
  */
 function createProxyPattern(key?: App.Service.OtherBaseURLKey) {
   if (!key) {
-    return "/proxy-default";
+    return '/proxy-default';
   }
 
   return `/proxy-${key}`;

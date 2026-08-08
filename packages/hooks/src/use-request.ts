@@ -1,6 +1,6 @@
-import { ref } from "vue";
-import type { Ref } from "vue";
-import { createFlatRequest } from "@sa/axios";
+import { ref } from 'vue';
+import type { Ref } from 'vue';
+import { createFlatRequest } from '@sa/axios';
 import type {
   AxiosError,
   CreateAxiosDefaults,
@@ -9,8 +9,8 @@ import type {
   RequestInstanceCommon,
   RequestOption,
   ResponseType
-} from "@sa/axios";
-import useLoading from "./use-loading";
+} from '@sa/axios';
+import useLoading from './use-loading';
 
 export type HookRequestInstanceResponseSuccessData<ApiData> = {
   data: Ref<ApiData>;
@@ -31,7 +31,7 @@ export interface HookRequestInstance<
   ApiData,
   State extends Record<string, unknown>
 > extends RequestInstanceCommon<State> {
-  <T extends ApiData = ApiData, R extends ResponseType = "json">(
+  <T extends ApiData = ApiData, R extends ResponseType = 'json'>(
     config: CustomAxiosRequestConfig
   ): HookRequestInstanceResponseData<ResponseData, MappedType<R, T>>;
 }
@@ -50,7 +50,7 @@ export default function createHookRequest<ResponseData, ApiData, State extends R
 
   const hookRequest: HookRequestInstance<ResponseData, ApiData, State> = function hookRequest<
     T extends ApiData = ApiData,
-    R extends ResponseType = "json"
+    R extends ResponseType = 'json'
   >(config: CustomAxiosRequestConfig) {
     const { loading, startLoading, endLoading } = useLoading();
 

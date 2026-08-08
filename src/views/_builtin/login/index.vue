@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import type { Component } from "vue";
-import { loginModuleRecord } from "@/constants/app";
-import { useAppStore } from "@/store/modules/app";
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
-import PwdLogin from "./components/PwdLogin.vue";
-import Register from "./components/Register.vue";
-import ResetPwd from "./components/ResetPwd.vue";
-import ExpressLogin from "./components/ExpressLogin.vue";
+import { computed } from 'vue';
+import type { Component } from 'vue';
+import { loginModuleRecord } from '@/constants/app';
+import { useAppStore } from '@/store/modules/app';
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
+import PwdLogin from './components/PwdLogin.vue';
+import Register from './components/Register.vue';
+import ResetPwd from './components/ResetPwd.vue';
+import ExpressLogin from './components/ExpressLogin.vue';
 
 interface Props {
   /** The login module */
@@ -26,13 +26,13 @@ interface LoginModule {
 }
 
 const moduleMap: Record<UnionKey.LoginModule, LoginModule> = {
-  "pwd-login": { label: loginModuleRecord["pwd-login"], component: PwdLogin },
+  'pwd-login': { label: loginModuleRecord['pwd-login'], component: PwdLogin },
   register: { label: loginModuleRecord.register, component: Register },
-  "reset-pwd": { label: loginModuleRecord["reset-pwd"], component: ResetPwd },
-  "express-login": { label: loginModuleRecord["express-login"], component: ExpressLogin }
+  'reset-pwd': { label: loginModuleRecord['reset-pwd'], component: ResetPwd },
+  'express-login': { label: loginModuleRecord['express-login'], component: ExpressLogin }
 };
 
-const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
+const activeModule = computed(() => moduleMap[props.module || 'pwd-login']);
 </script>
 
 <template>
@@ -41,7 +41,7 @@ const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
     <div class="absolute left-0 top-0 h-15 pl-12px z-9 flex-y-center justify-between">
       <SystemLogo class="size-36px mr-6px lt-sm:size-32px" />
       <h3 class="text-20px text-primary font-500 lt-sm:text-20px">
-        {{ $t("system.title") }}
+        {{ $t('system.title') }}
       </h3>
     </div>
     <!-- 左侧登录 -->

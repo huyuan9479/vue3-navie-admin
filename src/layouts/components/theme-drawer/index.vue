@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useAppStore } from "@/store/modules/app";
-import { $t } from "@/locales";
-import AppearanceSettings from "./components/appearance/index.vue";
-import LayoutSettings from "./components/layout/index.vue";
-import GeneralSettings from "./components/general/index.vue";
-import ConfigOperation from "./components/ConfigOperation.vue";
-import PresetSettings from "./components/preset/index.vue";
+import { computed, ref } from 'vue';
+import { useAppStore } from '@/store/modules/app';
+import { $t } from '@/locales';
+import AppearanceSettings from './components/appearance/index.vue';
+import LayoutSettings from './components/layout/index.vue';
+import GeneralSettings from './components/general/index.vue';
+import ConfigOperation from './components/ConfigOperation.vue';
+import PresetSettings from './components/preset/index.vue';
 
 defineOptions({
-  name: "ThemeDrawer"
+  name: 'ThemeDrawer'
 });
 
 const appStore = useAppStore();
-const activeTab = ref("appearance");
+const activeTab = ref('appearance');
 
 const drawerWidth = computed(() => {
   const width = 400;

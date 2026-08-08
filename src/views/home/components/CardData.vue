@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { createReusableTemplate } from "@vueuse/core";
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
+import { computed } from 'vue';
+import { createReusableTemplate } from '@vueuse/core';
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
 
 defineOptions({
-  name: "CardData"
+  name: 'CardData'
 });
 
 interface CardData {
@@ -22,48 +22,48 @@ interface CardData {
 
 const cardData = computed<CardData[]>(() => [
   {
-    key: "visitCount",
-    title: $t("page.home.visitCount"),
+    key: 'visitCount',
+    title: $t('page.home.visitCount'),
     value: 9725,
-    unit: "",
+    unit: '',
     color: {
-      start: "#ec4786",
-      end: "#b955a4"
+      start: '#ec4786',
+      end: '#b955a4'
     },
-    icon: "ant-design:bar-chart-outlined"
+    icon: 'ant-design:bar-chart-outlined'
   },
   {
-    key: "turnover",
-    title: $t("page.home.turnover"),
+    key: 'turnover',
+    title: $t('page.home.turnover'),
     value: 1026,
-    unit: "$",
+    unit: '$',
     color: {
-      start: "#865ec0",
-      end: "#5144b4"
+      start: '#865ec0',
+      end: '#5144b4'
     },
-    icon: "ant-design:money-collect-outlined"
+    icon: 'ant-design:money-collect-outlined'
   },
   {
-    key: "downloadCount",
-    title: $t("page.home.downloadCount"),
+    key: 'downloadCount',
+    title: $t('page.home.downloadCount'),
     value: 970925,
-    unit: "",
+    unit: '',
     color: {
-      start: "#56cdf3",
-      end: "#719de3"
+      start: '#56cdf3',
+      end: '#719de3'
     },
-    icon: "carbon:document-download"
+    icon: 'carbon:document-download'
   },
   {
-    key: "dealCount",
-    title: $t("page.home.dealCount"),
+    key: 'dealCount',
+    title: $t('page.home.dealCount'),
     value: 9527,
-    unit: "",
+    unit: '',
     color: {
-      start: "#fcbc25",
-      end: "#f68057"
+      start: '#fcbc25',
+      end: '#f68057'
     },
-    icon: "ant-design:trademark-circle-outlined"
+    icon: 'ant-design:trademark-circle-outlined'
   }
 ]);
 
@@ -75,7 +75,7 @@ const [DefineGradientBg, GradientBg] = createReusableTemplate<GradientBgProps>()
 
 const themeStore = useThemeStore();
 
-function getGradientColor(color: CardData["color"]) {
+function getGradientColor(color: CardData['color']) {
   return `linear-gradient(to bottom right, ${color.start}, ${color.end})`;
 }
 </script>

@@ -1,18 +1,18 @@
-import process from "node:process";
-import { loadConfig } from "c12";
-import type { CliOption } from "../types";
+import process from 'node:process';
+import { loadConfig } from 'c12';
+import type { CliOption } from '../types';
 
 const defaultOptions: CliOption = {
   cwd: process.cwd(),
   cleanupDirs: [
-    "**/dist",
-    "**/package-lock.json",
-    "**/yarn.lock",
-    "**/pnpm-lock.yaml",
-    "**/node_modules",
-    "!node_modules/**"
+    '**/dist',
+    '**/package-lock.json',
+    '**/yarn.lock',
+    '**/pnpm-lock.yaml',
+    '**/node_modules',
+    '!node_modules/**'
   ],
-  ncuCommandArgs: ["--deep", "-u"],
+  ncuCommandArgs: ['--deep', '-u'],
   changelogOptions: {},
   gitCommitVerifyIgnores: [
     /^((Merge pull request)|(Merge (.*?) into (.*?)|(Merge branch (.*?)))(?:\r?\n)*$)/m,
@@ -28,7 +28,7 @@ const defaultOptions: CliOption = {
 
 export async function loadCliOptions(overrides?: Partial<CliOption>, cwd = process.cwd()) {
   const { config } = await loadConfig<Partial<CliOption>>({
-    name: "soybean",
+    name: 'soybean',
     defaults: defaultOptions,
     overrides,
     cwd,

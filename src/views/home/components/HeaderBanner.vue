@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { useAppStore } from "@/store/modules/app";
-import { useAuthStore } from "@/store/modules/auth";
-import { $t } from "@/locales";
+import { computed } from 'vue';
+import { useAppStore } from '@/store/modules/app';
+import { useAuthStore } from '@/store/modules/auth';
+import { $t } from '@/locales';
 
 defineOptions({
-  name: "HeaderBanner"
+  name: 'HeaderBanner'
 });
 
 const appStore = useAppStore();
@@ -22,18 +22,18 @@ interface StatisticData {
 const statisticData = computed<StatisticData[]>(() => [
   {
     id: 0,
-    label: $t("page.home.projectCount"),
-    value: "25"
+    label: $t('page.home.projectCount'),
+    value: '25'
   },
   {
     id: 1,
-    label: $t("page.home.todo"),
-    value: "4/16"
+    label: $t('page.home.todo'),
+    value: '4/16'
   },
   {
     id: 2,
-    label: $t("page.home.message"),
-    value: "12"
+    label: $t('page.home.message'),
+    value: '12'
   }
 ]);
 </script>
@@ -48,9 +48,9 @@ const statisticData = computed<StatisticData[]>(() => [
           </div>
           <div class="pl-12px">
             <h3 class="text-18px font-semibold">
-              {{ $t("page.home.greeting", { userName: authStore.userInfo.userName }) }}
+              {{ $t('page.home.greeting', { userName: authStore.userInfo.userName }) }}
             </h3>
-            <p class="text-#999 leading-30px">{{ $t("page.home.weatherDesc") }}</p>
+            <p class="text-#999 leading-30px">{{ $t('page.home.weatherDesc') }}</p>
           </div>
         </div>
       </NGi>

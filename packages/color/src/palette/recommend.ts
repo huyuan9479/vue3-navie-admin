@@ -1,12 +1,12 @@
-import { getColorName, getDeltaE, getHsl, isValidColor, transformHslToHex } from "../shared";
-import { colorPalettes } from "../constant";
+import { getColorName, getDeltaE, getHsl, isValidColor, transformHslToHex } from '../shared';
+import { colorPalettes } from '../constant';
 import type {
   ColorPalette,
   ColorPaletteFamily,
   ColorPaletteFamilyWithNearestPalette,
   ColorPaletteMatch,
   ColorPaletteNumber
-} from "../types";
+} from '../types';
 
 /**
  * get recommended color palette by provided color
@@ -56,12 +56,12 @@ export function getRecommendedPaletteColorByNumber(color: string, number: ColorP
  */
 export function getRecommendedColorPaletteFamily(color: string) {
   if (!isValidColor(color)) {
-    throw new Error("Invalid color, please check color value!");
+    throw new Error('Invalid color, please check color value!');
   }
 
   let colorName = getColorName(color);
 
-  colorName = colorName.toLowerCase().replace(/\s/g, "-");
+  colorName = colorName.toLowerCase().replace(/\s/g, '-');
 
   const { h: h1, s: s1 } = getHsl(color);
 

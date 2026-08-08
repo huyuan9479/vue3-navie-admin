@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { computed, ref, shallowRef } from "vue";
-import { useRouter } from "vue-router";
-import { onKeyStroke, useDebounceFn } from "@vueuse/core";
-import { useRouteStore } from "@/store/modules/route";
-import { useAppStore } from "@/store/modules/app";
-import { $t } from "@/locales";
-import SearchResult from "./SearchResult.vue";
-import SearchFooter from "./SearchFooter.vue";
+import { computed, ref, shallowRef } from 'vue';
+import { useRouter } from 'vue-router';
+import { onKeyStroke, useDebounceFn } from '@vueuse/core';
+import { useRouteStore } from '@/store/modules/route';
+import { useAppStore } from '@/store/modules/app';
+import { $t } from '@/locales';
+import SearchResult from './SearchResult.vue';
+import SearchFooter from './SearchFooter.vue';
 
-defineOptions({ name: "SearchModal" });
+defineOptions({ name: 'SearchModal' });
 
 const router = useRouter();
 const appStore = useAppStore();
@@ -16,13 +16,13 @@ const routeStore = useRouteStore();
 
 const isMobile = computed(() => appStore.isMobile);
 
-const keyword = ref("");
-const activePath = ref("");
+const keyword = ref('');
+const activePath = ref('');
 const resultOptions = shallowRef<App.Global.Menu[]>([]);
 
 const handleSearch = useDebounceFn(search, 300);
 
-const visible = defineModel<boolean>("show", { required: true });
+const visible = defineModel<boolean>('show', { required: true });
 
 function search() {
   resultOptions.value = routeStore.searchMenus.filter(menu => {
@@ -30,7 +30,7 @@ function search() {
     const title = (menu.i18nKey ? $t(menu.i18nKey) : menu.label).toLocaleLowerCase();
     return trimKeyword && title.includes(trimKeyword);
   });
-  activePath.value = resultOptions.value[0]?.routePath ?? "";
+  activePath.value = resultOptions.value[0]?.routePath ?? '';
 }
 
 function handleClose() {
@@ -38,7 +38,7 @@ function handleClose() {
   setTimeout(() => {
     visible.value = false;
     resultOptions.value = [];
-    keyword.value = "";
+    keyword.value = '';
   }, 200);
 }
 
@@ -74,16 +74,16 @@ function getActivePathIndex() {
 
 /** key enter */
 function handleEnter() {
-  if (resultOptions.value?.length === 0 || activePath.value === "") return;
+  if (resultOptions.value?.length === 0 || activePath.value === '') return;
   handleClose();
   router.push(activePath.value);
 }
 
 function registerShortcut() {
-  onKeyStroke("Escape", handleClose);
-  onKeyStroke("Enter", handleEnter);
-  onKeyStroke("ArrowUp", handleUp);
-  onKeyStroke("ArrowDown", handleDown);
+  onKeyStroke('Escape', handleClose);
+  onKeyStroke('Enter', handleEnter);
+  onKeyStroke('ArrowUp', handleUp);
+  onKeyStroke('ArrowDown', handleDown);
 }
 
 registerShortcut();
@@ -108,7 +108,7 @@ registerShortcut();
         </template>
       </NInput>
       <NButton v-if="isMobile" type="primary" ghost @click="handleClose">
-        {{ $t("common.cancel") }}
+        {{ $t('common.cancel') }}
       </NButton>
     </NInputGroup>
 

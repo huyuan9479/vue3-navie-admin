@@ -1,19 +1,19 @@
-import { computed } from "vue";
-import { useCountDown, useLoading } from "@sa/hooks";
-import { REG_PHONE } from "@/constants/reg";
-import { $t } from "@/locales";
+import { computed } from 'vue';
+import { useCountDown, useLoading } from '@sa/hooks';
+import { REG_PHONE } from '@/constants/reg';
+import { $t } from '@/locales';
 
 export function useCaptcha() {
   const { loading, startLoading, endLoading } = useLoading();
   const { count, start, stop, isCounting } = useCountDown(10);
 
   const label = computed(() => {
-    let text = $t("page.login.codeLogin.getCode");
+    let text = $t('page.login.codeLogin.getCode');
 
-    const countingLabel = $t("page.login.codeLogin.reGetCode", { time: count.value });
+    const countingLabel = $t('page.login.codeLogin.reGetCode', { time: count.value });
 
     if (loading.value) {
-      text = "";
+      text = '';
     }
 
     if (isCounting.value) {
@@ -24,14 +24,14 @@ export function useCaptcha() {
   });
 
   function isPhoneValid(phone: string) {
-    if (phone.trim() === "") {
-      window.$message?.error?.($t("form.phone.required"));
+    if (phone.trim() === '') {
+      window.$message?.error?.($t('form.phone.required'));
 
       return false;
     }
 
     if (!REG_PHONE.test(phone)) {
-      window.$message?.error?.($t("form.phone.invalid"));
+      window.$message?.error?.($t('form.phone.invalid'));
 
       return false;
     }
@@ -53,7 +53,7 @@ export function useCaptcha() {
       setTimeout(resolve, 500);
     });
 
-    window.$message?.success?.($t("page.login.codeLogin.sendCodeSuccess"));
+    window.$message?.success?.($t('page.login.codeLogin.sendCodeSuccess'));
 
     start();
 

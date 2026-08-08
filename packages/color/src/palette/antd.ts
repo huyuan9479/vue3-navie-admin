@@ -1,6 +1,6 @@
-import type { AnyColor, HsvColor } from "colord";
-import { getHex, getHsv, isValidColor, mixColor } from "../shared";
-import type { ColorIndex } from "../types";
+import type { AnyColor, HsvColor } from 'colord';
+import { getHex, getHsv, isValidColor, mixColor } from '../shared';
+import type { ColorIndex } from '../types';
 
 /** Hue step */
 const hueStep = 2;
@@ -26,7 +26,7 @@ const darkColorCount = 4;
  */
 export function getAntDPaletteColorByIndex(color: AnyColor, index: ColorIndex): string {
   if (!isValidColor(color)) {
-    throw new Error("invalid input color value");
+    throw new Error('invalid input color value');
   }
 
   if (index === 6) {
@@ -68,7 +68,7 @@ const darkColorMap = [
  * @param darkTheme - Dark theme
  * @param darkThemeMixColor - Dark theme mix color (default: #141414)
  */
-export function getAntDColorPalette(color: AnyColor, darkTheme = false, darkThemeMixColor = "#141414"): string[] {
+export function getAntDColorPalette(color: AnyColor, darkTheme = false, darkThemeMixColor = '#141414'): string[] {
   const indexes: ColorIndex[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
   const patterns = indexes.map(index => getAntDPaletteColorByIndex(color, index));

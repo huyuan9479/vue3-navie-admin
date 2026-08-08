@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import type { VNode } from "vue";
-import { useTabStore } from "@/store/modules/tab";
-import { useSvgIcon } from "@/hooks/common/icon";
-import { $t } from "@/locales";
+import { computed } from 'vue';
+import type { VNode } from 'vue';
+import { useTabStore } from '@/store/modules/tab';
+import { useSvgIcon } from '@/hooks/common/icon';
+import { $t } from '@/locales';
 
 defineOptions({
-  name: "ContextMenu"
+  name: 'ContextMenu'
 });
 
 interface Props {
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabledKeys: () => []
 });
 
-const visible = defineModel<boolean>("visible");
+const visible = defineModel<boolean>('visible');
 
 const { removeTab, clearTabs, clearLeftTabs, clearRightTabs, fixTab, unfixTab, isTabRetain, homeTab } = useTabStore();
 const { SvgIconVNode } = useSvgIcon();
@@ -39,44 +39,44 @@ type DropdownOption = {
 const options = computed(() => {
   const opts: DropdownOption[] = [
     {
-      key: "closeCurrent",
-      label: $t("dropdown.closeCurrent"),
-      icon: SvgIconVNode({ icon: "mdi:close", fontSize: 18 })
+      key: 'closeCurrent',
+      label: $t('dropdown.closeCurrent'),
+      icon: SvgIconVNode({ icon: 'mdi:close', fontSize: 18 })
     },
     {
-      key: "closeOther",
-      label: $t("dropdown.closeOther"),
-      icon: SvgIconVNode({ icon: "mdi:arrow-expand-horizontal", fontSize: 18 })
+      key: 'closeOther',
+      label: $t('dropdown.closeOther'),
+      icon: SvgIconVNode({ icon: 'mdi:arrow-expand-horizontal', fontSize: 18 })
     },
     {
-      key: "closeLeft",
-      label: $t("dropdown.closeLeft"),
-      icon: SvgIconVNode({ icon: "mdi:format-horizontal-align-left", fontSize: 18 })
+      key: 'closeLeft',
+      label: $t('dropdown.closeLeft'),
+      icon: SvgIconVNode({ icon: 'mdi:format-horizontal-align-left', fontSize: 18 })
     },
     {
-      key: "closeRight",
-      label: $t("dropdown.closeRight"),
-      icon: SvgIconVNode({ icon: "mdi:format-horizontal-align-right", fontSize: 18 })
+      key: 'closeRight',
+      label: $t('dropdown.closeRight'),
+      icon: SvgIconVNode({ icon: 'mdi:format-horizontal-align-right', fontSize: 18 })
     },
     {
-      key: "closeAll",
-      label: $t("dropdown.closeAll"),
-      icon: SvgIconVNode({ icon: "mdi:arrow-collapse-horizontal", fontSize: 18 })
+      key: 'closeAll',
+      label: $t('dropdown.closeAll'),
+      icon: SvgIconVNode({ icon: 'mdi:arrow-collapse-horizontal', fontSize: 18 })
     }
   ];
 
   if (props.tabId !== homeTab?.id) {
     if (isTabRetain(props.tabId)) {
       opts.push({
-        key: "unpin",
-        label: $t("dropdown.unpin"),
-        icon: SvgIconVNode({ icon: "mdi:pin-off-outline", fontSize: 18 })
+        key: 'unpin',
+        label: $t('dropdown.unpin'),
+        icon: SvgIconVNode({ icon: 'mdi:pin-off-outline', fontSize: 18 })
       });
     } else {
       opts.push({
-        key: "pin",
-        label: $t("dropdown.pin"),
-        icon: SvgIconVNode({ icon: "mdi:pin-outline", fontSize: 18 })
+        key: 'pin',
+        label: $t('dropdown.pin'),
+        icon: SvgIconVNode({ icon: 'mdi:pin-outline', fontSize: 18 })
       });
     }
   }

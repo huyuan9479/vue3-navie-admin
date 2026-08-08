@@ -1,12 +1,12 @@
-import { createAlova } from "alova";
-import type { AlovaDefaultCacheAdapter, AlovaGenerics, AlovaGlobalCacheAdapter, AlovaRequestAdapter } from "alova";
-import VueHook from "alova/vue";
-import type { VueHookType } from "alova/vue";
-import adapterFetch from "alova/fetch";
-import { createServerTokenAuthentication } from "alova/client";
-import type { FetchRequestInit } from "alova/fetch";
-import { BACKEND_ERROR_CODE } from "./constant";
-import type { CustomAlovaConfig, RequestOptions } from "./type";
+import { createAlova } from 'alova';
+import type { AlovaDefaultCacheAdapter, AlovaGenerics, AlovaGlobalCacheAdapter, AlovaRequestAdapter } from 'alova';
+import VueHook from 'alova/vue';
+import type { VueHookType } from 'alova/vue';
+import adapterFetch from 'alova/fetch';
+import { createServerTokenAuthentication } from 'alova/client';
+import type { FetchRequestInit } from 'alova/fetch';
+import { BACKEND_ERROR_CODE } from './constant';
+import type { CustomAlovaConfig, RequestOptions } from './type';
 
 export const createAlovaRequest = <
   RequestConfig = FetchRequestInit,
@@ -50,7 +50,7 @@ export const createAlovaRequest = <
           if (await options.isBackendSuccess(response)) {
             transformedData = await options.transformBackendResponse(response);
           } else {
-            error = new Error("the backend request error");
+            error = new Error('the backend request error');
             error.code = BACKEND_ERROR_CODE;
           }
         } catch (err) {
@@ -73,5 +73,5 @@ export const createAlovaRequest = <
 };
 
 export { BACKEND_ERROR_CODE };
-export type * from "./type";
-export type * from "alova";
+export type * from './type';
+export type * from 'alova';
