@@ -10,7 +10,7 @@ const { bool: show, toggle } = useBoolean();
 
 <template>
   <ButtonIcon :tooltip-content="$t('common.search')" @click="toggle">
-    <icon-ant-design:search-outlined />
+    <icon-ant-design-search-outlined />
   </ButtonIcon>
   <SearchModal v-model:show="show" />
 </template>
