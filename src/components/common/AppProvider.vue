@@ -3,7 +3,7 @@ import { createTextVNode, defineComponent } from "vue";
 import { useDialog, useLoadingBar, useMessage, useNotification } from "naive-ui";
 
 defineOptions({
-  name: "AppProvider"
+  name: "AppProvider",
 });
 
 const ContextHolder = defineComponent({
@@ -19,7 +19,7 @@ const ContextHolder = defineComponent({
     register();
 
     return () => createTextVNode();
-  }
+  },
 });
 </script>
 

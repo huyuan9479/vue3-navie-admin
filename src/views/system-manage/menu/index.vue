@@ -11,9 +11,9 @@ const schemas: FormSchema[] = [
       placeholder: "请输入姓名",
       onInput: (e: any) => {
         console.log(e);
-      }
+      },
     },
-    rules: [{ required: true, message: "请输入姓名", trigger: ["blur"] }]
+    rules: [{ required: true, message: "请输入姓名", trigger: ["blur"] }],
   },
   {
     field: "mobile",
@@ -24,8 +24,8 @@ const schemas: FormSchema[] = [
       showButton: false,
       onInput: (e: any) => {
         console.log(e);
-      }
-    }
+      },
+    },
   },
   {
     field: "type",
@@ -36,17 +36,17 @@ const schemas: FormSchema[] = [
       options: [
         {
           label: "舒适性",
-          value: 1
+          value: 1,
         },
         {
           label: "经济性",
-          value: 2
-        }
+          value: 2,
+        },
       ],
       onUpdateValue: (e: any) => {
         console.log(e);
-      }
-    }
+      },
+    },
   },
   {
     field: "makeDate",
@@ -58,8 +58,8 @@ const schemas: FormSchema[] = [
       clearable: true,
       onUpdateValue: (e: any) => {
         console.log(e);
-      }
-    }
+      },
+    },
   },
   {
     field: "makeTime",
@@ -69,14 +69,14 @@ const schemas: FormSchema[] = [
       clearable: true,
       onUpdateValue: (e: any) => {
         console.log(e);
-      }
-    }
+      },
+    },
   },
   {
     field: "status",
     label: "状态",
     //插槽
-    slot: "statusSlot"
+    slot: "statusSlot",
   },
   {
     field: "makeProject",
@@ -87,21 +87,21 @@ const schemas: FormSchema[] = [
       options: [
         {
           label: "种牙",
-          value: 1
+          value: 1,
         },
         {
           label: "补牙",
-          value: 2
+          value: 2,
         },
         {
           label: "根管",
-          value: 3
-        }
+          value: 3,
+        },
       ],
       onUpdateChecked: (e: any) => {
         console.log(e);
-      }
-    }
+      },
+    },
   },
   {
     field: "makeSource",
@@ -111,23 +111,23 @@ const schemas: FormSchema[] = [
       options: [
         {
           label: "网上",
-          value: 1
+          value: 1,
         },
         {
           label: "门店",
-          value: 2
-        }
+          value: 2,
+        },
       ],
       onUpdateChecked: (e: any) => {
         console.log(e);
-      }
-    }
-  }
+      },
+    },
+  },
 ];
 
 const [register] = useForm({
   labelWidth: 80,
-  schemas
+  schemas,
 });
 
 function handleSubmit(values: Recordable) {

@@ -10,36 +10,36 @@ export const themeSettings: App.Theme.ThemeSetting = {
     info: "#1677ff",
     success: "#52c41a",
     warning: "#faad14",
-    error: "#f5222d"
+    error: "#f5222d",
   },
   isInfoFollowPrimary: true,
   layout: {
     mode: "vertical",
-    scrollMode: "content"
+    scrollMode: "content",
   },
   page: {
     animate: true,
-    animateMode: "fade-slide"
+    animateMode: "fade-slide",
   },
   header: {
     height: 50,
     breadcrumb: {
       visible: true,
-      showIcon: true
+      showIcon: true,
     },
     multilingual: {
-      visible: true
+      visible: true,
     },
     globalSearch: {
-      visible: true
-    }
+      visible: true,
+    },
   },
   tab: {
     visible: true,
     cache: true,
     height: 36,
     mode: "chrome",
-    closeTabByMiddleClick: false
+    closeTabByMiddleClick: false,
   },
   fixedHeaderAndTab: true,
   sider: {
@@ -49,20 +49,20 @@ export const themeSettings: App.Theme.ThemeSetting = {
     mixWidth: 90,
     mixCollapsedWidth: 64,
     mixChildMenuWidth: 200,
-    autoSelectFirstMenu: false
+    autoSelectFirstMenu: false,
   },
   footer: {
     visible: true,
     fixed: false,
     height: 30,
-    right: true
+    right: true,
   },
   watermark: {
     visible: false,
     text: "Vue3NavieAdmin",
     enableUserName: false,
     enableTime: false,
-    timeFormat: "YYYY-MM-DD HH:mm"
+    timeFormat: "YYYY-MM-DD HH:mm",
   },
   tokens: {
     light: {
@@ -70,22 +70,22 @@ export const themeSettings: App.Theme.ThemeSetting = {
         container: "rgb(255, 255, 255)",
         layout: "rgb(247, 250, 252)",
         inverted: "rgb(0, 20, 40)",
-        "base-text": "rgb(31, 31, 31)"
+        "base-text": "rgb(31, 31, 31)",
       },
       boxShadow: {
         header: "0 1px 2px rgb(0, 21, 41, 0.08)",
         sider: "2px 0 8px 0 rgb(29, 35, 41, 0.05)",
-        tab: "0 1px 2px rgb(0, 21, 41, 0.08)"
-      }
+        tab: "0 1px 2px rgb(0, 21, 41, 0.08)",
+      },
     },
     dark: {
       colors: {
         container: "rgb(28, 28, 28)",
         layout: "rgb(18, 18, 18)",
-        "base-text": "rgb(224, 224, 224)"
-      }
-    }
-  }
+        "base-text": "rgb(224, 224, 224)",
+      },
+    },
+  },
 };
 
 /**

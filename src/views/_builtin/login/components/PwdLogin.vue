@@ -8,7 +8,7 @@ import { useFormRules, useNaiveForm } from "@/hooks/common/form";
 import { $t } from "@/locales";
 
 defineOptions({
-  name: "PwdLogin"
+  name: "PwdLogin",
 });
 
 const authStore = useAuthStore();
@@ -23,22 +23,22 @@ interface FormModel {
 
 const model: FormModel = reactive({
   userName: "admin",
-  password: "123456"
+  password: "123456",
 });
 
 const expressLoginWays = [
   {
     icon: "ant-design:wechat-filled",
-    value: "wechat"
+    value: "wechat",
   },
   {
     icon: "ant-design:alipay-circle-outlined",
-    value: "alipay"
+    value: "alipay",
   },
   {
     icon: "ant-design:github-outlined",
-    value: "github"
-  }
+    value: "github",
+  },
 ];
 const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
   // inside computed to make locale reactive, if not apply i18n, you can define it without computed
@@ -46,7 +46,7 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
 
   return {
     userName: formRules.userName,
-    password: formRules.pwd
+    password: formRules.pwd,
   };
 });
 
@@ -65,7 +65,7 @@ interface CodeLoginFormModel {
 
 const codeLoginModel: CodeLoginFormModel = reactive({
   phone: "",
-  code: ""
+  code: "",
 });
 
 const codeLoginRules = computed<Record<keyof CodeLoginFormModel, App.Global.FormRule[]>>(() => {
@@ -73,7 +73,7 @@ const codeLoginRules = computed<Record<keyof CodeLoginFormModel, App.Global.Form
 
   return {
     phone: formRules.phone,
-    code: formRules.code
+    code: formRules.code,
   };
 });
 
@@ -99,7 +99,10 @@ async function handleCodeLoginSubmit() {
             @keyup.enter="handlePwdLoginSubmit"
           >
             <NFormItem path="userName">
-              <NInput v-model:value="model.userName" :placeholder="$t('page.login.common.userNamePlaceholder')">
+              <NInput
+                v-model:value="model.userName"
+                :placeholder="$t('page.login.common.userNamePlaceholder')"
+              >
                 <template #prefix>
                   <SvgIcon icon="material-symbols:person-outline" class="text-18px color-#999" />
                 </template>
@@ -149,7 +152,10 @@ async function handleCodeLoginSubmit() {
             @keyup.enter="handleCodeLoginSubmit"
           >
             <NFormItem path="phone">
-              <NInput v-model:value="codeLoginModel.phone" :placeholder="$t('page.login.common.phonePlaceholder')">
+              <NInput
+                v-model:value="codeLoginModel.phone"
+                :placeholder="$t('page.login.common.phonePlaceholder')"
+              >
                 <template #prefix>
                   <SvgIcon icon="material-symbols:mobile-outline" class="text-18px color-#999" />
                 </template>
@@ -157,7 +163,10 @@ async function handleCodeLoginSubmit() {
             </NFormItem>
             <NFormItem path="code">
               <div class="w-full flex-y-center gap-16px">
-                <NInput v-model:value="codeLoginModel.code" :placeholder="$t('page.login.common.codePlaceholder')">
+                <NInput
+                  v-model:value="codeLoginModel.code"
+                  :placeholder="$t('page.login.common.codePlaceholder')"
+                >
                   <template #prefix>
                     <SvgIcon icon="material-symbols:mail-outline" class="text-18px color-#999" />
                   </template>

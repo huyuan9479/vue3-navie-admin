@@ -12,8 +12,8 @@ export function fetchLogin(userName: string, password: string) {
     method: "post",
     data: {
       userName,
-      password
-    }
+      password,
+    },
   });
 }
 
@@ -32,8 +32,8 @@ export function fetchRefreshToken(refreshToken: string) {
     url: "/auth/refreshToken",
     method: "post",
     data: {
-      refreshToken
-    }
+      refreshToken,
+    },
   });
 }
 

@@ -2,7 +2,7 @@
 import ThemePreset from "./components/ThemePreset.vue";
 
 defineOptions({
-  name: "PresetSettings"
+  name: "PresetSettings",
 });
 </script>
 

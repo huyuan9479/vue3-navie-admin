@@ -5,7 +5,7 @@ import { useAuthStore } from "@/store/modules/auth";
 import { $t } from "@/locales";
 
 defineOptions({
-  name: "HeaderBanner"
+  name: "HeaderBanner",
 });
 
 const appStore = useAppStore();
@@ -23,18 +23,18 @@ const statisticData = computed<StatisticData[]>(() => [
   {
     id: 0,
     label: $t("page.home.projectCount"),
-    value: "25"
+    value: "25",
   },
   {
     id: 1,
     label: $t("page.home.todo"),
-    value: "4/16"
+    value: "4/16",
   },
   {
     id: 2,
     label: $t("page.home.message"),
-    value: "12"
-  }
+    value: "12",
+  },
 ]);
 </script>
 
@@ -56,7 +56,12 @@ const statisticData = computed<StatisticData[]>(() => [
       </NGi>
       <NGi span="24 s:24 m:6">
         <NSpace :size="24" justify="end">
-          <NStatistic v-for="item in statisticData" :key="item.id" class="whitespace-nowrap" v-bind="item" />
+          <NStatistic
+            v-for="item in statisticData"
+            :key="item.id"
+            class="whitespace-nowrap"
+            v-bind="item"
+          />
         </NSpace>
       </NGi>
     </NGrid>

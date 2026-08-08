@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 
 defineOptions({
   name: "ButtonIcon",
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 interface Props {
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
   icon: "",
   tooltipContent: "",
   tooltipPlacement: "bottom",
-  zIndex: 98
+  zIndex: 98,
 });
 
 const DEFAULT_CLASS = "h-[36px] text-icon";

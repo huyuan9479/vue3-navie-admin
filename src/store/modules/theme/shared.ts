@@ -42,7 +42,7 @@ export function initThemeSettings() {
 export function createThemeToken(
   colors: App.Theme.ThemeColor,
   tokens?: App.Theme.ThemeSetting["tokens"],
-  recommended = false
+  recommended = false,
 ) {
   const paletteColors = createThemePaletteColors(colors, recommended);
 
@@ -52,27 +52,27 @@ export function createThemeToken(
     colors: {
       ...paletteColors,
       nprogress: paletteColors.primary,
-      ...light.colors
+      ...light.colors,
     },
     boxShadow: {
-      ...light.boxShadow
-    }
+      ...light.boxShadow,
+    },
   };
 
   const darkThemeTokens: App.Theme.ThemeTokenCSSVars = {
     colors: {
       ...themeTokens.colors,
-      ...dark?.colors
+      ...dark?.colors,
     },
     boxShadow: {
       ...themeTokens.boxShadow,
-      ...dark?.boxShadow
-    }
+      ...dark?.boxShadow,
+    },
   };
 
   return {
     themeTokens,
-    darkThemeTokens
+    darkThemeTokens,
   };
 }
 
@@ -86,7 +86,7 @@ function createThemePaletteColors(colors: App.Theme.ThemeColor, recommended = fa
   const colorKeys = Object.keys(colors) as App.Theme.ThemeColorKey[];
   const colorPaletteVar = {} as App.Theme.ThemePaletteColor;
 
-  colorKeys.forEach(key => {
+  colorKeys.forEach((key) => {
     const colorMap = getColorPalette(colors[key], recommended);
 
     colorPaletteVar[key] = colorMap.get(500)!;
@@ -190,7 +190,10 @@ export function toggleCssDarkMode(darkMode = false) {
  */
 export function toggleAuxiliaryColorModes(grayscaleMode = false, colourWeakness = false) {
   const htmlElement = document.documentElement;
-  htmlElement.style.filter = [grayscaleMode ? "grayscale(100%)" : "", colourWeakness ? "invert(80%)" : ""]
+  htmlElement.style.filter = [
+    grayscaleMode ? "grayscale(100%)" : "",
+    colourWeakness ? "invert(80%)" : "",
+  ]
     .filter(Boolean)
     .join(" ");
 }
@@ -211,19 +214,19 @@ interface NaiveColorAction {
  */
 function getNaiveThemeColors(colors: App.Theme.ThemeColor, recommended = false) {
   const colorActions: NaiveColorAction[] = [
-    { scene: "", handler: color => color },
-    { scene: "Suppl", handler: color => color },
-    { scene: "Hover", handler: color => getPaletteColorByNumber(color, 500, recommended) },
-    { scene: "Pressed", handler: color => getPaletteColorByNumber(color, 700, recommended) },
-    { scene: "Active", handler: color => addColorAlpha(color, 0.1) }
+    { scene: "", handler: (color) => color },
+    { scene: "Suppl", handler: (color) => color },
+    { scene: "Hover", handler: (color) => getPaletteColorByNumber(color, 500, recommended) },
+    { scene: "Pressed", handler: (color) => getPaletteColorByNumber(color, 700, recommended) },
+    { scene: "Active", handler: (color) => addColorAlpha(color, 0.1) },
   ];
 
   const themeColors: NaiveThemeColor = {};
 
   const colorEntries = Object.entries(colors) as [App.Theme.ThemeColorKey, string][];
 
-  colorEntries.forEach(color => {
-    colorActions.forEach(action => {
+  colorEntries.forEach((color) => {
+    colorActions.forEach((action) => {
       const [colorType, colorValue] = color;
       const colorKey: NaiveColorKey = `${colorType}Color${action.scene}`;
       themeColors[colorKey] = action.handler(colorValue);
@@ -243,21 +246,21 @@ function getNaiveThemeColors(colors: App.Theme.ThemeColor, recommended = false) 
 export function getNaiveTheme(
   colors: App.Theme.ThemeColor,
   settings: App.Theme.ThemeSetting,
-  overrides?: GlobalThemeOverrides
+  overrides?: GlobalThemeOverrides,
 ) {
   const { primary: colorLoading } = colors;
 
   const theme: GlobalThemeOverrides = {
     common: {
       ...getNaiveThemeColors(colors, settings.recommendColor),
-      borderRadius: `${settings.themeRadius}px`
+      borderRadius: `${settings.themeRadius}px`,
     },
     LoadingBar: {
-      colorLoading
+      colorLoading,
     },
     Tag: {
-      borderRadius: `${settings.themeRadius}px`
-    }
+      borderRadius: `${settings.themeRadius}px`,
+    },
   };
 
   // If there are overrides, merge them with priority

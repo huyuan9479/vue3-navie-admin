@@ -19,7 +19,7 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta, buildTime: string) {
     ...setupUnplugin(viteEnv),
     progress(),
     setupHtmlPlugin(buildTime),
-    vueRootValidator()
+    vueRootValidator(),
   ];
 
   return plugins;

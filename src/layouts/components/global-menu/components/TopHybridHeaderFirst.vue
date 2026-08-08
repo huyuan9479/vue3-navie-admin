@@ -11,7 +11,7 @@ import { useRouterPush } from "@/hooks/common/router";
 import { useMenu, useMixMenuContext } from "../context";
 
 defineOptions({
-  name: "TopHybridHeaderFirst"
+  name: "TopHybridHeaderFirst",
 });
 
 const route = useRoute();
@@ -24,7 +24,7 @@ const {
   secondLevelMenus,
   activeFirstLevelMenuKey,
   handleSelectFirstLevelMenu,
-  activeDeepestLevelMenuKey
+  activeDeepestLevelMenuKey,
 } = useMixMenuContext("TopHybridHeaderFirst");
 const { selectedKey } = useMenu();
 
@@ -54,7 +54,7 @@ watch(
   () => {
     updateExpandedKeys();
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 

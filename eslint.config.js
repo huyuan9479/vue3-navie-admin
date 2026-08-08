@@ -6,7 +6,7 @@ export default defineConfig({
     "PascalCase",
     {
       registeredComponentsOnly: false,
-      ignores: ["/^icon-/"]
-    }
-  ]
+      ignores: ["/^icon-/"],
+    },
+  ],
 });

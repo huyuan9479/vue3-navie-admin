@@ -12,7 +12,7 @@ import {
   NAutoComplete,
   NCascader,
   NDatePicker,
-  NTimePicker
+  NTimePicker,
 } from "naive-ui";
 
 const componentMap: Record<string, any> = {
@@ -27,7 +27,7 @@ const componentMap: Record<string, any> = {
   NAutoComplete,
   NCascader,
   NDatePicker,
-  NTimePicker
+  NTimePicker,
 };
 
 /**
@@ -35,7 +35,11 @@ const componentMap: Record<string, any> = {
  */
 export function createPlaceholderMessage(component: ComponentType) {
   if (component === "NInput") return "请输入";
-  if (["NPicker", "NSelect", "NCheckbox", "NRadio", "NSwitch", "NDatePicker", "NTimePicker"].includes(component))
+  if (
+    ["NPicker", "NSelect", "NCheckbox", "NRadio", "NSwitch", "NDatePicker", "NTimePicker"].includes(
+      component,
+    )
+  )
     return "请选择";
   return "";
 }
@@ -54,7 +58,15 @@ export const dateItemType = genType();
 export function defaultType(component: string) {
   if (component === "NInput") return "";
   if (component === "NInputNumber") return null;
-  return ["NPicker", "NSelect", "NCheckbox", "NRadio", "NSwitch", "NDatePicker", "NTimePicker"].includes(component)
+  return [
+    "NPicker",
+    "NSelect",
+    "NCheckbox",
+    "NRadio",
+    "NSwitch",
+    "NDatePicker",
+    "NTimePicker",
+  ].includes(component)
     ? ""
     : undefined;
 }
@@ -63,7 +75,7 @@ export function defaultType(component: string) {
 export function getDynamicProps<T extends {}, U>(props: T): Partial<U> {
   const ret: Recordable = {};
 
-  Object.keys(props).map(key => {
+  Object.keys(props).map((key) => {
     ret[key] = unref((props as Recordable)[key]);
   });
 

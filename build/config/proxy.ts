@@ -18,9 +18,12 @@ export function createViteProxy(env: Env.ImportMeta, enable: boolean) {
 
   const { baseURL, proxyPattern, other } = createServiceConfig(env);
 
-  const proxy: Record<string, ProxyOptions> = createProxyItem({ baseURL, proxyPattern }, isEnableProxyLog);
+  const proxy: Record<string, ProxyOptions> = createProxyItem(
+    { baseURL, proxyPattern },
+    isEnableProxyLog,
+  );
 
-  other.forEach(item => {
+  other.forEach((item) => {
     Object.assign(proxy, createProxyItem(item, isEnableProxyLog));
   });
 
@@ -48,7 +51,7 @@ function createProxyItem(item: App.Service.ServiceConfigItem, enableLog: boolean
         consola.log(bgRed(`Error: ${req.method} `), green(`${options.target}${req.url}`));
       });
     },
-    rewrite: path => path.replace(new RegExp(`^${item.proxyPattern}`), "")
+    rewrite: (path) => path.replace(new RegExp(`^${item.proxyPattern}`), ""),
   };
 
   return proxy;

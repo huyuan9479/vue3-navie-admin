@@ -5,7 +5,7 @@ import { useRouterPush } from "@/hooks/common/router";
 import { useMenu } from "../context";
 
 defineOptions({
-  name: "HorizontalMenu"
+  name: "HorizontalMenu",
 });
 
 const routeStore = useRouteStore();

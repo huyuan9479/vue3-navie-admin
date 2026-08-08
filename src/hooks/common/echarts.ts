@@ -1,7 +1,15 @@
 import { computed, effectScope, nextTick, onScopeDispose, shallowRef, watch } from "vue";
 import { useElementSize } from "@vueuse/core";
 import * as echarts from "echarts/core";
-import { BarChart, GaugeChart, LineChart, PictorialBarChart, PieChart, RadarChart, ScatterChart } from "echarts/charts";
+import {
+  BarChart,
+  GaugeChart,
+  LineChart,
+  PictorialBarChart,
+  PieChart,
+  RadarChart,
+  ScatterChart,
+} from "echarts/charts";
 import type {
   BarSeriesOption,
   GaugeSeriesOption,
@@ -9,7 +17,7 @@ import type {
   PictorialBarSeriesOption,
   PieSeriesOption,
   RadarSeriesOption,
-  ScatterSeriesOption
+  ScatterSeriesOption,
 } from "echarts/charts";
 import {
   DatasetComponent,
@@ -18,7 +26,7 @@ import {
   TitleComponent,
   ToolboxComponent,
   TooltipComponent,
-  TransformComponent
+  TransformComponent,
 } from "echarts/components";
 import type {
   DatasetComponentOption,
@@ -26,7 +34,7 @@ import type {
   LegendComponentOption,
   TitleComponentOption,
   ToolboxComponentOption,
-  TooltipComponentOption
+  TooltipComponentOption,
 } from "echarts/components";
 import { LabelLayout, UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
@@ -65,7 +73,7 @@ echarts.use([
   GaugeChart,
   LabelLayout,
   UniversalTransition,
-  CanvasRenderer
+  CanvasRenderer,
 ]);
 
 interface ChartHooks {
@@ -94,7 +102,7 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
   const chartOptions: T = optionsFactory();
 
   const {
-    onRender = instance => {
+    onRender = (instance) => {
       const textColor = darkMode.value ? "rgb(224, 224, 224)" : "rgb(31, 31, 31)";
       const maskColor = darkMode.value ? "rgba(0, 0, 0, 0.4)" : "rgba(255, 255, 255, 0.8)";
 
@@ -102,13 +110,13 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
         color: themeStore.themeColor,
         textColor,
         fontSize: 14,
-        maskColor
+        maskColor,
       });
     },
-    onUpdated = instance => {
+    onUpdated = (instance) => {
       instance.hideLoading();
     },
-    onDestroy
+    onDestroy,
   } = hooks;
 
   /** is chart rendered */
@@ -121,7 +129,9 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
    *
    * @param callback callback function
    */
-  async function updateOptions(callback: (opts: T, optsFactory: () => T) => ECOption = () => chartOptions) {
+  async function updateOptions(
+    callback: (opts: T, optsFactory: () => T) => ECOption = () => chartOptions,
+  ) {
     const updatedOpts = callback(chartOptions, optionsFactory);
 
     Object.assign(chartOptions, updatedOpts);
@@ -208,7 +218,7 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
       ([newWidth, newHeight]) => {
         renderChartBySize(newWidth, newHeight);
       },
-      { flush: "post" }
+      { flush: "post" },
     );
 
     watch(darkMode, () => {
@@ -225,6 +235,6 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
     domRef,
     chart,
     updateOptions,
-    setOptions
+    setOptions,
   };
 }

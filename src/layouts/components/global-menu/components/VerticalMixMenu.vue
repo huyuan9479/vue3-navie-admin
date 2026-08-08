@@ -15,7 +15,7 @@ import FirstLevelMenu from "../components/FirstLevelMenu.vue";
 import GlobalLogo from "../../global-logo/index.vue";
 
 defineOptions({
-  name: "VerticalMixMenu"
+  name: "VerticalMixMenu",
 });
 
 const route = useRoute();
@@ -30,7 +30,7 @@ const {
   activeFirstLevelMenuKey,
   isActiveFirstLevelMenuHasChildren,
   getActiveFirstLevelMenuKey,
-  handleSelectFirstLevelMenu
+  handleSelectFirstLevelMenu,
 } = useMixMenuContext("VerticalMixMenu");
 const { selectedKey } = useMenu();
 
@@ -38,7 +38,9 @@ const inverted = computed(() => !themeStore.darkMode && themeStore.sider.inverte
 
 const hasChildMenus = computed(() => secondLevelMenus.value.length > 0);
 
-const showDrawer = computed(() => hasChildMenus.value && (drawerVisible.value || appStore.mixSiderFixed));
+const showDrawer = computed(
+  () => hasChildMenus.value && (drawerVisible.value || appStore.mixSiderFixed),
+);
 
 function handleSelectMenu(key: RouteKey) {
   handleSelectFirstLevelMenu(key);
@@ -71,7 +73,7 @@ watch(
   () => {
     updateExpandedKeys();
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 
@@ -93,7 +95,10 @@ watch(
       <div
         class="relative h-full transition-width-300"
         :style="{
-          width: appStore.mixSiderFixed && hasChildMenus ? themeStore.sider.mixChildMenuWidth + 'px' : '0px'
+          width:
+            appStore.mixSiderFixed && hasChildMenus
+              ? themeStore.sider.mixChildMenuWidth + 'px'
+              : '0px',
         }"
       >
         <DarkModeContainer
@@ -101,7 +106,10 @@ watch(
           :inverted="inverted"
           :style="{ width: showDrawer ? themeStore.sider.mixChildMenuWidth + 'px' : '0px' }"
         >
-          <header class="flex-y-center justify-between px-12px" :style="{ height: themeStore.header.height + 'px' }">
+          <header
+            class="flex-y-center justify-between px-12px"
+            :style="{ height: themeStore.header.height + 'px' }"
+          >
             <h2 class="text-16px text-primary font-bold">{{ $t("system.title") }}</h2>
             <PinToggler
               :pin="appStore.mixSiderFixed"

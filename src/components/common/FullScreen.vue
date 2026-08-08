@@ -2,7 +2,7 @@
 import { $t } from "@/locales";
 
 defineOptions({
-  name: "FullScreen"
+  name: "FullScreen",
 });
 
 interface Props {
@@ -13,7 +13,10 @@ defineProps<Props>();
 </script>
 
 <template>
-  <ButtonIcon :key="String(full)" :tooltip-content="full ? $t('icon.fullscreenExit') : $t('icon.fullscreen')">
+  <ButtonIcon
+    :key="String(full)"
+    :tooltip-content="full ? $t('icon.fullscreenExit') : $t('icon.fullscreen')"
+  >
     <icon-ant-design-fullscreen-exit v-if="full" />
     <icon-ant-design-fullscreen v-else />
   </ButtonIcon>

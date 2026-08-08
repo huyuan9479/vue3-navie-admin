@@ -5,7 +5,7 @@ import { $t } from "@/locales";
 import SettingItem from "../../../components/SettingItem.vue";
 
 defineOptions({
-  name: "FooterSettings"
+  name: "FooterSettings",
 });
 
 const themeStore = useThemeStore();
@@ -13,7 +13,7 @@ const themeStore = useThemeStore();
 const layoutMode = computed(() => themeStore.layout.mode);
 const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === "wrapper");
 const isMixHorizontalMode = computed(() =>
-  ["top-hybrid-sidebar-first", "top-hybrid-header-first"].includes(layoutMode.value)
+  ["top-hybrid-sidebar-first", "top-hybrid-header-first"].includes(layoutMode.value),
 );
 </script>
 
@@ -31,7 +31,12 @@ const isMixHorizontalMode = computed(() =>
       <NSwitch v-model:value="themeStore.footer.fixed" />
     </SettingItem>
     <SettingItem v-if="themeStore.footer.visible" key="3" :label="$t('theme.layout.footer.height')">
-      <NInputNumber v-model:value="themeStore.footer.height" size="small" :step="1" class="w-120px" />
+      <NInputNumber
+        v-model:value="themeStore.footer.height"
+        size="small"
+        :step="1"
+        class="w-120px"
+      />
     </SettingItem>
     <SettingItem
       v-if="themeStore.footer.visible && isMixHorizontalMode"

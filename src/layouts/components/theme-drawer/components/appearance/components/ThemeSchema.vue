@@ -6,14 +6,14 @@ import { $t } from "@/locales";
 import SettingItem from "../../../components/SettingItem.vue";
 
 defineOptions({
-  name: "ThemeSchema"
+  name: "ThemeSchema",
 });
 
 const themeStore = useThemeStore();
 
 const icons: Record<UnionKey.ThemeScheme, string> = {
   light: "material-symbols:sunny-outline-rounded",
-  dark: "material-symbols:dark-mode-outline-rounded"
+  dark: "material-symbols:dark-mode-outline-rounded",
 };
 
 function handleSegmentChange(value: string | number) {
@@ -28,7 +28,9 @@ function handleColourWeaknessChange(value: boolean) {
   themeStore.setColourWeakness(value);
 }
 
-const showSiderInverted = computed(() => !themeStore.darkMode && themeStore.layout.mode.includes("vertical"));
+const showSiderInverted = computed(
+  () => !themeStore.darkMode && themeStore.layout.mode.includes("vertical"),
+);
 </script>
 
 <template>

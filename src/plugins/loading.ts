@@ -28,11 +28,11 @@ export function setupLoading() {
     "left-0 top-0",
     "left-0 bottom-0 animate-delay-500",
     "right-0 top-0 animate-delay-1000",
-    "right-0 bottom-0 animate-delay-1500"
+    "right-0 bottom-0 animate-delay-1500",
   ];
 
   const dot = loadingClasses
-    .map(item => {
+    .map((item) => {
       return `<div class="absolute w-16px h-16px bg-primary rounded-8px animate-pulse ${item}"></div>`;
     })
     .join("\n");

@@ -1,5 +1,10 @@
 import { createAlova } from "alova";
-import type { AlovaDefaultCacheAdapter, AlovaGenerics, AlovaGlobalCacheAdapter, AlovaRequestAdapter } from "alova";
+import type {
+  AlovaDefaultCacheAdapter,
+  AlovaGenerics,
+  AlovaGlobalCacheAdapter,
+  AlovaRequestAdapter,
+} from "alova";
 import VueHook from "alova/vue";
 import type { VueHookType } from "alova/vue";
 import adapterFetch from "alova/fetch";
@@ -13,12 +18,14 @@ export const createAlovaRequest = <
   ResponseType = Response,
   ResponseHeader = Headers,
   L1Cache extends AlovaGlobalCacheAdapter = AlovaDefaultCacheAdapter,
-  L2Cache extends AlovaGlobalCacheAdapter = AlovaDefaultCacheAdapter
+  L2Cache extends AlovaGlobalCacheAdapter = AlovaDefaultCacheAdapter,
 >(
   customConfig: CustomAlovaConfig<
     AlovaGenerics<any, any, RequestConfig, ResponseType, ResponseHeader, L1Cache, L2Cache, any>
   >,
-  options: RequestOptions<AlovaGenerics<any, any, RequestConfig, ResponseType, ResponseHeader, L1Cache, L2Cache, any>>
+  options: RequestOptions<
+    AlovaGenerics<any, any, RequestConfig, ResponseType, ResponseHeader, L1Cache, L2Cache, any>
+  >,
 ) => {
   const { tokenRefresher } = options;
   const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthentication<
@@ -27,12 +34,12 @@ export const createAlovaRequest = <
   >({
     refreshTokenOnSuccess: {
       isExpired: (response, method) => tokenRefresher?.isExpired(response, method) || false,
-      handler: async (response, method) => tokenRefresher?.handler(response, method)
+      handler: async (response, method) => tokenRefresher?.handler(response, method),
     },
     refreshTokenOnError: {
       isExpired: (response, method) => tokenRefresher?.isExpired(response, method) || false,
-      handler: async (response, method) => tokenRefresher?.handler(response, method)
-    }
+      handler: async (response, method) => tokenRefresher?.handler(response, method),
+    },
   });
 
   const instance = createAlova({
@@ -65,8 +72,8 @@ export const createAlovaRequest = <
         return transformedData;
       },
       onComplete: options.onComplete,
-      onError: (error, method) => options.onError?.(error, null, method)
-    })
+      onError: (error, method) => options.onError?.(error, null, method),
+    }),
   });
 
   return instance;

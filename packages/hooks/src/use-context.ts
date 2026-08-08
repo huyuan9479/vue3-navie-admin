@@ -8,7 +8,7 @@ type ContextProvider<T> = T extends (...args: any[]) => any ? T : (arg: T) => T;
 
 type ContextConsumer<Context> = <N extends string | null | undefined = undefined>(
   consumerName?: N,
-  defaultValue?: Context
+  defaultValue?: Context,
 ) => N extends null | undefined ? Context | null : Context;
 
 /**
@@ -19,7 +19,7 @@ type ContextConsumer<Context> = <N extends string | null | undefined = undefined
  */
 export default function useContext<T>(
   contextName: ContextName,
-  composable?: T extends (...args: any[]) => any ? T : never
+  composable?: T extends (...args: any[]) => any ? T : never,
 ) {
   type Context = ContextValue<T>;
 

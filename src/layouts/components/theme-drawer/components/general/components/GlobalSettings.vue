@@ -4,7 +4,7 @@ import { $t } from "@/locales";
 import SettingItem from "../../../components/SettingItem.vue";
 
 defineOptions({
-  name: "GlobalSettings"
+  name: "GlobalSettings",
 });
 
 const themeStore = useThemeStore();

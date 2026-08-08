@@ -15,7 +15,7 @@ export function createStaticRoutes() {
 
   const authRoutes: ElegantRoute[] = [];
 
-  [...customRoutes, ...generatedRoutes].forEach(item => {
+  [...customRoutes, ...generatedRoutes].forEach((item) => {
     if (item.meta?.constant) {
       constantRoutes.push(item);
     } else {
@@ -25,7 +25,7 @@ export function createStaticRoutes() {
 
   return {
     constantRoutes,
-    authRoutes
+    authRoutes,
   };
 }
 

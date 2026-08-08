@@ -6,7 +6,7 @@ import { useCaptcha } from "@/hooks/business/captcha";
 import { $t } from "@/locales";
 
 defineOptions({
-  name: "Register"
+  name: "Register",
 });
 
 const { toggleLoginModule } = useRouterPush();
@@ -24,7 +24,7 @@ const model: FormModel = reactive({
   phone: "",
   code: "",
   password: "",
-  confirmPassword: ""
+  confirmPassword: "",
 });
 
 const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
@@ -34,7 +34,7 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
     phone: formRules.phone,
     code: formRules.code,
     password: formRules.pwd,
-    confirmPassword: createConfirmPwdRule(model.password)
+    confirmPassword: createConfirmPwdRule(model.password),
   };
 });
 
@@ -48,14 +48,32 @@ async function handleSubmit() {
 <template>
   <div>
     <h3 class="text-26px font-bold mb-24px">{{ $t("page.login.register.title") }}</h3>
-    <NForm ref="formRef" :model="model" :rules="rules" size="large" :show-label="false" @keyup.enter="handleSubmit">
+    <NForm
+      ref="formRef"
+      :model="model"
+      :rules="rules"
+      size="large"
+      :show-label="false"
+      @keyup.enter="handleSubmit"
+    >
       <NFormItem path="phone">
-        <NInput v-model:value="model.phone" :placeholder="$t('page.login.common.phonePlaceholder')" />
+        <NInput
+          v-model:value="model.phone"
+          :placeholder="$t('page.login.common.phonePlaceholder')"
+        />
       </NFormItem>
       <NFormItem path="code">
         <div class="w-full flex-y-center gap-16px">
-          <NInput v-model:value="model.code" :placeholder="$t('page.login.common.codePlaceholder')" />
-          <NButton size="large" :disabled="isCounting" :loading="loading" @click="getCaptcha(model.phone)">
+          <NInput
+            v-model:value="model.code"
+            :placeholder="$t('page.login.common.codePlaceholder')"
+          />
+          <NButton
+            size="large"
+            :disabled="isCounting"
+            :loading="loading"
+            @click="getCaptcha(model.phone)"
+          >
             {{ label }}
           </NButton>
         </div>
