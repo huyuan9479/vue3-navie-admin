@@ -53,11 +53,12 @@ export interface FormProps {
   resetButtonText?: string;
   gridProps?: GridProps;
   giProps?: GridItemProps;
-  resetFunc?: () => Promise<void>;
-  submitFunc?: () => Promise<void>;
   submitOnReset?: boolean;
   baseGridStyle?: CSSProperties;
   collapsedRows?: number;
+  showFeedback?: boolean;
+  resetFunc?: () => Promise<void>;
+  submitFunc?: () => Promise<void>;
 }
 
 export interface FormActionType {

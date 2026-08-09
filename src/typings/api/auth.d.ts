@@ -13,8 +13,12 @@ declare namespace Api {
     interface UserInfo {
       userId: string;
       userName: string;
-      roles: string[];
-      buttons: string[];
+      /** 角色 */
+      roles?: string[];
+      /** 权限 */
+      permissions?: CommonType.Option[];
+      /** 路由 */
+      routes?: CommonType.Option[];
     }
   }
 }

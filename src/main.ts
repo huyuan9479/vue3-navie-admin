@@ -4,6 +4,7 @@ import { setupVueRootValidator } from 'vite-plugin-vue-transition-root-validator
 import { setupAppVersionNotification, setupDayjs, setupIconifyOffline, setupLoading, setupNProgress } from './plugins';
 import { setupStore } from './store';
 import { setupRouter } from './router';
+import { setupDirectives } from './directives';
 import { getLocale, setupI18n } from './locales';
 import App from './App.vue';
 
@@ -14,6 +15,7 @@ async function setupApp() {
   setupDayjs();
   const app = createApp(App);
   setupStore(app);
+  setupDirectives(app);
   await setupRouter(app);
   setupI18n(app);
   setupAppVersionNotification();

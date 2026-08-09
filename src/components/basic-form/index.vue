@@ -57,7 +57,9 @@ const props = withDefaults(defineProps<FormProps>(), {
   // 是否折叠
   collapsed: true,
   //grid 配置
-  gridProps: () => ({ cols: '1 s:1 m:2 l:3 xl:4 2xl:4' })
+  gridProps: () => ({ cols: '1 s:2 m:2 l:3 xl:4 2xl:4' }),
+  // 是否显示反馈信息
+  showFeedback: false
 });
 
 const emit = defineEmits<{
@@ -202,7 +204,7 @@ onMounted(() => {
 
 <template>
   <NForm v-bind="getBindValue" ref="formElRef" :model="formModel">
-    <NGrid v-bind="getGrid">
+    <NGrid v-bind="getGrid" :y-gap="showFeedback ? 0 : 20">
       <NGi v-for="schema in getSchema" v-bind="schema.giProps" :key="schema.field">
         <NFormItem :label="schema.label" :path="schema.field">
           <!--标签名右侧温馨提示-->
@@ -211,7 +213,7 @@ onMounted(() => {
               {{ schema.label }}
               <NTooltip trigger="hover" :style="schema.labelMessageStyle">
                 <template #trigger>
-                  <icon-material-symbols-help-outline class="text-16px ml-2px cursor-pointer" />
+                  <icon-material-symbols-help-outline class="text-16px ml-2px cursor-pointer text-[#999]" />
                 </template>
                 {{ schema.labelMessage }}
               </NTooltip>

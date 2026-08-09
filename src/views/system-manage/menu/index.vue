@@ -1,6 +1,9 @@
 <script lang="ts" setup>
-import { BasicForm, useForm, type FormSchema } from '@/components/form/index';
+import { ref, reactive, h } from 'vue';
+import { BasicForm, useForm, type FormSchema } from '@/components/basic-form';
+import { BasicTable, TableAction, type BasicColumn } from '@/components/basic-table';
 
+const actionRef = ref();
 const schemas: FormSchema[] = [
   {
     field: 'name',
@@ -125,10 +128,98 @@ const schemas: FormSchema[] = [
   }
 ];
 
+const columns: BasicColumn[] = [
+  {
+    title: 'id',
+    key: 'id'
+  },
+  {
+    title: '名称',
+    key: 'name'
+  },
+  {
+    title: '头像',
+    key: 'avatar'
+  },
+  {
+    title: '性别',
+    key: 'sex'
+  },
+  {
+    title: '邮箱',
+    key: 'email',
+    width: 220
+  },
+  {
+    title: '城市',
+    key: 'city'
+  },
+  {
+    title: '状态',
+    key: 'status'
+  },
+  {
+    title: '创建时间',
+    key: 'createDate'
+  }
+];
+
 const [register] = useForm({
   labelWidth: 80,
   schemas
 });
+
+const actionColumn = reactive({
+    width: 220,
+    title: '操作',
+    key: 'action',
+    fixed: 'right' as const,
+    render(record: any) {
+      return h(TableAction as any, {
+        style: 'button',
+        actions: [
+          {
+            label: '删除',
+            onClick: handleDelete.bind(null, record),
+            // 根据业务控制是否显示 isShow 和 auth 是并且关系
+            ifShow: () => {
+              return true;
+            },
+            // 根据权限控制是否显示: 有权限，会显示，支持多个
+            auth: ['basic_list'],
+          },
+          {
+            label: '编辑',
+            onClick: handleEdit.bind(null, record),
+            ifShow: () => {
+              return true;
+            },
+            auth: ['basic_list'],
+          },
+        ],
+        dropDownActions: [
+          {
+            label: '启用',
+            key: 'enabled',
+            // 根据业务控制是否显示: 非enable状态的不显示启用按钮
+            ifShow: () => {
+              return true;
+            },
+          },
+          {
+            label: '禁用',
+            key: 'disabled',
+            ifShow: () => {
+              return true;
+            },
+          },
+        ],
+        select: (key: string) => {
+          window['$message']?.info(`您点击了，${key} 按钮`);
+        },
+      });
+    },
+  });
 
 function handleSubmit(values: Recordable) {
   console.log(values);
@@ -137,6 +228,22 @@ function handleSubmit(values: Recordable) {
 
 function handleReset(values: Recordable) {
   console.log(values);
+}
+
+function loadDataTable() {
+  console.log('loadDataTable');
+}
+
+function handleDelete(record: any) {
+  console.log(record);
+}
+
+function handleEdit(record: any) {
+  console.log(record);
+}
+
+function onCheckedRow(keys: any[]) {
+  console.log(keys);
 }
 </script>
 
@@ -148,6 +255,18 @@ function handleReset(values: Recordable) {
           <NInput v-model:value="model[field]" />
         </template>
       </BasicForm>
+    </NCard>
+    <NCard :bordered="false" class="mt-10px">
+      <BasicTable
+        ref="actionRef"
+        :columns="columns"
+        :request="loadDataTable"
+        :row-key="(row: any) => row.id"
+        :action-column="actionColumn"
+        :scroll-x="1090"
+        @update:checked-row-keys="onCheckedRow"
+      >
+      </basictable>
     </NCard>
   </div>
 </template>
