@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// import type { PropType } from 'vue';
 import { ref, unref, toRaw, computed, onMounted, nextTick } from 'vue';
 // import { ReloadOutlined, ColumnHeightOutlined, QuestionCircleOutlined } from '@vicons/antd';
 import { createTableContext } from './hooks/useTableContext';
@@ -10,13 +11,14 @@ import { useColumns } from './hooks/useColumns';
 import { useDataSource } from './hooks/useDataSource';
 import { usePagination } from './hooks/usePagination';
 
-import { basicProps } from './props';
+// import { basicProps } from './props';
 
 import type { BasicTableProps } from './types/table';
 
 import { getViewportOffset } from '@/utils/dom';
 import { useWindowSizeFn } from '@/hooks/common/window-size';
 import { isBoolean } from '@/utils/is';
+// import type { BasicColumn } from './types/table';
 
 const densityOptions = [
   {
@@ -36,17 +38,17 @@ const densityOptions = [
   }
 ];
 
-const emit = defineEmits([
-  'fetch-success',
-  'fetch-error',
-  'update:checked-row-keys',
-  'edit-end',
-  'edit-cancel',
-  'edit-row-end',
-  'edit-change'
-]);
+const emit = defineEmits<{
+  (
+    e: 'update:checked-row-keys',
+    keys: (string | number)[],
+    rows: any[],
+    meta: { row: any | undefined; action: 'check' | 'uncheck' | 'checkAll' | 'uncheckAll' }
+  ): void;
+  (e: string, ...args: any[]): void;
+}>();
 
-const props = defineProps({ ...basicProps });
+const props = defineProps<BasicTableProps>();
 const deviceHeight = ref(150);
 const tableElRef = ref<ComponentRef>(null);
 const wrapRef = ref<Nullable<HTMLDivElement>>(null);
@@ -91,7 +93,7 @@ function updatePageSize(size: number) {
 }
 
 //密度切换
-function densitySelect(e) {
+function densitySelect(e: 'small' | 'medium' | 'large') {
   tableSize.value = e;
 }
 
@@ -161,21 +163,20 @@ async function computeTableHeight() {
       paginationH += 28;
     }
   }
-  let height = bottomIncludeBody - (headerH + paginationH + marginH + (props.resizeHeightOffset || 0));
-  const maxHeight = props.maxHeight;
-  height = maxHeight && maxHeight < height ? maxHeight : height;
+  let height = bottomIncludeBody - (headerH + paginationH + marginH + (unref(getProps).resizeHeightOffset || 0));
+  const maxHeight = unref(getProps).maxHeight;
+  height = maxHeight && typeof maxHeight === 'number' && maxHeight < height ? maxHeight : height;
   deviceHeight.value = height;
 }
 
-useWindowSizeFn(computeTableHeight, 280);
+useWindowSizeFn(computeTableHeight as Fn<never, never>, 280);
 
-onMounted(() => {
-  nextTick(() => {
-    computeTableHeight();
-  });
+onMounted(async () => {
+  await nextTick();
+  await computeTableHeight();
 });
 
-createTableContext({ ...tableAction, wrapRef, getBindValues });
+createTableContext({ ...tableAction, wrapRef, getBindValues } as InstanceType<typeof BasicTable>);
 
 defineExpose(tableAction);
 </script>
@@ -184,16 +185,16 @@ defineExpose(tableAction);
   <div class="table-toolbar">
     <!--顶部左侧区域-->
     <div class="flex items-center table-toolbar-left">
-      <template v-if="props.title">
+      <template v-if="getProps.title">
         <div class="table-toolbar-left-title">
-          {{ props.title }}
-          <NTooltip v-if="props.titleTooltip" trigger="hover">
+          {{ getProps.title }}
+          <NTooltip v-if="getProps.titleTooltip" trigger="hover">
             <template #trigger>
               <NIcon size="18" class="ml-1 text-gray-400 cursor-pointer">
                 <QuestionCircleOutlined />
               </NIcon>
             </template>
-            {{ props.titleTooltip }}
+            {{ getProps.titleTooltip }}
           </NTooltip>
         </div>
       </template>
@@ -250,7 +251,7 @@ defineExpose(tableAction);
       ref="tableElRef"
       v-bind="getBindValues"
       :striped="isStriped"
-      :pagination="pagination"
+      :pagination="pagination === true ? undefined : pagination"
       @update:page="updatePage"
       @update:page-size="updatePageSize"
     >

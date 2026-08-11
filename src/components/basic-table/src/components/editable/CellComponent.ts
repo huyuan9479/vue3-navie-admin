@@ -13,13 +13,13 @@ export interface ComponentProps {
   ruleMessage: string;
 }
 
-export const CellComponent: FunctionalComponent = (
+export const CellComponent: FunctionalComponent<ComponentProps> = (
   { component = 'NInput', rule = true, ruleMessage, popoverVisible }: ComponentProps,
   { attrs }
 ) => {
-  const Comp = componentMap.get(component) as typeof defineComponent;
+  const comp = componentMap.get(component) as typeof defineComponent;
 
-  const DefaultComp = h(Comp, attrs);
+  const DefaultComp = h(comp as any, attrs);
   if (!rule) {
     return DefaultComp;
   }

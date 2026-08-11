@@ -4,9 +4,9 @@ import { h, Ref } from 'vue';
 import EditableCell from './EditableCell.vue';
 
 export function renderEditCell(column: BasicColumn) {
-  return (record, index) => {
-    const _key = column.key;
-    const value = record[_key];
+  return (record: EditRecordRow, index: number) => {
+    const columnKey = column.key;
+    const value = record[columnKey];
     record.onEdit = async (edit: boolean, submit = false) => {
       if (!submit) {
         record.editable = edit;

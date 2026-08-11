@@ -20,20 +20,32 @@ export interface BasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
 }
 
 export interface TableActionType {
-  reload: (opt) => Promise<void>;
+  reload: (opt?: Recordable) => Promise<void>;
   emit?: any;
-  getColumns: (opt?) => BasicColumn[];
+  getColumns: (opt?: Recordable) => BasicColumn[];
   setColumns: (columns: BasicColumn[] | string[]) => void;
 }
 
 export interface BasicTableProps {
   title?: string;
+  titleTooltip?: string;
+  size?: string;
   dataSource: Function;
-  columns: any[];
-  pagination: object;
-  showPagination: boolean;
-  actionColumn: any[];
+  columns: BasicColumn[];
+  pagination: object | boolean;
+  actionColumn?: BasicColumn;
   canResize: boolean;
   resizeHeightOffset: number;
   loading: boolean;
+  striped: boolean;
+  maxHeight?: number | undefined;
+  rowKey?: string | ((record: Recordable) => string);
+  beforeRequest?: (...arg: any[]) => Promise<any>;
+  request: (...arg: any[]) => Promise<any>;
+  afterRequest?: (...arg: any[]) => Promise<any>;
+  'update:checked-row-keys'?: (
+    keys: (string | number)[],
+    rows: any[],
+    meta: { row: any | undefined; action: 'check' | 'uncheck' | 'checkAll' | 'uncheckAll' }
+  ) => void;
 }

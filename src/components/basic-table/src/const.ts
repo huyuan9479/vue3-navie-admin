@@ -1,15 +1,15 @@
 const tableSetting = {
   apiSetting: {
     // 当前页的字段名
-    pageField: 'pageNum',
+    pageNumField: 'pageNum',
     // 每页数量字段名
-    sizeField: 'pageSize',
+    pageSizeField: 'pageSize',
     // 接口返回的数据字段名
-    listField: 'records',
+    recordsField: 'records',
     // 接口返回总页数字段名
-    totalField: 'pages',
+    pageCountField: 'pages',
     //总数字段名
-    countField: 'total'
+    totalField: 'total'
   },
   //默认分页数量
   defaultPageSize: 10,

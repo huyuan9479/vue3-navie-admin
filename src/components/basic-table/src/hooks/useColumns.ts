@@ -25,18 +25,18 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
   function isIfShow(action: ActionItem): boolean {
     const ifShow = action.ifShow;
 
-    let isIfShow = true;
+    let isShould = true;
 
     if (isBoolean(ifShow)) {
-      isIfShow = ifShow;
+      isShould = ifShow;
     }
     if (isFunction(ifShow)) {
-      isIfShow = ifShow(action);
+      isShould = ifShow(action);
     }
-    return isIfShow;
+    return isShould;
   }
 
-  const renderTooltip = (trigger, content) => {
+  const renderTooltip = (trigger: any, content: any) => {
     return h(NTooltip, null, {
       trigger: () => trigger,
       default: () => content
@@ -48,7 +48,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
     const columns = cloneDeep(pageColumns);
     return columns
       .filter(column => {
-        return hasPermission(column.auth as string[]) && isIfShow(column);
+        return hasPermission(column.auth as string[]) && isIfShow(column as ActionItem);
       })
       .map(column => {
         //默认 ellipsis 为true
@@ -68,7 +68,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
                       size: 14
                     },
                     {
-                      default: () => h(FormOutlined)
+                      // default: () => h(FormOutlined)
                     }
                   )
                 ]),
@@ -89,13 +89,14 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
     }
   );
 
-  function handleActionColumn(propsRef: ComputedRef<BasicTableProps>, columns: BasicColumn[]) {
-    const { actionColumn } = unref(propsRef);
+  function handleActionColumn(values: ComputedRef<BasicTableProps>, columns: BasicColumn[]) {
+    const { actionColumn } = unref(values);
     if (!actionColumn) return;
-    !columns.find(col => col.key === 'action') &&
+    if (!columns.find(col => col.key === 'action')) {
       columns.push({
         ...(actionColumn as any)
       });
+    }
   }
 
   //设置
@@ -114,7 +115,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
     } else {
       const newColumns: any[] = [];
       cacheColumns.forEach(item => {
-        if (columnList.includes(item.key)) {
+        if (columnList.includes(String(item.key))) {
           newColumns.push({ ...item });
         }
       });

@@ -1,13 +1,13 @@
 import { ref, ComputedRef, unref, computed, onMounted, watchEffect, watch } from 'vue';
 import type { BasicTableProps } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
-import { isBoolean, isFunction, isArray } from '@/utils/is';
+import { isBoolean, isFunction } from '@/utils/is';
 import { APISETTING } from '../const';
 
 export function useDataSource(
   propsRef: ComputedRef<BasicTableProps>,
-  { getPaginationInfo, setPagination, setLoading, tableData },
-  emit
+  { getPaginationInfo, setPagination, setLoading, tableData }: any,
+  emit: (e: string, ...args: any[]) => void
 ) {
   const dataSourceRef = ref<Recordable[]>([]);
 
@@ -19,10 +19,12 @@ export function useDataSource(
     () => unref(propsRef).dataSource,
     () => {
       const { dataSource }: any = unref(propsRef);
-      dataSource && (dataSourceRef.value = dataSource);
+      if (dataSource && dataSource.length > 0) {
+        dataSourceRef.value = dataSource;
+      }
     },
     {
-      immediate: true,
+      immediate: true
     }
   );
 
@@ -43,78 +45,81 @@ export function useDataSource(
     return unref(dataSourceRef);
   });
 
-  async function fetch(opt?) {
+  async function fetch(opt?: Recordable) {
     try {
       setLoading(true);
       const { request, pagination, beforeRequest, afterRequest }: any = unref(propsRef);
       if (!request) return;
       //组装分页信息
-      const pageField = APISETTING.pageField;
-      const sizeField = APISETTING.sizeField;
+      const pageNumField = APISETTING.pageNumField;
+      const pageSizeField = APISETTING.pageSizeField;
       const totalField = APISETTING.totalField;
-      const listField = APISETTING.listField;
-      const itemCount = APISETTING.countField;
+      const recordsField = APISETTING.recordsField;
+      const pageCountField = APISETTING.pageCountField;
       let pageParams = {};
-      const { page = 1, pageSize = 10 } = unref(getPaginationInfo) as PaginationProps;
+      const { pageNum = 1, pageSize = 10 } = unref(getPaginationInfo) as PaginationProps;
 
       if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
         pageParams = {};
       } else {
-        pageParams[pageField] = (opt && opt[pageField]) || page;
-        pageParams[sizeField] = pageSize;
+        (pageParams as Record<string, any>)[pageNumField] = (opt && opt[pageNumField]) || pageNum;
+        (pageParams as Record<string, any>)[pageSizeField] = pageSize;
       }
 
       let params = {
         ...pageParams,
-        ...opt,
+        ...opt
       };
       if (beforeRequest && isFunction(beforeRequest)) {
         // The params parameter can be modified by outsiders
         params = (await beforeRequest(params)) || params;
       }
       const res = await request(params);
-      const resultTotal = res[totalField];
-      const currentPage = res[pageField];
-      const total = res[itemCount];
-      const results = res[listField] ? res[listField] : [];
+      if (!res) return;
+      const pageCount = res[pageCountField];
+      const currentPage = res[pageNumField];
+      const total = res[totalField];
+      // const results = res[recordsField] ? res[recordsField] : [];
+
+      // const results = res[listField] ? res[listField] : [];
 
       // 如果数据异常，需获取正确的页码再次执行
-      if (resultTotal) {
+      if (pageCount) {
         const currentTotalPage = Math.ceil(total / pageSize);
-        if (page > currentTotalPage) {
+        if (pageNum > currentTotalPage) {
           setPagination({
-            page: currentTotalPage,
-            itemCount: total,
+            pageNum: currentTotalPage,
+            total: total
           });
           return await fetch(opt);
         }
       }
-      let resultInfo = res[listField] ? res[listField] : [];
+      let resultInfo = res[recordsField] ? res[recordsField] : [];
       if (afterRequest && isFunction(afterRequest)) {
         // can modify the data returned by the interface for processing
         resultInfo = (await afterRequest(resultInfo)) || resultInfo;
       }
       dataSourceRef.value = resultInfo;
       setPagination({
-        page: currentPage,
-        pageCount: resultTotal,
-        itemCount: total,
+        pageNum: currentPage,
+        pages: pageCount,
+        total: total
       });
-      if (opt && opt[pageField]) {
+      if (opt && opt[pageNumField]) {
         setPagination({
-          page: opt[pageField] || 1,
+          pageNum: opt[pageNumField] || 1
         });
       }
       emit('fetch-success', {
         items: unref(resultInfo),
-        resultTotal,
+        pageCount: pageCount
       });
     } catch (error) {
       console.error(error);
       emit('fetch-error', error);
       dataSourceRef.value = [];
       setPagination({
-        pageCount: 0,
+        pages: 0
       });
     } finally {
       setLoading(false);
@@ -127,7 +132,7 @@ export function useDataSource(
     }, 16);
   });
 
-  function setTableData(values) {
+  function setTableData(values: Recordable[]) {
     dataSourceRef.value = values;
   }
 
@@ -135,7 +140,7 @@ export function useDataSource(
     return getDataSourceRef.value;
   }
 
-  async function reload(opt?) {
+  async function reload(opt?: Recordable) {
     await fetch(opt);
   }
 
@@ -145,6 +150,6 @@ export function useDataSource(
     getDataSourceRef,
     getDataSource,
     setTableData,
-    reload,
+    reload
   };
 }

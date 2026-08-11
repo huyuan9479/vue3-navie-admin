@@ -11,8 +11,7 @@ export function usePermission() {
   function somePermissions(accesses: string[]) {
     return (
       userInfo.permissions?.some(item => {
-        const { value } = item;
-        return accesses.includes(value);
+        return accesses.includes(item);
       }) || false
     );
   }

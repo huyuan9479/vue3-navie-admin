@@ -16,7 +16,7 @@ declare namespace Api {
       /** 角色 */
       roles?: string[];
       /** 权限 */
-      permissions?: CommonType.Option[];
+      permissions?: string[];
       /** 路由 */
       routes?: CommonType.Option[];
     }

@@ -2,14 +2,18 @@ import type { Component } from 'vue';
 import { NInput, NSelect, NCheckbox, NInputNumber, NSwitch, NDatePicker, NTimePicker } from 'naive-ui';
 import type { ComponentType } from './types/componentType';
 
-export enum EventEnum {
-  NInput = 'on-input',
-  NInputNumber = 'on-input',
-  NSelect = 'on-update:value',
-  NSwitch = 'on-update:value',
-  NCheckbox = 'on-update:value',
-  NDatePicker = 'on-update:value',
-  NTimePicker = 'on-update:value'
+const eventMap = {
+  NInput: 'on-input',
+  NInputNumber: 'on-input',
+  NSelect: 'on-update:value',
+  NSwitch: 'on-update:value',
+  NCheckbox: 'on-update:value',
+  NDatePicker: 'on-update:value',
+  NTimePicker: 'on-update:value'
+};
+
+export function getComponentEvent(compName: ComponentType) {
+  return eventMap[compName as keyof typeof eventMap];
 }
 
 const componentMap = new Map<ComponentType, Component>();

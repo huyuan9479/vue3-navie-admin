@@ -1,12 +1,14 @@
 import { NButton } from 'naive-ui';
-import type { Component } from 'vue';
+import type { Component, VNode } from 'vue';
+
 export interface ActionItem extends Partial<InstanceType<typeof NButton>> {
   onClick?: Fn;
   label?: string;
+  key?: string | number;
   type?: 'success' | 'error' | 'warning' | 'info' | 'primary' | 'default';
   // 设定 color 后会覆盖 type 的样式
   color?: string;
-  icon?: Component;
+  icon?: Component | (() => VNode);
   popConfirm?: PopConfirm;
   disabled?: boolean;
   divider?: boolean;
