@@ -1,5 +1,5 @@
 import type { InternalRowData, TableBaseColumn } from 'naive-ui/lib/data-table/src/interface';
-import { ComponentType } from './componentType';
+import { ComponentType } from './index';
 
 export interface BasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   //编辑表格
@@ -30,22 +30,17 @@ export interface BasicTableProps {
   title?: string;
   titleTooltip?: string;
   size?: string;
-  dataSource: Function;
+  dataSource?: Function;
   columns: BasicColumn[];
-  pagination: object | boolean;
+  pagination?: object | boolean;
   actionColumn?: BasicColumn;
-  canResize: boolean;
-  resizeHeightOffset: number;
-  loading: boolean;
-  striped: boolean;
+  canResize?: boolean;
+  resizeHeightOffset?: number;
+  loading?: boolean;
+  striped?: boolean;
   maxHeight?: number | undefined;
   rowKey?: string | ((record: Recordable) => string);
   beforeRequest?: (...arg: any[]) => Promise<any>;
-  request: (...arg: any[]) => Promise<any>;
+  request?: (...arg: any[]) => Promise<any> | void;
   afterRequest?: (...arg: any[]) => Promise<any>;
-  'update:checked-row-keys'?: (
-    keys: (string | number)[],
-    rows: any[],
-    meta: { row: any | undefined; action: 'check' | 'uncheck' | 'checkAll' | 'uncheckAll' }
-  ) => void;
 }

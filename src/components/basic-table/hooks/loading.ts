@@ -6,7 +6,7 @@ export function useLoading(props: ComputedRef<BasicTableProps>) {
 
   watch(
     () => unref(props).loading,
-    (loading) => {
+    loading => {
       loadingRef.value = loading;
     }
   );

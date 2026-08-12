@@ -4,7 +4,7 @@ import { isEqual, cloneDeep } from 'lodash-es';
 import { isArray, isString, isBoolean, isFunction } from '@/utils/is';
 import { usePermission } from '@/hooks/common/permission';
 import { ActionItem } from '../types/tableAction';
-import { renderEditCell } from '../components/editable';
+import { renderEditCell } from '../utils/edit-cell';
 import { NTooltip, NIcon } from 'naive-ui';
 // import { FormOutlined } from '@vicons/antd';
 
@@ -100,7 +100,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
   }
 
   //设置
-  function setColumns(columnList: string[]) {
+  function setColumns(columnList: BasicColumn[] | string[]) {
     const columns: any[] = cloneDeep(columnList);
     if (!isArray(columns)) return;
 
@@ -108,14 +108,15 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
       columnsRef.value = [];
       return;
     }
-    const cacheKeys = cacheColumns.map(item => item.key);
+    const cacheKeys = cacheColumns?.map(item => item.key) || [];
     //针对拖拽排序
     if (!isString(columns[0])) {
       columnsRef.value = columns;
     } else {
+      const keyList = columnList as string[];
       const newColumns: any[] = [];
-      cacheColumns.forEach(item => {
-        if (columnList.includes(String(item.key))) {
+      cacheColumns?.forEach(item => {
+        if (keyList.includes(String(item.key))) {
           newColumns.push({ ...item });
         }
       });
@@ -138,7 +139,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
 
   //获取原始
   function getCacheColumns(isKey?: boolean): any[] {
-    return isKey ? cacheColumns.map(item => item.key) : cacheColumns;
+    return isKey ? cacheColumns?.map(item => item.key) : cacheColumns;
   }
 
   //更新原始数据单个字段

@@ -2,14 +2,14 @@
 // import type { PropType } from 'vue';
 import { ref, unref, toRaw, computed, onMounted, nextTick } from 'vue';
 // import { ReloadOutlined, ColumnHeightOutlined, QuestionCircleOutlined } from '@vicons/antd';
-import { createTableContext } from './hooks/useTableContext';
+import { createTableContext } from './hooks/table-context';
 
-import ColumnSetting from './components/settings/ColumnSetting.vue';
+import ColumnSetting from './components/ColumnSetting.vue';
 
-import { useLoading } from './hooks/useLoading';
-import { useColumns } from './hooks/useColumns';
-import { useDataSource } from './hooks/useDataSource';
-import { usePagination } from './hooks/usePagination';
+import { useLoading } from './hooks/loading';
+import { useColumns } from './hooks/columns';
+import { useDataSource } from './hooks/data-source';
+import { usePagination } from './hooks/pagination';
 
 // import { basicProps } from './props';
 
@@ -45,10 +45,23 @@ const emit = defineEmits<{
     rows: any[],
     meta: { row: any | undefined; action: 'check' | 'uncheck' | 'checkAll' | 'uncheckAll' }
   ): void;
-  (e: string, ...args: any[]): void;
+  (e: 'fetch-success', result: { items: any[]; pageCount: number }): void;
+  (e: 'fetch-error', error: unknown): void;
+  // (e: 'edit-end'): void;
+  // (e: 'edit-cancel'): void;
+  // (e: 'edit-row-end'): void;
+  // (e: 'edit-change'): void;
 }>();
 
-const props = defineProps<BasicTableProps>();
+const props = withDefaults(defineProps<BasicTableProps>(), {
+  dataSource: () => [],
+  columns: () => [],
+  pagination: true,
+  canResize: false,
+  resizeHeightOffset: 0,
+  loading: false,
+  striped: false
+});
 const deviceHeight = ref(150);
 const tableElRef = ref<ComponentRef>(null);
 const wrapRef = ref<Nullable<HTMLDivElement>>(null);
@@ -176,7 +189,7 @@ onMounted(async () => {
   await computeTableHeight();
 });
 
-createTableContext({ ...tableAction, wrapRef, getBindValues } as InstanceType<typeof BasicTable>);
+createTableContext({ ...tableAction, wrapRef, getBindValues });
 
 defineExpose(tableAction);
 </script>

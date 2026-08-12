@@ -1,6 +1,6 @@
 import type { FunctionalComponent, defineComponent } from 'vue';
-import type { ComponentType } from '../../types/componentType';
-import { componentMap } from '../../componentMap';
+import type { ComponentType } from '../types/index';
+import { componentMap } from '../utils/comp-map';
 
 import { h } from 'vue';
 

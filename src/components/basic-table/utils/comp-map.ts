@@ -1,6 +1,6 @@
 import type { Component } from 'vue';
 import { NInput, NSelect, NCheckbox, NInputNumber, NSwitch, NDatePicker, NTimePicker } from 'naive-ui';
-import type { ComponentType } from './types/componentType';
+import type { ComponentType } from '../types/index';
 
 const eventMap = {
   NInput: 'on-input',

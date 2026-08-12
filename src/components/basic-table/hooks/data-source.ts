@@ -1,13 +1,20 @@
 import { ref, ComputedRef, unref, computed, onMounted, watchEffect, watch } from 'vue';
 import type { BasicTableProps } from '../types/table';
-import type { PaginationProps } from '../types/pagination';
+import type { PaginationProps } from '../types/index';
 import { isBoolean, isFunction } from '@/utils/is';
-import { APISETTING } from '../const';
+import { APISETTING } from '../utils/const';
 
 export function useDataSource(
   propsRef: ComputedRef<BasicTableProps>,
   { getPaginationInfo, setPagination, setLoading, tableData }: any,
-  emit: (e: string, ...args: any[]) => void
+  emit: {
+    (e: 'fetch-success', result: { items: any[]; pageCount: number }): void;
+    (e: 'fetch-error', error: unknown): void;
+    // (e: 'edit-end'): void;
+    // (e: 'edit-cancel'): void;
+    // (e: 'edit-row-end'): void;
+    // (e: 'edit-change'): void;
+  }
 ) {
   const dataSourceRef = ref<Recordable[]>([]);
 

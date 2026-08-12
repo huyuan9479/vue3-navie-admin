@@ -1,7 +1,6 @@
-import type { BasicColumn } from '../../types/table';
+import type { BasicColumn } from '../types/table';
 import { h, Ref } from 'vue';
-
-import EditableCell from './EditableCell.vue';
+import EditableCell from '../components/EditableCell.vue';
 
 export function renderEditCell(column: BasicColumn) {
   return (record: EditRecordRow, index: number) => {

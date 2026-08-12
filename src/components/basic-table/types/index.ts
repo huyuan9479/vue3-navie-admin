@@ -1,3 +1,13 @@
+export type ComponentType =
+  | 'NInput'
+  | 'NInputNumber'
+  | 'NSelect'
+  | 'NCheckbox'
+  | 'NSwitch'
+  | 'NDatePicker'
+  | 'NTimePicker'
+  | 'NCascader';
+
 export interface PaginationProps {
   pageNum?: number; //受控模式下的当前页
   total?: number; //总条数

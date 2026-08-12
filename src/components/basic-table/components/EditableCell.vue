@@ -1,21 +1,21 @@
 <script setup lang="ts">
 // import type { PropType } from 'vue';
-import type { BasicColumn } from '../../types/table';
-import type { EditRecordRow } from './index';
+import type { BasicColumn } from '../types/table';
+import type { EditRecordRow } from '../utils/edit-cell';
 
 import { ref, unref, nextTick, computed, watchEffect, toRaw } from 'vue';
 // import { FormOutlined, CloseOutlined, CheckOutlined } from '@vicons/antd';
 import { CellComponent } from './CellComponent';
 
-import { useTableContext } from '../../hooks/useTableContext';
+import { useTableContext } from '../hooks/table-context';
 
 // import clickOutside from '@/directives/click-outside';
 
 // import { propTypes } from '@/utils/prop-types';
 import { isString, isBoolean, isFunction, isNumber, isArray } from '@/utils/is';
-import { createPlaceholderMessage } from './helper';
+import { createPlaceholderMessage } from '../utils/helper';
 import { set, omit } from 'lodash-es';
-import { getComponentEvent } from '../../componentMap';
+import { getComponentEvent } from '../utils/comp-map';
 import { parseISO, format } from 'date-fns';
 
 defineOptions({

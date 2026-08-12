@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, reactive, unref, toRaw, watchEffect } from 'vue';
-import { useTableContext } from '../../hooks/useTableContext';
+import { useTableContext } from '../hooks/table-context';
 import { cloneDeep } from 'lodash-es';
 // import { SettingOutlined, DragOutlined, VerticalRightOutlined, VerticalLeftOutlined } from '@vicons/antd';
 import { VueDraggable } from 'vue-draggable-plus';
 import { useThemeStore } from '@/store/modules/theme';
-import type { BasicColumn } from '../../types/table';
+import type { BasicColumn } from '../types/table';
 
 interface Options {
   title: string;
