@@ -644,9 +644,11 @@ declare namespace App {
       /** The backend service response code */
       code: string;
       /** The backend service response message */
-      msg: string;
+      message: string;
       /** The backend service response data */
       data: T;
+      /** The backend service response is successful */
+      success: boolean;
     };
 
     /** The demo backend service response data */
