@@ -6,8 +6,11 @@ declare namespace Api {
    */
   namespace Auth {
     interface LoginToken {
-      token: string;
-      refreshToken: string;
+      access_token: string;
+      refresh_token: string;
+      expires_in: number;
+      token_type: string;
+      scope: string;
     }
 
     interface UserInfo {

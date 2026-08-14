@@ -52,13 +52,13 @@ const activeModule = computed(() => moduleMap[props.module || 'pwd-login']);
     </div>
     <!-- 右侧登录 -->
     <div class="login-container-right relative flex-col-center lg:flex-initial min-h-full w-2/5 flex-1">
-      <NCard :bordered="false" class="relative z-4 size-full">
-        <div class="w-full p-32px lt-sm:w-300px lt-sm:p-0 2xl:w-500px">
+      <div class="relative flex justify-center w-full">
+        <div class="w-full px-50px px-24px lt-sm:w-350px lt-lg:w-500px lt-sm:px-24px lt-sm:px-12px 2xl:w-600px">
           <Transition :name="themeStore.page.animateMode" mode="out-in" appear>
             <component :is="activeModule.component" />
           </Transition>
         </div>
-      </NCard>
+      </div>
       <div class="flex-y-center position-absolute right-0 top-0 h-15 pr-12px z-9">
         <ThemeSchemaSwitch
           :theme-schema="themeStore.themeScheme"
@@ -86,15 +86,7 @@ const activeModule = computed(() => moduleMap[props.module || 'pwd-login']);
   }
 
   .login-container-right {
-    :deep(.n-card) {
-      .n-card-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border-radius: none;
-      }
-    }
+    background: #fff;
   }
 }
 
@@ -102,6 +94,9 @@ const activeModule = computed(() => moduleMap[props.module || 'pwd-login']);
   .login-container {
     .login-bg {
       background: linear-gradient(154deg, #07070915 30%, hsl(var(--primary) / 20%) 48%, #07070915 64%);
+    }
+    .login-container-right {
+      background: rgb(var(--layout-bg-color));
     }
   }
 }

@@ -19,7 +19,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const { toLogin, redirectFromLogin } = useRouterPush(false);
   const { loading: loginLoading, startLoading, endLoading } = useLoading();
 
-  const token = ref('');
+  const token = ref<Api.Auth.LoginToken>(getToken());
 
   const userInfo: Api.Auth.UserInfo = reactive({
     userId: '',
@@ -40,7 +40,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   });
 
   /** Is login */
-  const isLogin = computed(() => Boolean(token.value));
+  const isLogin = computed(() => Boolean(token.value.access_token));
 
   /** Reset auth store */
   async function resetStore() {
@@ -134,14 +134,13 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   async function loginByToken(loginToken: Api.Auth.LoginToken) {
     // 1. stored in the localStorage, the later requests need it in headers
-    localStg.set('token', loginToken.token);
-    localStg.set('refreshToken', loginToken.refreshToken);
+    localStg.set('token', JSON.stringify(loginToken));
 
     // 2. get user info
     const pass = await getUserInfo();
 
     if (pass) {
-      token.value = loginToken.token;
+      token.value = loginToken;
 
       return true;
     }
@@ -165,7 +164,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   async function initUserInfo() {
     const maybeToken = getToken();
 
-    if (maybeToken) {
+    if (maybeToken.access_token) {
       token.value = maybeToken;
       const pass = await getUserInfo();
 

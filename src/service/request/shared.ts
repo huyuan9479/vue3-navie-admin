@@ -4,8 +4,8 @@ import { fetchRefreshToken } from '../api';
 import type { RequestInstanceState } from './type';
 
 export function getAuthorization() {
-  const token = localStg.get('token');
-  const Authorization = token ? `Bearer ${token}` : null;
+  const token = JSON.parse(localStg.get('token') || '{}');
+  const Authorization = token.access_token ? `${token.token_type} ${token.access_token}` : null;
 
   return Authorization;
 }
@@ -14,11 +14,10 @@ export function getAuthorization() {
 async function handleRefreshToken() {
   const { resetStore } = useAuthStore();
 
-  const rToken = localStg.get('refreshToken') || '';
-  const { error, data } = await fetchRefreshToken(rToken);
+  const token = JSON.parse(localStg.get('token') || '{}');
+  const { error, data } = await fetchRefreshToken(token.refresh_token);
   if (!error) {
-    localStg.set('token', data.token);
-    localStg.set('refreshToken', data.refreshToken);
+    localStg.set('token', JSON.stringify(data));
     return true;
   }
 

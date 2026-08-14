@@ -87,7 +87,7 @@ async function handleCodeLoginSubmit() {
 <template>
   <div>
     <h3 class="text-26px font-bold mb-24px">{{ $t('page.login.pwdLogin.title') }}</h3>
-    <NTabs class="card-tabs" default-value="pwd-login" size="large" animated type="segment">
+    <NTabs default-value="pwd-login" size="large" animated type="segment">
       <NTabPane name="pwd-login" :tab="$t('page.login.pwdLogin.passwordLogin')">
         <Transition :name="themeStore.page.animateMode" mode="out-in" appear>
           <NForm

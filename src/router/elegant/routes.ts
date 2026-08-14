@@ -75,23 +75,25 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
-    name: 'system-manage',
-    path: '/system-manage',
+    name: 'system',
+    path: '/system',
     component: 'layout.base',
     meta: {
-      title: 'system-manage',
-      i18nKey: 'route.system-manage',
+      title: 'system',
+      i18nKey: 'route.system',
       icon: 'ant-design:setting-outlined',
       order: 2
     },
     children: [
       {
-        name: 'system-manage_menu',
-        path: '/system-manage/menu',
-        component: 'view.system-manage_menu',
+        name: 'system_role',
+        path: '/system/role',
+        component: 'view.system_role',
         meta: {
-          title: 'system-manage_menu',
-          i18nKey: 'route.system-manage_menu'
+          title: 'system_role',
+          i18nKey: 'route.system_role',
+          icon: 'ant-design:user-outlined',
+          order: 1
         }
       }
     ]

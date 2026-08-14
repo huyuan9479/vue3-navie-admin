@@ -229,8 +229,8 @@ const local: App.I18n.Schema = {
     500: 'Server Error',
     'iframe-page': 'Iframe',
     home: 'Workbench',
-    'system-manage': 'System Management',
-    'system-manage_menu': 'Menu Management'
+    system: 'System Management',
+    system_role: 'Role Management'
   },
   page: {
     login: {
