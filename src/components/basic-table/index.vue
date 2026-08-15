@@ -1,24 +1,15 @@
 <script lang="ts" setup>
-// import type { PropType } from 'vue';
 import { ref, unref, toRaw, computed, onMounted, nextTick } from 'vue';
-// import { ReloadOutlined, ColumnHeightOutlined, QuestionCircleOutlined } from '@vicons/antd';
 import { createTableContext } from './hooks/table-context';
-
 import ColumnSetting from './components/ColumnSetting.vue';
-
 import { useLoading } from './hooks/loading';
 import { useColumns } from './hooks/columns';
 import { useDataSource } from './hooks/data-source';
 import { usePagination } from './hooks/pagination';
-
-// import { basicProps } from './props';
-
 import type { BasicTableProps } from './types/table';
-
 import { getViewportOffset } from '@/utils/dom';
 import { useWindowSizeFn } from '@/hooks/common/window-size';
 import { isBoolean } from '@/utils/is';
-// import type { BasicColumn } from './types/table';
 
 const densityOptions = [
   {
@@ -57,10 +48,13 @@ const props = withDefaults(defineProps<BasicTableProps>(), {
   dataSource: () => [],
   columns: () => [],
   pagination: true,
-  canResize: false,
+  size: 'small',
+  canResize: true,
   resizeHeightOffset: 0,
   loading: false,
-  striped: false
+  striped: true,
+  singleLine: false,
+  bordered: true
 });
 const deviceHeight = ref(150);
 const tableElRef = ref<ComponentRef>(null);
@@ -95,13 +89,13 @@ const { getPageColumns, setColumns, getColumns, getCacheColumns, setCacheColumns
 
 //页码切换
 function updatePage(page: number) {
-  setPagination({ pageNum: page });
+  setPagination({ page: page });
   reload();
 }
 
 //分页数量切换
 function updatePageSize(size: number) {
-  setPagination({ pageNum: 1, pageSize: size });
+  setPagination({ page: 1, pageSize: size });
   reload();
 }
 
@@ -180,6 +174,14 @@ async function computeTableHeight() {
   const maxHeight = unref(getProps).maxHeight;
   height = maxHeight && typeof maxHeight === 'number' && maxHeight < height ? maxHeight : height;
   deviceHeight.value = height;
+}
+
+function rowProps() {
+  return {
+    style: {
+      backgroundColor: '#f5f5f5'
+    }
+  };
 }
 
 useWindowSizeFn(computeTableHeight as Fn<never, never>, 280);
@@ -264,6 +266,7 @@ defineExpose(tableAction);
       ref="tableElRef"
       v-bind="getBindValues"
       :striped="isStriped"
+      :row-props="rowProps"
       :pagination="pagination === true ? undefined : pagination"
       @update:page="updatePage"
       @update:page-size="updatePageSize"

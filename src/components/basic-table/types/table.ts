@@ -30,6 +30,8 @@ export interface BasicTableProps {
   title?: string;
   titleTooltip?: string;
   size?: string;
+  singleLine?: boolean;
+  bordered?: boolean;
   dataSource?: Function;
   columns: BasicColumn[];
   pagination?: object | boolean;
@@ -40,6 +42,7 @@ export interface BasicTableProps {
   striped?: boolean;
   maxHeight?: number | undefined;
   rowKey?: string | ((record: Recordable) => string);
+  rowProps?: (record: Recordable) => Recordable;
   beforeRequest?: (...arg: any[]) => Promise<any>;
   request?: (...arg: any[]) => Promise<any> | void;
   afterRequest?: (...arg: any[]) => Promise<any>;

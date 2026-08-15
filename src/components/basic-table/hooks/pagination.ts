@@ -27,12 +27,14 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
       return false;
     }
     return {
-      pageNum: 1, //当前页
+      page: 1, //当前页
       pageSize: DEFAULTPAGESIZE, //分页大小
       pageSizes: PAGESIZES, // 每页条数
       showSizePicker: true,
       showQuickJumper: true,
-      prefix: (pagingInfo: PaginationProps) => `共 ${pagingInfo.total || 0} 条`, // 不需要可以通过 pagination 重置或者删除
+      pageSlot: 7,
+      size: 'small',
+      prefix: (pagingInfo: PaginationProps) => `共 ${pagingInfo.itemCount || 0} 条`, // 不需要可以通过 pagination 重置或者删除
       ...(isBoolean(pagination) ? {} : pagination),
       ...unref(configRef)
     };

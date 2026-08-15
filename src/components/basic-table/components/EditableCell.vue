@@ -5,7 +5,7 @@ import type { EditRecordRow } from '../utils/edit-cell';
 
 import { ref, unref, nextTick, computed, watchEffect, toRaw } from 'vue';
 // import { FormOutlined, CloseOutlined, CheckOutlined } from '@vicons/antd';
-import { CellComponent } from './CellComponent';
+import { CellComponent } from '../utils/cell-component';
 
 import { useTableContext } from '../hooks/table-context';
 

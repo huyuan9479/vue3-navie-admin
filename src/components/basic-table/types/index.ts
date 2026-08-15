@@ -9,9 +9,11 @@ export type ComponentType =
   | 'NCascader';
 
 export interface PaginationProps {
-  pageNum?: number; //受控模式下的当前页
-  total?: number; //总条数
-  pages?: number; //总页数
+  page?: number; //受控模式下的当前页
+  itemCount?: number; //总条数
+  pageCount?: number; //总页数
+  pageSlot?: number; //页码显示的个数
+  size?: 'small' | 'medium' | 'large'; //分页大小
   pageSize?: number; //受控模式下的分页大小
   pageSizes?: number[]; //每页条数， 可自定义
   showSizePicker?: boolean; //是否显示每页条数的选择器

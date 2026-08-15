@@ -2,6 +2,7 @@
 import { ref, reactive, h } from 'vue';
 import { BasicForm, useForm, type FormSchema } from '@/components/basic-form';
 import { BasicTable, TableAction, type BasicColumn } from '@/components/basic-table';
+import { fetchGetRoleList } from '@/service/api';
 
 const actionRef = ref();
 const schemas: FormSchema[] = [
@@ -130,41 +131,37 @@ const schemas: FormSchema[] = [
 
 const columns: BasicColumn[] = [
   {
-    title: 'id',
+    title: '角色Id',
     key: 'id'
   },
   {
-    title: '名称',
+    title: '角色名称',
     key: 'name'
   },
   {
-    title: '头像',
-    key: 'avatar'
-  },
-  {
-    title: '性别',
-    key: 'sex'
-  },
-  {
-    title: '邮箱',
-    key: 'email',
-    width: 220
-  },
-  {
-    title: '城市',
-    key: 'city'
-  },
-  {
     title: '状态',
-    key: 'status'
+    key: 'status',
+    render(record: any) {
+      return h(
+        'NTag',
+        {
+          type: record.status === 1 ? 'success' : 'danger'
+        },
+        record.status === 1 ? '启用' : '禁用'
+      );
+    }
+  },
+  {
+    title: '备注',
+    key: 'remark'
   },
   {
     title: '创建时间',
-    key: 'createDate'
+    key: 'createTime'
   }
 ];
 
-const [register] = useForm({
+const [register, { getFieldsValue }] = useForm({
   labelWidth: 80,
   schemas
 });
@@ -230,7 +227,10 @@ function handleReset(values: Recordable) {
   console.log(values);
 }
 
-function loadDataTable() {}
+async function loadDataTable(res: any) {
+  const { data } = await fetchGetRoleList({ ...getFieldsValue(), ...res });
+  return data;
+}
 
 function handleDelete(record: any) {
   console.log(record);
@@ -247,14 +247,14 @@ function onCheckedRow(keys: (string | number)[]) {
 
 <template>
   <div>
-    <NCard :bordered="false">
+    <NCard :bordered="false" size="small">
       <BasicForm @register="register" @submit="handleSubmit" @reset="handleReset">
         <template #statusSlot="{ model, field }">
           <NInput v-model:value="model[field]" />
         </template>
       </BasicForm>
     </NCard>
-    <NCard :bordered="false" class="mt-10px">
+    <NCard :bordered="false" class="mt-10px" size="small">
       <BasicTable
         ref="actionRef"
         :columns="columns"

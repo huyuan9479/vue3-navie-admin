@@ -58,18 +58,18 @@ export function useDataSource(
       const { request, pagination, beforeRequest, afterRequest }: any = unref(propsRef);
       if (!request) return;
       //组装分页信息
-      const pageNumField = APISETTING.pageNumField;
+      const pageField = APISETTING.pageNumField;
       const pageSizeField = APISETTING.pageSizeField;
       const totalField = APISETTING.totalField;
       const recordsField = APISETTING.recordsField;
-      const pageCountField = APISETTING.pageCountField;
+      const pageCountField = APISETTING.pagesField;
       let pageParams = {};
-      const { pageNum = 1, pageSize = 10 } = unref(getPaginationInfo) as PaginationProps;
+      const { page = 1, pageSize = 10 } = unref(getPaginationInfo) as PaginationProps;
 
       if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
         pageParams = {};
       } else {
-        (pageParams as Record<string, any>)[pageNumField] = (opt && opt[pageNumField]) || pageNum;
+        (pageParams as Record<string, any>)[pageField] = (opt && opt[pageField]) || page;
         (pageParams as Record<string, any>)[pageSizeField] = pageSize;
       }
 
@@ -84,18 +84,14 @@ export function useDataSource(
       const res = await request(params);
       if (!res) return;
       const pageCount = res[pageCountField];
-      const currentPage = res[pageNumField];
+      const currentPage = res[pageField];
       const total = res[totalField];
-      // const results = res[recordsField] ? res[recordsField] : [];
-
-      // const results = res[listField] ? res[listField] : [];
-
       // 如果数据异常，需获取正确的页码再次执行
       if (pageCount) {
         const currentTotalPage = Math.ceil(total / pageSize);
-        if (pageNum > currentTotalPage) {
+        if (currentPage > currentTotalPage) {
           setPagination({
-            pageNum: currentTotalPage,
+            page: currentTotalPage,
             total: total
           });
           return await fetch(opt);
@@ -108,13 +104,13 @@ export function useDataSource(
       }
       dataSourceRef.value = resultInfo;
       setPagination({
-        pageNum: currentPage,
-        pages: pageCount,
-        total: total
+        page: currentPage,
+        pageCount: pageCount,
+        itemCount: total
       });
-      if (opt && opt[pageNumField]) {
+      if (opt && opt[pageField]) {
         setPagination({
-          pageNum: opt[pageNumField] || 1
+          page: opt[pageField] || 1
         });
       }
       emit('fetch-success', {
@@ -122,7 +118,6 @@ export function useDataSource(
         pageCount: pageCount
       });
     } catch (error) {
-      console.error(error);
       emit('fetch-error', error);
       dataSourceRef.value = [];
       setPagination({

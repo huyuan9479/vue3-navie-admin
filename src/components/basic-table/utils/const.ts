@@ -7,7 +7,7 @@ const tableSetting = {
     // 接口返回的数据字段名
     recordsField: 'records',
     // 接口返回总页数字段名
-    pageCountField: 'pages',
+    pagesField: 'pages',
     //总数字段名
     totalField: 'total'
   },

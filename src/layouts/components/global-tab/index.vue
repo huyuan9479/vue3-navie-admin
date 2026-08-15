@@ -9,7 +9,7 @@ import { useTabStore } from '@/store/modules/tab';
 import { isPC } from '@/utils/agent';
 import { GLOBAL_TAB_WHEEL_SPEED_RATIO } from '@/constants/app';
 import BetterScroll from '@/components/custom/BetterScroll.vue';
-import ContextMenu from './context-menu.vue';
+import ContextMenu from './components/ContextMenu.vue';
 
 defineOptions({
   name: 'GlobalTab'
