@@ -1,12 +1,11 @@
 <script setup lang="ts">
-// import type { PropType } from 'vue';
 import { computed, toRaw } from 'vue';
 import type { ActionItem } from '../types/tableAction';
 import { usePermission } from '@/hooks/common/permission';
 import { isBoolean, isFunction } from '@/utils/is';
 import type { ButtonType } from 'naive-ui/lib';
-import type { DropdownMixedOption } from 'naive-ui/lib/dropdown/src/interface';
-// import { DownOutlined } from '@vicons/antd';
+import SvgIcon from '@/components/custom/SvgIcon.vue';
+
 defineOptions({
   name: 'TableAction'
 });
@@ -21,37 +20,12 @@ interface TableActionProps {
 const props = withDefaults(defineProps<TableActionProps>(), {
   actions: undefined,
   dropDownActions: undefined,
-  style: 'button',
+  style: 'text',
   select: () => {}
 });
-// defineProps<{}>();
 
-// export default defineComponent({
-//   name: 'TableAction',
-//   // components: { DownOutlined },
-//   props: {
-//     actions: {
-//       type: Array as PropType<ActionItem[]>,
-//       default: null,
-//       required: true
-//     },
-//     dropDownActions: {
-//       type: Array as PropType<ActionItem[]>,
-//       default: null
-//     },
-//     style: {
-//       type: String as PropType<string>,
-//       default: 'button'
-//     },
-//     select: {
-//       type: Function as PropType<Function>,
-//       default: () => {}
-//     }
-//   },
-//   setup(props) {
 const { hasPermission } = usePermission();
-
-const actionType = props.style === 'button' ? 'default' : props.style === 'text' ? 'primary' : 'default';
+const actionType = props.style === 'button' ? 'default' : props.style === 'text' ? 'default' : '';
 const actionText = props.style === 'button' ? undefined : props.style === 'text' ? true : undefined;
 
 const getMoreProps = computed(() => {
@@ -62,7 +36,7 @@ const getMoreProps = computed(() => {
   };
 });
 
-const getDropdownList = computed((): DropdownMixedOption[] => {
+const getDropdownList = computed((): ActionItem[] => {
   return (toRaw(props.dropDownActions) || [])
     .filter(action => {
       return hasPermission(action.auth as string[]) && isIfShow(action);
@@ -78,7 +52,7 @@ const getDropdownList = computed((): DropdownMixedOption[] => {
         onConfirm: popConfirm?.confirm,
         onCancel: popConfirm?.cancel
       };
-    }) as DropdownMixedOption[];
+    }) as ActionItem[];
 });
 
 function isIfShow(action: ActionItem): boolean {
@@ -115,46 +89,64 @@ const getActions = computed(() => {
       };
     });
 });
-
-//     return {
-//       getActions,
-//       getDropdownList,
-//       getMoreProps
-//     };
-//   }
-// });
 </script>
 
 <template>
-  <div class="tableAction">
+  <div class="table-action">
     <div class="flex items-center justify-center">
-      <template v-for="(action, index) in getActions" :key="`${index}-${action.label}`">
-        <NButton v-bind="action" class="mx-1">
-          {{ action.label }}
-          <template v-if="action.hasOwnProperty('icon')" #icon>
-            <NIcon :component="action.icon" />
+      <NSpace align="center">
+        <template v-for="(action, index) in getActions" :key="`${index}-${action.label}`">
+          <NButton v-bind="action" class="action-btn-item flex items-center">
+            <template v-if="action.hasOwnProperty('icon')" #icon>
+              <SvgIcon :icon="action.icon as string" />
+            </template>
+            {{ action.label }}
+          </NButton>
+        </template>
+
+        <NPopover trigger="hover" placement="bottom">
+          <template #trigger>
+            <div v-if="dropDownActions && getDropdownList.length" class="action-btn-more">
+              <slot name="more"></slot>
+              <NButton v-if="!$slots.more" v-bind="getMoreProps" icon-placement="right">
+                <div class="flex items-center">
+                  <span>更多</span>
+                  <icon-mdi-chevron-down class="text-20px" />
+                </div>
+              </NButton>
+            </div>
           </template>
-        </NButton>
-      </template>
-      <NDropdown
-        v-if="dropDownActions && getDropdownList.length"
-        trigger="hover"
-        :options="getDropdownList"
-        @select="select"
-      >
-        <slot name="more"></slot>
-        <NButton v-if="!$slots.more" v-bind="getMoreProps" class="mx-1" icon-placement="right">
-          <div class="flex items-center">
-            <span>更多</span>
-            <NIcon size="14" class="ml-1">
-              <DownOutlined />
-            </NIcon>
-          </div>
-          <!--          <template #icon>-->
-          <!--            -->
-          <!--          </template>-->
-        </NButton>
-      </NDropdown>
+          <template #default>
+            <NSpace size="small" vertical>
+              <NButton
+                v-for="(item, index) in getDropdownList"
+                :key="`${index}-${item.key}`"
+                v-bind="item"
+                :text="actionText"
+                @click="select(item)"
+              >
+                <template v-if="item.hasOwnProperty('icon')" #icon>
+                  <SvgIcon :icon="item.icon as string" />
+                </template>
+                {{ item.label }}
+              </NButton>
+            </NSpace>
+          </template>
+        </NPopover>
+      </NSpace>
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.table-action {
+  :deep(.action-btn-item),
+  :deep(.action-btn-more) {
+    .n-button__icon {
+      margin-right: 0;
+      margin-left: 0;
+      font-size: 17px;
+    }
+  }
+}
+</style>

@@ -10,6 +10,36 @@ import type { BasicTableProps } from './types/table';
 import { getViewportOffset } from '@/utils/dom';
 import { useWindowSizeFn } from '@/hooks/common/window-size';
 import { isBoolean } from '@/utils/is';
+const props = withDefaults(defineProps<BasicTableProps>(), {
+  dataSource: () => [],
+  columns: () => [],
+  pagination: true,
+  size: 'small',
+  canResize: true,
+  resizeHeightOffset: 0,
+  loading: false,
+  striped: true,
+  singleLine: false,
+  bordered: true
+});
+
+const emit = defineEmits<{
+  (
+    e: 'update:checked-row-keys',
+    keys: (string | number)[],
+    rows: any[],
+    meta: {
+      row: any | undefined;
+      action: 'check' | 'uncheck' | 'checkAll' | 'uncheckAll';
+    }
+  ): void;
+  (e: 'fetch-success', result: { items: any[]; pageCount: number }): void;
+  (e: 'fetch-error', error: unknown): void;
+  // (e: 'edit-end'): void;
+  // (e: 'edit-cancel'): void;
+  // (e: 'edit-row-end'): void;
+  // (e: 'edit-change'): void;
+}>();
 
 const densityOptions = [
   {
@@ -28,39 +58,25 @@ const densityOptions = [
     key: 'large'
   }
 ];
+const stripedOptions = [
+  {
+    type: 'menu',
+    label: '开启',
+    key: 'Y'
+  },
+  {
+    type: 'menu',
+    label: '关闭',
+    key: 'N'
+  }
+];
 
-const emit = defineEmits<{
-  (
-    e: 'update:checked-row-keys',
-    keys: (string | number)[],
-    rows: any[],
-    meta: { row: any | undefined; action: 'check' | 'uncheck' | 'checkAll' | 'uncheckAll' }
-  ): void;
-  (e: 'fetch-success', result: { items: any[]; pageCount: number }): void;
-  (e: 'fetch-error', error: unknown): void;
-  // (e: 'edit-end'): void;
-  // (e: 'edit-cancel'): void;
-  // (e: 'edit-row-end'): void;
-  // (e: 'edit-change'): void;
-}>();
-
-const props = withDefaults(defineProps<BasicTableProps>(), {
-  dataSource: () => [],
-  columns: () => [],
-  pagination: true,
-  size: 'small',
-  canResize: true,
-  resizeHeightOffset: 0,
-  loading: false,
-  striped: true,
-  singleLine: false,
-  bordered: true
-});
 const deviceHeight = ref(150);
 const tableElRef = ref<ComponentRef>(null);
 const wrapRef = ref<Nullable<HTMLDivElement>>(null);
 let paginationEl: HTMLElement | null;
 const isStriped = ref(props.striped || false);
+const tableStriped = ref(props.striped ? 'Y' : 'N');
 const tableData = ref<Recordable[]>([]);
 const innerPropsRef = ref<Partial<BasicTableProps>>();
 
@@ -85,7 +101,8 @@ const { getDataSourceRef, getDataSource, getRowKey, reload } = useDataSource(
   emit
 );
 
-const { getPageColumns, setColumns, getColumns, getCacheColumns, setCacheColumnsField } = useColumns(getProps);
+const { getPageColumns, getScrollX, setColumns, getColumns, getCacheColumns, setCacheColumnsField } =
+  useColumns(getProps);
 
 //页码切换
 function updatePage(page: number) {
@@ -103,7 +120,11 @@ function updatePageSize(size: number) {
 function densitySelect(e: 'small' | 'medium' | 'large') {
   tableSize.value = e;
 }
-
+// 斑马纹切换
+function stripedSelect(e: 'Y' | 'N') {
+  isStriped.value = e === 'Y';
+  tableStriped.value = e;
+}
 //获取表格大小
 const getTableSize = computed(() => tableSize.value);
 
@@ -120,7 +141,8 @@ const getBindValues = computed(() => {
     size: unref(getTableSize),
     remote: true,
     'max-height': maxHeight,
-    title: '' // 重置为空 避免绑定到 table 上面
+    title: '', // 重置为空 避免绑定到 table 上面
+    scrollX: unref(getScrollX)
   };
 });
 
@@ -130,8 +152,6 @@ const pagination = computed(() => toRaw(unref(getPaginationInfo)));
 function setProps(values: Partial<BasicTableProps>) {
   innerPropsRef.value = { ...unref(innerPropsRef), ...values };
 }
-
-const setStriped = (value: boolean) => (isStriped.value = value);
 
 const tableAction = {
   reload,
@@ -219,46 +239,37 @@ defineExpose(tableAction);
     <div class="flex items-center leading-none table-toolbar-right">
       <!--顶部右侧区域-->
       <slot name="toolbar"></slot>
-
-      <!--斑马纹-->
-      <NTooltip trigger="hover">
-        <template #trigger>
-          <div class="mr-2 table-toolbar-right-icon">
-            <NSwitch v-model:value="isStriped" @update:value="setStriped" />
-          </div>
-        </template>
-        <span>表格斑马纹</span>
-      </NTooltip>
-      <NDivider vertical />
-
-      <!--刷新-->
-      <NTooltip trigger="hover">
-        <template #trigger>
-          <div class="table-toolbar-right-icon" @click="reload">
-            <NIcon size="18">
-              <ReloadOutlined />
-            </NIcon>
-          </div>
-        </template>
-        <span>刷新</span>
-      </NTooltip>
-
-      <!--密度-->
-      <NTooltip trigger="hover">
-        <template #trigger>
-          <div class="table-toolbar-right-icon">
-            <NDropdown v-model:value="tableSize" trigger="click" :options="densityOptions" @select="densitySelect">
-              <NIcon size="18">
-                <ColumnHeightOutlined />
-              </NIcon>
-            </NDropdown>
-          </div>
-        </template>
-        <span>密度</span>
-      </NTooltip>
-
-      <!--表格设置单独抽离成组件-->
-      <ColumnSetting />
+      <NSpace size="small">
+        <!-- 斑马纹 -->
+        <NDropdown v-model:value="tableStriped" trigger="click" :options="stripedOptions" @select="stripedSelect">
+          <NButton secondary circle size="small">
+            <template #icon>
+              <icon-mdi:format-align-center class="text-#666" />
+            </template>
+          </NButton>
+        </NDropdown>
+        <!--刷新-->
+        <NTooltip trigger="hover">
+          <template #trigger>
+            <NButton secondary circle size="small" @click="reload">
+              <template #icon>
+                <icon-mdi:reload class="text-#666" />
+              </template>
+            </NButton>
+          </template>
+          <span>刷新</span>
+        </NTooltip>
+        <!--密度-->
+        <NDropdown v-model:value="tableSize" trigger="click" :options="densityOptions" @select="densitySelect">
+          <NButton secondary circle size="small">
+            <template #icon>
+              <icon-mdi:arrow-expand-vertical class="text-#666" />
+            </template>
+          </NButton>
+        </NDropdown>
+        <!--表格设置单独抽离成组件-->
+        <ColumnSetting />
+      </NSpace>
     </div>
   </div>
   <div class="s-table">

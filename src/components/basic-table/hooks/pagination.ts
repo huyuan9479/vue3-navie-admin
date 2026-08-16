@@ -33,7 +33,6 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
       showSizePicker: true,
       showQuickJumper: true,
       pageSlot: 7,
-      size: 'small',
       prefix: (pagingInfo: PaginationProps) => `共 ${pagingInfo.itemCount || 0} 条`, // 不需要可以通过 pagination 重置或者删除
       ...(isBoolean(pagination) ? {} : pagination),
       ...unref(configRef)

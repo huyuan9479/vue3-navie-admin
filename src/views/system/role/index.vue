@@ -3,6 +3,8 @@ import { ref, reactive, h } from 'vue';
 import { BasicForm, useForm, type FormSchema } from '@/components/basic-form';
 import { BasicTable, TableAction, type BasicColumn } from '@/components/basic-table';
 import { fetchGetRoleList } from '@/service/api';
+import { NTag, NButton } from 'naive-ui';
+import SvgIcon from '@/components/custom/SvgIcon.vue';
 
 const actionRef = ref();
 const schemas: FormSchema[] = [
@@ -132,20 +134,24 @@ const schemas: FormSchema[] = [
 const columns: BasicColumn[] = [
   {
     title: '角色Id',
-    key: 'id'
+    key: 'id',
+    width: 140
   },
   {
     title: '角色名称',
-    key: 'name'
+    key: 'name',
+    width: 100
   },
   {
     title: '状态',
     key: 'status',
+    width: 80,
     render(record: any) {
       return h(
-        'NTag',
+        NTag,
         {
-          type: record.status === 1 ? 'success' : 'danger'
+          type: record.status === 1 ? 'success' : 'error',
+          size: 'small'
         },
         record.status === 1 ? '启用' : '禁用'
       );
@@ -153,7 +159,9 @@ const columns: BasicColumn[] = [
   },
   {
     title: '备注',
-    key: 'remark'
+    key: 'remark',
+    ellipsis: true,
+    width: 150
   },
   {
     title: '创建时间',
@@ -172,49 +180,73 @@ const actionColumn = reactive({
   key: 'action',
   fixed: 'right' as const,
   render(record: any) {
-    return h(TableAction as any, {
-      style: 'button',
-      actions: [
-        {
-          label: '删除',
-          onClick: handleDelete.bind(null, record),
-          // 根据业务控制是否显示 isShow 和 auth 是并且关系
-          ifShow: () => {
-            return true;
+    return h(
+      TableAction as any,
+      {
+        style: 'text',
+        actions: [
+          {
+            label: '删除',
+            type: 'error',
+            icon: 'material-symbols:delete-rounded',
+            onClick: handleDelete.bind(null, record),
+            // 根据业务控制是否显示 isShow 和 auth 是并且关系
+            ifShow: () => {
+              return true;
+            }
+            // 根据权限控制是否显示: 有权限，会显示，支持多个
           },
-          // 根据权限控制是否显示: 有权限，会显示，支持多个
-          auth: ['basic_list']
-        },
-        {
-          label: '编辑',
-          onClick: handleEdit.bind(null, record),
-          ifShow: () => {
-            return true;
+          {
+            label: '编辑',
+            onClick: handleEdit.bind(null, record),
+            ifShow: () => {
+              return true;
+            }
+            // auth: ['basic_list']
+          }
+        ],
+        dropDownActions: [
+          {
+            label: '启用',
+            key: 'enabled',
+            type: 'success',
+            icon: 'material-symbols:open-in-new-rounded',
+            // 根据业务控制是否显示: 非enable状态的不显示启用按钮
+            ifShow: () => {
+              return true;
+            }
           },
-          auth: ['basic_list']
-        }
-      ],
-      dropDownActions: [
-        {
-          label: '启用',
-          key: 'enabled',
-          // 根据业务控制是否显示: 非enable状态的不显示启用按钮
-          ifShow: () => {
-            return true;
+          {
+            label: '禁用',
+            key: 'disabled',
+            type: 'error',
+            icon: 'material-symbols:do-not-disturb-on-outline-rounded',
+            ifShow: () => {
+              return true;
+            }
           }
-        },
-        {
-          label: '禁用',
-          key: 'disabled',
-          ifShow: () => {
-            return true;
-          }
+        ],
+        select: ({ key }: { key: string }) => {
+          window['$message']?.info(`您点击了，${key} 按钮`);
         }
-      ],
-      select: (key: string) => {
-        window['$message']?.info(`您点击了，${key} 按钮`);
+      },
+      {
+        // ✅ 在这里传入 more 插槽
+        more: () =>
+          h(
+            NButton,
+            {
+              type: 'primary',
+              size: 'small',
+              text: true
+            },
+            {
+              default: () => '自定义更多',
+              icon: () => h(SvgIcon, { icon: 'material-symbols:8k-outline' })
+            }
+          )
       }
-    });
+    );
   }
 });
 
@@ -261,9 +293,18 @@ function onCheckedRow(keys: (string | number)[]) {
         :request="loadDataTable"
         :row-key="(row: any) => row.id"
         :action-column="actionColumn"
-        :scroll-x="1090"
         @update:checked-row-keys="onCheckedRow"
       ></BasicTable>
     </NCard>
+    <!--
+ <TableAction :actions="actions" :drop-down-actions="dropDownActions" :select="handleSelect">
+      <template #more>
+        <NButton type="primary" size="small" dashed>
+          自定义更多操作
+          <icon-mdi-dots-horizontal />
+        </NButton>
+      </template>
+    </TableAction>
+-->
   </div>
 </template>

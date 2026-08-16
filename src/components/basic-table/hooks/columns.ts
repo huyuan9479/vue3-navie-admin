@@ -6,16 +6,17 @@ import { usePermission } from '@/hooks/common/permission';
 import { ActionItem } from '../types/tableAction';
 import { renderEditCell } from '../utils/edit-cell';
 import { NTooltip, NIcon } from 'naive-ui';
+import { isNumber } from '@/utils/is';
 // import { FormOutlined } from '@vicons/antd';
 
 export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
-  const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
-  let cacheColumns = unref(propsRef).columns;
+  // 初始化时和 watch 中合并 actionColumn
+  const columnsRef = ref(mergeActionColumn()) as unknown as Ref<BasicColumn[]>;
+  let cacheColumns = mergeActionColumn();
+  const DEFAULT_WIDTH = 100;
 
   const getColumnsRef = computed(() => {
     const columns = cloneDeep(unref(columnsRef));
-
-    handleActionColumn(propsRef, columns);
     if (!columns) return [];
     return columns;
   });
@@ -51,8 +52,13 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
         return hasPermission(column.auth as string[]) && isIfShow(column as ActionItem);
       })
       .map(column => {
-        //默认 ellipsis 为true
-        column.ellipsis = typeof column.ellipsis === 'undefined' ? { tooltip: true } : false;
+        // 默认宽度
+        column.width = column.width || DEFAULT_WIDTH;
+        column.minWidth = column.minWidth || DEFAULT_WIDTH;
+        // 默认居中对齐
+        column.align = column.align || 'center';
+        //默认 ellipsis 为 false
+        column.ellipsis = column.ellipsis ? { tooltip: true } : false;
         const { edit } = column;
         if (edit) {
           column.render = renderEditCell(column);
@@ -80,23 +86,32 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
         return column;
       });
   });
+  // 表格内容的横向宽度，如果列被水平固定了，则需要设定它
+  const getScrollX = computed(() => {
+    return getPageColumns.value.reduce((total, column) => {
+      const { width, minWidth } = column;
+      const w = isNumber(width) ? width : isNumber(minWidth) ? minWidth : DEFAULT_WIDTH;
+      return total + w;
+    }, 0);
+  });
 
   watch(
     () => unref(propsRef).columns,
-    columns => {
-      columnsRef.value = columns;
-      cacheColumns = columns;
+    () => {
+      const merged = mergeActionColumn();
+      columnsRef.value = merged;
+      cacheColumns = merged;
     }
   );
 
-  function handleActionColumn(values: ComputedRef<BasicTableProps>, columns: BasicColumn[]) {
-    const { actionColumn } = unref(values);
-    if (!actionColumn) return;
-    if (!columns.find(col => col.key === 'action')) {
-      columns.push({
-        ...(actionColumn as any)
-      });
+  function mergeActionColumn(): BasicColumn[] {
+    const { columns, actionColumn } = unref(propsRef);
+    const result = [...columns];
+    if (!actionColumn) return result;
+    if (!result.find(col => col.key === 'action')) {
+      result.push({ ...(actionColumn as any) });
     }
+    return result;
   }
 
   //设置
@@ -161,6 +176,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
     setCacheColumnsField,
     setColumns,
     getColumns,
-    getPageColumns
+    getPageColumns,
+    getScrollX
   };
 }

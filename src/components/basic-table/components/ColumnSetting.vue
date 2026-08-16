@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref, reactive, unref, toRaw, watchEffect } from 'vue';
+import { ref, reactive, watch, toRaw, unref } from 'vue';
 import { useTableContext } from '../hooks/table-context';
 import { cloneDeep } from 'lodash-es';
-// import { SettingOutlined, DragOutlined, VerticalRightOutlined, VerticalLeftOutlined } from '@vicons/antd';
-import { VueDraggable } from 'vue-draggable-plus';
+import Draggable from 'vuedraggable';
 import { useThemeStore } from '@/store/modules/theme';
 import type { BasicColumn } from '../types/table';
 
@@ -13,16 +12,6 @@ interface Options {
   fixed?: boolean | 'left' | 'right';
 }
 
-// export default defineComponent({
-//   name: 'ColumnSetting',
-//   // components: {
-//   //   SettingOutlined,
-//   //   DragOutlined,
-//   //   VueDraggable,
-//   //   VerticalRightOutlined,
-//   //   VerticalLeftOutlined
-//   // },
-//   setup() {
 const { darkMode } = useThemeStore();
 const table: any = useTableContext();
 const columnsList = ref<Options[]>([]);
@@ -40,16 +29,18 @@ const state = reactive<{
   defaultCheckList: []
 });
 
-// const getSelection = computed(() => {
-//   return state.selection;
-// });
-
-watchEffect(() => {
-  const columns = table.getColumns();
-  if (columns.length) {
-    init();
-  }
-});
+const initialized = ref(false);
+// 避免每次列变化都重置 checkList
+watch(
+  () => table.getColumns(),
+  columns => {
+    if (columns.length && !initialized.value) {
+      init();
+      initialized.value = true;
+    }
+  },
+  { immediate: true }
+);
 
 //初始化
 function init() {
@@ -57,18 +48,11 @@ function init() {
   const checkList: any = columns.map(item => item.key);
   state.checkList = checkList;
   state.defaultCheckList = checkList;
-  const newColumns = columns.filter(item => item.key != 'action' && item.title != '操作');
-  if (!columnsList.value.length) {
-    columnsList.value = cloneDeep(newColumns);
-    cacheColumnsList.value = cloneDeep(newColumns);
-  }
+  columnsList.value = cloneDeep(columns);
+  cacheColumnsList.value = cloneDeep(columns);
 }
 
-//切换
 function onChange(checkList: any[]) {
-  if (state.selection) {
-    checkList.unshift('selection');
-  }
   setColumns(checkList);
 }
 
@@ -90,11 +74,11 @@ function getColumns() {
 function resetColumns() {
   state.checkList = [...state.defaultCheckList];
   state.checkAll = true;
-  const cacheColumnsKeys: any[] = table.getCacheColumns();
+  const cacheColumnsKeys: any[] = cacheColumnsList.value;
   const newColumns = cacheColumnsKeys.map(item => {
     return {
       ...item,
-      fixed: undefined
+      fixed: item.fixed || undefined
     };
   });
   setColumns(newColumns);
@@ -113,28 +97,16 @@ function onCheckAll(e: boolean) {
   }
 }
 
+function onMove(e: any) {
+  if (e.draggedContext.element.draggable === false) return false;
+  return true;
+}
+
 //拖拽排序
 function draggableEnd() {
   const newColumns = toRaw(unref(columnsList));
   columnsList.value = newColumns;
   setColumns(newColumns as BasicColumn[]);
-}
-
-//勾选列
-function onSelection(e: boolean) {
-  const checkList = table.getCacheColumns();
-  if (e) {
-    checkList.unshift({ type: 'selection', key: 'selection' });
-    setColumns(checkList as BasicColumn[]);
-  } else {
-    checkList.splice(0, 1);
-    setColumns(checkList as BasicColumn[]);
-  }
-}
-
-function onMove(e: any) {
-  if (e.draggedContext.element.draggable === false) return false;
-  return true;
 }
 
 //固定
@@ -147,104 +119,100 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
     columns[index].fixed = isFixed;
   }
   table.setCacheColumnsField(item.key, { fixed: isFixed });
-  columnsList.value[index].fixed = isFixed;
+  const columnsListIndex = columnsList.value.findIndex(res => res.key === item.key);
+  if (columnsListIndex !== -1) {
+    columnsList.value[columnsListIndex].fixed = isFixed;
+  }
   setColumns(columns);
 }
-
-//     return {
-//       ...toRefs(state),
-//       columnsList,
-//       darkMode,
-//       onChange,
-//       onCheckAll,
-//       onSelection,
-//       onMove,
-//       resetColumns,
-//       fixedColumn,
-//       draggableEnd,
-//       getSelection
-//     };
-//   }
-// });
 </script>
 
 <template>
-  <NTooltip trigger="hover">
+  <NTooltip trigger="hover" class="column-setting">
     <template #trigger>
-      <div class="cursor-pointer table-toolbar-right-icon">
-        <NPopover trigger="click" :width="230" class="toolbar-popover" placement="bottom-end">
+      <div class="cursor-pointer">
+        <NPopover trigger="click" :width="240" placement="bottom-end">
           <template #trigger>
-            <NIcon size="18">
-              <SettingOutlined />
-            </NIcon>
+            <NButton secondary circle size="small">
+              <template #icon>
+                <icon-mdi:view-grid-outline class="text-#666" />
+              </template>
+            </NButton>
           </template>
           <template #header>
-            <div class="table-toolbar-inner-popover-title">
-              <NSpace>
-                <NCheckbox v-model:checked="state.checkAll" @update:checked="onCheckAll">列展示</NCheckbox>
-                <NCheckbox v-model:checked="state.selection" @update:checked="onSelection">勾选列</NCheckbox>
+            <div>
+              <NSpace justify="space-between">
+                <NCheckbox v-model:checked="state.checkAll" class="ml-4px" @update:checked="onCheckAll">
+                  列展示
+                </NCheckbox>
                 <NButton text type="info" size="small" class="mt-1" @click="resetColumns">重置</NButton>
               </NSpace>
             </div>
           </template>
-          <div class="table-toolbar-inner">
-            <NCheckboxGroup v-model:value="state.checkList" @update:value="onChange">
-              <VueDraggable
-                v-model="columnsList"
-                :animation="300"
-                item-key="key"
-                filter=".no-draggable"
-                :move="onMove"
-                @end="draggableEnd"
-              >
-                <template #item="{ element }">
-                  <div
-                    class="table-toolbar-inner-checkbox"
-                    :class="{
-                      'table-toolbar-inner-checkbox-dark': darkMode === true,
-                      'no-draggable': element.draggable === false
-                    }"
-                  >
-                    <span class="drag-icon" :class="{ 'drag-icon-hidden': element.draggable === false }">
-                      <NIcon size="18">
-                        <DragOutlined />
-                      </NIcon>
-                    </span>
-                    <NCheckbox :value="element.key" :label="element.title" />
-                    <div class="fixed-item">
-                      <NTooltip trigger="hover" placement="bottom">
-                        <template #trigger>
-                          <NIcon
-                            size="18"
-                            :color="element.fixed === 'left' ? '#2080f0' : undefined"
-                            class="cursor-pointer"
-                            @click="fixedColumn(element, 'left')"
+          <template #default>
+            <div class="column-setting-content">
+              <NCheckboxGroup v-model:value="state.checkList" @update:value="onChange">
+                <Draggable
+                  v-model="columnsList"
+                  :animation="300"
+                  item-key="key"
+                  filter=".no-draggable"
+                  :move="onMove"
+                  @end="draggableEnd"
+                >
+                  <template #item="{ element }">
+                    <div
+                      class="column-setting-content-checkbox"
+                      :class="{
+                        'column-setting-content-checkbox-dark': darkMode === true,
+                        'no-draggable': !state.checkList.includes(element.key)
+                      }"
+                    >
+                      <NCheckbox :value="element.key" :label="element.title" />
+                      <div class="fixed-item">
+                        <NSpace size="small">
+                          <span
+                            class="drag-icon"
+                            :class="{ 'drag-icon-disabled': !state.checkList.includes(element.key) }"
                           >
-                            <VerticalRightOutlined />
-                          </NIcon>
-                        </template>
-                        <span>固定到左侧</span>
-                      </NTooltip>
-                      <NDivider vertical />
-                      <NTooltip trigger="hover" placement="bottom">
-                        <template #trigger>
-                          <NIcon
-                            size="18"
-                            :color="element.fixed === 'right' ? '#2080f0' : undefined"
-                            class="cursor-pointer"
-                            @click="fixedColumn(element, 'right')"
-                          >
-                            <VerticalLeftOutlined />
-                          </NIcon>
-                        </template>
-                        <span>固定到右侧</span>
-                      </NTooltip>
+                            <icon-ant-design:drag-outlined class="text-18px" />
+                          </span>
+                          <NTooltip trigger="hover" placement="bottom" :content-style="{ padding: '0' }">
+                            <template #trigger>
+                              <NIcon
+                                size="18"
+                                :color="element.fixed === 'left' ? '#2080f0' : undefined"
+                                class="cursor-pointer"
+                                :class="{ 'fixed-icon-disabled': !state.checkList.includes(element.key) }"
+                                @click="fixedColumn(element, 'left')"
+                              >
+                                <icon-ant-design:vertical-right-outlined class="text-18px" />
+                              </NIcon>
+                            </template>
+                            <span>固定到左侧</span>
+                          </NTooltip>
+                          <NTooltip trigger="hover" placement="bottom" :content-style="{ padding: '0' }">
+                            <template #trigger>
+                              <NIcon
+                                size="18"
+                                :color="element.fixed === 'right' ? '#2080f0' : undefined"
+                                class="cursor-pointer"
+                                :class="{ 'fixed-icon-disabled': !state.checkList.includes(element.key) }"
+                                @click="fixedColumn(element, 'right')"
+                              >
+                                <icon-ant-design:vertical-left-outlined class="text-18px" />
+                              </NIcon>
+                            </template>
+                            <span>固定到右侧</span>
+                          </NTooltip>
+                        </NSpace>
+                      </div>
                     </div>
-                  </div>
-                </template>
-              </VueDraggable>
-            </NCheckboxGroup>
-          </div>
+                  </template>
+                </Draggable>
+              </NCheckboxGroup>
+            </div>
+          </template>
         </NPopover>
       </div>
     </template>
@@ -252,34 +220,16 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
   </NTooltip>
 </template>
 
-<style lang="scss">
-.table-toolbar {
-  &-inner-popover-title {
-    padding: 3px 0;
-  }
-
-  &-right {
-    &-icon {
-      margin-left: 12px;
-      font-size: 16px;
-      color: var(--text-color);
-      cursor: pointer;
-
-      :hover {
-        color: #1890ff;
-      }
-    }
-  }
-}
-
-.table-toolbar-inner {
+<style lang="scss" scoped>
+.column-setting-content {
   &-checkbox {
     display: flex;
     align-items: center;
-    padding: 10px 14px;
+    padding: 6px 4px;
 
     &:hover {
       background: #e6f7ff;
+      border-radius: 4px;
     }
 
     .drag-icon {
@@ -290,6 +240,15 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
         visibility: hidden;
         cursor: default;
       }
+      &-disabled {
+        color: #999;
+        cursor: not-allowed;
+      }
+    }
+
+    .fixed-icon-disabled {
+      color: #999;
+      cursor: not-allowed;
     }
 
     .fixed-item {
@@ -315,9 +274,14 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
   }
 }
 
-.toolbar-popover {
-  .n-popover__content {
-    padding: 0;
+.dark {
+  .column-setting-content {
+    &-checkbox {
+      &:hover {
+        background: hsla(0, 0%, 100%, 0.08);
+        border-radius: 4px;
+      }
+    }
   }
 }
 </style>
