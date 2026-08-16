@@ -230,7 +230,8 @@ const local: App.I18n.Schema = {
     'iframe-page': 'Iframe',
     home: 'Workbench',
     system: 'System Management',
-    system_role: 'Role Management'
+    system_role: 'Role Management',
+    system_user: 'User Management'
   },
   page: {
     login: {

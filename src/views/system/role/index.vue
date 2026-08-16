@@ -252,7 +252,11 @@ const actionColumn = reactive({
 
 function handleSubmit(values: Recordable) {
   console.log(values);
-  // reloadTable();
+  reloadTable();
+}
+
+function reloadTable() {
+  actionRef.value.reload();
 }
 
 function handleReset(values: Recordable) {
@@ -294,17 +298,14 @@ function onCheckedRow(keys: (string | number)[]) {
         :row-key="(row: any) => row.id"
         :action-column="actionColumn"
         @update:checked-row-keys="onCheckedRow"
-      ></BasicTable>
+      >
+        <template #toolbar>
+          <NButton type="primary">
+            <icon-mdi:plus class="text-18px" />
+            新增
+          </NButton>
+        </template>
+      </BasicTable>
     </NCard>
-    <!--
- <TableAction :actions="actions" :drop-down-actions="dropDownActions" :select="handleSelect">
-      <template #more>
-        <NButton type="primary" size="small" dashed>
-          自定义更多操作
-          <icon-mdi-dots-horizontal />
-        </NButton>
-      </template>
-    </TableAction>
--->
   </div>
 </template>

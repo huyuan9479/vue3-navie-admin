@@ -220,31 +220,33 @@ defineExpose(tableAction);
   <div class="table-toolbar">
     <!--顶部左侧区域-->
     <div class="flex items-center table-toolbar-left">
-      <template v-if="getProps.title">
-        <div class="table-toolbar-left-title">
-          {{ getProps.title }}
-          <NTooltip v-if="getProps.titleTooltip" trigger="hover">
-            <template #trigger>
-              <NIcon size="18" class="ml-1 text-gray-400 cursor-pointer">
-                <QuestionCircleOutlined />
-              </NIcon>
-            </template>
-            {{ getProps.titleTooltip }}
-          </NTooltip>
-        </div>
-      </template>
-      <slot name="tableTitle"></slot>
+      <NSpace size="small" :wrap="false">
+        <template v-if="getProps.title">
+          <div class="table-toolbar-left-title">
+            {{ getProps.title }}
+            <NTooltip v-if="getProps.titleTooltip" trigger="hover">
+              <template #trigger>
+                <NIcon size="18" class="ml-1 text-gray-400 cursor-pointer">
+                  <QuestionCircleOutlined />
+                </NIcon>
+              </template>
+              {{ getProps.titleTooltip }}
+            </NTooltip>
+          </div>
+        </template>
+        <slot name="tableTitle"></slot>
+        <slot name="toolbar"></slot>
+      </NSpace>
     </div>
 
     <div class="flex items-center leading-none table-toolbar-right">
       <!--顶部右侧区域-->
-      <slot name="toolbar"></slot>
       <NSpace size="small">
         <!-- 斑马纹 -->
         <NDropdown v-model:value="tableStriped" trigger="click" :options="stripedOptions" @select="stripedSelect">
           <NButton secondary circle size="small">
             <template #icon>
-              <icon-mdi:format-align-center class="text-#666" />
+              <icon-mdi-format-align-center class="text-#666" />
             </template>
           </NButton>
         </NDropdown>
@@ -253,7 +255,7 @@ defineExpose(tableAction);
           <template #trigger>
             <NButton secondary circle size="small" @click="reload">
               <template #icon>
-                <icon-mdi:reload class="text-#666" />
+                <icon-mdi-refresh class="text-#666" />
               </template>
             </NButton>
           </template>
@@ -263,7 +265,7 @@ defineExpose(tableAction);
         <NDropdown v-model:value="tableSize" trigger="click" :options="densityOptions" @select="densitySelect">
           <NButton secondary circle size="small">
             <template #icon>
-              <icon-mdi:arrow-expand-vertical class="text-#666" />
+              <icon-mdi-arrow-expand-vertical class="text-#666" />
             </template>
           </NButton>
         </NDropdown>
@@ -293,13 +295,20 @@ defineExpose(tableAction);
 .table-toolbar {
   display: flex;
   justify-content: space-between;
-  padding: 0 0 16px 0;
+  padding-bottom: 8px;
 
   &-left {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     &-title {
       display: flex;
@@ -313,7 +322,7 @@ defineExpose(tableAction);
   &-right {
     display: flex;
     justify-content: flex-end;
-    flex: 1;
+    padding-left: 12px;
 
     &-icon {
       margin-left: 12px;

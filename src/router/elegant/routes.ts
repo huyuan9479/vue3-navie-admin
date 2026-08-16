@@ -92,7 +92,16 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'system_role',
           i18nKey: 'route.system_role',
-          icon: 'ant-design:user-outlined',
+          order: 2
+        }
+      },
+      {
+        name: 'system_user',
+        path: '/system/user',
+        component: 'view.system_user',
+        meta: {
+          title: 'system_user',
+          i18nKey: 'route.system_user',
           order: 1
         }
       }

@@ -25,6 +25,7 @@ declare module "@elegant-router/types" {
     "login": "/login/:module(pwd-login|register|reset-pwd|express-login)?";
     "system": "/system";
     "system_role": "/system/role";
+    "system_user": "/system/user";
   };
 
   /**
@@ -86,6 +87,7 @@ declare module "@elegant-router/types" {
     | "login"
     | "home"
     | "system_role"
+    | "system_user"
   >;
 
   /**
@@ -157,7 +159,7 @@ declare module "@elegant-router/types" {
         component: `view.${K}`;
       }
     : never;
-  
+
   /**
    * the center level route
    */
@@ -180,7 +182,7 @@ declare module "@elegant-router/types" {
         children: (CenterLevelRoute<GetChildRouteKey<K>> | LastLevelRoute<GetChildRouteKey<K>>)[];
       }
     : never;
-  
+
   /**
    * the custom first level route
    */

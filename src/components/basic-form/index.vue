@@ -294,7 +294,7 @@ onMounted(() => {
             <icon-material-symbols-refresh class="text-16px mr-2px" />
             {{ getProps.resetButtonText }}
           </NButton>
-          <NButton v-if="isInline && getProps.showAdvancedButton" type="default" @click="unfoldToggle">
+          <NButton v-if="isInline && getProps.showAdvancedButton" type="default" dashed @click="unfoldToggle">
             {{ overflow ? '展开' : '收起' }}
             <icon-mdi-chevron-down v-if="overflow" class="unfold-icon" />
             <icon-mdi-chevron-up v-else class="unfold-icon" />

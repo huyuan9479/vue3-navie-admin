@@ -170,7 +170,8 @@ const routeMap: RouteMap = {
   "iframe-page": "/iframe-page/:url",
   "login": "/login/:module(pwd-login|register|reset-pwd|express-login)?",
   "system": "/system",
-  "system_role": "/system/role"
+  "system_role": "/system/role",
+  "system_user": "/system/user"
 };
 
 /**

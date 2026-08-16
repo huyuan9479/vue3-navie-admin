@@ -131,7 +131,7 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
   <NTooltip trigger="hover" class="column-setting">
     <template #trigger>
       <div class="cursor-pointer">
-        <NPopover trigger="click" :width="240" placement="bottom-end">
+        <NPopover trigger="click" :width="240" placement="bottom-end" :content-style="{ padding: '0' }">
           <template #trigger>
             <NButton secondary circle size="small">
               <template #icon>
@@ -175,7 +175,7 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
                             class="drag-icon"
                             :class="{ 'drag-icon-disabled': !state.checkList.includes(element.key) }"
                           >
-                            <icon-ant-design:drag-outlined class="text-18px" />
+                            <icon-ant-design-drag-outlined class="text-18px" />
                           </span>
                           <NTooltip trigger="hover" placement="bottom" :content-style="{ padding: '0' }">
                             <template #trigger>
@@ -186,7 +186,7 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
                                 :class="{ 'fixed-icon-disabled': !state.checkList.includes(element.key) }"
                                 @click="fixedColumn(element, 'left')"
                               >
-                                <icon-ant-design:vertical-right-outlined class="text-18px" />
+                                <icon-ant-design-vertical-right-outlined class="text-18px" />
                               </NIcon>
                             </template>
                             <span>固定到左侧</span>
@@ -200,7 +200,7 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
                                 :class="{ 'fixed-icon-disabled': !state.checkList.includes(element.key) }"
                                 @click="fixedColumn(element, 'right')"
                               >
-                                <icon-ant-design:vertical-left-outlined class="text-18px" />
+                                <icon-ant-design-vertical-left-outlined class="text-18px" />
                               </NIcon>
                             </template>
                             <span>固定到右侧</span>
@@ -222,6 +222,9 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
 
 <style lang="scss" scoped>
 .column-setting-content {
+  padding: 12px;
+  max-height: 300px;
+  overflow: auto;
   &-checkbox {
     display: flex;
     align-items: center;
