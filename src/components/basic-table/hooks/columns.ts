@@ -7,6 +7,7 @@ import { ActionItem } from '../types/tableAction';
 import { renderEditCell } from '../utils/edit-cell';
 import { NTooltip, NIcon } from 'naive-ui';
 import { isNumber } from '@/utils/is';
+import SvgIcon from '@/components/custom/SvgIcon.vue';
 // import { FormOutlined } from '@vicons/antd';
 
 export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
@@ -62,26 +63,25 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
         const { edit } = column;
         if (edit) {
           column.render = renderEditCell(column);
-          if (edit) {
-            const title: any = column.title;
-            column.title = () => {
-              return renderTooltip(
-                h('div', { class: 'flex items-center' }, [
-                  h('span', { style: { 'margin-right': '5px' } }, title),
-                  h(
-                    NIcon,
-                    {
-                      size: 14
-                    },
-                    {
-                      // default: () => h(FormOutlined)
-                    }
-                  )
-                ]),
-                '该列可编辑'
-              );
-            };
-          }
+          const title: any = column.title;
+          column.title = () => {
+            return renderTooltip(
+              h('div', { class: 'flex items-center justify-center' }, [
+                h('span', { style: { 'margin-right': '2px' } }, title),
+                h(
+                  NIcon,
+                  {
+                    size: 16,
+                    class: 'table-header-edit-icon'
+                  },
+                  {
+                    default: () => h(SvgIcon, { icon: 'mdi-square-edit-outline' })
+                  }
+                )
+              ]),
+              '该列可编辑'
+            );
+          };
         }
         return column;
       });

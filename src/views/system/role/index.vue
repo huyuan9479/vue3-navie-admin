@@ -301,7 +301,7 @@ function onCheckedRow(keys: (string | number)[]) {
       >
         <template #toolbar>
           <NButton type="primary">
-            <icon-mdi:plus class="text-18px" />
+            <icon-mdi-plus class="text-18px" />
             新增
           </NButton>
         </template>

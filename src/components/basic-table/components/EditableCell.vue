@@ -21,28 +21,6 @@ const props = defineProps<{
   index: number;
 }>();
 
-// export default defineComponent({
-//   name: 'EditableCell',
-//   components: { CellComponent },
-//   directives: {
-//     clickOutside
-//   },
-//   props: {
-//     value: {
-//       type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Recordable>,
-//       default: ''
-//     },
-//     record: {
-//       type: Object as PropType<EditRecordRow>,
-//       default: () => ({})
-//     },
-//     column: {
-//       type: Object as PropType<BasicColumn>,
-//       default: () => ({})
-//     },
-//     index: propTypes.number
-//   },
-//   setup(props) {
 const table = useTableContext();
 const isEdit = ref(false);
 const elRef = ref();
@@ -51,8 +29,6 @@ const ruleMessage = ref('');
 const optionsRef = ref<LabelValueOptions>([]);
 const currentValueRef = ref<any>(props.value);
 const defaultValueRef = ref<any>(props.value);
-
-// const { prefixCls } = useDesign('editable-cell');
 
 const getComponent = computed(() => props.column?.editComponent || 'NInput');
 const getRule = computed(() => !!props.column?.editRule);
@@ -321,31 +297,8 @@ if (props.record) {
     }
   };
 }
-
-//     return {
-//       isEdit,
-//       handleEdit,
-//       currentValueRef,
-//       handleSubmit,
-//       handleChange,
-//       handleCancel,
-//       elRef,
-//       getComponent,
-//       getRule,
-//       onClickOutside,
-//       ruleMessage,
-//       getRuleVisible,
-//       getComponentProps,
-//       handleOptionsChange,
-//       getWrapperClass,
-//       getRowEditable,
-//       getValues,
-//       handleEnter
-//       // getSize,
-//     };
-//   }
-// });
 </script>
+
 <template>
   <div class="editable-cell">
     <div class="flex editable-cell-content" v-if="isEdit" v-click-outside="onClickOutside">
@@ -363,25 +316,28 @@ if (props.record) {
         />
       </div>
       <div class="editable-cell-action" v-if="!getRowEditable">
-        <n-icon class="mx-2 cursor-pointer" title="保存">
-          <CheckOutlined @click="handleSubmit" />
-        </n-icon>
-        <n-icon class="mx-2 cursor-pointer" title="取消">
-          <CloseOutlined @click="handleCancel" />
-        </n-icon>
+        <div class="ml-4px cursor-pointer" title="保存" @click="() => handleSubmit()">
+          <icon-mdi-check-circle-outline class="text-18px! text-#666 dark:text-#fff"/>
+        </div>
+        <div class="ml-4px cursor-pointer" title="取消" @click="handleCancel">
+          <icon-mdi-close-circle-outline class="text-18px! text-#666 dark:text-#fff"/>
+        </div>
       </div>
     </div>
     <div v-else class="flex items-center editable-cell-content" @click="handleEdit">
       {{ getValues }}
-      <n-icon class="ml-1 edit-icon" v-if="!column.editRow">
-        <FormOutlined />
-      </n-icon>
+      <div class="edit-icon" v-if="!column.editRow">
+        <icon-mdi-square-edit-outline class="text-16px! text-#666 dark:text-#fff"/>
+      </div>
     </div>
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .editable-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &-content {
     position: relative;
     overflow-wrap: break-word;
@@ -396,11 +352,7 @@ if (props.record) {
 
     .edit-icon {
       font-size: 14px;
-      //position: absolute;
-      //top: 4px;
-      //right: 0;
       display: none;
-      width: 20px;
       cursor: pointer;
     }
 

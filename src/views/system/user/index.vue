@@ -62,7 +62,12 @@ const columns: BasicColumn[] = [
   },
   {
     title: '用户名',
-    key: 'name'
+    key: 'name',
+    width: 160,
+    editComponent: 'NInput',
+    // 默认必填校验
+    editRule: true,
+    edit: true,
   },
   {
     title: '角色',
@@ -209,6 +214,8 @@ function onCheckedRow(keys: (string | number)[]) {
     <NCard :bordered="false" class="mt-10px" size="small">
       <BasicTable
         ref="actionRef"
+        title="用户列表"
+        title-tooltip="这是一个提示，可以用来说明"
         :columns="columns"
         :request="loadDataTable"
         :row-key="(row: any) => row.id"
@@ -217,7 +224,7 @@ function onCheckedRow(keys: (string | number)[]) {
       >
         <template #toolbar>
           <NButton type="primary">
-            <icon-mdi:plus class="text-18px" />
+            <icon-mdi-plus class="text-18px" />
             新增
           </NButton>
         </template>

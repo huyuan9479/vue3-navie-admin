@@ -95,20 +95,39 @@ const getActions = computed(() => {
   <div class="table-action">
     <div class="flex items-center justify-center">
       <NSpace align="center">
-        <template v-for="(action, index) in getActions" :key="`${index}-${action.label}`">
-          <NButton v-bind="action" class="action-btn-item flex items-center">
-            <template v-if="action.hasOwnProperty('icon')" #icon>
+        <template
+          v-for="(action, index) in getActions"
+          :key="`${index}-${action.label}`"
+        >
+          <NButton
+            v-bind="action"
+            class="action-btn-item flex items-center"
+          >
+            <template
+              v-if="action.hasOwnProperty('icon')"
+              #icon
+            >
               <SvgIcon :icon="action.icon as string" />
             </template>
             {{ action.label }}
           </NButton>
         </template>
 
-        <NPopover trigger="hover" placement="bottom">
+        <NPopover
+          trigger="hover"
+          placement="bottom"
+        >
           <template #trigger>
-            <div v-if="dropDownActions && getDropdownList.length" class="action-btn-more">
+            <div
+              v-if="dropDownActions && getDropdownList.length"
+              class="action-btn-more"
+            >
               <slot name="more"></slot>
-              <NButton v-if="!$slots.more" v-bind="getMoreProps" icon-placement="right">
+              <NButton
+                v-if="!$slots.more"
+                v-bind="getMoreProps"
+                icon-placement="right"
+              >
                 <div class="flex items-center">
                   <span>更多</span>
                   <icon-mdi-chevron-down class="text-20px" />
@@ -117,7 +136,10 @@ const getActions = computed(() => {
             </div>
           </template>
           <template #default>
-            <NSpace size="small" vertical>
+            <NSpace
+              size="small"
+              vertical
+            >
               <NButton
                 v-for="(item, index) in getDropdownList"
                 :key="`${index}-${item.key}`"
@@ -125,7 +147,10 @@ const getActions = computed(() => {
                 :text="actionText"
                 @click="select(item)"
               >
-                <template v-if="item.hasOwnProperty('icon')" #icon>
+                <template
+                  v-if="item.hasOwnProperty('icon')"
+                  #icon
+                >
                   <SvgIcon :icon="item.icon as string" />
                 </template>
                 {{ item.label }}

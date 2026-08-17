@@ -1,6 +1,3 @@
 node_modules
 dist
-src/typings/components.d.ts
-src/typings/elegant-router.d.ts
-src/router/elegant
 pnpm-lock.yaml

@@ -128,30 +128,57 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
 </script>
 
 <template>
-  <NTooltip trigger="hover" class="column-setting">
+  <NTooltip
+    trigger="hover"
+    class="column-setting"
+  >
     <template #trigger>
       <div class="cursor-pointer">
-        <NPopover trigger="click" :width="240" placement="bottom-end" :content-style="{ padding: '0' }">
+        <NPopover
+          trigger="click"
+          :width="240"
+          placement="bottom-end"
+          :content-style="{ padding: '0' }"
+        >
           <template #trigger>
-            <NButton secondary circle size="small">
+            <NButton
+              secondary
+              circle
+              size="small"
+            >
               <template #icon>
-                <icon-mdi:view-grid-outline class="text-#666" />
+                <icon-mdi-view-grid-outline class="text-#666" />
               </template>
             </NButton>
           </template>
           <template #header>
             <div>
               <NSpace justify="space-between">
-                <NCheckbox v-model:checked="state.checkAll" class="ml-4px" @update:checked="onCheckAll">
+                <NCheckbox
+                  v-model:checked="state.checkAll"
+                  class="ml-4px"
+                  @update:checked="onCheckAll"
+                >
                   列展示
                 </NCheckbox>
-                <NButton text type="info" size="small" class="mt-1" @click="resetColumns">重置</NButton>
+                <NButton
+                  text
+                  type="info"
+                  size="small"
+                  class="mt-1"
+                  @click="resetColumns"
+                >
+                  重置
+                </NButton>
               </NSpace>
             </div>
           </template>
           <template #default>
             <div class="column-setting-content">
-              <NCheckboxGroup v-model:value="state.checkList" @update:value="onChange">
+              <NCheckboxGroup
+                v-model:value="state.checkList"
+                @update:value="onChange"
+              >
                 <Draggable
                   v-model="columnsList"
                   :animation="300"
@@ -168,7 +195,10 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
                         'no-draggable': !state.checkList.includes(element.key)
                       }"
                     >
-                      <NCheckbox :value="element.key" :label="element.title" />
+                      <NCheckbox
+                        :value="element.key"
+                        :label="element.title"
+                      />
                       <div class="fixed-item">
                         <NSpace size="small">
                           <span
@@ -177,7 +207,11 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
                           >
                             <icon-ant-design-drag-outlined class="text-18px" />
                           </span>
-                          <NTooltip trigger="hover" placement="bottom" :content-style="{ padding: '0' }">
+                          <NTooltip
+                            trigger="hover"
+                            placement="bottom"
+                            :content-style="{ padding: '0' }"
+                          >
                             <template #trigger>
                               <NIcon
                                 size="18"
@@ -191,7 +225,11 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
                             </template>
                             <span>固定到左侧</span>
                           </NTooltip>
-                          <NTooltip trigger="hover" placement="bottom" :content-style="{ padding: '0' }">
+                          <NTooltip
+                            trigger="hover"
+                            placement="bottom"
+                            :content-style="{ padding: '0' }"
+                          >
                             <template #trigger>
                               <NIcon
                                 size="18"

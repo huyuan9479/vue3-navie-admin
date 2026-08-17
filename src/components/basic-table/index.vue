@@ -35,10 +35,10 @@ const emit = defineEmits<{
   ): void;
   (e: 'fetch-success', result: { items: any[]; pageCount: number }): void;
   (e: 'fetch-error', error: unknown): void;
-  // (e: 'edit-end'): void;
-  // (e: 'edit-cancel'): void;
-  // (e: 'edit-row-end'): void;
-  // (e: 'edit-change'): void;
+  (e: 'edit-end'): void;
+  (e: 'edit-cancel'): void;
+  (e: 'edit-row-end'): void;
+  (e: 'edit-change'): void;
 }>();
 
 const densityOptions = [
@@ -220,15 +220,21 @@ defineExpose(tableAction);
   <div class="table-toolbar">
     <!--顶部左侧区域-->
     <div class="flex items-center table-toolbar-left">
-      <NSpace size="small" :wrap="false">
+      <NSpace
+        size="small"
+        align="center"
+        :wrap="false"
+      >
         <template v-if="getProps.title">
           <div class="table-toolbar-left-title">
             {{ getProps.title }}
-            <NTooltip v-if="getProps.titleTooltip" trigger="hover">
+            <NTooltip
+              v-if="getProps.titleTooltip"
+              trigger="hover"
+              placement="top-start"
+            >
               <template #trigger>
-                <NIcon size="18" class="ml-1 text-gray-400 cursor-pointer">
-                  <QuestionCircleOutlined />
-                </NIcon>
+                <icon-material-symbols-help-outline class="text-18px cursor-pointer" />
               </template>
               {{ getProps.titleTooltip }}
             </NTooltip>
@@ -243,8 +249,17 @@ defineExpose(tableAction);
       <!--顶部右侧区域-->
       <NSpace size="small">
         <!-- 斑马纹 -->
-        <NDropdown v-model:value="tableStriped" trigger="click" :options="stripedOptions" @select="stripedSelect">
-          <NButton secondary circle size="small">
+        <NDropdown
+          v-model:value="tableStriped"
+          trigger="click"
+          :options="stripedOptions"
+          @select="stripedSelect"
+        >
+          <NButton
+            secondary
+            circle
+            size="small"
+          >
             <template #icon>
               <icon-mdi-format-align-center class="text-#666" />
             </template>
@@ -253,7 +268,12 @@ defineExpose(tableAction);
         <!--刷新-->
         <NTooltip trigger="hover">
           <template #trigger>
-            <NButton secondary circle size="small" @click="reload">
+            <NButton
+              secondary
+              circle
+              size="small"
+              @click="reload"
+            >
               <template #icon>
                 <icon-mdi-refresh class="text-#666" />
               </template>
@@ -262,8 +282,17 @@ defineExpose(tableAction);
           <span>刷新</span>
         </NTooltip>
         <!--密度-->
-        <NDropdown v-model:value="tableSize" trigger="click" :options="densityOptions" @select="densitySelect">
-          <NButton secondary circle size="small">
+        <NDropdown
+          v-model:value="tableSize"
+          trigger="click"
+          :options="densityOptions"
+          @select="densitySelect"
+        >
+          <NButton
+            secondary
+            circle
+            size="small"
+          >
             <template #icon>
               <icon-mdi-arrow-expand-vertical class="text-#666" />
             </template>
@@ -274,7 +303,7 @@ defineExpose(tableAction);
       </NSpace>
     </div>
   </div>
-  <div class="s-table">
+  <div class="custome-basic-table">
     <NDataTable
       ref="tableElRef"
       v-bind="getBindValues"
@@ -284,8 +313,15 @@ defineExpose(tableAction);
       @update:page="updatePage"
       @update:page-size="updatePageSize"
     >
-      <template v-for="item in Object.keys($slots)" #[item]="data" :key="item">
-        <slot :name="item" v-bind="data"></slot>
+      <template
+        v-for="item in Object.keys($slots)"
+        #[item]="data"
+        :key="item"
+      >
+        <slot
+          :name="item"
+          v-bind="data"
+        ></slot>
       </template>
     </NDataTable>
   </div>
@@ -323,21 +359,25 @@ defineExpose(tableAction);
     display: flex;
     justify-content: flex-end;
     padding-left: 12px;
+  }
+}
 
-    &-icon {
-      margin-left: 12px;
-      font-size: 16px;
-      cursor: pointer;
-      color: var(--text-color);
-
-      :hover {
-        color: #1890ff;
+.custome-basic-table {
+  :deep(.n-data-table) {
+    .n-data-table-thead {
+      .table-header-edit-icon {
+        color: #666;
       }
     }
   }
 }
-
-.table-toolbar-inner-popover-title {
-  padding: 2px 0;
+.dark .custome-basic-table {
+  :deep(.n-data-table) {
+    .n-data-table-thead {
+      .table-header-edit-icon {
+        color: #fff;
+      }
+    }
+  }
 }
 </style>

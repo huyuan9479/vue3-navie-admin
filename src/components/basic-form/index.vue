@@ -203,15 +203,35 @@ onMounted(() => {
 </script>
 
 <template>
-  <NForm v-bind="getBindValue" ref="formElRef" :model="formModel">
-    <NGrid v-bind="getGrid" :y-gap="showFeedback ? 0 : 20">
-      <NGi v-for="schema in getSchema" v-bind="schema.giProps" :key="schema.field">
-        <NFormItem :label="schema.label" :path="schema.field">
+  <NForm
+    v-bind="getBindValue"
+    ref="formElRef"
+    :model="formModel"
+  >
+    <NGrid
+      v-bind="getGrid"
+      :y-gap="showFeedback ? 0 : 20"
+    >
+      <NGi
+        v-for="schema in getSchema"
+        v-bind="schema.giProps"
+        :key="schema.field"
+      >
+        <NFormItem
+          :label="schema.label"
+          :path="schema.field"
+        >
           <!--标签名右侧温馨提示-->
-          <template v-if="schema.labelMessage" #label>
+          <template
+            v-if="schema.labelMessage"
+            #label
+          >
             <div class="flex items-center">
               {{ schema.label }}
-              <NTooltip trigger="hover" :style="schema.labelMessageStyle">
+              <NTooltip
+                trigger="hover"
+                :style="schema.labelMessageStyle"
+              >
                 <template #trigger>
                   <icon-material-symbols-help-outline class="text-16px ml-2px cursor-pointer text-[#999]" />
                 </template>
@@ -222,7 +242,12 @@ onMounted(() => {
 
           <!--判断插槽-->
           <template v-if="schema.slot">
-            <slot :name="schema.slot" :model="formModel" :field="schema.field" :value="formModel[schema.field]"></slot>
+            <slot
+              :name="schema.slot"
+              :model="formModel"
+              :field="schema.field"
+              :value="formModel[schema.field]"
+            ></slot>
           </template>
 
           <!--NCheckbox-->
@@ -243,7 +268,11 @@ onMounted(() => {
           <template v-else-if="schema.component === 'NRadioGroup'">
             <NRadioGroup v-model:value="formModel[schema.field]">
               <NSpace>
-                <NRadio v-for="item in schema.componentProps.options" :key="item.value" :value="item.value">
+                <NRadio
+                  v-for="item in schema.componentProps.options"
+                  :key="item.value"
+                  :value="item.value"
+                >
                   {{ item.label }}
                 </NRadio>
               </NSpace>
@@ -290,14 +319,29 @@ onMounted(() => {
             <icon-material-symbols-search class="text-16px mr-2px" />
             {{ getProps.submitButtonText }}
           </NButton>
-          <NButton v-if="getProps.showResetButton" v-bind="getResetBtnOptions" @click="resetFields">
+          <NButton
+            v-if="getProps.showResetButton"
+            v-bind="getResetBtnOptions"
+            @click="resetFields"
+          >
             <icon-material-symbols-refresh class="text-16px mr-2px" />
             {{ getProps.resetButtonText }}
           </NButton>
-          <NButton v-if="isInline && getProps.showAdvancedButton" type="default" dashed @click="unfoldToggle">
+          <NButton
+            v-if="isInline && getProps.showAdvancedButton"
+            type="default"
+            dashed
+            @click="unfoldToggle"
+          >
             {{ overflow ? '展开' : '收起' }}
-            <icon-mdi-chevron-down v-if="overflow" class="unfold-icon" />
-            <icon-mdi-chevron-up v-else class="unfold-icon" />
+            <icon-mdi-chevron-down
+              v-if="overflow"
+              class="unfold-icon"
+            />
+            <icon-mdi-chevron-up
+              v-else
+              class="unfold-icon"
+            />
           </NButton>
         </NSpace>
       </NGi>
