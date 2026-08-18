@@ -231,7 +231,8 @@ const local: App.I18n.Schema = {
     home: 'Workbench',
     system: 'System Management',
     system_role: 'Role Management',
-    system_user: 'User Management'
+    system_user: 'User Management',
+    system_menu: 'Menu Management'
   },
   page: {
     login: {

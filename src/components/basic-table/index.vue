@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, unref, toRaw, computed, onMounted, nextTick } from 'vue';
+import { ref, unref, toRaw, computed, onMounted, nextTick, h } from 'vue';
 import { createTableContext } from './hooks/table-context';
 import ColumnSetting from './components/ColumnSetting.vue';
 import { useLoading } from './hooks/loading';
@@ -10,6 +10,9 @@ import type { BasicTableProps } from './types/table';
 import { getViewportOffset } from '@/utils/dom';
 import { useWindowSizeFn } from '@/hooks/common/window-size';
 import { isBoolean } from '@/utils/is';
+import { NIcon } from 'naive-ui';
+import SvgIcon from '@/components/custom/SvgIcon.vue';
+
 const props = withDefaults(defineProps<BasicTableProps>(), {
   dataSource: () => [],
   columns: () => [],
@@ -20,7 +23,19 @@ const props = withDefaults(defineProps<BasicTableProps>(), {
   loading: false,
   striped: true,
   singleLine: false,
-  bordered: true
+  bordered: true,
+  renderExpandIcon: () => {
+    return h(
+      NIcon,
+      { size: 16 },
+      {
+        default: () =>
+          h(SvgIcon, {
+            icon: 'ant-design:caret-right-outlined'
+          })
+      }
+    );
+  }
 });
 
 const emit = defineEmits<{
@@ -106,13 +121,13 @@ const { getPageColumns, getScrollX, setColumns, getColumns, getCacheColumns, set
 
 //页码切换
 function updatePage(page: number) {
-  setPagination({ page: page });
+  setPagination({ current: page });
   reload();
 }
 
 //分页数量切换
 function updatePageSize(size: number) {
-  setPagination({ page: 1, pageSize: size });
+  setPagination({ current: 1, pageSize: size });
   reload();
 }
 
@@ -231,7 +246,6 @@ defineExpose(tableAction);
             <NTooltip
               v-if="getProps.titleTooltip"
               trigger="hover"
-              placement="top-start"
             >
               <template #trigger>
                 <icon-material-symbols-help-outline class="text-18px cursor-pointer" />
@@ -365,8 +379,18 @@ defineExpose(tableAction);
 .custome-basic-table {
   :deep(.n-data-table) {
     .n-data-table-thead {
+      .n-data-table-th__title {
+        font-weight: 500;
+      }
       .table-header-edit-icon {
         color: #666;
+      }
+    }
+    .n-data-table-base-table-body {
+      .n-data-table-table {
+        .n-data-table-expand-trigger {
+          margin-right: 2px;
+        }
       }
     }
   }

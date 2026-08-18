@@ -58,19 +58,20 @@ export function useDataSource(
       const { request, pagination, beforeRequest, afterRequest }: any = unref(propsRef);
       if (!request) return;
       //组装分页信息
-      const pageField = APISETTING.pageNumField;
-      const pageSizeField = APISETTING.pageSizeField;
+      const currentField = APISETTING.currentField;
       const totalField = APISETTING.totalField;
       const recordsField = APISETTING.recordsField;
       const pageCountField = APISETTING.pagesField;
+      const currentFetchField = APISETTING.currentFetchField;
+      const pageSizeFetchField = APISETTING.pageSizeFetchField;
       let pageParams = {};
-      const { page = 1, pageSize = 10 } = unref(getPaginationInfo) as PaginationProps;
+      const { current = 1, pageSize = 10 } = unref(getPaginationInfo) as PaginationProps;
 
       if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
         pageParams = {};
       } else {
-        (pageParams as Record<string, any>)[pageField] = (opt && opt[pageField]) || page;
-        (pageParams as Record<string, any>)[pageSizeField] = pageSize;
+        (pageParams as Record<string, any>)[currentFetchField] = (opt && opt[currentField]) || current;
+        (pageParams as Record<string, any>)[pageSizeFetchField] = pageSize;
       }
 
       let params = {
@@ -84,7 +85,7 @@ export function useDataSource(
       const res = await request(params);
       if (!res) return;
       const pageCount = res[pageCountField];
-      const currentPage = res[pageField];
+      const currentPage = res[currentField];
       const total = res[totalField];
       // 如果数据异常，需获取正确的页码再次执行
       if (pageCount) {
@@ -108,9 +109,9 @@ export function useDataSource(
         pageCount: pageCount,
         itemCount: total
       });
-      if (opt && opt[pageField]) {
+      if (opt && opt[currentField]) {
         setPagination({
-          page: opt[pageField] || 1
+          current: opt[currentField] || 1
         });
       }
       emit('fetch-success', {

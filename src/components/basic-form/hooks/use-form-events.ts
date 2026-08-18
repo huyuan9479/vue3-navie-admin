@@ -55,6 +55,11 @@ export function useFormEvents({
       emit('submit', false);
       loadingSub.value = false;
       console.error(error);
+      if (Array.isArray(error) && error.length > 0) {
+        window.$message?.error(error[0]?.[0]?.message || JSON.stringify(error));
+      } else {
+        window.$message?.error(error.message);
+      }
       return false;
     }
   }

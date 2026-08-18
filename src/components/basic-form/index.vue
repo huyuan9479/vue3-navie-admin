@@ -64,6 +64,9 @@ const props = withDefaults(defineProps<FormProps>(), {
 
 const emit = defineEmits<{
   (e: 'register', action: Partial<FormActionType>): void;
+  // 这里要定义事件，否则会警告
+  (e: 'submit', values: Recordable): void;
+  (e: 'reset', values: Recordable): void;
 }>();
 
 const attrs = useAttrs();

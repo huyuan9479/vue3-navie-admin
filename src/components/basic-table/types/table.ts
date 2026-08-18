@@ -1,5 +1,6 @@
 import type { InternalRowData, TableBaseColumn } from 'naive-ui/lib/data-table/src/interface';
 import { ComponentType } from './index';
+import type { VNode } from 'vue';
 
 export interface BasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   //编辑表格
@@ -42,6 +43,7 @@ export interface BasicTableProps {
   striped?: boolean;
   maxHeight?: number | undefined;
   rowKey?: string | ((record: Recordable) => string);
+  renderExpandIcon?: (record: Recordable) => VNode;
   rowProps?: (record: Recordable) => Recordable;
   beforeRequest?: (...arg: any[]) => Promise<any>;
   request?: (...arg: any[]) => Promise<any> | void;

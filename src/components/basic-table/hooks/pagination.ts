@@ -27,7 +27,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
       return false;
     }
     return {
-      page: 1, //当前页
+      current: 1, //当前页
       pageSize: DEFAULTPAGESIZE, //分页大小
       pageSizes: PAGESIZES, // 每页条数
       showSizePicker: true,

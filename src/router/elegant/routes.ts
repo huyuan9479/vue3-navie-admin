@@ -86,6 +86,16 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'system_user',
+        path: '/system/user',
+        component: 'view.system_user',
+        meta: {
+          title: 'system_user',
+          i18nKey: 'route.system_user',
+          order: 1
+        }
+      },
+      {
         name: 'system_role',
         path: '/system/role',
         component: 'view.system_role',
@@ -96,13 +106,13 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
-        name: 'system_user',
-        path: '/system/user',
-        component: 'view.system_user',
+        name: 'system_menu',
+        path: '/system/menu',
+        component: 'view.system_menu',
         meta: {
-          title: 'system_user',
-          i18nKey: 'route.system_user',
-          order: 1
+          title: 'system_menu',
+          i18nKey: 'route.system_menu',
+          order: 3
         }
       }
     ]
