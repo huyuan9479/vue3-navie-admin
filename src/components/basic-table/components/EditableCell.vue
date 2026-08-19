@@ -53,7 +53,11 @@ const getComponentProps = computed(() => {
   let valueField = isCheckValue ? 'checked' : 'value';
   const val = unref(currentValueRef);
 
-  let value = isCheckValue ? (isNumber(val) && isBoolean(val) ? val : !!val) : val;
+  let value = isCheckValue
+    ? isNumber(val) && isBoolean(val)
+      ? val
+      : !!val
+    : val;
 
   //TODO 特殊处理 NDatePicker 可能要根据项目 规范自行调整代码
   if (component === 'NDatePicker') {
@@ -72,7 +76,9 @@ const getComponentProps = computed(() => {
     }
   }
 
-  const onEvent: any = editComponent ? getComponentEvent(editComponent) : undefined;
+  const onEvent: any = editComponent
+    ? getComponentEvent(editComponent)
+    : undefined;
 
   return {
     placeholder: createPlaceholderMessage(unref(getComponent)),
@@ -97,7 +103,8 @@ const getValues = computed(() => {
     return value;
   }
 
-  const options: LabelValueOptions = editComponentProps?.options ?? (unref(optionsRef) || []);
+  const options: LabelValueOptions =
+    editComponentProps?.options ?? (unref(optionsRef) || []);
   const option = options.find(item => `${item.value}` === `${value}`);
 
   return option?.label ?? value;
@@ -151,7 +158,10 @@ async function handleChange(e: any, ...args: any[]) {
   if (component === 'NDatePicker') {
     if (isNumber(currentValueRef.value)) {
       if (compProps.valueFormat) {
-        currentValueRef.value = format(currentValueRef.value, compProps.valueFormat);
+        currentValueRef.value = format(
+          currentValueRef.value,
+          compProps.valueFormat
+        );
       }
     } else if (isArray(currentValueRef.value)) {
       if (compProps.valueFormat) {
@@ -263,7 +273,9 @@ function handleOptionsChange(options: LabelValueOptions) {
 function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
   if (props.record) {
     /* eslint-disable  */
-    isArray(props.record[cbs]) ? props.record[cbs]?.push(handle) : (props.record[cbs] = [handle]);
+    isArray(props.record[cbs])
+      ? props.record[cbs]?.push(handle)
+      : (props.record[cbs] = [handle]);
   }
 }
 
@@ -278,7 +290,8 @@ if (props.record) {
   }
   /* eslint-disable  */
   props.record.onCancelEdit = () => {
-    isArray(props.record?.cancelCbs) && props.record?.cancelCbs.forEach(fn => fn());
+    isArray(props.record?.cancelCbs) &&
+      props.record?.cancelCbs.forEach(fn => fn());
   };
   /* eslint-disable */
   props.record.onSubmitEdit = async () => {
@@ -301,7 +314,11 @@ if (props.record) {
 
 <template>
   <div class="editable-cell">
-    <div class="flex editable-cell-content" v-if="isEdit" v-click-outside="onClickOutside">
+    <div
+      class="flex editable-cell-content"
+      v-if="isEdit"
+      v-click-outside="onClickOutside"
+    >
       <div class="editable-cell-content-comp">
         <CellComponent
           v-bind="getComponentProps"
@@ -316,18 +333,28 @@ if (props.record) {
         />
       </div>
       <div class="editable-cell-action" v-if="!getRowEditable">
-        <div class="ml-4px cursor-pointer" title="保存" @click="() => handleSubmit()">
-          <icon-mdi-check-circle-outline class="text-18px! text-#666 dark:text-#fff"/>
+        <div
+          class="ml-4px cursor-pointer"
+          title="保存"
+          @click="() => handleSubmit()"
+        >
+          <icon-mdi-check-circle-outline
+            class="text-18px! text-#666 dark:text-#fff"
+          />
         </div>
         <div class="ml-4px cursor-pointer" title="取消" @click="handleCancel">
-          <icon-mdi-close-circle-outline class="text-18px! text-#666 dark:text-#fff"/>
+          <icon-mdi-close-circle-outline
+            class="text-18px! text-#666 dark:text-#fff"
+          />
         </div>
       </div>
     </div>
-    <div v-else class="flex items-center editable-cell-content" @click="handleEdit">
+    <div v-else class="flex-center editable-cell-content" @click="handleEdit">
       {{ getValues }}
       <div class="edit-icon" v-if="!column.editRow">
-        <icon-mdi-square-edit-outline class="text-16px! text-#666 dark:text-#fff"/>
+        <icon-mdi-square-edit-outline
+          class="text-16px! text-#666 dark:text-#fff"
+        />
       </div>
     </div>
   </div>
@@ -345,6 +372,7 @@ if (props.record) {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    width: 100%;
 
     &-comp {
       flex: 1;

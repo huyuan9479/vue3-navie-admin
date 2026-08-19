@@ -1,12 +1,17 @@
 <script lang="ts" setup>
 import { ref, reactive, h } from 'vue';
 import { BasicForm, useForm, type FormSchema } from '@/components/basic-form';
-import { BasicTable, TableAction, type BasicColumn } from '@/components/basic-table';
+import {
+  BasicTable,
+  TableAction,
+  type BasicColumn
+} from '@/components/basic-table';
 import { fetchGetMenuList } from '@/service/api/system';
 import { NTag, NButton } from 'naive-ui';
 import SvgIcon from '@/components/custom/SvgIcon.vue';
 
 const actionRef = ref();
+const currentEditKeyRef = ref('');
 const schemas: FormSchema[] = [
   {
     field: 'id',
@@ -25,33 +30,6 @@ const schemas: FormSchema[] = [
       onInput: (e: any) => {
         console.log(e);
       }
-    }
-  },
-  {
-    field: 'email',
-    component: 'NInput',
-    label: '邮箱',
-    componentProps: {
-      placeholder: '请输入邮箱'
-    }
-  },
-  {
-    field: 'status',
-    label: '状态',
-    //插槽
-    component: 'NSelect',
-    componentProps: {
-      placeholder: '请选择状态',
-      options: [
-        {
-          label: '启用',
-          value: 1
-        },
-        {
-          label: '禁用',
-          value: 0
-        }
-      ]
     }
   }
 ];
@@ -75,21 +53,34 @@ const columns: BasicColumn[] = [
   {
     title: '菜单名称',
     key: 'menuName',
-    width: 130
+    width: 130,
+    editComponent: 'NInput',
+    editRow: true,
+    editRule: true,
+    edit: true
   },
   {
     title: '菜单类型',
     key: 'menuType',
+    width: 120,
     render(record: any) {
-      return h(
-        NTag,
+      return record.menuType === '1' ? '目录' : '菜单';
+    },
+    editComponent: 'NSelect',
+    editComponentProps: {
+      options: [
         {
-          type: record.menuType === '1' ? 'primary' : 'success',
-          size: 'small'
+          label: '目录',
+          value: '1'
         },
-        record.menuType === '1' ? '目录' : '菜单'
-      );
-    }
+        {
+          label: '菜单',
+          value: '2'
+        }
+      ]
+    },
+    editRow: true,
+    edit: true
   },
   {
     title: '父级ID',
@@ -150,7 +141,7 @@ const columns: BasicColumn[] = [
 ];
 
 const [register, { getFieldsValue }] = useForm({
-  labelWidth: 80,
+  labelWidth: 60,
   schemas
 });
 
@@ -163,6 +154,7 @@ const actionColumn = reactive({
     return h(TableAction as any, {
       style: 'text',
       actions: [
+        ...createActions(record),
         {
           label: '删除',
           type: 'error',
@@ -173,43 +165,33 @@ const actionColumn = reactive({
             return true;
           }
           // 根据权限控制是否显示: 有权限，会显示，支持多个
-        },
-        {
-          label: '编辑',
-          onClick: handleEdit.bind(null, record),
-          ifShow: () => {
-            return true;
-          }
-          // auth: ['basic_list']
         }
-      ],
-      dropDownActions: [
-        {
-          label: '启用',
-          key: 'enabled',
-          type: 'success',
-          icon: 'material-symbols:open-in-new-rounded',
-          // 根据业务控制是否显示: 非enable状态的不显示启用按钮
-          ifShow: () => {
-            return true;
-          }
-        },
-        {
-          label: '禁用',
-          key: 'disabled',
-          type: 'error',
-          icon: 'material-symbols:do-not-disturb-on-outline-rounded',
-          ifShow: () => {
-            return true;
-          }
-        }
-      ],
-      select: ({ key }: { key: string }) => {
-        window['$message']?.info(`您点击了，${key} 按钮`);
-      }
+      ]
     });
   }
 });
+
+function createActions(record: any) {
+  if (!record.editable) {
+    return [
+      {
+        label: '编辑',
+        onClick: handleEdit.bind(null, record)
+      }
+    ];
+  } else {
+    return [
+      {
+        label: '保存',
+        onClick: handleSave.bind(null, record)
+      },
+      {
+        label: '取消',
+        onClick: handleCancel.bind(null, record)
+      }
+    ];
+  }
+}
 
 function handleSubmit(values: Recordable) {
   console.log(values);
@@ -233,21 +215,31 @@ function handleDelete(record: any) {
   console.log(record);
 }
 
-function handleEdit(record: any) {
-  console.log(record);
-}
-
 function onCheckedRow(keys: (string | number)[]) {
   console.log(keys);
+}
+
+async function handleSave(record: any) {
+  const pass = await record.onEdit?.(false, true);
+  if (pass) {
+    currentEditKeyRef.value = '';
+  }
+}
+
+function handleCancel(record: any) {
+  currentEditKeyRef.value = '';
+  record.onEdit?.(false, false);
+}
+
+function handleEdit(record: any) {
+  currentEditKeyRef.value = record.key;
+  record.onEdit?.(true);
 }
 </script>
 
 <template>
   <div>
-    <NCard
-      :bordered="false"
-      size="small"
-    >
+    <NCard :bordered="false" size="small">
       <BasicForm
         @register="register"
         @submit="handleSubmit"
@@ -258,11 +250,7 @@ function onCheckedRow(keys: (string | number)[]) {
         </template>
       </BasicForm>
     </NCard>
-    <NCard
-      :bordered="false"
-      class="mt-10px"
-      size="small"
-    >
+    <NCard :bordered="false" class="mt-10px" size="small">
       <BasicTable
         ref="actionRef"
         :columns="columns"
@@ -272,7 +260,7 @@ function onCheckedRow(keys: (string | number)[]) {
         @update:checked-row-keys="onCheckedRow"
       >
         <template #toolbar>
-          <NButton type="primary">
+          <NButton type="primary" ghost>
             <icon-mdi-plus class="text-18px" />
             新增
           </NButton>

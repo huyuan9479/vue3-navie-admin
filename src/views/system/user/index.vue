@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import { ref, reactive, h } from 'vue';
 import { BasicForm, useForm, type FormSchema } from '@/components/basic-form';
-import { BasicTable, TableAction, type BasicColumn } from '@/components/basic-table';
+import {
+  BasicTable,
+  TableAction,
+  type BasicColumn
+} from '@/components/basic-table';
 import { fetchGetUserList } from '@/service/api';
 import { NTag, NButton } from 'naive-ui';
 
@@ -67,7 +71,7 @@ const columns: BasicColumn[] = [
     editComponent: 'NInput',
     // 默认必填校验
     editRule: true,
-    edit: true,
+    edit: true
   },
   {
     title: '角色',
@@ -205,7 +209,11 @@ function onCheckedRow(keys: (string | number)[]) {
 <template>
   <div>
     <NCard :bordered="false" size="small">
-      <BasicForm @register="register" @submit="handleSubmit" @reset="handleReset">
+      <BasicForm
+        @register="register"
+        @submit="handleSubmit"
+        @reset="handleReset"
+      >
         <template #statusSlot="{ model, field }">
           <NInput v-model:value="model[field]" />
         </template>
@@ -223,7 +231,7 @@ function onCheckedRow(keys: (string | number)[]) {
         @update:checked-row-keys="onCheckedRow"
       >
         <template #toolbar>
-          <NButton type="primary">
+          <NButton type="primary" ghost>
             <icon-mdi-plus class="text-18px" />
             新增
           </NButton>

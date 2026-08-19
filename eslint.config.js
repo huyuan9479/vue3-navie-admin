@@ -1,6 +1,7 @@
 import { defineConfig } from '@soybeanjs/eslint-config-vue';
 
 export default defineConfig({
+  'vue/no-unused-emit-declarations': 'off',
   'vue/component-name-in-template-casing': [
     'warn',
     'PascalCase',

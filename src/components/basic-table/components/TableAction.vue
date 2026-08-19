@@ -14,7 +14,11 @@ interface TableActionProps {
   actions?: ActionItem[];
   dropDownActions?: ActionItem[];
   style?: string;
-  select?: (option: { label?: string; key?: string | number; [key: string]: any }) => void;
+  select?: (option: {
+    label?: string;
+    key?: string | number;
+    [key: string]: any;
+  }) => void;
 }
 
 const props = withDefaults(defineProps<TableActionProps>(), {
@@ -25,8 +29,18 @@ const props = withDefaults(defineProps<TableActionProps>(), {
 });
 
 const { hasPermission } = usePermission();
-const actionType = props.style === 'button' ? 'default' : props.style === 'text' ? 'default' : '';
-const actionText = props.style === 'button' ? undefined : props.style === 'text' ? true : undefined;
+const actionType =
+  props.style === 'button'
+    ? 'default'
+    : props.style === 'text'
+      ? 'default'
+      : '';
+const actionText =
+  props.style === 'button'
+    ? undefined
+    : props.style === 'text'
+      ? true
+      : undefined;
 
 const getMoreProps = computed(() => {
   return {
@@ -99,47 +113,37 @@ const getActions = computed(() => {
           v-for="(action, index) in getActions"
           :key="`${index}-${action.label}`"
         >
-          <NButton
-            v-bind="action"
-            class="action-btn-item flex items-center"
-          >
-            <template
-              v-if="action.hasOwnProperty('icon')"
-              #icon
-            >
+          <NButton v-bind="action" class="action-btn-item flex items-center">
+            <template v-if="action.hasOwnProperty('icon')" #icon>
               <SvgIcon :icon="action.icon as string" />
             </template>
             {{ action.label }}
           </NButton>
         </template>
 
-        <NPopover
-          trigger="hover"
-          placement="bottom"
-        >
+        <NPopover trigger="hover" placement="bottom">
           <template #trigger>
-            <div
-              v-if="dropDownActions && getDropdownList.length"
-              class="action-btn-more"
-            >
-              <slot name="more"></slot>
-              <NButton
-                v-if="!$slots.more"
-                v-bind="getMoreProps"
-                icon-placement="right"
+            <div>
+              <div
+                v-if="dropDownActions && getDropdownList.length"
+                class="action-btn-more"
               >
-                <div class="flex items-center">
-                  <span>更多</span>
-                  <icon-mdi-chevron-down class="text-20px" />
-                </div>
-              </NButton>
+                <slot name="more"></slot>
+                <NButton
+                  v-if="!$slots.more"
+                  v-bind="getMoreProps"
+                  icon-placement="right"
+                >
+                  <div class="flex items-center">
+                    <span>更多</span>
+                    <icon-mdi-chevron-down class="text-20px" />
+                  </div>
+                </NButton>
+              </div>
             </div>
           </template>
           <template #default>
-            <NSpace
-              size="small"
-              vertical
-            >
+            <NSpace size="small" vertical>
               <NButton
                 v-for="(item, index) in getDropdownList"
                 :key="`${index}-${item.key}`"
@@ -147,10 +151,7 @@ const getActions = computed(() => {
                 :text="actionText"
                 @click="select(item)"
               >
-                <template
-                  v-if="item.hasOwnProperty('icon')"
-                  #icon
-                >
+                <template v-if="item.hasOwnProperty('icon')" #icon>
                   <SvgIcon :icon="item.icon as string" />
                 </template>
                 {{ item.label }}

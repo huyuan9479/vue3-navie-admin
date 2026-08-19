@@ -9,8 +9,8 @@ import {
   useAttrs
 } from 'vue';
 import { createPlaceholderMessage, getComponent } from './utils/helper';
-import { useFormEvents } from './hooks/use-form-events';
-import { useFormValues } from './hooks/use-form-values';
+import { useFormEvents } from './hooks/form-events';
+import { useFormValues } from './hooks/form-values';
 import type { Ref } from 'vue';
 import type { GridProps } from 'naive-ui/lib/grid';
 import type { ButtonProps } from 'naive-ui/lib/button';
@@ -73,8 +73,8 @@ const props = withDefaults(defineProps<FormProps>(), {
 const emit = defineEmits<{
   (e: 'register', action: Partial<FormActionType>): void;
   // 这里要定义事件，否则会警告
-  (e: 'submit', values: Recordable): void;
-  (e: 'reset', values: Recordable): void;
+  (e: 'submit', values?: Recordable): void;
+  (e: 'reset', values?: Recordable): void;
 }>();
 
 const attrs = useAttrs();
@@ -176,7 +176,9 @@ const {
   clearValidate,
   setFieldsValue
 } = useFormEvents({
-  emit: emit as (event: string, ...args: any[]) => void,
+  emit: emit as {
+    (e: 'submit' | 'reset', values: Recordable | boolean): void;
+  },
   getProps,
   formModel,
   getSchema,
@@ -337,7 +339,6 @@ onMounted(() => {
           <NButton
             v-if="isInline && getProps.showAdvancedButton"
             type="default"
-            dashed
             @click="unfoldToggle"
           >
             {{ overflow ? '展开' : '收起' }}

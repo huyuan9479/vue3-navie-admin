@@ -3,10 +3,12 @@ import type { FormProps, FormSchema, FormActionType } from '../types/form';
 import { unref, toRaw } from 'vue';
 import { isFunction } from '@/utils/is';
 
-declare type EmitType = (event: string, ...args: any[]) => void;
+// declare type EmitType = (event: string, ...args: any[]) => void;
 
 interface UseFormActionContext {
-  emit: EmitType;
+  emit: {
+    (e: 'submit' | 'reset', values: Recordable | boolean): void;
+  };
   getProps: ComputedRef<FormProps>;
   getSchema: ComputedRef<FormSchema[]>;
   formModel: Recordable;

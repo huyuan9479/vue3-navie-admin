@@ -25,16 +25,12 @@ const props = withDefaults(defineProps<BasicTableProps>(), {
   singleLine: false,
   bordered: true,
   renderExpandIcon: () => {
-    return h(
-      NIcon,
-      { size: 16 },
-      {
-        default: () =>
-          h(SvgIcon, {
-            icon: 'ant-design:caret-right-outlined'
-          })
-      }
-    );
+    return h(NIcon, null, {
+      default: () =>
+        h(SvgIcon, {
+          icon: 'ant-design:caret-right-outlined'
+        })
+    });
   }
 });
 
