@@ -11,6 +11,3 @@
 "*.md"     eol=lf
 "*.yaml"   eol=lf
 "*.yml"    eol=lf
-"*.prettierignore" eol=lf
-"*.prettierrc*" eol=lf
-"*.editorconfig" eol=lf

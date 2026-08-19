@@ -116,8 +116,14 @@ const { getDataSourceRef, getDataSource, getRowKey, reload } = useDataSource(
   emit
 );
 
-const { getPageColumns, getScrollX, setColumns, getColumns, getCacheColumns, setCacheColumnsField } =
-  useColumns(getProps);
+const {
+  getPageColumns,
+  getScrollX,
+  setColumns,
+  getColumns,
+  getCacheColumns,
+  setCacheColumnsField
+} = useColumns(getProps);
 
 //页码切换
 function updatePage(page: number) {
@@ -197,7 +203,9 @@ async function computeTableHeight() {
   let paginationH = 2;
   const marginH = 24;
   if (!isBoolean(unref(pagination))) {
-    paginationEl = tableEl.querySelector('.n-data-table__pagination') as HTMLElement;
+    paginationEl = tableEl.querySelector(
+      '.n-data-table__pagination'
+    ) as HTMLElement;
     if (paginationEl) {
       const offsetHeight = paginationEl.offsetHeight;
       paginationH += offsetHeight || 0;
@@ -205,9 +213,17 @@ async function computeTableHeight() {
       paginationH += 28;
     }
   }
-  let height = bottomIncludeBody - (headerH + paginationH + marginH + (unref(getProps).resizeHeightOffset || 0));
+  let height =
+    bottomIncludeBody -
+    (headerH +
+      paginationH +
+      marginH +
+      (unref(getProps).resizeHeightOffset || 0));
   const maxHeight = unref(getProps).maxHeight;
-  height = maxHeight && typeof maxHeight === 'number' && maxHeight < height ? maxHeight : height;
+  height =
+    maxHeight && typeof maxHeight === 'number' && maxHeight < height
+      ? maxHeight
+      : height;
   deviceHeight.value = height;
 }
 
@@ -235,20 +251,15 @@ defineExpose(tableAction);
   <div class="table-toolbar">
     <!--顶部左侧区域-->
     <div class="flex items-center table-toolbar-left">
-      <NSpace
-        size="small"
-        align="center"
-        :wrap="false"
-      >
+      <NSpace size="small" align="center" :wrap="false">
         <template v-if="getProps.title">
           <div class="table-toolbar-left-title">
             {{ getProps.title }}
-            <NTooltip
-              v-if="getProps.titleTooltip"
-              trigger="hover"
-            >
+            <NTooltip v-if="getProps.titleTooltip" trigger="hover">
               <template #trigger>
-                <icon-material-symbols-help-outline class="text-18px cursor-pointer" />
+                <icon-material-symbols-help-outline
+                  class="text-18px cursor-pointer"
+                />
               </template>
               {{ getProps.titleTooltip }}
             </NTooltip>
@@ -269,11 +280,7 @@ defineExpose(tableAction);
           :options="stripedOptions"
           @select="stripedSelect"
         >
-          <NButton
-            secondary
-            circle
-            size="small"
-          >
+          <NButton secondary circle size="small">
             <template #icon>
               <icon-mdi-format-align-center class="text-#666" />
             </template>
@@ -282,12 +289,7 @@ defineExpose(tableAction);
         <!--刷新-->
         <NTooltip trigger="hover">
           <template #trigger>
-            <NButton
-              secondary
-              circle
-              size="small"
-              @click="reload"
-            >
+            <NButton secondary circle size="small" @click="reload">
               <template #icon>
                 <icon-mdi-refresh class="text-#666" />
               </template>
@@ -302,11 +304,7 @@ defineExpose(tableAction);
           :options="densityOptions"
           @select="densitySelect"
         >
-          <NButton
-            secondary
-            circle
-            size="small"
-          >
+          <NButton secondary circle size="small">
             <template #icon>
               <icon-mdi-arrow-expand-vertical class="text-#666" />
             </template>
@@ -327,15 +325,8 @@ defineExpose(tableAction);
       @update:page="updatePage"
       @update:page-size="updatePageSize"
     >
-      <template
-        v-for="item in Object.keys($slots)"
-        #[item]="data"
-        :key="item"
-      >
-        <slot
-          :name="item"
-          v-bind="data"
-        ></slot>
+      <template v-for="item in Object.keys($slots)" #[item]="data" :key="item">
+        <slot :name="item" v-bind="data"></slot>
       </template>
     </NDataTable>
   </div>

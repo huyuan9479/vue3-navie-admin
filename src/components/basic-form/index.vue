@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { reactive, ref, computed, unref, onMounted, watch, useAttrs } from 'vue';
+import {
+  reactive,
+  ref,
+  computed,
+  unref,
+  onMounted,
+  watch,
+  useAttrs
+} from 'vue';
 import { createPlaceholderMessage, getComponent } from './utils/helper';
 import { useFormEvents } from './hooks/use-form-events';
 import { useFormValues } from './hooks/use-form-values';
@@ -136,10 +144,13 @@ const getGrid = computed((): GridProps => {
   };
 });
 
-const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) }) as Recordable);
+const getBindValue = computed(
+  () => ({ ...attrs, ...props, ...unref(getProps) }) as Recordable
+);
 
 const getSchema = computed((): FormSchema[] => {
-  const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
+  const schemas: FormSchema[] =
+    unref(schemaRef) || (unref(getProps).schemas as any);
   for (const schema of schemas) {
     const { defaultValue } = schema;
     // handle date type
@@ -157,7 +168,14 @@ const { handleFormValues, initDefault } = useFormValues({
   formModel
 });
 
-const { handleSubmit, validate, resetFields, getFieldsValue, clearValidate, setFieldsValue } = useFormEvents({
+const {
+  handleSubmit,
+  validate,
+  resetFields,
+  getFieldsValue,
+  clearValidate,
+  setFieldsValue
+} = useFormEvents({
   emit: emit as (event: string, ...args: any[]) => void,
   getProps,
   formModel,
@@ -206,37 +224,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <NForm
-    v-bind="getBindValue"
-    ref="formElRef"
-    :model="formModel"
-  >
-    <NGrid
-      v-bind="getGrid"
-      :y-gap="showFeedback ? 0 : 20"
-    >
+  <NForm v-bind="getBindValue" ref="formElRef" :model="formModel">
+    <NGrid v-bind="getGrid" :y-gap="showFeedback ? 0 : 20">
       <NGi
         v-for="schema in getSchema"
         v-bind="schema.giProps"
         :key="schema.field"
       >
-        <NFormItem
-          :label="schema.label"
-          :path="schema.field"
-        >
+        <NFormItem :label="schema.label" :path="schema.field">
           <!--标签名右侧温馨提示-->
-          <template
-            v-if="schema.labelMessage"
-            #label
-          >
+          <template v-if="schema.labelMessage" #label>
             <div class="flex items-center">
               {{ schema.label }}
-              <NTooltip
-                trigger="hover"
-                :style="schema.labelMessageStyle"
-              >
+              <NTooltip trigger="hover" :style="schema.labelMessageStyle">
                 <template #trigger>
-                  <icon-material-symbols-help-outline class="text-16px ml-2px cursor-pointer text-[#999]" />
+                  <icon-material-symbols-help-outline
+                    class="text-16px ml-2px cursor-pointer text-[#999]"
+                  />
                 </template>
                 {{ schema.labelMessage }}
               </NTooltip>
@@ -337,14 +341,8 @@ onMounted(() => {
             @click="unfoldToggle"
           >
             {{ overflow ? '展开' : '收起' }}
-            <icon-mdi-chevron-down
-              v-if="overflow"
-              class="unfold-icon"
-            />
-            <icon-mdi-chevron-up
-              v-else
-              class="unfold-icon"
-            />
+            <icon-mdi-chevron-down v-if="overflow" class="unfold-icon" />
+            <icon-mdi-chevron-up v-else class="unfold-icon" />
           </NButton>
         </NSpace>
       </NGi>
