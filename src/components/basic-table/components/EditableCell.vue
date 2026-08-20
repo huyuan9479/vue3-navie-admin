@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import type { BasicColumn } from '../types/table';
-import type { EditRecordRow } from '../utils/edit-cell';
-import { ref, unref, nextTick, computed, watchEffect, toRaw } from 'vue';
-import { CellComponent } from '../utils/cell-component';
-import { useTableContext } from '../hooks/table-context';
-import { isString, isBoolean, isFunction, isNumber, isArray } from '@/utils/is';
-import { createPlaceholderMessage } from '../utils/helper';
-import { set, omit } from 'lodash-es';
-import { getComponentEvent } from '../utils/comp-map';
-import { parseISO, format } from 'date-fns';
+import type { BasicColumn } from "../types/table";
+import type { EditRecordRow } from "../utils/edit-cell";
+import { ref, unref, nextTick, computed, watchEffect, toRaw } from "vue";
+import { CellComponent } from "../utils/cell-component";
+import { useTableContext } from "../hooks/table-context";
+import { isString, isBoolean, isFunction, isNumber, isArray } from "@/utils/is";
+import { createPlaceholderMessage } from "../utils/helper";
+import { set, omit } from "lodash-es";
+import { getComponentEvent } from "../utils/comp-map";
+import { parseISO, format } from "date-fns";
 
 defineOptions({
-  name: 'EditableCell'
+  name: "EditableCell",
 });
 
 const props = defineProps<{
@@ -25,12 +25,12 @@ const table = useTableContext();
 const isEdit = ref(false);
 const elRef = ref();
 const ruleVisible = ref(false);
-const ruleMessage = ref('');
+const ruleMessage = ref("");
 const optionsRef = ref<LabelValueOptions>([]);
 const currentValueRef = ref<any>(props.value);
 const defaultValueRef = ref<any>(props.value);
 
-const getComponent = computed(() => props.column?.editComponent || 'NInput');
+const getComponent = computed(() => props.column?.editComponent || "NInput");
 const getRule = computed(() => !!props.column?.editRule);
 
 const getRuleVisible = computed(() => {
@@ -39,7 +39,7 @@ const getRuleVisible = computed(() => {
 
 const getIsCheckComp = computed(() => {
   const component = unref(getComponent);
-  return ['NCheckbox', 'NRadio'].includes(component);
+  return ["NCheckbox", "NRadio"].includes(component);
 });
 
 const getComponentProps = computed(() => {
@@ -50,7 +50,7 @@ const getComponentProps = computed(() => {
 
   const isCheckValue = unref(getIsCheckComp);
 
-  let valueField = isCheckValue ? 'checked' : 'value';
+  let valueField = isCheckValue ? "checked" : "value";
   const val = unref(currentValueRef);
 
   let value = isCheckValue
@@ -60,18 +60,18 @@ const getComponentProps = computed(() => {
     : val;
 
   //TODO 特殊处理 NDatePicker 可能要根据项目 规范自行调整代码
-  if (component === 'NDatePicker') {
+  if (component === "NDatePicker") {
     if (isString(value)) {
       if (compProps.valueFormat) {
-        valueField = 'formatted-value';
+        valueField = "formatted-value";
       } else {
         value = parseISO(value as any).getTime();
       }
     } else if (isArray(value)) {
       if (compProps.valueFormat) {
-        valueField = 'formatted-value';
+        valueField = "formatted-value";
       } else {
-        value = value.map(item => parseISO(item).getTime());
+        value = value.map((item) => parseISO(item).getTime());
       }
     }
   }
@@ -83,9 +83,9 @@ const getComponentProps = computed(() => {
   return {
     placeholder: createPlaceholderMessage(unref(getComponent)),
     ...apiSelectProps,
-    ...omit(compProps, 'onChange'),
+    ...omit(compProps, "onChange"),
     [onEvent]: handleChange,
-    [valueField]: value
+    [valueField]: value,
   };
 });
 
@@ -99,19 +99,19 @@ const getValues = computed(() => {
   }
 
   const component = unref(getComponent);
-  if (!component.includes('NSelect')) {
+  if (!component.includes("NSelect")) {
     return value;
   }
 
   const options: LabelValueOptions =
     editComponentProps?.options ?? (unref(optionsRef) || []);
-  const option = options.find(item => `${item.value}` === `${value}`);
+  const option = options.find((item) => `${item.value}` === `${value}`);
 
   return option?.label ?? value;
 });
 
 const getWrapperClass = computed(() => {
-  const { align = 'center' } = props.column;
+  const { align = "center" } = props.column;
   return `edit-cell-align-${align}`;
 });
 
@@ -133,7 +133,7 @@ watchEffect(() => {
 
 function handleEdit() {
   if (unref(getRowEditable) || unref(props.column?.editRow)) return;
-  ruleMessage.value = '';
+  ruleMessage.value = "";
   isEdit.value = true;
   nextTick().then(() => {
     const el = unref(elRef);
@@ -146,26 +146,26 @@ async function handleChange(e: any, ...args: any[]) {
   const compProps = props.column?.editComponentProps ?? {};
   if (!e) {
     currentValueRef.value = e;
-  } else if (e?.target && Reflect.has(e.target, 'value')) {
+  } else if (e?.target && Reflect.has(e.target, "value")) {
     currentValueRef.value = (e as ChangeEvent).target.value;
-  } else if (component === 'NCheckbox') {
+  } else if (component === "NCheckbox") {
     currentValueRef.value = (e as ChangeEvent).target.checked;
   } else if (isString(e) || isBoolean(e) || isNumber(e)) {
     currentValueRef.value = e;
   }
 
   //TODO 特殊处理 NDatePicker 可能要根据项目 规范自行调整代码
-  if (component === 'NDatePicker') {
+  if (component === "NDatePicker") {
     if (isNumber(currentValueRef.value)) {
       if (compProps.valueFormat) {
         currentValueRef.value = format(
           currentValueRef.value,
-          compProps.valueFormat
+          compProps.valueFormat,
         );
       }
     } else if (isArray(currentValueRef.value)) {
       if (compProps.valueFormat) {
-        currentValueRef.value = currentValueRef.value.map(item => {
+        currentValueRef.value = currentValueRef.value.map((item) => {
           format(item, compProps.valueFormat);
         });
       }
@@ -175,10 +175,10 @@ async function handleChange(e: any, ...args: any[]) {
   const onChange = props.column?.editComponentProps?.onChange;
   if (onChange && isFunction(onChange)) onChange(...args);
 
-  table.emit?.('edit-change', {
+  table.emit?.("edit-change", {
     column: props.column,
     value: unref(currentValueRef),
-    record: toRaw(props.record)
+    record: toRaw(props.record),
   });
   await handleSubmiRule();
 }
@@ -202,12 +202,12 @@ async function handleSubmiRule() {
         ruleVisible.value = true;
         return false;
       } else {
-        ruleMessage.value = '';
+        ruleMessage.value = "";
         return true;
       }
     }
   }
-  ruleMessage.value = '';
+  ruleMessage.value = "";
   return true;
 }
 
@@ -227,7 +227,7 @@ async function handleSubmit(needEmit = true, valid = true) {
 
   set(record, dataKey, value);
   if (needEmit) {
-    table.emit?.('edit-end', { record, index, key, value });
+    table.emit?.("edit-end", { record, index, key, value });
   }
   isEdit.value = false;
 }
@@ -245,12 +245,12 @@ function handleCancel() {
   const { column, index, record } = props;
   const { key } = column;
   ruleVisible.value = true;
-  ruleMessage.value = '';
-  table.emit?.('edit-cancel', {
+  ruleMessage.value = "";
+  table.emit?.("edit-cancel", {
     record,
     index,
     key: key,
-    value: unref(currentValueRef)
+    value: unref(currentValueRef),
   });
 }
 
@@ -260,7 +260,7 @@ function onClickOutside() {
   }
   const component = unref(getComponent);
 
-  if (component.includes('NInput')) {
+  if (component.includes("NInput")) {
     handleCancel();
   }
 }
@@ -270,7 +270,7 @@ function handleOptionsChange(options: LabelValueOptions) {
   optionsRef.value = options;
 }
 
-function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
+function initCbs(cbs: "submitCbs" | "validCbs" | "cancelCbs", handle: Fn) {
   if (props.record) {
     /* eslint-disable  */
     isArray(props.record[cbs])
@@ -280,9 +280,9 @@ function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
 }
 
 if (props.record) {
-  initCbs('submitCbs', handleSubmit);
-  initCbs('validCbs', handleSubmiRule);
-  initCbs('cancelCbs', handleCancel);
+  initCbs("submitCbs", handleSubmit);
+  initCbs("validCbs", handleSubmiRule);
+  initCbs("cancelCbs", handleCancel);
 
   if (props.column.key) {
     if (!props.record.editValueRefs) props.record.editValueRefs = {};
@@ -291,21 +291,21 @@ if (props.record) {
   /* eslint-disable  */
   props.record.onCancelEdit = () => {
     isArray(props.record?.cancelCbs) &&
-      props.record?.cancelCbs.forEach(fn => fn());
+      props.record?.cancelCbs.forEach((fn) => fn());
   };
   /* eslint-disable */
   props.record.onSubmitEdit = async () => {
     if (isArray(props.record?.submitCbs)) {
-      const validFns = (props.record?.validCbs || []).map(fn => fn());
+      const validFns = (props.record?.validCbs || []).map((fn) => fn());
 
       const res = await Promise.all(validFns);
 
-      const pass = res.every(item => !!item);
+      const pass = res.every((item) => !!item);
 
       if (!pass) return;
       const submitFns = props.record?.submitCbs || [];
-      submitFns.forEach(fn => fn(false, false));
-      table.emit?.('edit-row-end');
+      submitFns.forEach((fn) => fn(false, false));
+      table.emit?.("edit-row-end");
       return true;
     }
   };

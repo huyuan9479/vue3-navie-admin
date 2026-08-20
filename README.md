@@ -20,8 +20,7 @@
 > [!NOTE]
 > 如果您觉得 `SoybeanAdmin`对您有所帮助，或者您喜欢我们的项目，请在 GitHub 上给我们一个 ⭐️。您的支持是我们持续改进和增加新功能的动力！感谢您的支持！
 
-> [!NOTE]
-> `SoybeanAdmin` 快速上手系列视频已在 [Bilibili](https://www.bilibili.com/video/BV1YKdRYXELC) 上线 [点击这里](https://www.bilibili.com/video/BV1YKdRYXELC) 前往查看
+> [!NOTE] > `SoybeanAdmin` 快速上手系列视频已在 [Bilibili](https://www.bilibili.com/video/BV1YKdRYXELC) 上线 [点击这里](https://www.bilibili.com/video/BV1YKdRYXELC) 前往查看
 
 <div align="center">
   <table width="100%">

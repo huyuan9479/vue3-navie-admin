@@ -13,7 +13,10 @@
       "request": "launch",
       "name": "TS Debugger",
       "runtimeExecutable": "tsx",
-      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"],
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**"
+      ],
       "program": "${file}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"

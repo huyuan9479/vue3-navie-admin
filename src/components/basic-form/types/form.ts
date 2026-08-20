@@ -1,22 +1,22 @@
-import type { CSSProperties } from 'vue';
-import type { GridProps, GridItemProps } from 'naive-ui/lib/grid';
-import type { ButtonProps } from 'naive-ui/lib/button';
+import type { CSSProperties } from "vue";
+import type { GridProps, GridItemProps } from "naive-ui/lib/grid";
+import type { ButtonProps } from "naive-ui/lib/button";
 
 export type ComponentType =
-  | 'NInput'
-  | 'NInputGroup'
-  | 'NInputNumber'
-  | 'NSelect'
-  | 'NTreeSelect'
-  | 'NRadioButtonGroup'
-  | 'NRadioGroup'
-  | 'NCheckbox'
-  | 'NCheckboxGroup'
-  | 'NAutoComplete'
-  | 'NCascader'
-  | 'NDatePicker'
-  | 'NTimePicker'
-  | 'NSwitch';
+  | "NInput"
+  | "NInputGroup"
+  | "NInputNumber"
+  | "NSelect"
+  | "NTreeSelect"
+  | "NRadioButtonGroup"
+  | "NRadioGroup"
+  | "NCheckbox"
+  | "NCheckboxGroup"
+  | "NAutoComplete"
+  | "NCascader"
+  | "NDatePicker"
+  | "NTimePicker"
+  | "NSwitch";
 
 export interface FormSchema {
   field: string;

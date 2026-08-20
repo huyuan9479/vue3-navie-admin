@@ -1,9 +1,15 @@
-import type { InternalRowData, TableBaseColumn } from 'naive-ui/lib/data-table/src/interface';
-import { ComponentType } from './index';
-import type { VNode } from 'vue';
+import type {
+  InternalRowData,
+  TableColumn,
+} from "naive-ui/lib/data-table/src/interface";
+import { ComponentType } from "./index";
+import type { VNode, VNodeChild } from "vue";
 
-export interface BasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
+export type BasicColumn<T = InternalRowData> = TableColumn<T> & {
   //编辑表格
+  title?: string | (() => VNodeChild);
+  key: string | number;
+  type?: "selection" | "index";
   edit?: boolean;
   editRow?: boolean;
   editable?: boolean;
@@ -11,6 +17,7 @@ export interface BasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   editComponentProps?: Recordable;
   editRule?: boolean | ((text: string, record: Recordable) => Promise<string>);
   editValueMap?: (value: any) => string;
+  render?: (rowData: T, rowIndex: number) => VNodeChild;
   onEditRow?: () => void;
   // 权限编码控制是否显示
   auth?: string[];
@@ -18,7 +25,7 @@ export interface BasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   ifShow?: boolean | ((column: BasicColumn) => boolean);
   // 控制是否支持拖拽，默认支持
   draggable?: boolean;
-}
+};
 
 export interface TableActionType {
   reload: (opt?: Recordable) => Promise<void>;

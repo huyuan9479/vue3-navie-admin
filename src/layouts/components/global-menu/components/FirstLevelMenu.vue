@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { createReusableTemplate } from '@vueuse/core';
-import { SimpleScrollbar } from '@sa/materials';
-import { transformColorWithOpacity } from '@sa/color';
-import type { RouteKey } from '@elegant-router/types';
+import { computed } from "vue";
+import { createReusableTemplate } from "@vueuse/core";
+import { SimpleScrollbar } from "@sa/materials";
+import { transformColorWithOpacity } from "@sa/color";
+import type { RouteKey } from "@elegant-router/types";
 
 defineOptions({
-  name: 'FirstLevelMenu'
+  name: "FirstLevelMenu",
 });
 
 interface Props {
@@ -21,39 +21,40 @@ interface Props {
 const props = defineProps<Props>();
 
 interface Emits {
-  (e: 'select', menuKey: RouteKey): boolean;
-  (e: 'toggleSiderCollapse'): void;
+  (e: "select", menuKey: RouteKey): boolean;
+  (e: "toggleSiderCollapse"): void;
 }
 
 const emit = defineEmits<Emits>();
 
 interface MixMenuItemProps {
   /** Menu item label */
-  label: App.Global.Menu['label'];
+  label: App.Global.Menu["label"];
   /** Menu item icon */
-  icon: App.Global.Menu['icon'];
+  icon: App.Global.Menu["icon"];
   /** Active menu item */
   active: boolean;
   /** Mini size */
   isMini?: boolean;
 }
-const [DefineMixMenuItem, MixMenuItem] = createReusableTemplate<MixMenuItemProps>();
+const [DefineMixMenuItem, MixMenuItem] =
+  createReusableTemplate<MixMenuItemProps>();
 
 const selectedBgColor = computed(() => {
   const { darkMode, themeColor } = props;
 
-  const light = transformColorWithOpacity(themeColor, 0.1, '#ffffff');
-  const dark = transformColorWithOpacity(themeColor, 0.3, '#000000');
+  const light = transformColorWithOpacity(themeColor, 0.1, "#ffffff");
+  const dark = transformColorWithOpacity(themeColor, 0.3, "#000000");
 
   return darkMode ? dark : light;
 });
 
 function handleClickMixMenu(menuKey: RouteKey) {
-  emit('select', menuKey);
+  emit("select", menuKey);
 }
 
 function toggleSiderCollapse() {
-  emit('toggleSiderCollapse');
+  emit("toggleSiderCollapse");
 }
 </script>
 
@@ -65,10 +66,13 @@ function toggleSiderCollapse() {
       :class="{
         'text-primary selected-mix-menu': active,
         'text-white:65 hover:text-white': inverted,
-        '!text-white !bg-primary': active && inverted
+        '!text-white !bg-primary': active && inverted,
       }"
     >
-      <component :is="icon" :class="[isMini ? 'text-icon-small' : 'text-icon-large']" />
+      <component
+        :is="icon"
+        :class="[isMini ? 'text-icon-small' : 'text-icon-large']"
+      />
       <p
         class="w-full ellipsis-text text-center text-12px transition-height-300"
         :class="[isMini ? 'h-0 pt-0' : 'h-20px pt-4px']"

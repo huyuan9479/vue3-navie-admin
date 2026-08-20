@@ -1,21 +1,24 @@
 <script lang="ts" setup>
-import { getCurrentInstance, ref, unref, computed, useAttrs } from 'vue';
-import { deepMerge } from '@/utils/common';
-import type { BasicModalProps, ModalMethods } from './types';
+import { getCurrentInstance, ref, unref, computed, useAttrs } from "vue";
+import { deepMerge } from "@/utils/common";
+import type { BasicModalProps, ModalMethods } from "./types";
 
 const attrs = useAttrs();
 const props = withDefaults(defineProps<BasicModalProps>(), {
-  subBtnText: '确定',
-  cancelBtnText: '取消',
-  title: '',
+  subBtnText: "确定",
+  cancelBtnText: "取消",
+  title: "",
   showIcon: false,
   width: 500,
   maskClosable: true,
-  preset: 'card',
-  draggable: true
+  preset: "card",
+  draggable: true,
 });
 const emit = defineEmits<{
-  (e: 'onClose' | 'onOk' | 'register', values?: Recordable): void;
+  (e: "onClose" | "onOk" | "onRefresh"): void;
+  (e: "register", methods: ModalMethods): void;
+  (e: "onRefresh"): void;
+  (e: "onCallback", values?: Recordable): void;
 }>();
 
 const propsRef = ref<Partial<BasicModalProps> | null>(null);
@@ -40,7 +43,7 @@ const getBindValue = computed(() => {
   return {
     ...attrs,
     ...unref(getProps),
-    ...unref(propsRef)
+    ...unref(propsRef),
   };
 });
 
@@ -55,29 +58,41 @@ function openModal() {
 function closeModal() {
   isModal.value = false;
   subLoading.value = false;
-  emit('onClose');
+  emit("onClose");
 }
 
 function onCloseModal() {
   isModal.value = false;
-  emit('onClose');
+  emit("onClose");
 }
 
 function handleSubmit() {
   subLoading.value = true;
-  emit('onOk');
+  emit("onOk");
 }
 
 const modalMethods: ModalMethods = {
+  // 设置弹窗属性
   setProps,
+  // 打开弹窗
   openModal,
+  // 关闭弹窗
   closeModal,
-  setSubLoading
+  // 设置提交按钮加载状态
+  setSubLoading,
+  // 比如：新增成功后，刷新列表
+  onRefresh: () => {
+    emit("onRefresh");
+  },
+  // 比如：新增成功后，回调父组件
+  onCallback: (values?: Recordable) => {
+    emit("onCallback", values);
+  },
 };
 
 const instance = getCurrentInstance();
 if (instance) {
-  emit('register', modalMethods);
+  emit("register", modalMethods);
 }
 
 defineExpose(modalMethods);

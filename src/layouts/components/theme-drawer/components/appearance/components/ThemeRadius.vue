@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useThemeStore } from '@/store/modules/theme';
-import { $t } from '@/locales';
-import SettingItem from '../../../components/SettingItem.vue';
+import { useThemeStore } from "@/store/modules/theme";
+import { $t } from "@/locales";
+import SettingItem from "../../../components/SettingItem.vue";
 
 defineOptions({
-  name: 'ThemeRadius'
+  name: "ThemeRadius",
 });
 
 const themeStore = useThemeStore();
@@ -14,11 +14,15 @@ const themeStore = useThemeStore();
   <NCard
     :title="$t('theme.appearance.themeRadius.title')"
     :segmented="{
-      content: true
+      content: true,
     }"
     size="small"
   >
-    <TransitionGroup tag="div" name="setting-list" class="flex-col-stretch gap-12px">
+    <TransitionGroup
+      tag="div"
+      name="setting-list"
+      class="flex-col-stretch gap-12px"
+    >
       <SettingItem key="1" :label="$t('theme.appearance.themeRadius.title')">
         <NInputNumber
           v-model:value="themeStore.themeRadius"

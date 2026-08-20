@@ -1,7 +1,7 @@
-import { useRouter } from 'vue-router';
-import type { RouteLocationRaw } from 'vue-router';
-import type { RouteKey } from '@elegant-router/types';
-import { router as globalRouter } from '@/router';
+import { useRouter } from "vue-router";
+import type { RouteLocationRaw } from "vue-router";
+import type { RouteKey } from "@elegant-router/types";
+import { router as globalRouter } from "@/router";
 
 /**
  * Router push
@@ -18,11 +18,14 @@ export function useRouterPush(inSetup = true) {
 
   const routerBack = router.back;
 
-  async function routerPushByKey(key: RouteKey, options?: App.Global.RouterPushOptions) {
+  async function routerPushByKey(
+    key: RouteKey,
+    options?: App.Global.RouterPushOptions,
+  ) {
     const { query, params } = options || {};
 
     const routeLocation: RouteLocationRaw = {
-      name: key
+      name: key,
     };
 
     if (Object.keys(query || {}).length) {
@@ -38,11 +41,11 @@ export function useRouterPush(inSetup = true) {
 
   function routerPushByKeyWithMetaQuery(key: RouteKey) {
     const allRoutes = router.getRoutes();
-    const meta = allRoutes.find(item => item.name === key)?.meta || null;
+    const meta = allRoutes.find((item) => item.name === key)?.meta || null;
 
     const query: Record<string, string> = {};
 
-    meta?.query?.forEach(item => {
+    meta?.query?.forEach((item) => {
       query[item.key] = item.value;
     });
 
@@ -50,7 +53,7 @@ export function useRouterPush(inSetup = true) {
   }
 
   async function toHome() {
-    return routerPushByKey('root');
+    return routerPushByKey("root");
   }
 
   /**
@@ -59,22 +62,25 @@ export function useRouterPush(inSetup = true) {
    * @param loginModule The login module
    * @param redirectUrl The redirect url, if not specified, it will be the current route fullPath
    */
-  async function toLogin(loginModule?: UnionKey.LoginModule, redirectUrl?: string) {
-    const module = loginModule || 'pwd-login';
+  async function toLogin(
+    loginModule?: UnionKey.LoginModule,
+    redirectUrl?: string,
+  ) {
+    const module = loginModule || "pwd-login";
 
     const options: App.Global.RouterPushOptions = {
       params: {
-        module
-      }
+        module,
+      },
     };
 
     const redirect = redirectUrl || route.value.fullPath;
 
     options.query = {
-      redirect
+      redirect,
     };
 
-    return routerPushByKey('login', options);
+    return routerPushByKey("login", options);
   }
 
   /**
@@ -85,7 +91,7 @@ export function useRouterPush(inSetup = true) {
   async function toggleLoginModule(module: UnionKey.LoginModule) {
     const query = route.value.query as Record<string, string>;
 
-    return routerPushByKey('login', { query, params: { module } });
+    return routerPushByKey("login", { query, params: { module } });
   }
 
   /**
@@ -110,6 +116,6 @@ export function useRouterPush(inSetup = true) {
     routerPushByKeyWithMetaQuery,
     toLogin,
     toggleLoginModule,
-    redirectFromLogin
+    redirectFromLogin,
   };
 }

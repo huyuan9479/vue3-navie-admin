@@ -1,5 +1,8 @@
-import { request } from '../../request';
+import { request } from "../../request";
 // Get role list
-export function fetchGetRoleList(params: { pageNum: number; pageSize: number }) {
-  return request({ url: '/system/role/list', params });
+export function fetchGetRoleList(params: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  return request({ url: "/system/role/list", params });
 }

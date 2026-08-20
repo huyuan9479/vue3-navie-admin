@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { useAppStore } from '@/store/modules/app';
-import { $t } from '@/locales';
-import AppearanceSettings from './components/appearance/index.vue';
-import LayoutSettings from './components/layout/index.vue';
-import GeneralSettings from './components/general/index.vue';
-import ConfigOperation from './components/ConfigOperation.vue';
-import PresetSettings from './components/preset/index.vue';
+import { computed, ref } from "vue";
+import { useAppStore } from "@/store/modules/app";
+import { $t } from "@/locales";
+import AppearanceSettings from "./components/appearance/index.vue";
+import LayoutSettings from "./components/layout/index.vue";
+import GeneralSettings from "./components/general/index.vue";
+import ConfigOperation from "./components/ConfigOperation.vue";
+import PresetSettings from "./components/preset/index.vue";
 
 defineOptions({
-  name: 'ThemeDrawer'
+  name: "ThemeDrawer",
 });
 
 const appStore = useAppStore();
-const activeTab = ref('appearance');
+const activeTab = ref("appearance");
 
 const drawerWidth = computed(() => {
   const width = 400;
@@ -28,9 +28,22 @@ const drawerWidth = computed(() => {
 </script>
 
 <template>
-  <NDrawer v-model:show="appStore.themeDrawerVisible" display-directive="show" :width="drawerWidth">
-    <NDrawerContent :title="$t('theme.themeDrawerTitle')" :native-scrollbar="false" closable>
-      <NTabs v-model:value="activeTab" type="segment" size="medium" class="mb-16px">
+  <NDrawer
+    v-model:show="appStore.themeDrawerVisible"
+    display-directive="show"
+    :width="drawerWidth"
+  >
+    <NDrawerContent
+      :title="$t('theme.themeDrawerTitle')"
+      :native-scrollbar="false"
+      closable
+    >
+      <NTabs
+        v-model:value="activeTab"
+        type="segment"
+        size="medium"
+        class="mb-16px"
+      >
         <NTab name="appearance" :tab="$t('theme.tabs.appearance')"></NTab>
         <NTab name="layout" :tab="$t('theme.tabs.layout')"></NTab>
         <NTab name="general" :tab="$t('theme.tabs.general')"></NTab>

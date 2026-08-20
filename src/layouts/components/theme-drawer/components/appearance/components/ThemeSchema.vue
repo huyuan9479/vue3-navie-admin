@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { themeSchemaRecord } from '@/constants/app';
-import { useThemeStore } from '@/store/modules/theme';
-import { $t } from '@/locales';
-import SettingItem from '../../../components/SettingItem.vue';
+import { computed } from "vue";
+import { themeSchemaRecord } from "@/constants/app";
+import { useThemeStore } from "@/store/modules/theme";
+import { $t } from "@/locales";
+import SettingItem from "../../../components/SettingItem.vue";
 
 defineOptions({
-  name: 'ThemeSchema'
+  name: "ThemeSchema",
 });
 
 const themeStore = useThemeStore();
 
 const icons: Record<UnionKey.ThemeScheme, string> = {
-  light: 'material-symbols:sunny-outline-rounded',
-  dark: 'material-symbols:dark-mode-outline-rounded'
+  light: "material-symbols:sunny-outline-rounded",
+  dark: "material-symbols:dark-mode-outline-rounded",
 };
 
 function handleSegmentChange(value: string | number) {
@@ -28,14 +28,16 @@ function handleColourWeaknessChange(value: boolean) {
   themeStore.setColourWeakness(value);
 }
 
-const showSiderInverted = computed(() => !themeStore.darkMode && themeStore.layout.mode.includes('vertical'));
+const showSiderInverted = computed(
+  () => !themeStore.darkMode && themeStore.layout.mode.includes("vertical"),
+);
 </script>
 
 <template>
   <NCard
     :title="$t('theme.appearance.themeSchema.title')"
     :segmented="{
-      content: true
+      content: true,
     }"
     size="small"
   >
@@ -55,15 +57,24 @@ const showSiderInverted = computed(() => !themeStore.darkMode && themeStore.layo
         </NTabs>
       </div>
       <Transition name="sider-inverted">
-        <SettingItem v-if="showSiderInverted" :label="$t('theme.layout.sider.inverted')">
+        <SettingItem
+          v-if="showSiderInverted"
+          :label="$t('theme.layout.sider.inverted')"
+        >
           <NSwitch v-model:value="themeStore.sider.inverted" />
         </SettingItem>
       </Transition>
       <SettingItem :label="$t('theme.appearance.grayscale')">
-        <NSwitch :value="themeStore.grayscale" @update:value="handleGrayscaleChange" />
+        <NSwitch
+          :value="themeStore.grayscale"
+          @update:value="handleGrayscaleChange"
+        />
       </SettingItem>
       <SettingItem :label="$t('theme.appearance.colourWeakness')">
-        <NSwitch :value="themeStore.colourWeakness" @update:value="handleColourWeaknessChange" />
+        <NSwitch
+          :value="themeStore.colourWeakness"
+          @update:value="handleColourWeaknessChange"
+        />
       </SettingItem>
     </div>
   </NCard>

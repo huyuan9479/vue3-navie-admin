@@ -1,4 +1,4 @@
-import { upperFirst } from 'lodash-es';
+import { upperFirst } from "lodash-es";
 
 export interface ViewportOffsetResult {
   left: number;
@@ -17,17 +17,18 @@ export function getBoundingClientRect(element: Element): DOMRect | number {
 }
 
 function trim(string: string) {
-  return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
+  return (string || "").replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, "");
 }
 
 /* istanbul ignore next */
 export function hasClass(el: Element, cls: string) {
   if (!el || !cls) return false;
-  if (cls.indexOf(' ') !== -1) throw new Error('className should not contain space.');
+  if (cls.indexOf(" ") !== -1)
+    throw new Error("className should not contain space.");
   if (el.classList) {
     return el.classList.contains(cls);
   } else {
-    return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1;
+    return (" " + el.className + " ").indexOf(" " + cls + " ") > -1;
   }
 }
 
@@ -35,7 +36,7 @@ export function hasClass(el: Element, cls: string) {
 export function addClass(el: Element, cls: string) {
   if (!el) return;
   let curClass = el.className;
-  const classes = (cls || '').split(' ');
+  const classes = (cls || "").split(" ");
 
   for (let i = 0, j = classes.length; i < j; i++) {
     const clsName = classes[i];
@@ -44,7 +45,7 @@ export function addClass(el: Element, cls: string) {
     if (el.classList) {
       el.classList.add(clsName);
     } else if (!hasClass(el, clsName)) {
-      curClass += ' ' + clsName;
+      curClass += " " + clsName;
     }
   }
   if (!el.classList) {
@@ -55,8 +56,8 @@ export function addClass(el: Element, cls: string) {
 /* istanbul ignore next */
 export function removeClass(el: Element, cls: string) {
   if (!el || !cls) return;
-  const classes = cls.split(' ');
-  let curClass = ' ' + el.className + ' ';
+  const classes = cls.split(" ");
+  let curClass = " " + el.className + " ";
 
   for (let i = 0, j = classes.length; i < j; i++) {
     const clsName = classes[i];
@@ -65,7 +66,7 @@ export function removeClass(el: Element, cls: string) {
     if (el.classList) {
       el.classList.remove(clsName);
     } else if (hasClass(el, clsName)) {
-      curClass = curClass.replace(' ' + clsName + ' ', ' ');
+      curClass = curClass.replace(" " + clsName + " ", " ");
     }
   }
   if (!el.classList) {
@@ -96,7 +97,12 @@ export function getViewportOffset(element: Element): ViewportOffsetResult {
 
   const box = getBoundingClientRect(element);
 
-  const { left: retLeft, top: rectTop, width: rectWidth, height: rectHeight } = box as DOMRect;
+  const {
+    left: retLeft,
+    top: rectTop,
+    width: rectWidth,
+    height: rectHeight,
+  } = box as DOMRect;
 
   const scrollLeft = (pageXOffset || docScrollLeft) - (docClientLeft || 0);
   const scrollTop = (pageYOffset || docScrollTop) - (docClientTop || 0);
@@ -114,20 +120,20 @@ export function getViewportOffset(element: Element): ViewportOffsetResult {
     right: clientWidth - rectWidth - left,
     bottom: clientHeight - rectHeight - top,
     rightIncludeBody: clientWidth - left,
-    bottomIncludeBody: clientHeight - top
+    bottomIncludeBody: clientHeight - top,
   };
 }
 
 export function hackCss(attr: string, value: string) {
-  const prefix: string[] = ['webkit', 'Moz', 'ms', 'OT'];
+  const prefix: string[] = ["webkit", "Moz", "ms", "OT"];
 
   const styleObj: any = {};
-  prefix.forEach(item => {
+  prefix.forEach((item) => {
     styleObj[`${item}${upperFirst(attr)}`] = value;
   });
   return {
     ...styleObj,
-    [attr]: value
+    [attr]: value,
   };
 }
 
@@ -135,7 +141,7 @@ export function hackCss(attr: string, value: string) {
 export function on(
   element: Element | HTMLElement | Document | Window,
   event: string,
-  handler: EventListenerOrEventListenerObject
+  handler: EventListenerOrEventListenerObject,
 ): void {
   if (element && event && handler) {
     element.addEventListener(event, handler, false);
@@ -143,7 +149,11 @@ export function on(
 }
 
 /* istanbul ignore next */
-export function off(element: Element | HTMLElement | Document | Window, event: string, handler: Fn): void {
+export function off(
+  element: Element | HTMLElement | Document | Window,
+  event: string,
+  handler: Fn,
+): void {
   if (element && event && handler) {
     element.removeEventListener(event, handler, false);
   }

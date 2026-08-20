@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useAppStore } from '@/store/modules/app';
-import HeaderBanner from './components/HeaderBanner.vue';
-import CardData from './components/CardData.vue';
-import LineChart from './components/LineChart.vue';
-import PieChart from './components/PieChart.vue';
-import ProjectNews from './components/ProjectNews.vue';
-import CreativityBanner from './components/CreativityBanner.vue';
+import { computed } from "vue";
+import { useAppStore } from "@/store/modules/app";
+import HeaderBanner from "./components/HeaderBanner.vue";
+import CardData from "./components/CardData.vue";
+import LineChart from "./components/LineChart.vue";
+import PieChart from "./components/PieChart.vue";
+import ProjectNews from "./components/ProjectNews.vue";
+import CreativityBanner from "./components/CreativityBanner.vue";
 
 const appStore = useAppStore();
 

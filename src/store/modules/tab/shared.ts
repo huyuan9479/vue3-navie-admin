@@ -1,7 +1,11 @@
-import type { Router } from 'vue-router';
-import type { LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
-import { $t } from '@/locales';
-import { getRoutePath } from '@/router/elegant/transform';
+import type { Router } from "vue-router";
+import type {
+  LastLevelRouteKey,
+  RouteKey,
+  RouteMap,
+} from "@elegant-router/types";
+import { $t } from "@/locales";
+import { getRoutePath } from "@/router/elegant/transform";
 
 /**
  * Get all tabs
@@ -14,11 +18,13 @@ export function getAllTabs(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
     return [];
   }
 
-  const filterHomeTabs = tabs.filter(tab => tab.id !== homeTab.id);
+  const filterHomeTabs = tabs.filter((tab) => tab.id !== homeTab.id);
 
-  const fixedTabs = filterHomeTabs.filter(isFixedTab).sort((a, b) => a.fixedIndex! - b.fixedIndex!);
+  const fixedTabs = filterHomeTabs
+    .filter(isFixedTab)
+    .sort((a, b) => a.fixedIndex! - b.fixedIndex!);
 
-  const remainTabs = filterHomeTabs.filter(tab => !isFixedTab(tab));
+  const remainTabs = filterHomeTabs.filter((tab) => !isFixedTab(tab));
 
   const allTabs = [homeTab, ...fixedTabs, ...remainTabs];
 
@@ -46,7 +52,7 @@ export function getTabIdByRoute(route: App.Global.TabRoute) {
 
   if (meta.multiTab) {
     const queryKeys = Object.keys(query).sort();
-    const qs = queryKeys.map(key => `${key}=${query[key]}`).join('&');
+    const qs = queryKeys.map((key) => `${key}=${query[key]}`).join("&");
 
     id = `${path}?${qs}`;
   }
@@ -78,7 +84,7 @@ export function getTabByRoute(route: App.Global.TabRoute) {
     fixedIndex: fixedIndexInTab,
     icon,
     localIcon,
-    i18nKey
+    i18nKey,
   };
 
   return tab;
@@ -98,7 +104,7 @@ export function getRouteIcons(route: App.Global.TabRoute) {
   // Route.matched only appears when there are multiple matches,so check if route.matched exists
   if (route.matched) {
     // Find the meta of the current route from matched
-    const currentRoute = route.matched.find(r => r.name === route.name);
+    const currentRoute = route.matched.find((r) => r.name === route.name);
     // If icon exists in currentRoute.meta, it will overwrite the default value
     icon = currentRoute?.meta?.icon || icon;
     localIcon = currentRoute?.meta?.localIcon;
@@ -113,7 +119,10 @@ export function getRouteIcons(route: App.Global.TabRoute) {
  * @param router
  * @param homeRouteName routeHome in useRouteStore
  */
-export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteKey) {
+export function getDefaultHomeTab(
+  router: Router,
+  homeRouteName: LastLevelRouteKey,
+) {
   const homeRoutePath = getRoutePath(homeRouteName);
   const i18nLabel = $t(`route.${homeRouteName}`);
 
@@ -122,11 +131,11 @@ export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteK
     label: i18nLabel || homeRouteName,
     routeKey: homeRouteName,
     routePath: homeRoutePath,
-    fullPath: homeRoutePath
+    fullPath: homeRoutePath,
   };
 
   const routes = router.getRoutes();
-  const homeRoute = routes.find(route => route.name === homeRouteName);
+  const homeRoute = routes.find((route) => route.name === homeRouteName);
   if (homeRoute) {
     homeTab = getTabByRoute(homeRoute);
   }
@@ -141,7 +150,7 @@ export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteK
  * @param tabs
  */
 export function isTabInTabs(tabId: string, tabs: App.Global.Tab[]) {
-  return tabs.some(tab => tab.id === tabId);
+  return tabs.some((tab) => tab.id === tabId);
 }
 
 /**
@@ -151,7 +160,7 @@ export function isTabInTabs(tabId: string, tabs: App.Global.Tab[]) {
  * @param tabs
  */
 export function filterTabsById(tabId: string, tabs: App.Global.Tab[]) {
-  return tabs.filter(tab => tab.id !== tabId);
+  return tabs.filter((tab) => tab.id !== tabId);
 }
 
 /**
@@ -161,7 +170,7 @@ export function filterTabsById(tabId: string, tabs: App.Global.Tab[]) {
  * @param tabs
  */
 export function filterTabsByIds(tabIds: string[], tabs: App.Global.Tab[]) {
-  return tabs.filter(tab => !tabIds.includes(tab.id));
+  return tabs.filter((tab) => !tabIds.includes(tab.id));
 }
 
 /**
@@ -173,9 +182,9 @@ export function filterTabsByIds(tabIds: string[], tabs: App.Global.Tab[]) {
 export function extractTabsByAllRoutes(router: Router, tabs: App.Global.Tab[]) {
   const routes = router.getRoutes();
 
-  const routeNames = routes.map(route => route.name);
+  const routeNames = routes.map((route) => route.name);
 
-  return tabs.filter(tab => routeNames.includes(tab.routeKey));
+  return tabs.filter((tab) => routeNames.includes(tab.routeKey));
 }
 
 /**
@@ -195,7 +204,7 @@ export function getFixedTabs(tabs: App.Global.Tab[]) {
 export function getFixedTabIds(tabs: App.Global.Tab[]) {
   const fixedTabs = getFixedTabs(tabs);
 
-  return fixedTabs.map(tab => tab.id);
+  return fixedTabs.map((tab) => tab.id);
 }
 
 /**
@@ -216,9 +225,9 @@ export function reorderFixedTabs(tabs: App.Global.Tab[]) {
  * @param tabs
  */
 function updateTabsLabel(tabs: App.Global.Tab[]) {
-  const updated = tabs.map(tab => ({
+  const updated = tabs.map((tab) => ({
     ...tab,
-    label: tab.newLabel || tab.oldLabel || tab.label
+    label: tab.newLabel || tab.oldLabel || tab.label,
   }));
 
   return updated;
@@ -234,7 +243,7 @@ export function updateTabByI18nKey(tab: App.Global.Tab) {
 
   return {
     ...tab,
-    label: i18nKey ? $t(i18nKey) : label
+    label: i18nKey ? $t(i18nKey) : label,
   };
 }
 
@@ -244,7 +253,7 @@ export function updateTabByI18nKey(tab: App.Global.Tab) {
  * @param tabs
  */
 export function updateTabsByI18nKey(tabs: App.Global.Tab[]) {
-  return tabs.map(tab => updateTabByI18nKey(tab));
+  return tabs.map((tab) => updateTabByI18nKey(tab));
 }
 
 /**
@@ -259,5 +268,5 @@ export function findTabByRouteName(name: RouteKey, tabs: App.Global.Tab[]) {
   const tabId = routePath;
   const multiTabId = `${routePath}?`;
 
-  return tabs.find(tab => tab.id === tabId || tab.id.startsWith(multiTabId));
+  return tabs.find((tab) => tab.id === tabId || tab.id.startsWith(multiTabId));
 }

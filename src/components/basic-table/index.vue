@@ -1,85 +1,75 @@
 <script lang="ts" setup>
-import { ref, unref, toRaw, computed, onMounted, nextTick, h } from 'vue';
-import { createTableContext } from './hooks/table-context';
-import ColumnSetting from './components/ColumnSetting.vue';
-import { useLoading } from './hooks/loading';
-import { useColumns } from './hooks/columns';
-import { useDataSource } from './hooks/data-source';
-import { usePagination } from './hooks/pagination';
-import type { BasicTableProps } from './types/table';
-import { getViewportOffset } from '@/utils/dom';
-import { useWindowSizeFn } from '@/hooks/common/window-size';
-import { isBoolean } from '@/utils/is';
-import { NIcon } from 'naive-ui';
-import SvgIcon from '@/components/custom/SvgIcon.vue';
+import { ref, unref, toRaw, computed, onMounted, nextTick } from "vue";
+import { createTableContext } from "./hooks/table-context";
+import ColumnSetting from "./components/ColumnSetting.vue";
+import { useLoading } from "./hooks/loading";
+import { useColumns } from "./hooks/columns";
+import { useDataSource } from "./hooks/data-source";
+import { usePagination } from "./hooks/pagination";
+import type { BasicTableProps } from "./types/table";
+import { getViewportOffset } from "@/utils/dom";
+import { useWindowSizeFn } from "@/hooks/common/window-size";
+import { isBoolean } from "@/utils/is";
 
 const props = withDefaults(defineProps<BasicTableProps>(), {
   dataSource: () => [],
   columns: () => [],
   pagination: true,
-  size: 'small',
+  size: "small",
   canResize: true,
   resizeHeightOffset: 0,
   loading: false,
   striped: true,
   singleLine: false,
   bordered: true,
-  renderExpandIcon: () => {
-    return h(NIcon, null, {
-      default: () =>
-        h(SvgIcon, {
-          icon: 'ant-design:caret-right-outlined'
-        })
-    });
-  }
 });
 
 const emit = defineEmits<{
   (
-    e: 'update:checked-row-keys',
+    e: "update:checked-row-keys",
     keys: (string | number)[],
     rows: any[],
     meta: {
       row: any | undefined;
-      action: 'check' | 'uncheck' | 'checkAll' | 'uncheckAll';
-    }
+      action: "check" | "uncheck" | "checkAll" | "uncheckAll";
+    },
   ): void;
-  (e: 'fetch-success', result: { items: any[]; pageCount: number }): void;
-  (e: 'fetch-error', error: unknown): void;
-  (e: 'edit-end'): void;
-  (e: 'edit-cancel'): void;
-  (e: 'edit-row-end'): void;
-  (e: 'edit-change'): void;
+  (e: "fetch-success", result: { items: any[]; pageCount: number }): void;
+  (e: "fetch-error", error: unknown): void;
+  (e: "edit-end"): void;
+  (e: "edit-cancel"): void;
+  (e: "edit-row-end"): void;
+  (e: "edit-change"): void;
 }>();
 
 const densityOptions = [
   {
-    type: 'menu',
-    label: '紧凑',
-    key: 'small'
+    type: "menu",
+    label: "紧凑",
+    key: "small",
   },
   {
-    type: 'menu',
-    label: '默认',
-    key: 'medium'
+    type: "menu",
+    label: "默认",
+    key: "medium",
   },
   {
-    type: 'menu',
-    label: '宽松',
-    key: 'large'
-  }
+    type: "menu",
+    label: "宽松",
+    key: "large",
+  },
 ];
 const stripedOptions = [
   {
-    type: 'menu',
-    label: '开启',
-    key: 'Y'
+    type: "menu",
+    label: "开启",
+    key: "Y",
   },
   {
-    type: 'menu',
-    label: '关闭',
-    key: 'N'
-  }
+    type: "menu",
+    label: "关闭",
+    key: "N",
+  },
 ];
 
 const deviceHeight = ref(150);
@@ -87,7 +77,7 @@ const tableElRef = ref<ComponentRef>(null);
 const wrapRef = ref<Nullable<HTMLDivElement>>(null);
 let paginationEl: HTMLElement | null;
 const isStriped = ref(props.striped || false);
-const tableStriped = ref(props.striped ? 'Y' : 'N');
+const tableStriped = ref(props.striped ? "Y" : "N");
 const tableData = ref<Recordable[]>([]);
 const innerPropsRef = ref<Partial<BasicTableProps>>();
 
@@ -95,7 +85,7 @@ const getProps = computed(() => {
   return { ...props, ...unref(innerPropsRef) } as BasicTableProps;
 });
 
-const tableSize = ref(unref(getProps as any).size || 'medium');
+const tableSize = ref(unref(getProps as any).size || "medium");
 
 const { getLoading, setLoading } = useLoading(getProps);
 
@@ -107,9 +97,9 @@ const { getDataSourceRef, getDataSource, getRowKey, reload } = useDataSource(
     getPaginationInfo,
     setPagination,
     tableData,
-    setLoading
+    setLoading,
   },
-  emit
+  emit,
 );
 
 const {
@@ -118,7 +108,7 @@ const {
   setColumns,
   getColumns,
   getCacheColumns,
-  setCacheColumnsField
+  setCacheColumnsField,
 } = useColumns(getProps);
 
 //页码切换
@@ -134,12 +124,12 @@ function updatePageSize(size: number) {
 }
 
 //密度切换
-function densitySelect(e: 'small' | 'medium' | 'large') {
+function densitySelect(e: "small" | "medium" | "large") {
   tableSize.value = e;
 }
 // 斑马纹切换
-function stripedSelect(e: 'Y' | 'N') {
-  isStriped.value = e === 'Y';
+function stripedSelect(e: "Y" | "N") {
+  isStriped.value = e === "Y";
   tableStriped.value = e;
 }
 //获取表格大小
@@ -148,7 +138,7 @@ const getTableSize = computed(() => tableSize.value);
 //组装表格信息
 const getBindValues = computed(() => {
   const dataList = unref(getDataSourceRef);
-  const maxHeight = dataList.length ? `${unref(deviceHeight)}px` : 'auto';
+  const maxHeight = dataList.length ? `${unref(deviceHeight)}px` : "auto";
   return {
     ...unref(getProps),
     loading: unref(getLoading),
@@ -157,9 +147,9 @@ const getBindValues = computed(() => {
     data: dataList,
     size: unref(getTableSize),
     remote: true,
-    'max-height': maxHeight,
-    title: '', // 重置为空 避免绑定到 table 上面
-    scrollX: unref(getScrollX)
+    "max-height": maxHeight,
+    title: "", // 重置为空 避免绑定到 table 上面
+    scrollX: unref(getScrollX),
   };
 });
 
@@ -180,7 +170,7 @@ const tableAction = {
   getPageColumns,
   getCacheColumns,
   setCacheColumnsField,
-  emit
+  emit,
 };
 
 const getCanResize = computed(() => {
@@ -193,14 +183,14 @@ async function computeTableHeight() {
   if (!table) return;
   if (!unref(getCanResize)) return;
   const tableEl: any = table?.$el;
-  const headEl = tableEl.querySelector('.n-data-table-thead ');
+  const headEl = tableEl.querySelector(".n-data-table-thead ");
   const { bottomIncludeBody } = getViewportOffset(headEl);
   const headerH = 64;
   let paginationH = 2;
   const marginH = 24;
   if (!isBoolean(unref(pagination))) {
     paginationEl = tableEl.querySelector(
-      '.n-data-table__pagination'
+      ".n-data-table__pagination",
     ) as HTMLElement;
     if (paginationEl) {
       const offsetHeight = paginationEl.offsetHeight;
@@ -217,7 +207,7 @@ async function computeTableHeight() {
       (unref(getProps).resizeHeightOffset || 0));
   const maxHeight = unref(getProps).maxHeight;
   height =
-    maxHeight && typeof maxHeight === 'number' && maxHeight < height
+    maxHeight && typeof maxHeight === "number" && maxHeight < height
       ? maxHeight
       : height;
   deviceHeight.value = height;
@@ -226,8 +216,8 @@ async function computeTableHeight() {
 function rowProps() {
   return {
     style: {
-      backgroundColor: '#f5f5f5'
-    }
+      backgroundColor: "#f5f5f5",
+    },
   };
 }
 
@@ -254,7 +244,7 @@ defineExpose(tableAction);
             <NTooltip v-if="getProps.titleTooltip" trigger="hover">
               <template #trigger>
                 <icon-material-symbols-help-outline
-                  class="text-18px cursor-pointer"
+                  class="text-18px cursor-pointer ml-2px"
                 />
               </template>
               {{ getProps.titleTooltip }}
@@ -369,10 +359,12 @@ defineExpose(tableAction);
       .n-data-table-th__title {
         font-weight: 500;
       }
+
       .table-header-edit-icon {
         color: #666;
       }
     }
+
     .n-data-table-base-table-body {
       .n-data-table-table {
         .n-data-table-expand-trigger {
@@ -382,6 +374,7 @@ defineExpose(tableAction);
     }
   }
 }
+
 .dark .custome-basic-table {
   :deep(.n-data-table) {
     .n-data-table-thead {

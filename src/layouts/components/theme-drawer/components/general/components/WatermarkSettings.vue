@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { watermarkTimeFormatOptions } from '@/constants/app';
-import { useThemeStore } from '@/store/modules/theme';
-import { $t } from '@/locales';
-import SettingItem from '../../../components/SettingItem.vue';
+import { computed } from "vue";
+import { watermarkTimeFormatOptions } from "@/constants/app";
+import { useThemeStore } from "@/store/modules/theme";
+import { $t } from "@/locales";
+import SettingItem from "../../../components/SettingItem.vue";
 
 defineOptions({
-  name: 'WatermarkSettings'
+  name: "WatermarkSettings",
 });
 
 const themeStore = useThemeStore();
 
 const isWatermarkTextVisible = computed(
-  () => themeStore.watermark.visible && !themeStore.watermark.enableUserName && !themeStore.watermark.enableTime
+  () =>
+    themeStore.watermark.visible &&
+    !themeStore.watermark.enableUserName &&
+    !themeStore.watermark.enableTime,
 );
 </script>
 
@@ -20,19 +23,37 @@ const isWatermarkTextVisible = computed(
   <NCard
     :title="$t('theme.general.watermark.title')"
     :segmented="{
-      content: true
+      content: true,
     }"
     size="small"
   >
-    <TransitionGroup tag="div" name="setting-list" class="flex-col-stretch gap-12px">
+    <TransitionGroup
+      tag="div"
+      name="setting-list"
+      class="flex-col-stretch gap-12px"
+    >
       <SettingItem key="1" :label="$t('theme.general.watermark.visible')">
         <NSwitch v-model:value="themeStore.watermark.visible" />
       </SettingItem>
-      <SettingItem v-if="themeStore.watermark.visible" key="2" :label="$t('theme.general.watermark.enableUserName')">
-        <NSwitch :value="themeStore.watermark.enableUserName" @update:value="themeStore.setWatermarkEnableUserName" />
+      <SettingItem
+        v-if="themeStore.watermark.visible"
+        key="2"
+        :label="$t('theme.general.watermark.enableUserName')"
+      >
+        <NSwitch
+          :value="themeStore.watermark.enableUserName"
+          @update:value="themeStore.setWatermarkEnableUserName"
+        />
       </SettingItem>
-      <SettingItem v-if="themeStore.watermark.visible" key="3" :label="$t('theme.general.watermark.enableTime')">
-        <NSwitch :value="themeStore.watermark.enableTime" @update:value="themeStore.setWatermarkEnableTime" />
+      <SettingItem
+        v-if="themeStore.watermark.visible"
+        key="3"
+        :label="$t('theme.general.watermark.enableTime')"
+      >
+        <NSwitch
+          :value="themeStore.watermark.enableTime"
+          @update:value="themeStore.setWatermarkEnableTime"
+        />
       </SettingItem>
       <SettingItem
         v-if="themeStore.watermark.visible && themeStore.watermark.enableTime"
@@ -46,7 +67,11 @@ const isWatermarkTextVisible = computed(
           class="w-210px"
         />
       </SettingItem>
-      <SettingItem v-if="isWatermarkTextVisible" key="5" :label="$t('theme.general.watermark.text')">
+      <SettingItem
+        v-if="isWatermarkTextVisible"
+        key="5"
+        :label="$t('theme.general.watermark.text')"
+      >
         <NInput
           v-model:value="themeStore.watermark.text"
           autosize

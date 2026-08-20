@@ -6,20 +6,20 @@ import {
   unref,
   onMounted,
   watch,
-  useAttrs
-} from 'vue';
-import { createPlaceholderMessage, getComponent } from './utils/helper';
-import { useFormEvents } from './hooks/form-events';
-import { useFormValues } from './hooks/form-values';
-import type { Ref } from 'vue';
-import type { GridProps } from 'naive-ui/lib/grid';
-import type { ButtonProps } from 'naive-ui/lib/button';
-import type { FormSchema, FormProps, FormActionType } from './types/form';
-import type { ComponentType } from './types/form';
-import { isArray } from '@/utils/is';
-import { deepMerge } from '@/utils/common';
+  useAttrs,
+} from "vue";
+import { createPlaceholderMessage, getComponent } from "./utils/helper";
+import { useFormEvents } from "./hooks/form-events";
+import { useFormValues } from "./hooks/form-values";
+import type { Ref } from "vue";
+import type { GridProps } from "naive-ui/lib/grid";
+import type { ButtonProps } from "naive-ui/lib/button";
+import type { FormSchema, FormProps, FormActionType } from "./types/form";
+import type { ComponentType } from "./types/form";
+import { isArray } from "@/utils/is";
+import { deepMerge } from "@/utils/common";
 
-defineOptions({ name: 'BasicForm' });
+defineOptions({ name: "BasicForm" });
 
 const props = withDefaults(defineProps<FormProps>(), {
   // 标签宽度  固定宽度
@@ -27,15 +27,15 @@ const props = withDefaults(defineProps<FormProps>(), {
   // 表单配置规则
   schemas: () => [],
   // 布局方式
-  layout: 'inline',
+  layout: "inline",
   // 是否展示为行内表单
   inline: false,
   // 表单大小
-  size: 'medium',
+  size: "medium",
   // 标签位置
-  labelPlacement: 'left',
+  labelPlacement: "left",
   // 必填项位置
-  requireMarkPlacement: 'left',
+  requireMarkPlacement: "left",
   // 组件是否width 100%
   isFull: true,
   // 是否显示操作按钮（查询/重置）
@@ -47,34 +47,34 @@ const props = withDefaults(defineProps<FormProps>(), {
   // 是否展开收起按钮
   showAdvancedButton: true,
   // 查询按钮文本
-  submitButtonText: '查询',
+  submitButtonText: "查询",
   // 重置按钮文本
-  resetButtonText: '重置',
+  resetButtonText: "重置",
   // 重置按钮配置
   resetButtonOptions: (): Partial<ButtonProps> => ({
-    size: 'medium',
-    secondary: true
+    size: "medium",
+    secondary: true,
   }),
   // 查询按钮配置
   submitButtonOptions: (): Partial<ButtonProps> => ({
-    size: 'medium',
-    type: 'primary'
+    size: "medium",
+    type: "primary",
   }),
   // 折叠行数
-  collapsedRows: 2,
+  collapsedRows: 1,
   // 是否折叠
   collapsed: true,
   //grid 配置
-  gridProps: () => ({ cols: '1 s:2 m:2 l:3 xl:4 2xl:4' }),
+  gridProps: () => ({ cols: "1 s:2 m:2 l:3 xl:4 2xl:4" }),
   // 是否显示反馈信息
-  showFeedback: false
+  showFeedback: false,
 });
 
 const emit = defineEmits<{
-  (e: 'register', action: Partial<FormActionType>): void;
+  (e: "register", action: Partial<FormActionType>): void;
   // 这里要定义事件，否则会警告
-  (e: 'submit', values?: Recordable): void;
-  (e: 'reset', values?: Recordable): void;
+  (e: "submit", values: Recordable): void;
+  (e: "reset"): void;
 }>();
 
 const attrs = useAttrs();
@@ -90,18 +90,18 @@ const isUpdateDefaultRef = ref(false);
 const getSubmitBtnOptions = computed((): Partial<ButtonProps> => {
   return Object.assign(
     {
-      size: props.size as unknown as ButtonProps['size']
+      size: props.size as unknown as ButtonProps["size"],
     },
-    props.submitButtonOptions
+    props.submitButtonOptions,
   );
 });
 
 const getResetBtnOptions = computed((): Partial<ButtonProps> => {
   return Object.assign(
     {
-      size: props.size as unknown as ButtonProps['size']
+      size: props.size as unknown as ButtonProps["size"],
     },
-    props.resetButtonOptions
+    props.resetButtonOptions,
   );
 });
 
@@ -111,14 +111,14 @@ function getComponentProps(schema: FormSchema) {
   return {
     clearable: true,
     placeholder: createPlaceholderMessage(unref(component) as ComponentType),
-    ...compProps
+    ...compProps,
   };
 }
 
 const getProps = computed((): FormProps => {
   const formProps = { ...props, ...unref(propsRef) } as FormProps;
   const rulesObj: any = {
-    rules: {}
+    rules: {},
   };
   const schemas: any = formProps.schemas || [];
   schemas.forEach((item: FormSchema) => {
@@ -131,7 +131,7 @@ const getProps = computed((): FormProps => {
 
 const isInline = computed(() => {
   const { layout } = unref(getProps);
-  return layout === 'inline';
+  return layout === "inline";
 });
 
 const getGrid = computed((): GridProps => {
@@ -139,13 +139,13 @@ const getGrid = computed((): GridProps => {
   return {
     ...gridProps,
     collapsed: isInline.value ? gridCollapsed.value : false,
-    responsive: 'screen',
-    collapsedRows: props.collapsedRows
+    responsive: "screen",
+    collapsedRows: props.collapsedRows,
   };
 });
 
 const getBindValue = computed(
-  () => ({ ...attrs, ...props, ...unref(getProps) }) as Recordable
+  () => ({ ...attrs, ...props, ...unref(getProps) }) as Recordable,
 );
 
 const getSchema = computed((): FormSchema[] => {
@@ -165,7 +165,7 @@ const getSchema = computed((): FormSchema[] => {
 const { handleFormValues, initDefault } = useFormValues({
   defaultFormModel,
   getSchema,
-  formModel
+  formModel,
 });
 
 const {
@@ -174,10 +174,10 @@ const {
   resetFields,
   getFieldsValue,
   clearValidate,
-  setFieldsValue
+  setFieldsValue,
 } = useFormEvents({
   emit: emit as {
-    (e: 'submit' | 'reset', values: Recordable | boolean): void;
+    (e: "submit" | "reset", values: Recordable | boolean): void;
   },
   getProps,
   formModel,
@@ -185,7 +185,7 @@ const {
   formElRef: formElRef as Ref<FormActionType>,
   defaultFormModel,
   loadingSub,
-  handleFormValues
+  handleFormValues,
 });
 
 function unfoldToggle() {
@@ -203,12 +203,12 @@ const formActionType: Partial<FormActionType> = {
   validate,
   clearValidate,
   setProps,
-  submit: handleSubmit
+  submit: handleSubmit,
 };
 
 watch(
   () => getSchema.value,
-  schema => {
+  (schema) => {
     if (unref(isUpdateDefaultRef)) {
       return;
     }
@@ -216,12 +216,12 @@ watch(
       initDefault();
       isUpdateDefaultRef.value = true;
     }
-  }
+  },
 );
 
 onMounted(() => {
   initDefault();
-  emit('register', formActionType);
+  emit("register", formActionType);
 });
 </script>
 
@@ -302,7 +302,8 @@ onMounted(() => {
               :model="formModel"
               :field="schema.field"
               :value="formModel[schema.field]"
-            ></slot>
+            >
+            </slot>
           </template>
         </NFormItem>
       </NGi>
@@ -341,7 +342,7 @@ onMounted(() => {
             type="default"
             @click="unfoldToggle"
           >
-            {{ overflow ? '展开' : '收起' }}
+            {{ overflow ? "展开" : "收起" }}
             <icon-mdi-chevron-down v-if="overflow" class="unfold-icon" />
             <icon-mdi-chevron-up v-else class="unfold-icon" />
           </NButton>

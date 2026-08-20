@@ -1,4 +1,4 @@
-import { request } from '../request';
+import { request } from "../request";
 
 /**
  * Login
@@ -8,18 +8,18 @@ import { request } from '../request';
  */
 export function fetchLogin(userName: string, password: string) {
   return request<Api.Auth.LoginToken>({
-    url: '/oauth/token',
-    method: 'post',
+    url: "/oauth/token",
+    method: "post",
     data: {
       userName,
-      password
-    }
+      password,
+    },
   });
 }
 
 /** Get user info */
 export function fetchGetUserInfo() {
-  return request<Api.Auth.UserInfo>({ url: '/auth/user/info' });
+  return request<Api.Auth.UserInfo>({ url: "/auth/user/info" });
 }
 
 /**
@@ -29,11 +29,11 @@ export function fetchGetUserInfo() {
  */
 export function fetchRefreshToken(refreshToken: string) {
   return request<Api.Auth.LoginToken>({
-    url: '/auth/refreshToken',
-    method: 'post',
+    url: "/auth/refreshToken",
+    method: "post",
     data: {
-      refreshToken
-    }
+      refreshToken,
+    },
   });
 }
 
@@ -44,5 +44,5 @@ export function fetchRefreshToken(refreshToken: string) {
  * @param msg error message
  */
 export function fetchCustomBackendError(code: string, msg: string) {
-  return request({ url: '/auth/error', params: { code, msg } });
+  return request({ url: "/auth/error", params: { code, msg } });
 }

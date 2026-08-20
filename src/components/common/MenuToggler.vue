@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { $t } from '@/locales';
+import { computed } from "vue";
+import { $t } from "@/locales";
 
-defineOptions({ name: 'MenuToggler' });
+defineOptions({ name: "MenuToggler" });
 
 interface Props {
   /** Show collapsed icon */
@@ -12,13 +12,13 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   arrowIcon: false,
-  zIndex: 98
+  zIndex: 98,
 });
 
 const icon = computed(() => {
   const icons: Record<number, string> = {
-    0: 'ant-design:menu-fold-outlined',
-    1: 'ant-design:menu-unfold-outlined'
+    0: "ant-design:menu-fold-outlined",
+    1: "ant-design:menu-unfold-outlined",
   };
   const collapsed = Number(props.collapsed || false);
   return icons[collapsed];

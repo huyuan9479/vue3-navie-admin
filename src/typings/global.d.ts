@@ -1,19 +1,19 @@
-import type { ComputedRef, Ref, VNode } from 'vue';
+import type { ComputedRef, Ref, VNode } from "vue";
 
 export {};
 
 declare global {
   export interface Window {
     /** NProgress instance */
-    NProgress?: import('nprogress').NProgress;
+    NProgress?: import("nprogress").NProgress;
     /** Loading bar instance */
-    $loadingBar?: import('naive-ui').LoadingBarProviderInst;
+    $loadingBar?: import("naive-ui").LoadingBarProviderInst;
     /** Dialog instance */
-    $dialog?: import('naive-ui').DialogProviderInst;
+    $dialog?: import("naive-ui").DialogProviderInst;
     /** Message instance */
-    $message?: import('naive-ui').MessageProviderInst;
+    $message?: import("naive-ui").MessageProviderInst;
     /** Notification instance */
-    $notification?: import('naive-ui').NotificationProviderInst;
+    $notification?: import("naive-ui").NotificationProviderInst;
   }
 
   export type Recordable<T = any> = Record<string, T>;

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { themeTabModeOptions } from '@/constants/app';
-import { useThemeStore } from '@/store/modules/theme';
-import { translateOptions } from '@/utils/common';
-import { $t } from '@/locales';
-import SettingItem from '../../../components/SettingItem.vue';
+import { themeTabModeOptions } from "@/constants/app";
+import { useThemeStore } from "@/store/modules/theme";
+import { translateOptions } from "@/utils/common";
+import { $t } from "@/locales";
+import SettingItem from "../../../components/SettingItem.vue";
 
 defineOptions({
-  name: 'TabSettings'
+  name: "TabSettings",
 });
 
 const themeStore = useThemeStore();
@@ -16,24 +16,45 @@ const themeStore = useThemeStore();
   <NCard
     :title="$t('theme.layout.tab.title')"
     :segmented="{
-      content: true
+      content: true,
     }"
     size="small"
   >
-    <TransitionGroup tag="div" name="setting-list" class="flex-col-stretch gap-12px">
+    <TransitionGroup
+      tag="div"
+      name="setting-list"
+      class="flex-col-stretch gap-12px"
+    >
       <SettingItem key="1" :label="$t('theme.layout.tab.visible')">
         <NSwitch v-model:value="themeStore.tab.visible" />
       </SettingItem>
-      <SettingItem v-if="themeStore.tab.visible" key="2" :label="$t('theme.layout.tab.cache')">
+      <SettingItem
+        v-if="themeStore.tab.visible"
+        key="2"
+        :label="$t('theme.layout.tab.cache')"
+      >
         <template #suffix>
           <IconTooltip :desc="$t('theme.layout.tab.cacheTip')" />
         </template>
         <NSwitch v-model:value="themeStore.tab.cache" />
       </SettingItem>
-      <SettingItem v-if="themeStore.tab.visible" key="3" :label="$t('theme.layout.tab.height')">
-        <NInputNumber v-model:value="themeStore.tab.height" size="small" :step="1" class="w-120px" />
+      <SettingItem
+        v-if="themeStore.tab.visible"
+        key="3"
+        :label="$t('theme.layout.tab.height')"
+      >
+        <NInputNumber
+          v-model:value="themeStore.tab.height"
+          size="small"
+          :step="1"
+          class="w-120px"
+        />
       </SettingItem>
-      <SettingItem v-if="themeStore.tab.visible" key="4" :label="$t('theme.layout.tab.mode.title')">
+      <SettingItem
+        v-if="themeStore.tab.visible"
+        key="4"
+        :label="$t('theme.layout.tab.mode.title')"
+      >
         <NSelect
           v-model:value="themeStore.tab.mode"
           :options="translateOptions(themeTabModeOptions)"
@@ -41,7 +62,11 @@ const themeStore = useThemeStore();
           class="w-120px"
         />
       </SettingItem>
-      <SettingItem v-if="themeStore.tab.visible" key="5" :label="$t('theme.layout.tab.closeByMiddleClick')">
+      <SettingItem
+        v-if="themeStore.tab.visible"
+        key="5"
+        :label="$t('theme.layout.tab.closeByMiddleClick')"
+      >
         <template #suffix>
           <IconTooltip :desc="$t('theme.layout.tab.closeByMiddleClickTip')" />
         </template>

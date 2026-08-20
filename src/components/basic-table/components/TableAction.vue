@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed, toRaw } from 'vue';
-import type { ActionItem } from '../types/tableAction';
-import { usePermission } from '@/hooks/common/permission';
-import { isBoolean, isFunction } from '@/utils/is';
-import type { ButtonType } from 'naive-ui/lib';
-import SvgIcon from '@/components/custom/SvgIcon.vue';
+import { computed, toRaw } from "vue";
+import type { ActionItem } from "../types/tableAction";
+import { usePermission } from "@/hooks/common/permission";
+import { isBoolean, isFunction } from "@/utils/is";
+import type { ButtonType } from "naive-ui/lib";
+import SvgIcon from "@/components/custom/SvgIcon.vue";
 
 defineOptions({
-  name: 'TableAction'
+  name: "TableAction",
 });
 
 interface TableActionProps {
@@ -24,21 +24,21 @@ interface TableActionProps {
 const props = withDefaults(defineProps<TableActionProps>(), {
   actions: undefined,
   dropDownActions: undefined,
-  style: 'text',
-  select: () => {}
+  style: "text",
+  select: () => {},
 });
 
 const { hasPermission } = usePermission();
 const actionType =
-  props.style === 'button'
-    ? 'default'
-    : props.style === 'text'
-      ? 'default'
-      : '';
+  props.style === "button"
+    ? "default"
+    : props.style === "text"
+      ? "default"
+      : "";
 const actionText =
-  props.style === 'button'
+  props.style === "button"
     ? undefined
-    : props.style === 'text'
+    : props.style === "text"
       ? true
       : undefined;
 
@@ -46,25 +46,25 @@ const getMoreProps = computed(() => {
   return {
     text: actionText,
     type: actionType as ButtonType,
-    size: 'small' as const
+    size: "small" as const,
   };
 });
 
 const getDropdownList = computed((): ActionItem[] => {
   return (toRaw(props.dropDownActions) || [])
-    .filter(action => {
+    .filter((action) => {
       return hasPermission(action.auth as string[]) && isIfShow(action);
     })
-    .map(action => {
+    .map((action) => {
       const { popConfirm } = action;
       return {
-        size: 'small' as const,
+        size: "small" as const,
         text: actionText,
         type: actionType as ButtonType,
         ...action,
         ...popConfirm,
         onConfirm: popConfirm?.confirm,
-        onCancel: popConfirm?.cancel
+        onCancel: popConfirm?.cancel,
       };
     }) as ActionItem[];
 });
@@ -85,21 +85,21 @@ function isIfShow(action: ActionItem): boolean {
 
 const getActions = computed(() => {
   return (toRaw(props.actions) || [])
-    .filter(action => {
+    .filter((action) => {
       return hasPermission(action.auth as string[]) && isIfShow(action);
     })
-    .map(action => {
+    .map((action) => {
       const { popConfirm } = action;
       //需要展示什么风格，自己修改一下参数
       return {
-        size: 'small' as const,
+        size: "small" as const,
         text: actionText,
         type: actionType as ButtonType,
         ...action,
         ...popConfirm,
         onConfirm: popConfirm?.confirm,
         onCancel: popConfirm?.cancel,
-        enable: !!popConfirm
+        enable: !!popConfirm,
       };
     });
 });

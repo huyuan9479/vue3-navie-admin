@@ -1,5 +1,5 @@
-import { ComponentType } from '../types/form';
-import { unref } from 'vue';
+import { ComponentType } from "../types/form";
+import { unref } from "vue";
 import {
   NInput,
   NInputGroup,
@@ -12,8 +12,8 @@ import {
   NAutoComplete,
   NCascader,
   NDatePicker,
-  NTimePicker
-} from 'naive-ui';
+  NTimePicker,
+} from "naive-ui";
 
 const componentMap: Record<string, any> = {
   NInput,
@@ -27,23 +27,33 @@ const componentMap: Record<string, any> = {
   NAutoComplete,
   NCascader,
   NDatePicker,
-  NTimePicker
+  NTimePicker,
 };
 
 /**
  * @description: 生成placeholder
  */
 export function createPlaceholderMessage(component: ComponentType) {
-  if (component === 'NInput') return '请输入';
-  if (['NPicker', 'NSelect', 'NCheckbox', 'NRadio', 'NSwitch', 'NDatePicker', 'NTimePicker'].includes(component))
-    return '请选择';
-  return '';
+  if (component === "NInput") return "请输入";
+  if (
+    [
+      "NPicker",
+      "NSelect",
+      "NCheckbox",
+      "NRadio",
+      "NSwitch",
+      "NDatePicker",
+      "NTimePicker",
+    ].includes(component)
+  )
+    return "请选择";
+  return "";
 }
 
-const dateTypes = ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker'];
+const dateTypes = ["DatePicker", "MonthPicker", "WeekPicker", "TimePicker"];
 
 function genType() {
-  return [...dateTypes, 'RangePicker'];
+  return [...dateTypes, "RangePicker"];
 }
 
 /**
@@ -52,10 +62,18 @@ function genType() {
 export const dateItemType = genType();
 
 export function defaultType(component: string) {
-  if (component === 'NInput') return '';
-  if (component === 'NInputNumber') return null;
-  return ['NPicker', 'NSelect', 'NCheckbox', 'NRadio', 'NSwitch', 'NDatePicker', 'NTimePicker'].includes(component)
-    ? ''
+  if (component === "NInput") return "";
+  if (component === "NInputNumber") return null;
+  return [
+    "NPicker",
+    "NSelect",
+    "NCheckbox",
+    "NRadio",
+    "NSwitch",
+    "NDatePicker",
+    "NTimePicker",
+  ].includes(component)
+    ? ""
     : undefined;
 }
 
@@ -63,7 +81,7 @@ export function defaultType(component: string) {
 export function getDynamicProps<T extends {}, U>(props: T): Partial<U> {
   const ret: Recordable = {};
 
-  Object.keys(props).map(key => {
+  Object.keys(props).map((key) => {
     ret[key] = unref((props as Recordable)[key]);
   });
 

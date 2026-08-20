@@ -1,7 +1,7 @@
-import { ref, unref, getCurrentInstance, watch } from 'vue';
-import { isProdMode } from '@/utils/common';
-import { ModalMethods, UseModalReturnType, BasicModalProps } from '../types';
-import { tryOnUnmounted } from '@vueuse/core';
+import { ref, unref, getCurrentInstance, watch } from "vue";
+import { isProdMode } from "@/utils/common";
+import { ModalMethods, UseModalReturnType, BasicModalProps } from "../types";
+import { tryOnUnmounted } from "@vueuse/core";
 
 export function useModal(props: BasicModalProps): UseModalReturnType {
   const modalRef = ref<Nullable<ModalMethods>>(null);
@@ -10,7 +10,7 @@ export function useModal(props: BasicModalProps): UseModalReturnType {
   const getInstance = () => {
     const instance = unref(modalRef.value);
     if (!instance) {
-      console.error('useModal instance is undefined!');
+      console.error("useModal instance is undefined!");
     }
     return instance;
   };
@@ -22,7 +22,7 @@ export function useModal(props: BasicModalProps): UseModalReturnType {
       });
     }
     modalRef.value = modalInstance;
-    currentInstance?.emit('register', modalInstance);
+    currentInstance?.emit("register", modalInstance);
 
     watch(
       () => props,
@@ -31,8 +31,8 @@ export function useModal(props: BasicModalProps): UseModalReturnType {
       },
       {
         immediate: true,
-        deep: true
-      }
+        deep: true,
+      },
     );
   };
 
@@ -46,9 +46,15 @@ export function useModal(props: BasicModalProps): UseModalReturnType {
     closeModal: () => {
       getInstance()?.closeModal();
     },
-    setSubLoading: status => {
+    setSubLoading: (status) => {
       getInstance()?.setSubLoading(status);
-    }
+    },
+    onRefresh: () => {
+      getInstance()?.onRefresh();
+    },
+    onCallback: (values?: Recordable) => {
+      getInstance()?.onCallback(values);
+    },
   };
 
   return [register, methods];
@@ -58,7 +64,7 @@ export function useModal(props: BasicModalProps): UseModalReturnType {
 function getDynamicProps<T extends {}, U>(props: T): Partial<U> {
   const ret: Recordable = {};
 
-  Object.keys(props).map(key => {
+  Object.keys(props).map((key) => {
     ret[key] = unref((props as Recordable)[key]);
   });
 

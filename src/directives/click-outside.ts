@@ -1,6 +1,10 @@
-import { on } from '@/utils/dom';
-import { isServer } from '@/utils/is';
-import type { ComponentPublicInstance, DirectiveBinding, ObjectDirective } from 'vue';
+import { on } from "@/utils/dom";
+import { isServer } from "@/utils/is";
+import type {
+  ComponentPublicInstance,
+  DirectiveBinding,
+  ObjectDirective,
+} from "vue";
 
 type DocumentHandler = <T extends MouseEvent>(mouseup: T, mousedown: T) => void;
 
@@ -17,17 +21,20 @@ const nodeList: FlushList = new Map();
 let startClick: MouseEvent;
 
 if (!isServer) {
-  on(document, 'mousedown', (e: Event) => {
+  on(document, "mousedown", (e: Event) => {
     startClick = e as MouseEvent;
   });
-  on(document, 'mouseup', (e: Event) => {
+  on(document, "mouseup", (e: Event) => {
     for (const { documentHandler } of nodeList.values()) {
       documentHandler(e as MouseEvent, startClick);
     }
   });
 }
 
-function createDocumentHandler(el: HTMLElement, binding: DirectiveBinding): DocumentHandler {
+function createDocumentHandler(
+  el: HTMLElement,
+  binding: DirectiveBinding,
+): DocumentHandler {
   let excludes: HTMLElement[] = [];
   if (Array.isArray(binding.arg)) {
     excludes = binding.arg;
@@ -45,14 +52,26 @@ function createDocumentHandler(el: HTMLElement, binding: DirectiveBinding): Docu
     const mouseDownTarget = mousedown.target as Node;
     const isBound = !binding || !binding.instance;
     const isTargetExists = !mouseUpTarget || !mouseDownTarget;
-    const isContainedByEl = el.contains(mouseUpTarget) || el.contains(mouseDownTarget);
+    const isContainedByEl =
+      el.contains(mouseUpTarget) || el.contains(mouseDownTarget);
     const isSelf = el === mouseUpTarget;
 
     const isTargetExcluded =
-      (excludes.length && excludes.some(item => item?.contains(mouseUpTarget))) ||
+      (excludes.length &&
+        excludes.some((item) => item?.contains(mouseUpTarget))) ||
       (excludes.length && excludes.includes(mouseDownTarget as HTMLElement));
-    const isContainedByPopper = popperRef && (popperRef.contains(mouseUpTarget) || popperRef.contains(mouseDownTarget));
-    if (isBound || isTargetExists || isContainedByEl || isSelf || isTargetExcluded || isContainedByPopper) {
+    const isContainedByPopper =
+      popperRef &&
+      (popperRef.contains(mouseUpTarget) ||
+        popperRef.contains(mouseDownTarget));
+    if (
+      isBound ||
+      isTargetExists ||
+      isContainedByEl ||
+      isSelf ||
+      isTargetExcluded ||
+      isContainedByPopper
+    ) {
       return;
     }
     binding.value();
@@ -63,18 +82,18 @@ const ClickOutside: ObjectDirective = {
   beforeMount(el, binding) {
     nodeList.set(el, {
       documentHandler: createDocumentHandler(el, binding),
-      bindingFn: binding.value
+      bindingFn: binding.value,
     });
   },
   updated(el, binding) {
     nodeList.set(el, {
       documentHandler: createDocumentHandler(el, binding),
-      bindingFn: binding.value
+      bindingFn: binding.value,
     });
   },
   unmounted(el) {
     nodeList.delete(el);
-  }
+  },
 };
 
 export default ClickOutside;

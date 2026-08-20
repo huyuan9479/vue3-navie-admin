@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref, reactive, watch, toRaw, unref } from 'vue';
-import { useTableContext } from '../hooks/table-context';
-import { cloneDeep } from 'lodash-es';
-import Draggable from 'vuedraggable';
-import { useThemeStore } from '@/store/modules/theme';
-import type { BasicColumn } from '../types/table';
+import { ref, reactive, watch, toRaw, unref } from "vue";
+import { useTableContext } from "../hooks/table-context";
+import { cloneDeep } from "lodash-es";
+import Draggable from "vuedraggable";
+import { useThemeStore } from "@/store/modules/theme";
+import type { BasicColumn } from "../types/table";
 
 interface Options {
   title: string;
   key: string;
-  fixed?: boolean | 'left' | 'right';
+  fixed?: boolean | "left" | "right";
 }
 
 const { darkMode } = useThemeStore();
@@ -26,26 +26,26 @@ const state = reactive<{
   selection: false,
   checkAll: true,
   checkList: [],
-  defaultCheckList: []
+  defaultCheckList: [],
 });
 
 const initialized = ref(false);
 // 避免每次列变化都重置 checkList
 watch(
   () => table.getColumns(),
-  columns => {
+  (columns) => {
     if (columns.length && !initialized.value) {
       init();
       initialized.value = true;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 //初始化
 function init() {
   const columns: any[] = getColumns();
-  const checkList: any = columns.map(item => item.key);
+  const checkList: any = columns.map((item) => item.key);
   state.checkList = checkList;
   state.defaultCheckList = checkList;
   columnsList.value = cloneDeep(columns);
@@ -75,10 +75,10 @@ function resetColumns() {
   state.checkList = [...state.defaultCheckList];
   state.checkAll = true;
   const cacheColumnsKeys: any[] = cacheColumnsList.value;
-  const newColumns = cacheColumnsKeys.map(item => {
+  const newColumns = cacheColumnsKeys.map((item) => {
     return {
       ...item,
-      fixed: item.fixed || undefined
+      fixed: item.fixed || undefined,
     };
   });
   setColumns(newColumns);
@@ -110,16 +110,21 @@ function draggableEnd() {
 }
 
 //固定
-function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | undefined) {
+function fixedColumn(
+  item: BasicColumn,
+  fixed: boolean | "left" | "right" | undefined,
+) {
   if (!state.checkList.includes(item.key as string)) return;
   const columns = getColumns();
   const isFixed = item.fixed === fixed ? undefined : fixed;
-  const index = columns.findIndex(res => res.key === item.key);
+  const index = columns.findIndex((res) => res.key === item.key);
   if (index !== -1) {
     columns[index].fixed = isFixed;
   }
   table.setCacheColumnsField(item.key, { fixed: isFixed });
-  const columnsListIndex = columnsList.value.findIndex(res => res.key === item.key);
+  const columnsListIndex = columnsList.value.findIndex(
+    (res) => res.key === item.key,
+  );
   if (columnsListIndex !== -1) {
     columnsList.value[columnsListIndex].fixed = isFixed;
   }
@@ -128,10 +133,7 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
 </script>
 
 <template>
-  <NTooltip
-    trigger="hover"
-    class="column-setting"
-  >
+  <NTooltip trigger="hover" class="column-setting">
     <template #trigger>
       <div class="cursor-pointer">
         <NPopover
@@ -141,11 +143,7 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
           :content-style="{ padding: '0' }"
         >
           <template #trigger>
-            <NButton
-              secondary
-              circle
-              size="small"
-            >
+            <NButton secondary circle size="small">
               <template #icon>
                 <icon-mdi-view-grid-outline class="text-#666" />
               </template>
@@ -191,19 +189,21 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
                     <div
                       class="column-setting-content-checkbox"
                       :class="{
-                        'column-setting-content-checkbox-dark': darkMode === true,
-                        'no-draggable': !state.checkList.includes(element.key)
+                        'column-setting-content-checkbox-dark':
+                          darkMode === true,
+                        'no-draggable': !state.checkList.includes(element.key),
                       }"
                     >
-                      <NCheckbox
-                        :value="element.key"
-                        :label="element.title"
-                      />
+                      <NCheckbox :value="element.key" :label="element.title" />
                       <div class="fixed-item">
                         <NSpace size="small">
                           <span
                             class="drag-icon"
-                            :class="{ 'drag-icon-disabled': !state.checkList.includes(element.key) }"
+                            :class="{
+                              'drag-icon-disabled': !state.checkList.includes(
+                                element.key,
+                              ),
+                            }"
                           >
                             <icon-ant-design-drag-outlined class="text-18px" />
                           </span>
@@ -215,12 +215,21 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
                             <template #trigger>
                               <NIcon
                                 size="18"
-                                :color="element.fixed === 'left' ? '#2080f0' : undefined"
+                                :color="
+                                  element.fixed === 'left'
+                                    ? '#2080f0'
+                                    : undefined
+                                "
                                 class="cursor-pointer"
-                                :class="{ 'fixed-icon-disabled': !state.checkList.includes(element.key) }"
+                                :class="{
+                                  'fixed-icon-disabled':
+                                    !state.checkList.includes(element.key),
+                                }"
                                 @click="fixedColumn(element, 'left')"
                               >
-                                <icon-ant-design-vertical-right-outlined class="text-18px" />
+                                <icon-ant-design-vertical-right-outlined
+                                  class="text-18px"
+                                />
                               </NIcon>
                             </template>
                             <span>固定到左侧</span>
@@ -233,12 +242,21 @@ function fixedColumn(item: BasicColumn, fixed: boolean | 'left' | 'right' | unde
                             <template #trigger>
                               <NIcon
                                 size="18"
-                                :color="element.fixed === 'right' ? '#2080f0' : undefined"
+                                :color="
+                                  element.fixed === 'right'
+                                    ? '#2080f0'
+                                    : undefined
+                                "
                                 class="cursor-pointer"
-                                :class="{ 'fixed-icon-disabled': !state.checkList.includes(element.key) }"
+                                :class="{
+                                  'fixed-icon-disabled':
+                                    !state.checkList.includes(element.key),
+                                }"
                                 @click="fixedColumn(element, 'right')"
                               >
-                                <icon-ant-design-vertical-left-outlined class="text-18px" />
+                                <icon-ant-design-vertical-left-outlined
+                                  class="text-18px"
+                                />
                               </NIcon>
                             </template>
                             <span>固定到右侧</span>

@@ -1,5 +1,9 @@
 {
-  "ignorePatterns": ["src/typings/components.d.ts", "src/typings/elegant-router.d.ts", "src/router/elegant"],
+  "ignorePatterns": [
+    "src/typings/components.d.ts",
+    "src/typings/elegant-router.d.ts",
+    "src/router/elegant"
+  ],
   "printWidth": 80,
   "singleQuote": true,
   "trailingComma": "none",

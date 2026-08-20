@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
-import { $t } from '@/locales';
-import LayoutModeCard from '../../../components/LayoutModeCard.vue';
+import { useAppStore } from "@/store/modules/app";
+import { useThemeStore } from "@/store/modules/theme";
+import { $t } from "@/locales";
+import LayoutModeCard from "../../../components/LayoutModeCard.vue";
 
 defineOptions({
-  name: 'LayoutMode'
+  name: "LayoutMode",
 });
 
 const appStore = useAppStore();
@@ -16,11 +16,14 @@ const themeStore = useThemeStore();
   <NCard
     :title="$t('theme.layout.layoutMode.title')"
     :segmented="{
-      content: true
+      content: true,
     }"
     size="small"
   >
-    <LayoutModeCard v-model:mode="themeStore.layout.mode" :disabled="appStore.isMobile">
+    <LayoutModeCard
+      v-model:mode="themeStore.layout.mode"
+      :disabled="appStore.isMobile"
+    >
       <template #vertical>
         <div class="layout-sider h-full w-18px !bg-primary"></div>
         <div class="vertical-wrapper">
