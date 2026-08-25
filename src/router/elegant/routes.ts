@@ -6,115 +6,115 @@ import type { GeneratedRoute } from "@elegant-router/types";
 
 export const generatedRoutes: GeneratedRoute[] = [
   {
-    name: "403",
-    path: "/403",
-    component: "layout.blank$view.403",
+    name: '403',
+    path: '/403',
+    component: 'layout.blank$view.403',
     meta: {
-      title: "403",
-      i18nKey: "route.403",
+      title: '403',
+      i18nKey: 'route.403',
       constant: true,
-      hideInMenu: true,
-    },
+      hideInMenu: true
+    }
   },
   {
-    name: "404",
-    path: "/404",
-    component: "layout.blank$view.404",
+    name: '404',
+    path: '/404',
+    component: 'layout.blank$view.404',
     meta: {
-      title: "404",
-      i18nKey: "route.404",
+      title: '404',
+      i18nKey: 'route.404',
       constant: true,
-      hideInMenu: true,
-    },
+      hideInMenu: true
+    }
   },
   {
-    name: "500",
-    path: "/500",
-    component: "layout.blank$view.500",
+    name: '500',
+    path: '/500',
+    component: 'layout.blank$view.500',
     meta: {
-      title: "500",
-      i18nKey: "route.500",
+      title: '500',
+      i18nKey: 'route.500',
       constant: true,
-      hideInMenu: true,
-    },
+      hideInMenu: true
+    }
   },
   {
-    name: "home",
-    path: "/home",
-    component: "layout.base$view.home",
+    name: 'home',
+    path: '/home',
+    component: 'layout.base$view.home',
     meta: {
-      title: "home",
-      i18nKey: "route.home",
-      icon: "ant-design:history-outlined",
-      order: 1,
-    },
+      title: 'home',
+      i18nKey: 'route.home',
+      icon: 'ant-design:history-outlined',
+      order: 1
+    }
   },
   {
-    name: "iframe-page",
-    path: "/iframe-page/:url",
-    component: "layout.base$view.iframe-page",
+    name: 'iframe-page',
+    path: '/iframe-page/:url',
+    component: 'layout.base$view.iframe-page',
     props: true,
     meta: {
-      title: "iframe-page",
-      i18nKey: "route.iframe-page",
+      title: 'iframe-page',
+      i18nKey: 'route.iframe-page',
       constant: true,
       hideInMenu: true,
-      keepAlive: true,
-    },
+      keepAlive: true
+    }
   },
   {
-    name: "login",
-    path: "/login/:module(pwd-login|register|reset-pwd|express-login)?",
-    component: "layout.blank$view.login",
+    name: 'login',
+    path: '/login/:module(pwd-login|register|reset-pwd|express-login)?',
+    component: 'layout.blank$view.login',
     props: true,
     meta: {
-      title: "login",
-      i18nKey: "route.login",
+      title: 'login',
+      i18nKey: 'route.login',
       constant: true,
-      hideInMenu: true,
-    },
+      hideInMenu: true
+    }
   },
   {
-    name: "system",
-    path: "/system",
-    component: "layout.base",
+    name: 'system',
+    path: '/system',
+    component: 'layout.base',
     meta: {
-      title: "system",
-      i18nKey: "route.system",
-      icon: "ant-design:setting-outlined",
-      order: 2,
+      title: 'system',
+      i18nKey: 'route.system',
+      icon: 'ant-design:setting-outlined',
+      order: 2
     },
     children: [
       {
-        name: "system_menu",
-        path: "/system/menu",
-        component: "view.system_menu",
+        name: 'system_menu',
+        path: '/system/menu',
+        component: 'view.system_menu',
         meta: {
-          title: "system_menu",
-          i18nKey: "route.system_menu",
-          order: 3,
-        },
+          title: 'system_menu',
+          i18nKey: 'route.system_menu',
+          order: 3
+        }
       },
       {
-        name: "system_role",
-        path: "/system/role",
-        component: "view.system_role",
+        name: 'system_role',
+        path: '/system/role',
+        component: 'view.system_role',
         meta: {
-          title: "system_role",
-          i18nKey: "route.system_role",
-          order: 2,
-        },
+          title: 'system_role',
+          i18nKey: 'route.system_role',
+          order: 2
+        }
       },
       {
-        name: "system_user",
-        path: "/system/user",
-        component: "view.system_user",
+        name: 'system_user',
+        path: '/system/user',
+        component: 'view.system_user',
         meta: {
-          title: "system_user",
-          i18nKey: "route.system_user",
-          order: 1,
-        },
-      },
-    ],
-  },
+          title: 'system_user',
+          i18nKey: 'route.system_user',
+          order: 1
+        }
+      }
+    ]
+  }
 ];

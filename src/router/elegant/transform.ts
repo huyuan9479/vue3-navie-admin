@@ -4,8 +4,8 @@
 // Read more: https://github.com/soybeanjs/elegant-router
 
 import type { RouteRecordRaw, RouteComponent } from 'vue-router';
-import type { ElegantConstRoute } from "@elegant-router/vue";
-import type { RouteMap, RouteKey, RoutePath } from "@elegant-router/types";
+import type { ElegantConstRoute } from '@elegant-router/vue';
+import type { RouteMap, RouteKey, RoutePath } from '@elegant-router/types';
 
 /**
  * transform elegant const routes to vue routes
@@ -16,11 +16,9 @@ import type { RouteMap, RouteKey, RoutePath } from "@elegant-router/types";
 export function transformElegantRoutesToVueRoutes(
   routes: ElegantConstRoute[],
   layouts: Record<string, RouteComponent | (() => Promise<RouteComponent>)>,
-  views: Record<string, RouteComponent | (() => Promise<RouteComponent>)>,
+  views: Record<string, RouteComponent | (() => Promise<RouteComponent>)>
 ) {
-  return routes.flatMap((route) =>
-    transformElegantRouteToVueRoute(route, layouts, views),
-  );
+  return routes.flatMap(route => transformElegantRouteToVueRoute(route, layouts, views));
 }
 
 /**
@@ -32,21 +30,21 @@ export function transformElegantRoutesToVueRoutes(
 function transformElegantRouteToVueRoute(
   route: ElegantConstRoute,
   layouts: Record<string, RouteComponent | (() => Promise<RouteComponent>)>,
-  views: Record<string, RouteComponent | (() => Promise<RouteComponent>)>,
+  views: Record<string, RouteComponent | (() => Promise<RouteComponent>)>
 ) {
-  const LAYOUT_PREFIX = "layout.";
-  const VIEW_PREFIX = "view.";
-  const ROUTE_DEGREE_SPLITTER = "_";
-  const FIRST_LEVEL_ROUTE_COMPONENT_SPLIT = "$";
+  const LAYOUT_PREFIX = 'layout.';
+  const VIEW_PREFIX = 'view.';
+  const ROUTE_DEGREE_SPLITTER = '_';
+  const FIRST_LEVEL_ROUTE_COMPONENT_SPLIT = '$';
 
   function isLayout(component: string) {
     return component.startsWith(LAYOUT_PREFIX);
   }
 
   function getLayoutName(component: string) {
-    const layout = component.replace(LAYOUT_PREFIX, "");
+    const layout = component.replace(LAYOUT_PREFIX, '');
 
-    if (!layouts[layout]) {
+    if(!layouts[layout]) {
       throw new Error(`Layout component "${layout}" not found`);
     }
 
@@ -58,9 +56,9 @@ function transformElegantRouteToVueRoute(
   }
 
   function getViewName(component: string) {
-    const view = component.replace(VIEW_PREFIX, "");
+    const view = component.replace(VIEW_PREFIX, '');
 
-    if (!views[view]) {
+    if(!views[view]) {
       throw new Error(`View component "${view}" not found`);
     }
 
@@ -80,14 +78,14 @@ function transformElegantRouteToVueRoute(
 
     return {
       layout: getLayoutName(layout),
-      view: getViewName(view),
+      view: getViewName(view)
     };
   }
 
   const vueRoutes: RouteRecordRaw[] = [];
 
   // add props: true to route
-  if (route.path.includes(":") && !route.props) {
+  if (route.path.includes(':') && !route.props) {
     route.props = true;
   }
 
@@ -104,16 +102,16 @@ function transformElegantRouteToVueRoute(
           path,
           component: layouts[layout],
           meta: {
-            title: route.meta?.title || "",
+            title: route.meta?.title || ''
           },
           children: [
             {
               name,
-              path: "",
+              path: '',
               component: views[view],
-              ...rest,
-            } as RouteRecordRaw,
-          ],
+              ...rest
+            } as RouteRecordRaw
+          ]
         };
 
         return [singleLevelRoute];
@@ -130,27 +128,24 @@ function transformElegantRouteToVueRoute(
 
         vueRoute.component = views[viewName];
       }
+
     }
   } catch (error: any) {
-    console.error(
-      `Error transforming route "${route.name}": ${error.toString()}`,
-    );
+    console.error(`Error transforming route "${route.name}": ${error.toString()}`);
     return [];
   }
 
   // add redirect to child
   if (children?.length && !vueRoute.redirect) {
     vueRoute.redirect = {
-      name: children[0].name,
+      name: children[0].name
     };
   }
 
   if (children?.length) {
-    const childRoutes = children.flatMap((child) =>
-      transformElegantRouteToVueRoute(child, layouts, views),
-    );
+    const childRoutes = children.flatMap(child => transformElegantRouteToVueRoute(child, layouts, views));
 
-    if (isFirstLevelRoute(route)) {
+    if(isFirstLevelRoute(route)) {
       vueRoute.children = childRoutes;
     } else {
       vueRoutes.push(...childRoutes);
@@ -166,18 +161,18 @@ function transformElegantRouteToVueRoute(
  * map of route name and route path
  */
 const routeMap: RouteMap = {
-  root: "/",
+  "root": "/",
   "not-found": "/:pathMatch(.*)*",
   "403": "/403",
   "404": "/404",
   "500": "/500",
-  home: "/home",
+  "home": "/home",
   "iframe-page": "/iframe-page/:url",
-  login: "/login/:module(pwd-login|register|reset-pwd|express-login)?",
-  system: "/system",
-  system_menu: "/system/menu",
-  system_role: "/system/role",
-  system_user: "/system/user",
+  "login": "/login/:module(pwd-login|register|reset-pwd|express-login)?",
+  "system": "/system",
+  "system_menu": "/system/menu",
+  "system_role": "/system/role",
+  "system_user": "/system/user"
 };
 
 /**
@@ -195,8 +190,7 @@ export function getRoutePath<T extends RouteKey>(name: T) {
 export function getRouteName(path: RoutePath) {
   const routeEntries = Object.entries(routeMap) as [RouteKey, RoutePath][];
 
-  const routeName: RouteKey | null =
-    routeEntries.find(([, routePath]) => routePath === path)?.[0] || null;
+  const routeName: RouteKey | null = routeEntries.find(([, routePath]) => routePath === path)?.[0] || null;
 
   return routeName;
 }
