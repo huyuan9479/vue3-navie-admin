@@ -4,6 +4,7 @@ import { ref } from "vue";
 
 const [modalRegister, { openModal, closeModal }] = useModal({
   title: "添加用户",
+  tipMessage: "这是一个提示，可以用来说明",
 });
 const modalRef = ref<typeof BasicModal>();
 
@@ -21,12 +22,7 @@ defineExpose({
 </script>
 
 <template>
-  <BasicModal
-    ref="modalRef"
-    @register="modalRegister"
-    @on-ok="handleOk"
-    @on-close="handleClose"
-  />
+  <BasicModal ref="modalRef" @register="modalRegister" @on-ok="handleOk" @on-close="handleClose" />
 </template>
 
 <style scoped></style>

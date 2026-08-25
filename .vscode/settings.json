@@ -21,6 +21,6 @@
   "unocss.root": ["./"],
   "oxc.fmt.configPath": ".oxfmtrc.json",
   "[vue]": {
-    "editor.formatOnSave": false
+    "editor.formatOnSave": true
   }
 }

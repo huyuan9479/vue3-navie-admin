@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { getCurrentInstance, ref, unref, computed, useAttrs } from "vue";
+import { getCurrentInstance, ref, unref, computed, useAttrs, h } from "vue";
 import { deepMerge } from "@/utils/common";
 import type { BasicModalProps, ModalMethods } from "./types";
+import ModalHeader from "./components/ModalHeader.vue";
 
 const attrs = useAttrs();
 const props = withDefaults(defineProps<BasicModalProps>(), {
@@ -10,9 +11,12 @@ const props = withDefaults(defineProps<BasicModalProps>(), {
   title: "",
   showIcon: false,
   width: 500,
+  tipMessage: "",
   maskClosable: true,
   preset: "card",
   draggable: true,
+  fullscreen: true,
+  canFullscreen: true,
 });
 const emit = defineEmits<{
   (e: "onClose" | "onOk" | "onRefresh"): void;
@@ -25,6 +29,8 @@ const propsRef = ref<Partial<BasicModalProps> | null>(null);
 
 const isModal = ref(false);
 const subLoading = ref(false);
+const fullscreen = ref(props.fullscreen);
+const canFullscreen = ref(props.canFullscreen);
 
 const getProps = computed((): BasicModalProps => {
   return { ...props, ...(unref(propsRef) as any) };
@@ -44,6 +50,21 @@ const getBindValue = computed(() => {
     ...attrs,
     ...unref(getProps),
     ...unref(propsRef),
+  };
+});
+
+const getModalBindValue = computed(() => {
+  const { title, tipMessage, ...bindValue } = unref(getBindValue) as any;
+  return {
+    ...bindValue,
+    title: () => h(ModalHeader, { title, tipMessage }),
+  };
+});
+
+const modalStyle = computed(() => {
+  const width = getBindValue.value.width;
+  return {
+    width: typeof width === "number" ? `${width}px` : width,
   };
 });
 
@@ -99,15 +120,22 @@ defineExpose(modalMethods);
 </script>
 
 <template>
-  <NModal
-    id="basic-modal"
-    v-bind="getBindValue"
-    v-model:show="isModal"
-    @close="onCloseModal"
-  >
-    <template #header>
-      <div id="basic-modal-bar" class="w-full">
-        {{ getBindValue.title }}
+  <NModal id="basic-modal" v-bind="getModalBindValue" v-model:show="isModal" :style="modalStyle" @close="onCloseModal">
+    <template #header-extra>
+      <div class="modal-header-extra">
+        <NButton v-if="canFullscreen" quaternary size="small" class="extra-action-item"
+          @click="fullscreen = !fullscreen">
+          <template #icon>
+            <icon-mdi-fullscreen v-if="fullscreen" />
+            <icon-mdi-fullscreen-exit v-else />
+          </template>
+        </NButton>
+        <!--
+ <button class="extra-action-item" @click="fullscreen = !fullscreen">
+          <icon-mdi-fullscreen v-if="fullscreen" />
+          <icon-mdi-fullscreen-exit v-else />
+        </button>
+-->
       </div>
     </template>
     <template #default>
@@ -127,4 +155,11 @@ defineExpose(modalMethods);
   </NModal>
 </template>
 
-<style lang="less"></style>
+<style scoped lang="scss">
+.modal-header-extra {
+  display: flex;
+  align-items: center;
+
+  .extra-action-item {}
+}
+</style>

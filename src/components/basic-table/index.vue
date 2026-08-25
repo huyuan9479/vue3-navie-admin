@@ -243,9 +243,7 @@ defineExpose(tableAction);
             {{ getProps.title }}
             <NTooltip v-if="getProps.titleTooltip" trigger="hover">
               <template #trigger>
-                <icon-material-symbols-help-outline
-                  class="text-18px cursor-pointer ml-2px"
-                />
+                <icon-material-symbols-help-outline class="text-18px cursor-pointer ml-2px" />
               </template>
               {{ getProps.titleTooltip }}
             </NTooltip>
@@ -260,12 +258,7 @@ defineExpose(tableAction);
       <!--顶部右侧区域-->
       <NSpace size="small">
         <!-- 斑马纹 -->
-        <NDropdown
-          v-model:value="tableStriped"
-          trigger="click"
-          :options="stripedOptions"
-          @select="stripedSelect"
-        >
+        <NDropdown v-model:value="tableStriped" trigger="click" :options="stripedOptions" @select="stripedSelect">
           <NButton secondary circle size="small">
             <template #icon>
               <icon-mdi-format-align-center class="text-#666" />
@@ -284,12 +277,7 @@ defineExpose(tableAction);
           <span>刷新</span>
         </NTooltip>
         <!--密度-->
-        <NDropdown
-          v-model:value="tableSize"
-          trigger="click"
-          :options="densityOptions"
-          @select="densitySelect"
-        >
+        <NDropdown v-model:value="tableSize" trigger="click" :options="densityOptions" @select="densitySelect">
           <NButton secondary circle size="small">
             <template #icon>
               <icon-mdi-arrow-expand-vertical class="text-#666" />
@@ -302,15 +290,9 @@ defineExpose(tableAction);
     </div>
   </div>
   <div class="custome-basic-table">
-    <NDataTable
-      ref="tableElRef"
-      v-bind="getBindValues"
-      :striped="isStriped"
-      :row-props="rowProps"
-      :pagination="pagination === true ? undefined : pagination"
-      @update:page="updatePage"
-      @update:page-size="updatePageSize"
-    >
+    <NDataTable ref="tableElRef" v-bind="getBindValues" :striped="isStriped" :row-props="rowProps"
+      :pagination="pagination === true ? undefined : pagination" @update:page="updatePage"
+      @update:page-size="updatePageSize">
       <template v-for="item in Object.keys($slots)" #[item]="data" :key="item">
         <slot :name="item" v-bind="data"></slot>
       </template>

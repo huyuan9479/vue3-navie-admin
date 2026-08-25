@@ -228,11 +228,7 @@ onMounted(() => {
 <template>
   <NForm v-bind="getBindValue" ref="formElRef" :model="formModel">
     <NGrid v-bind="getGrid" :y-gap="showFeedback ? 0 : 20">
-      <NGi
-        v-for="schema in getSchema"
-        v-bind="schema.giProps"
-        :key="schema.field"
-      >
+      <NGi v-for="schema in getSchema" v-bind="schema.giProps" :key="schema.field">
         <NFormItem :label="schema.label" :path="schema.field">
           <!--标签名右侧温馨提示-->
           <template v-if="schema.labelMessage" #label>
@@ -240,9 +236,7 @@ onMounted(() => {
               {{ schema.label }}
               <NTooltip trigger="hover" :style="schema.labelMessageStyle">
                 <template #trigger>
-                  <icon-material-symbols-help-outline
-                    class="text-16px ml-2px cursor-pointer text-[#999]"
-                  />
+                  <icon-material-symbols-help-outline class="text-16px ml-2px cursor-pointer" />
                 </template>
                 {{ schema.labelMessage }}
               </NTooltip>
@@ -251,24 +245,15 @@ onMounted(() => {
 
           <!--判断插槽-->
           <template v-if="schema.slot">
-            <slot
-              :name="schema.slot"
-              :model="formModel"
-              :field="schema.field"
-              :value="formModel[schema.field]"
-            ></slot>
+            <slot :name="schema.slot" :model="formModel" :field="schema.field" :value="formModel[schema.field]"></slot>
           </template>
 
           <!--NCheckbox-->
           <template v-else-if="schema.component === 'NCheckbox'">
             <NCheckboxGroup v-model:value="formModel[schema.field]">
               <NSpace>
-                <NCheckbox
-                  v-for="item in schema.componentProps.options"
-                  :key="item.value"
-                  :value="item.value"
-                  :label="item.label"
-                />
+                <NCheckbox v-for="item in schema.componentProps.options" :key="item.value" :value="item.value"
+                  :label="item.label" />
               </NSpace>
             </NCheckboxGroup>
           </template>
@@ -277,71 +262,37 @@ onMounted(() => {
           <template v-else-if="schema.component === 'NRadioGroup'">
             <NRadioGroup v-model:value="formModel[schema.field]">
               <NSpace>
-                <NRadio
-                  v-for="item in schema.componentProps.options"
-                  :key="item.value"
-                  :value="item.value"
-                >
+                <NRadio v-for="item in schema.componentProps.options" :key="item.value" :value="item.value">
                   {{ item.label }}
                 </NRadio>
               </NSpace>
             </NRadioGroup>
           </template>
           <!--动态渲染表单组件-->
-          <component
-            v-bind="getComponentProps(schema)"
-            :is="getComponent(schema.component || 'NInput')"
-            v-else
-            v-model:value="formModel[schema.field]"
-            :class="{ isFull: schema.isFull != false && getProps.isFull }"
-          />
+          <component v-bind="getComponentProps(schema)" :is="getComponent(schema.component || 'NInput')" v-else
+            v-model:value="formModel[schema.field]" :class="{ isFull: schema.isFull != false && getProps.isFull }" />
           <!--组件后面的内容-->
           <template v-if="schema.suffix">
-            <slot
-              :name="schema.suffix"
-              :model="formModel"
-              :field="schema.field"
-              :value="formModel[schema.field]"
-            >
+            <slot :name="schema.suffix" :model="formModel" :field="schema.field" :value="formModel[schema.field]">
             </slot>
           </template>
         </NFormItem>
       </NGi>
       <!--提交 重置 展开 收起 按钮-->
-      <NGi
-        v-if="getProps.showActionButtonGroup"
-        :span="isInline ? '' : 24"
-        :suffix="isInline ? true : false"
-        #="{ overflow }"
-      >
-        <NSpace
-          align="center"
-          :justify="isInline ? 'end' : 'start'"
-          :style="{ 'margin-left': `${isInline ? 12 : getProps.labelWidth}px` }"
-        >
-          <NButton
-            v-if="getProps.showSubmitButton"
-            v-bind="getSubmitBtnOptions"
-            :loading="loadingSub"
-            attr-type="submit"
-            @click="handleSubmit"
-          >
+      <NGi v-if="getProps.showActionButtonGroup" :span="isInline ? '' : 24" :suffix="isInline ? true : false"
+        #="{ overflow }">
+        <NSpace align="center" :justify="isInline ? 'end' : 'start'"
+          :style="{ 'margin-left': `${isInline ? 12 : getProps.labelWidth}px` }">
+          <NButton v-if="getProps.showSubmitButton" v-bind="getSubmitBtnOptions" :loading="loadingSub"
+            attr-type="submit" @click="handleSubmit">
             <icon-material-symbols-search class="text-16px mr-2px" />
             {{ getProps.submitButtonText }}
           </NButton>
-          <NButton
-            v-if="getProps.showResetButton"
-            v-bind="getResetBtnOptions"
-            @click="resetFields"
-          >
+          <NButton v-if="getProps.showResetButton" v-bind="getResetBtnOptions" @click="resetFields">
             <icon-material-symbols-refresh class="text-16px mr-2px" />
             {{ getProps.resetButtonText }}
           </NButton>
-          <NButton
-            v-if="isInline && getProps.showAdvancedButton"
-            type="default"
-            @click="unfoldToggle"
-          >
+          <NButton v-if="isInline && getProps.showAdvancedButton" type="default" @click="unfoldToggle">
             {{ overflow ? "展开" : "收起" }}
             <icon-mdi-chevron-down v-if="overflow" class="unfold-icon" />
             <icon-mdi-chevron-up v-else class="unfold-icon" />

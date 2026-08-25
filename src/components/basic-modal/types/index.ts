@@ -9,15 +9,21 @@ export interface ModalMethods {
   onRefresh: () => void;
   onCallback: (values?: Recordable) => void;
 }
+
+type ModalWidth = number | `${number}px` | `${number}%` | `${number}vw`;
+
 export interface BasicModalProps {
   subBtnText?: string;
   cancelBtnText?: string;
   showIcon?: boolean;
-  width?: number;
+  width?: ModalWidth;
   title?: string;
   maskClosable?: boolean;
-  preset?: "dialog" | "card" | undefined;
+  preset?: 'dialog' | 'card' | undefined;
   draggable?: boolean;
+  tipMessage?: string;
+  fullscreen?: boolean;
+  canFullscreen?: boolean;
   onPositiveClick?: (values?: Recordable) => void;
   onNegativeClick?: (values?: Recordable) => void;
 }
