@@ -15,6 +15,7 @@ type ModalWidth = number | `${number}px` | `${number}%` | `${number}vw`;
 export interface BasicModalProps {
   subBtnText?: string;
   cancelBtnText?: string;
+  minHeight?: number;
   showIcon?: boolean;
   width?: ModalWidth;
   title?: string;
@@ -24,6 +25,7 @@ export interface BasicModalProps {
   tipMessage?: string;
   fullscreen?: boolean;
   canFullscreen?: boolean;
+  wrapClassName?: string;
   onPositiveClick?: (values?: Recordable) => void;
   onNegativeClick?: (values?: Recordable) => void;
 }
