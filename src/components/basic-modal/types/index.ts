@@ -6,6 +6,7 @@ export interface ModalMethods {
   openModal: () => void;
   closeModal: () => void;
   setSubLoading: (status: boolean) => void;
+  setModalLoading: (status: boolean) => void;
   onRefresh: () => void;
   onCallback: (values?: Recordable) => void;
 }
@@ -13,10 +14,11 @@ export interface ModalMethods {
 type ModalWidth = number | `${number}px` | `${number}%` | `${number}vw`;
 
 export interface BasicModalProps {
-  subBtnText?: string;
+  showOkBtn?: boolean;
+  showCancelBtn?: boolean;
+  okBtnText?: string;
   cancelBtnText?: string;
   minHeight?: number;
-  showIcon?: boolean;
   width?: ModalWidth;
   title?: string;
   maskClosable?: boolean;
@@ -25,9 +27,8 @@ export interface BasicModalProps {
   tipMessage?: string;
   fullscreen?: boolean;
   canFullscreen?: boolean;
-  wrapClassName?: string;
-  onPositiveClick?: (values?: Recordable) => void;
-  onNegativeClick?: (values?: Recordable) => void;
+  showAction?: boolean;
+  showCancelTip?: boolean;
 }
 
 export type RegisterFn = (ModalInstance: ModalMethods) => void;

@@ -4,14 +4,13 @@ export interface UseFullScreenContext {
   wrapClassName: Ref<string | undefined>;
 }
 
-export function useFullScreen(context: UseFullScreenContext) {
+export function useFullScreen() {
   const fullScreenRef = ref(false);
 
   const getWrapClassName = computed(() => {
-    const clsName = unref(context.wrapClassName) || '';
     return unref(fullScreenRef)
-      ? `modal-fullscreen ${clsName} `
-      : `basic-modal-wrap ${clsName}`;
+      ? `basic-modal-wrap modal-fullscreen`
+      : `basic-modal-wrap not-modal-fullscreen`;
   });
 
   function handleFullScreen(e: Event) {

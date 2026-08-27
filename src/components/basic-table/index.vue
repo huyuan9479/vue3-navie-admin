@@ -122,6 +122,17 @@ function updatePageSize(size: number) {
   setPagination({ current: 1, pageSize: size });
   reload();
 }
+// 选中行切换
+function updateCheckedRowKeys(
+  keys: (string | number)[],
+  rows: any[],
+  meta: {
+    row: any | undefined;
+    action: "check" | "uncheck" | "checkAll" | "uncheckAll";
+  },
+) {
+  emit("update:checked-row-keys", keys, rows, meta);
+}
 
 //密度切换
 function densitySelect(e: "small" | "medium" | "large") {
@@ -292,7 +303,7 @@ defineExpose(tableAction);
   <div class="custome-basic-table">
     <NDataTable ref="tableElRef" v-bind="getBindValues" :striped="isStriped" :row-props="rowProps"
       :pagination="pagination === true ? undefined : pagination" @update:page="updatePage"
-      @update:page-size="updatePageSize">
+      @update:page-size="updatePageSize" @update:checked-row-keys="updateCheckedRowKeys">
       <template v-for="item in Object.keys($slots)" #[item]="data" :key="item">
         <slot :name="item" v-bind="data"></slot>
       </template>
@@ -339,7 +350,7 @@ defineExpose(tableAction);
   :deep(.n-data-table) {
     .n-data-table-thead {
       .n-data-table-th__title {
-        font-weight: 500;
+        font-weight: bold;
       }
 
       .table-header-edit-icon {

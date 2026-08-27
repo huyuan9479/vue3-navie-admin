@@ -209,39 +209,27 @@ function handleEdit(record: any) {
   console.log(record);
 }
 
-function onCheckedRow(keys: (string | number)[]) {
-  console.log(keys);
+function onCheckedRow(keys: (string | number)[], rows: Recordable[]) {
+  console.log(keys, rows);
 }
 // 新增用户
 function handleAddUser() {
-  addUserRef.value.openModal();
+  addUserRef.value.handleOpenModal();
 }
 </script>
 
 <template>
   <div>
     <NCard :bordered="false" size="small">
-      <BasicForm
-        @register="register"
-        @submit="handleSubmit"
-        @reset="handleReset"
-      >
+      <BasicForm @register="register" @submit="handleSubmit" @reset="handleReset">
         <template #statusSlot="{ model, field }">
           <NInput v-model:value="model[field]" />
         </template>
       </BasicForm>
     </NCard>
     <NCard :bordered="false" class="mt-10px" size="small">
-      <BasicTable
-        ref="actionRef"
-        title="用户列表"
-        title-tooltip="这是一个提示，可以用来说明"
-        :columns="columns"
-        :request="loadDataTable"
-        :row-key="(row: any) => row.id"
-        :action-column="actionColumn"
-        @update:checked-row-keys="onCheckedRow"
-      >
+      <BasicTable ref="actionRef" title="用户列表" title-tooltip="这是一个提示，可以用来说明" :columns="columns" :request="loadDataTable"
+        :row-key="(row: any) => row.id" :action-column="actionColumn" @update:checked-row-keys="onCheckedRow">
         <template #toolbar>
           <NButton type="primary" ghost @click="handleAddUser">
             <icon-mdi-plus class="text-18px" />

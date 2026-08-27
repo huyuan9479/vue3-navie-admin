@@ -8,10 +8,13 @@ import { useFullScreen } from './hooks/modal-fullscreen';
 
 const attrs = useAttrs();
 const props = withDefaults(defineProps<BasicModalProps>(), {
-  subBtnText: '确定',
+  showOkBtn: true,
+  showCancelBtn: true,
+  showAction: true,
+  showCancelTip: false,
+  okBtnText: '确定',
   cancelBtnText: '取消',
   title: '',
-  showIcon: false,
   width: 500,
   tipMessage: '',
   maskClosable: true,
@@ -33,6 +36,7 @@ const propsRef = ref<Partial<BasicModalProps> | null>(null);
 const modalWrapperRef = ref<typeof ModalWrapper>();
 const isModal = ref(false);
 const subLoading = ref(false);
+const modalLoading = ref(false);
 const canFullscreen = ref(props.canFullscreen);
 
 const getProps = computed((): BasicModalProps => {
@@ -40,13 +44,11 @@ const getProps = computed((): BasicModalProps => {
 });
 
 // 全屏
-const { handleFullScreen, getWrapClassName, fullScreenRef } = useFullScreen({
-  wrapClassName: computed(() => getProps.value.wrapClassName)
-});
+const { handleFullScreen, getWrapClassName, fullScreenRef } = useFullScreen();
 
 const submitBtnText = computed(() => {
-  const { subBtnText } = propsRef.value as any;
-  return subBtnText || props.subBtnText;
+  const { okBtnText } = propsRef.value as any;
+  return okBtnText || props.okBtnText;
 });
 
 async function setProps(modalProps: Partial<BasicModalProps>): Promise<void> {
@@ -62,13 +64,16 @@ const getBindValue = computed(() => {
 });
 
 const getModalBindValue = computed(() => {
-  const { title, tipMessage, ...bindValue } = unref(getBindValue) as any;
+  const { title, tipMessage, showAction, ...bindValue } = unref(getBindValue) as any;
   return {
     ...bindValue,
-    title: () => h(ModalHeader, { title, tipMessage })
+    // 解决警告：Blocked aria-hidden on an element because its descendant retained focus.
+    autoFocus: bindValue.autoFocus ?? false,
+    trapFocus: bindValue.trapFocus ?? false,
+    title: () => h(ModalHeader, { title, tipMessage, showAction })
   };
 });
-
+// 弹窗的宽度
 const modalStyle = computed(() => {
   if (fullScreenRef.value) {
     return {
@@ -88,6 +93,10 @@ function setSubLoading(status: boolean) {
   subLoading.value = status;
 }
 
+function setModalLoading(status: boolean) {
+  modalLoading.value = status;
+}
+
 function openModal() {
   isModal.value = true;
 }
@@ -95,12 +104,32 @@ function openModal() {
 function closeModal() {
   isModal.value = false;
   subLoading.value = false;
+  modalLoading.value = false;
   emit('onClose');
 }
 
 function onCloseModal() {
-  isModal.value = false;
-  emit('onClose');
+  // 点击右上角关闭弹窗
+  // 如果显示提示，弹窗关闭前，需要确认
+  // 如果不显示提示，直接关闭弹窗
+  if (getBindValue.value.showCancelTip) {
+    window.$dialog?.warning({
+      title: '提示',
+      content: '确定要关闭吗？',
+      type: 'warning',
+      maskClosable: false,
+      positiveText: '确定',
+      negativeText: '取消',
+      onPositiveClick: () => {
+        isModal.value = false;
+        emit('onClose');
+      }
+    })
+    return false;
+  } else {
+    isModal.value = false;
+    emit('onClose');
+  }
 }
 
 function handleSubmit() {
@@ -117,6 +146,8 @@ const modalMethods: ModalMethods = {
   closeModal,
   // 设置提交按钮加载状态
   setSubLoading,
+  // 设置弹窗加载状态
+  setModalLoading,
   // 比如：新增成功后，刷新列表
   onRefresh: () => {
     emit('onRefresh');
@@ -136,44 +167,30 @@ defineExpose(modalMethods);
 </script>
 
 <template>
-  <NModal
-    id="basic-modal"
-    v-bind="getModalBindValue"
-    v-model:show="isModal"
-    :style="modalStyle"
-    :class="getWrapClassName"
-    header-class="basic-modal-header"
-    content-class="basic-modal-content"
-    @close="onCloseModal"
-    @after-enter="modalWrapperRef?.setModalHeight()"
-  >
+  <NModal v-bind="getModalBindValue" v-model:show="isModal" :style="modalStyle" :class="getWrapClassName"
+    header-class="basic-modal-header" content-class="basic-modal-content" @close="onCloseModal"
+    @after-enter="modalWrapperRef?.setModalHeight()">
     <template #header-extra>
       <div class="modal-header-extra">
-        <button
-          v-if="canFullscreen"
-          class="extra-action-item"
-          @click="handleFullScreen"
-        >
+        <button v-if="canFullscreen" class="extra-action-item" @click="handleFullScreen">
           <icon-mdi-fullscreen v-if="!fullScreenRef" />
           <icon-mdi-fullscreen-exit v-else />
         </button>
       </div>
     </template>
     <template #default>
-      <ModalWrapper
-        ref="modalWrapperRef"
-        :full-screen="fullScreenRef"
-        :min-height="getProps.minHeight"
-        :open="isModal"
-        show-action
-      >
+      <ModalWrapper ref="modalWrapperRef" :full-screen="fullScreenRef" :min-height="getProps.minHeight" :open="isModal"
+        show-action>
         <slot></slot>
       </ModalWrapper>
+      <div v-if="modalLoading" class="basic-modal-loading">
+        <NSpin :stroke-width="16" size="large" />
+      </div>
     </template>
     <template v-if="!$slots.action" #action>
-      <NSpace>
-        <NButton @click="closeModal">取消</NButton>
-        <NButton type="primary" :loading="subLoading" @click="handleSubmit">
+      <NSpace v-if="getProps.showAction" justify="end">
+        <NButton v-if="getProps.showCancelBtn" @click="closeModal">{{ getProps.cancelBtnText }}</NButton>
+        <NButton v-if="getProps.showOkBtn" type="primary" :loading="subLoading" @click="handleSubmit">
           {{ submitBtnText }}
         </NButton>
       </NSpace>
@@ -186,16 +203,46 @@ defineExpose(modalMethods);
 
 <style lang="scss">
 .basic-modal-header {
-  padding: 10px 24px 8px !important;
+  padding: 12px 24px !important;
   border-bottom: 1px solid rgba(102, 102, 102, 0.12);
 }
-.basic-modal-content {
-  padding: 12px 0 !important;
+
+.dark {
+  .basic-modal-content {
+    .basic-modal-loading {
+      background-color: transparent;
+    }
+  }
 }
 
-.basic-modal-wrap {
-  margin-top: 2vh;
-  margin-bottom: 2vh;
+.basic-modal-content {
+  position: relative;
+  padding: 12px 0 !important;
+
+  .basic-modal-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.basic-modal-wrap .n-card__action {
+  padding: 10px 24px !important;
+  border-top: 1px solid rgba(102, 102, 102, 0.12);
+}
+
+.not-modal-fullscreen {
+  margin-top: 5vh;
+  margin-bottom: 5vh;
 }
 
 .modal-fullscreen {
@@ -234,6 +281,7 @@ defineExpose(modalMethods);
     .extra-action-item {
       background-color: transparent;
       color: rgba(255, 255, 255, 0.52);
+
       &:hover {
         background-color: rgba(255, 255, 255, 0.12);
       }

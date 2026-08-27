@@ -98,10 +98,6 @@ function setModalHeight() {
 
     // 动态读取 header/footer 的完整 DOM 高度，getBoundingClientRect().height 已包含 padding 和 border
     const headerHeight = getElementHeight(headerDom);
-    // 单独获取 header 的上下 padding，后续如需调试或扩展计算可直接使用
-    // const headerVerticalPadding = headerDom
-    //   ? getVerticalSize(headerDom, 'paddingTop', 'paddingBottom')
-    //   : 0;
     const footerHeight = props.showAction
       ? getElementHeight(modalDom.querySelector('.n-card__action'))
       : 0;
@@ -118,13 +114,6 @@ function setModalHeight() {
       getModalVerticalMargin(modalDom) +
       bodyVerticalPadding;
 
-    console.log(
-      headerHeight,
-      footerHeight,
-      getModalVerticalMargin(modalDom),
-      bodyVerticalPadding
-    );
-
     realHeight.value = Math.ceil(
       Math.max(props.minHeight, window.innerHeight - occupiedHeight - 1)
     );
@@ -138,11 +127,7 @@ defineExpose({
 </script>
 
 <template>
-  <NScrollbar
-    ref="wrapperRef"
-    class="modal-scrollbar__content"
-    :style="scrollbarStyle"
-  >
+  <NScrollbar ref="wrapperRef" class="modal-scrollbar__content" :style="scrollbarStyle">
     <div class="px-24px">
       <slot name="default"></slot>
     </div>
@@ -151,7 +136,7 @@ defineExpose({
 
 <style lang="scss">
 .modal-scrollbar__content {
-  > .n-scrollbar-container {
+  >.n-scrollbar-container {
     min-height: inherit;
   }
 }
