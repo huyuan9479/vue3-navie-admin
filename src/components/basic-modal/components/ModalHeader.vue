@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { ModalHeaderProps } from "../types/header";
+import type { ModalHeaderProps } from '../types/header';
 
 withDefaults(defineProps<ModalHeaderProps>(), {
-  title: "",
-  tipMessage: "",
+  title: '',
+  tipMessage: ''
 });
 </script>
 
@@ -12,19 +12,13 @@ withDefaults(defineProps<ModalHeaderProps>(), {
     <div class="font-500">{{ title }}</div>
     <NTooltip v-if="tipMessage" placement="bottom" trigger="hover">
       <template #trigger>
-        <icon-material-symbols-help-outline class="text-20px ml-2px cursor-pointer title-tips-icon" />
+        <icon-material-symbols-help-outline
+          class="text-20px ml-2px cursor-pointer"
+        />
       </template>
       <span>{{ tipMessage }}</span>
     </NTooltip>
   </div>
 </template>
 
-<style scoped lang="scss">
-.title-tips-icon {
-  color: #666666;
-}
-
-.dark .title-tips-icon {
-  color: #ffffff;
-}
-</style>
+<style scoped lang="scss"></style>
