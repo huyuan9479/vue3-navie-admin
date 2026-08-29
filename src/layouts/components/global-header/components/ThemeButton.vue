@@ -11,7 +11,7 @@ const appStore = useAppStore();
 
 <template>
   <ButtonIcon
-    icon="material-symbols:settings-outline-rounded"
+    icon="mdi:settings-outline"
     :tooltip-content="$t('icon.themeConfig')"
     @click="appStore.openThemeDrawer"
   />

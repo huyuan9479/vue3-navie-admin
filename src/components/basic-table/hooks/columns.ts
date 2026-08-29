@@ -57,7 +57,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
       .map(column => {
         // 默认宽度
         column.width = column.width || DEFAULT_WIDTH;
-        column.minWidth = column.minWidth || DEFAULT_WIDTH;
+        column.minWidth = column.minWidth || column.width;
         // 默认居中对齐
         column.align = column.align || 'center';
         //默认 ellipsis 为 false

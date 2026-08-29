@@ -66,7 +66,7 @@ const columns: BasicColumn[] = [
   {
     type: 'selection',
     key: 'selection',
-    width: 40
+    width: 60
   },
   {
     title: '用户Id',

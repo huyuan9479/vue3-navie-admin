@@ -161,7 +161,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
     const staticRoute = createStaticRoutes();
 
-    if (authRouteMode.value === 'static') {
+    if (authRouteMode.value === 'static_role') {
       addConstantRoutes(staticRoute.constantRoutes);
     } else {
       const { data, error } = await fetchGetConstantRoutes();
@@ -175,9 +175,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     }
 
     handleConstantAndAuthRoutes();
-
     setIsInitConstantRoute(true);
-
     tabStore.initHomeTab();
   }
 
@@ -188,7 +186,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       await authStore.initUserInfo();
     }
 
-    if (authRouteMode.value === 'static') {
+    if (authRouteMode.value === 'static_role') {
       initStaticAuthRoute();
     } else {
       await initDynamicAuthRoute();
@@ -200,7 +198,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   /** Init static auth route */
   function initStaticAuthRoute() {
     const { authRoutes: staticAuthRoutes } = createStaticRoutes();
-
+    // 如果是超级管理员，添加所有路由
+    console.log('authStore.isStaticSuper', authStore.isStaticSuper);
+    console.log('authStore.userInfo.roles', authStore.userInfo.roles);
     if (authStore.isStaticSuper) {
       addAuthRoutes(staticAuthRoutes);
     } else {
@@ -308,7 +308,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       return false;
     }
 
-    if (authRouteMode.value === 'static') {
+    if (authRouteMode.value === 'static_role') {
       const { authRoutes: staticAuthRoutes } = createStaticRoutes();
       return isRouteExistByRouteName(routeName, staticAuthRoutes);
     }

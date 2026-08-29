@@ -6,7 +6,8 @@ const homeRoute: RouteRecordRaw = {
   meta: {
     title: 'home',
     i18nKey: 'route.home',
-    icon: 'ant-design:home-outlined',
+    iconFontSize: 20,
+    icon: 'mdi:home-outline',
     order: 1
   },
   children: [
@@ -17,7 +18,7 @@ const homeRoute: RouteRecordRaw = {
       meta: {
         title: 'home',
         i18nKey: 'route.home',
-        icon: 'ant-design:history-outlined',
+        icon: 'mdi:home-outline',
         order: 1
       }
     }

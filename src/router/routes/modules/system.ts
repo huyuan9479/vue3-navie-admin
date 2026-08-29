@@ -8,8 +8,9 @@ const systemRoute: RouteRecordRaw = {
   meta: {
     title: 'system',
     i18nKey: 'route.system',
-    icon: 'ant-design:setting-outlined',
-    order: 2
+    icon: 'mdi:cog-outline',
+    order: 2,
+    roles: ['R_SUPER', 'R_ADMIN']
   },
   children: [
     {
@@ -19,7 +20,8 @@ const systemRoute: RouteRecordRaw = {
       meta: {
         title: 'system_user',
         i18nKey: 'route.system_user',
-        order: 1
+        order: 1,
+        roles: ['R_SUPER', 'R_ADMIN']
       }
     },
     {
@@ -29,7 +31,8 @@ const systemRoute: RouteRecordRaw = {
       meta: {
         title: 'system_role',
         i18nKey: 'route.system_role',
-        order: 2
+        order: 2,
+        roles: ['R_ADMIN']
       }
     },
     {
@@ -39,7 +42,8 @@ const systemRoute: RouteRecordRaw = {
       meta: {
         title: 'system_menu',
         i18nKey: 'route.system_menu',
-        order: 3
+        order: 3,
+        roles: ['R_USER']
       }
     }
   ]

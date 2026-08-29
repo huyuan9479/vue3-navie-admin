@@ -5,23 +5,49 @@ import SvgIcon from '@/components/custom/SvgIcon.vue';
 import { $t } from '@/locales';
 
 /**
- * Filter auth routes by roles
+ * Filter auth routes by roles recursively
  * @param routes routes
  * @param roles roles
  */
 export function filterAuthRoutesByRoles(
   routes: RouteRecordRaw[],
   roles: string[]
-) {
-  return routes.filter(route => {
-    const routeRoles = route.meta?.roles;
+): RouteRecordRaw[] {
+  return routes.flatMap(route => filterAuthRouteByRoles(route, roles));
+}
 
-    if (!routeRoles) return true;
+/**
+ * Filter auth route by roles
+ *
+ * @param route Auth route
+ * @param roles Roles
+ */
+function filterAuthRouteByRoles(
+  route: RouteRecordRaw,
+  roles: string[]
+): RouteRecordRaw[] {
+  const routeRoles = (route.meta && route.meta.roles) || [];
 
-    const intersection = routeRoles.filter(role => roles.includes(role));
+  // if the route's "roles" is empty, then it is allowed to access
+  const isEmptyRoles = !routeRoles.length;
 
-    return intersection.length > 0;
-  });
+  // if the user's role is included in the route's "roles", then it is allowed to access
+  const hasPermission = routeRoles.some(role => roles.includes(role));
+
+  const filterRoute = { ...route };
+
+  if (filterRoute.children?.length) {
+    filterRoute.children = filterRoute.children.flatMap(item =>
+      filterAuthRouteByRoles(item, roles)
+    );
+  }
+
+  // Exclude the route if it has no children after filtering
+  if (filterRoute.children?.length === 0) {
+    return [];
+  }
+
+  return hasPermission || isEmptyRoles ? [filterRoute] : [];
 }
 
 /**
@@ -82,10 +108,17 @@ function getGlobalMenuByBaseRoute(
   if (meta.icon || meta.localIcon) {
     const icon = meta.localIcon || meta.icon;
     const prop = meta.localIcon ? 'localIcon' : 'icon';
+    const style = meta.iconFontSize
+      ? { fontSize: `${meta.iconFontSize}px` }
+      : undefined;
 
-    menu.icon = () => h(SvgIcon, { [prop]: icon as string });
+    menu.icon = () => h(SvgIcon, { [prop]: icon as string, style });
   } else if (import.meta.env.VITE_MENU_ICON) {
-    menu.icon = () => h(SvgIcon, { icon: import.meta.env.VITE_MENU_ICON });
+    const style = meta.iconFontSize
+      ? { fontSize: `${meta.iconFontSize}px` }
+      : undefined;
+    menu.icon = () =>
+      h(SvgIcon, { icon: import.meta.env.VITE_MENU_ICON, style });
   }
 
   if (children && children.length > 0 && !isSingleLevel) {
