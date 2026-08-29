@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { watermarkTimeFormatOptions } from "@/constants/app";
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
-import SettingItem from "../../../components/SettingItem.vue";
+import { computed } from 'vue';
+import { watermarkTimeFormatOptions } from '@/constants/app';
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
+import SettingItem from '../../../components/SettingItem.vue';
 
 defineOptions({
-  name: "WatermarkSettings",
+  name: 'WatermarkSettings'
 });
 
 const themeStore = useThemeStore();
@@ -15,7 +15,7 @@ const isWatermarkTextVisible = computed(
   () =>
     themeStore.watermark.visible &&
     !themeStore.watermark.enableUserName &&
-    !themeStore.watermark.enableTime,
+    !themeStore.watermark.enableTime
 );
 </script>
 
@@ -23,7 +23,7 @@ const isWatermarkTextVisible = computed(
   <NCard
     :title="$t('theme.general.watermark.title')"
     :segmented="{
-      content: true,
+      content: true
     }"
     size="small"
   >

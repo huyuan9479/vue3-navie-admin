@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
-import SettingItem from "../../../components/SettingItem.vue";
+import { computed } from 'vue';
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
+import SettingItem from '../../../components/SettingItem.vue';
 
 defineOptions({
-  name: "SiderSettings",
+  name: 'SiderSettings'
 });
 
 const themeStore = useThemeStore();
 
 const layoutMode = computed(() => themeStore.layout.mode);
 const isMixLayoutMode = computed(
-  () => layoutMode.value.includes("mix") || layoutMode.value.includes("hybrid"),
+  () => layoutMode.value.includes('mix') || layoutMode.value.includes('hybrid')
 );
-const isHybridLayoutMode = computed(() => layoutMode.value.includes("hybrid"));
+const isHybridLayoutMode = computed(() => layoutMode.value.includes('hybrid'));
 </script>
 
 <template>
   <NCard
     :title="$t('theme.layout.sider.title')"
     :segmented="{
-      content: true,
+      content: true
     }"
     size="small"
   >

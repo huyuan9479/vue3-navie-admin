@@ -3,12 +3,12 @@ import {
   isFunction,
   isObject,
   isString,
-  isNullOrUnDef,
-} from "@/utils/is";
-import { unref } from "vue";
-import type { Ref, ComputedRef } from "vue";
-import type { FormSchema } from "../types/form";
-import { set } from "lodash-es";
+  isNullOrUnDef
+} from '@/utils/is';
+import { unref } from 'vue';
+import type { Ref, ComputedRef } from 'vue';
+import type { FormSchema } from '../types/form';
+import { set } from 'lodash-es';
 
 interface UseFormValuesContext {
   defaultFormModel: Ref<any>;
@@ -18,7 +18,7 @@ interface UseFormValuesContext {
 export function useFormValues({
   defaultFormModel,
   getSchema,
-  formModel,
+  formModel
 }: UseFormValuesContext) {
   // 加工 form values
   function handleFormValues(values: Recordable) {
@@ -50,7 +50,7 @@ export function useFormValues({
   function initDefault() {
     const schemas = unref(getSchema);
     const obj: Recordable = {};
-    schemas.forEach((item) => {
+    schemas.forEach(item => {
       const { defaultValue } = item;
       if (!isNullOrUnDef(defaultValue)) {
         obj[item.field] = defaultValue;

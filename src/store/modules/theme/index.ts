@@ -5,23 +5,23 @@ import {
   ref,
   toRefs,
   watch,
-  nextTick,
-} from "vue";
-import type { Ref } from "vue";
-import { useDateFormat, useEventListener, useNow } from "@vueuse/core";
-import { defineStore } from "pinia";
-import { getPaletteColorByNumber } from "@sa/color";
-import { localStg } from "@/utils/storage";
-import { SetupStoreId } from "@/enum";
-import { useAuthStore } from "../auth";
+  nextTick
+} from 'vue';
+import type { Ref } from 'vue';
+import { useDateFormat, useEventListener, useNow } from '@vueuse/core';
+import { defineStore } from 'pinia';
+import { getPaletteColorByNumber } from '@sa/color';
+import { localStg } from '@/utils/storage';
+import { SetupStoreId } from '@/enum';
+import { useAuthStore } from '../auth';
 import {
   addThemeVarsToGlobal,
   createThemeToken,
   getNaiveTheme,
   initThemeSettings,
   toggleAuxiliaryColorModes,
-  toggleCssDarkMode,
-} from "./shared";
+  toggleCssDarkMode
+} from './shared';
 
 /** Theme store */
 export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
@@ -39,12 +39,12 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   const {
     now: watermarkTime,
     pause: pauseWatermarkTime,
-    resume: resumeWatermarkTime,
+    resume: resumeWatermarkTime
   } = useNow({ controls: true });
 
   /** Dark mode */
   const darkMode = computed(() => {
-    return settings.value.themeScheme === "dark";
+    return settings.value.themeScheme === 'dark';
   });
 
   /** grayscale mode */
@@ -59,14 +59,14 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     const colors: App.Theme.ThemeColor = {
       primary: themeColor,
       ...otherColor,
-      info: isInfoFollowPrimary ? themeColor : otherColor.info,
+      info: isInfoFollowPrimary ? themeColor : otherColor.info
     };
     return colors;
   });
 
   /** Naive theme */
   const naiveTheme = computed(() =>
-    getNaiveTheme(themeColors.value, settings.value, naiveThemeOverrides.value),
+    getNaiveTheme(themeColors.value, settings.value, naiveThemeOverrides.value)
   );
 
   /**
@@ -113,12 +113,12 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
    */
   function setThemeScheme(
     themeScheme: UnionKey.ThemeScheme,
-    event?: MouseEvent,
+    event?: MouseEvent
   ) {
     const isAppearanceTransition =
       // @ts-expect-error - startViewTransition is not available in the current DOM lib target
       document.startViewTransition &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!isAppearanceTransition || !event) {
       settings.value.themeScheme = themeScheme;
       return;
@@ -127,7 +127,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     const y = event.clientY;
     const endRadius = Math.hypot(
       Math.max(x, innerWidth - x),
-      Math.max(y, innerHeight - y),
+      Math.max(y, innerHeight - y)
     );
     const transition = document.startViewTransition(async () => {
       settings.value.themeScheme = themeScheme;
@@ -136,23 +136,23 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     transition.ready.then(() => {
       const clipPath = [
         `circle(0px at ${x}px ${y}px)`,
-        `circle(${endRadius}px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`
       ];
       const animate = document.documentElement.animate(
         {
           clipPath:
-            settings.value.themeScheme === "dark"
+            settings.value.themeScheme === 'dark'
               ? [...clipPath].toReversed()
-              : clipPath,
+              : clipPath
         },
         {
           duration: 450,
-          easing: "ease-in",
+          easing: 'ease-in',
           pseudoElement:
-            settings.value.themeScheme === "dark"
-              ? "::view-transition-old(root)"
-              : "::view-transition-new(root)",
-        },
+            settings.value.themeScheme === 'dark'
+              ? '::view-transition-old(root)'
+              : '::view-transition-new(root)'
+        }
       );
       animate.onfinish = () => {
         transition.skipTransition();
@@ -180,9 +180,9 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
   /** Toggle theme scheme */
   function toggleThemeScheme(event?: MouseEvent) {
-    const themeSchemes: UnionKey.ThemeScheme[] = ["light", "dark"];
+    const themeSchemes: UnionKey.ThemeScheme[] = ['light', 'dark'];
     const index = themeSchemes.findIndex(
-      (item) => item === settings.value.themeScheme,
+      item => item === settings.value.themeScheme
     );
     const nextIndex = index === themeSchemes.length - 1 ? 0 : index + 1;
     const nextThemeScheme = themeSchemes[nextIndex];
@@ -204,7 +204,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       colorValue = getPaletteColorByNumber(color, 500, true);
     }
 
-    if (key === "primary") {
+    if (key === 'primary') {
       settings.value.themeColor = colorValue;
     } else {
       settings.value.otherColor[key] = colorValue;
@@ -225,7 +225,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     const { themeTokens, darkThemeTokens } = createThemeToken(
       themeColors.value,
       settings.value.tokens,
-      settings.value.recommendColor,
+      settings.value.recommendColor
     );
     addThemeVarsToGlobal(themeTokens, darkThemeTokens);
   }
@@ -283,11 +283,11 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
     if (!isProd) return;
 
-    localStg.set("themeSettings", settings.value);
+    localStg.set('themeSettings', settings.value);
   }
 
   // cache theme settings when page is closed or refreshed
-  useEventListener(window, "beforeunload", () => {
+  useEventListener(window, 'beforeunload', () => {
     cacheThemeSettings();
   });
 
@@ -296,41 +296,41 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     // watch dark mode
     watch(
       darkMode,
-      (val) => {
+      val => {
         toggleCssDarkMode(val);
-        localStg.set("darkMode", val);
+        localStg.set('darkMode', val);
       },
-      { immediate: true },
+      { immediate: true }
     );
 
     watch(
       [grayscaleMode, colourWeaknessMode],
-      (val) => {
+      val => {
         toggleAuxiliaryColorModes(val[0], val[1]);
       },
-      { immediate: true },
+      { immediate: true }
     );
 
     // themeColors change, update css vars and storage theme color
     watch(
       themeColors,
-      (val) => {
+      val => {
         setupThemeVarsToGlobal();
-        localStg.set("themeColor", val.primary);
+        localStg.set('themeColor', val.primary);
       },
-      { immediate: true },
+      { immediate: true }
     );
 
     // watch watermark settings to control timer
     watch(
       () => [
         settings.value.watermark.visible,
-        settings.value.watermark.enableTime,
+        settings.value.watermark.enableTime
       ],
       () => {
         updateWatermarkTimer();
       },
-      { immediate: true },
+      { immediate: true }
     );
   });
 
@@ -355,6 +355,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     setThemeLayout,
     setWatermarkEnableUserName,
     setWatermarkEnableTime,
-    setNaiveThemeOverrides,
+    setNaiveThemeOverrides
   };
 });

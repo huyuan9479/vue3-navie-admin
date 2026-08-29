@@ -1,9 +1,9 @@
-import useBoolean from "./use-boolean";
-import useLoading from "./use-loading";
-import useCountDown from "./use-count-down";
-import useContext from "./use-context";
-import useSvgIconRender from "./use-svg-icon-render";
-import useTable from "./use-table";
+import useBoolean from './use-boolean';
+import useLoading from './use-loading';
+import useCountDown from './use-count-down';
+import useContext from './use-context';
+import useSvgIconRender from './use-svg-icon-render';
+import useTable from './use-table';
 
 export {
   useBoolean,
@@ -11,6 +11,6 @@ export {
   useCountDown,
   useContext,
   useSvgIconRender,
-  useTable,
+  useTable
 };
-export type * from "./use-table";
+export type * from './use-table';

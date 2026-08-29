@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
-import { useRoute } from "vue-router";
-import { SimpleScrollbar } from "@sa/materials";
-import { useBoolean } from "@sa/hooks";
-import type { RouteKey } from "@page-router/types";
-import { GLOBAL_SIDER_MENU_ID } from "@/constants/app";
-import { useAppStore } from "@/store/modules/app";
-import { useThemeStore } from "@/store/modules/theme";
-import { useRouteStore } from "@/store/modules/route";
-import { useRouterPush } from "@/hooks/common/router";
-import { $t } from "@/locales";
-import { useMenu, useMixMenuContext } from "../context";
-import FirstLevelMenu from "../components/FirstLevelMenu.vue";
-import GlobalLogo from "../../global-logo/index.vue";
+import { computed, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { SimpleScrollbar } from '@sa/materials';
+import { useBoolean } from '@sa/hooks';
+import type { RouteKey } from '@page-router/types';
+import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
+import { useAppStore } from '@/store/modules/app';
+import { useThemeStore } from '@/store/modules/theme';
+import { useRouteStore } from '@/store/modules/route';
+import { useRouterPush } from '@/hooks/common/router';
+import { $t } from '@/locales';
+import { useMenu, useMixMenuContext } from '../context';
+import FirstLevelMenu from '../components/FirstLevelMenu.vue';
+import GlobalLogo from '../../global-logo/index.vue';
 
 defineOptions({
-  name: "VerticalMixMenu",
+  name: 'VerticalMixMenu'
 });
 
 const route = useRoute();
@@ -30,18 +30,18 @@ const {
   activeFirstLevelMenuKey,
   isActiveFirstLevelMenuHasChildren,
   getActiveFirstLevelMenuKey,
-  handleSelectFirstLevelMenu,
-} = useMixMenuContext("VerticalMixMenu");
+  handleSelectFirstLevelMenu
+} = useMixMenuContext('VerticalMixMenu');
 const { selectedKey } = useMenu();
 
 const inverted = computed(
-  () => !themeStore.darkMode && themeStore.sider.inverted,
+  () => !themeStore.darkMode && themeStore.sider.inverted
 );
 
 const hasChildMenus = computed(() => secondLevelMenus.value.length > 0);
 
 const showDrawer = computed(
-  () => hasChildMenus.value && (drawerVisible.value || appStore.mixSiderFixed),
+  () => hasChildMenus.value && (drawerVisible.value || appStore.mixSiderFixed)
 );
 
 function handleSelectMenu(key: RouteKey) {
@@ -75,7 +75,7 @@ watch(
   () => {
     updateExpandedKeys();
   },
-  { immediate: true },
+  { immediate: true }
 );
 </script>
 
@@ -103,7 +103,7 @@ watch(
           width:
             appStore.mixSiderFixed && hasChildMenus
               ? themeStore.sider.mixChildMenuWidth + 'px'
-              : '0px',
+              : '0px'
         }"
       >
         <DarkModeContainer
@@ -112,7 +112,7 @@ watch(
           :style="{
             width: showDrawer
               ? themeStore.sider.mixChildMenuWidth + 'px'
-              : '0px',
+              : '0px'
           }"
         >
           <header
@@ -120,7 +120,7 @@ watch(
             :style="{ height: themeStore.header.height + 'px' }"
           >
             <h2 class="text-16px text-primary font-bold">
-              {{ $t("system.title") }}
+              {{ $t('system.title') }}
             </h2>
             <PinToggler
               :pin="appStore.mixSiderFixed"

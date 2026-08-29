@@ -8,18 +8,18 @@
   使用：给 Dom 加上 v-throttle 及回调函数即可
   <button v-throttle="debounceClick">节流提交</button>
 */
-import type { Directive, DirectiveBinding } from "vue";
+import type { Directive, DirectiveBinding } from 'vue';
 interface ElType extends HTMLElement {
   _handleClick: () => any;
   disabled: boolean;
 }
 const throttle: Directive = {
   mounted(el: ElType, binding: DirectiveBinding) {
-    if (typeof binding.value !== "function") {
-      throw "callback must be a function";
+    if (typeof binding.value !== 'function') {
+      throw 'callback must be a function';
     }
     let timer: NodeJS.Timeout | null = null;
-    el["_handleClick"] = function () {
+    el['_handleClick'] = function () {
       if (timer) {
         clearTimeout(timer);
       }
@@ -31,11 +31,11 @@ const throttle: Directive = {
         }, 1000);
       }
     };
-    el.addEventListener("click", el["_handleClick"]);
+    el.addEventListener('click', el['_handleClick']);
   },
   beforeUnmount(el: ElType) {
-    el.removeEventListener("click", el["_handleClick"]);
-  },
+    el.removeEventListener('click', el['_handleClick']);
+  }
 };
 
 export default throttle;

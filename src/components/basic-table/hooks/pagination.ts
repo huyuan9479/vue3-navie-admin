@@ -1,9 +1,9 @@
-import type { PaginationProps } from "../types/index";
-import type { BasicTableProps } from "../types/table";
-import { computed, unref, ref, ComputedRef, watch } from "vue";
+import type { PaginationProps } from '../types/index';
+import type { BasicTableProps } from '../types/table';
+import { computed, unref, ref, ComputedRef, watch } from 'vue';
 
-import { isBoolean } from "@/utils/is";
-import { DEFAULTPAGESIZE, PAGESIZES } from "../utils/const";
+import { isBoolean } from '@/utils/is';
+import { DEFAULTPAGESIZE, PAGESIZES } from '../utils/const';
 
 export function usePagination(refProps: ComputedRef<BasicTableProps>) {
   const configRef = ref<PaginationProps>({});
@@ -11,14 +11,14 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
 
   watch(
     () => unref(refProps).pagination,
-    (pagination) => {
+    pagination => {
       if (!isBoolean(pagination) && pagination) {
         configRef.value = {
           ...unref(configRef),
-          ...pagination,
+          ...pagination
         };
       }
-    },
+    }
   );
 
   const getPaginationInfo = computed((): PaginationProps | boolean => {
@@ -36,7 +36,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
       prefix: (pagingInfo: PaginationProps) =>
         `共 ${pagingInfo.itemCount || 0} 条`, // 不需要可以通过 pagination 重置或者删除
       ...(isBoolean(pagination) ? {} : pagination),
-      ...unref(configRef),
+      ...unref(configRef)
     };
   });
 
@@ -44,7 +44,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
     const paginationInfo = unref(getPaginationInfo);
     configRef.value = {
       ...(!isBoolean(paginationInfo) ? paginationInfo : {}),
-      ...info,
+      ...info
     };
   }
 
@@ -65,6 +65,6 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
     getPaginationInfo,
     setShowPagination,
     getShowPagination,
-    setPagination,
+    setPagination
   };
 }

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { LAYOUT_SCROLL_EL_ID } from "@sa/materials";
-import { useAppStore } from "@/store/modules/app";
-import { useThemeStore } from "@/store/modules/theme";
-import { useRouteStore } from "@/store/modules/route";
-import { useTabStore } from "@/store/modules/tab";
+import { computed } from 'vue';
+import { LAYOUT_SCROLL_EL_ID } from '@sa/materials';
+import { useAppStore } from '@/store/modules/app';
+import { useThemeStore } from '@/store/modules/theme';
+import { useRouteStore } from '@/store/modules/route';
+import { useTabStore } from '@/store/modules/tab';
 
 defineOptions({
-  name: "GlobalContent",
+  name: 'GlobalContent'
 });
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  showPadding: true,
+  showPadding: true
 });
 
 const appStore = useAppStore();
@@ -25,7 +25,7 @@ const routeStore = useRouteStore();
 const tabStore = useTabStore();
 
 const transitionName = computed(() =>
-  themeStore.page.animate ? themeStore.page.animateMode : "",
+  themeStore.page.animate ? themeStore.page.animateMode : ''
 );
 
 function resetScroll() {

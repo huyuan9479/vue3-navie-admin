@@ -1,13 +1,13 @@
-import { ref, Ref, ComputedRef, unref, computed, watch, toRaw, h } from "vue";
-import type { BasicColumn, BasicTableProps } from "../types/table";
-import { isEqual, cloneDeep } from "lodash-es";
-import { isArray, isString, isBoolean, isFunction } from "@/utils/is";
-import { usePermission } from "@/hooks/common/permission";
-import { ActionItem } from "../types/tableAction";
-import { renderEditCell } from "../utils/edit-cell";
-import { NTooltip, NIcon } from "naive-ui";
-import { isNumber } from "@/utils/is";
-import SvgIcon from "@/components/custom/SvgIcon.vue";
+import { ref, Ref, ComputedRef, unref, computed, watch, toRaw, h } from 'vue';
+import type { BasicColumn, BasicTableProps } from '../types/table';
+import { isEqual, cloneDeep } from 'lodash-es';
+import { isArray, isString, isBoolean, isFunction } from '@/utils/is';
+import { usePermission } from '@/hooks/common/permission';
+import { ActionItem } from '../types/tableAction';
+import { renderEditCell } from '../utils/edit-cell';
+import { NTooltip, NIcon } from 'naive-ui';
+import { isNumber } from '@/utils/is';
+import SvgIcon from '@/components/custom/SvgIcon.vue';
 
 export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
   // 初始化时和 watch 中合并 actionColumn
@@ -40,7 +40,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
   const renderTooltip = (trigger: any, content: any) => {
     return h(NTooltip, null, {
       trigger: () => trigger,
-      default: () => content,
+      default: () => content
     });
   };
 
@@ -48,18 +48,18 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
     const pageColumns = unref(getColumnsRef);
     const columns = cloneDeep(pageColumns);
     return columns
-      .filter((column) => {
+      .filter(column => {
         return (
           hasPermission(column.auth as string[]) &&
           isIfShow(column as ActionItem)
         );
       })
-      .map((column) => {
+      .map(column => {
         // 默认宽度
         column.width = column.width || DEFAULT_WIDTH;
         column.minWidth = column.minWidth || DEFAULT_WIDTH;
         // 默认居中对齐
-        column.align = column.align || "center";
+        column.align = column.align || 'center';
         //默认 ellipsis 为 false
         column.ellipsis = column.ellipsis ? { tooltip: true } : false;
         const { edit } = column;
@@ -68,21 +68,21 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
           const title: any = column.title;
           column.title = () => {
             return renderTooltip(
-              h("div", { class: "flex items-center justify-center" }, [
-                h("span", { style: { "margin-right": "2px" } }, title),
+              h('div', { class: 'flex items-center justify-center' }, [
+                h('span', { style: { 'margin-right': '2px' } }, title),
                 h(
                   NIcon,
                   {
                     size: 16,
-                    class: "table-header-edit-icon",
+                    class: 'table-header-edit-icon'
                   },
                   {
                     default: () =>
-                      h(SvgIcon, { icon: "mdi-square-edit-outline" }),
-                  },
-                ),
+                      h(SvgIcon, { icon: 'mdi-square-edit-outline' })
+                  }
+                )
               ]),
-              "该列可编辑",
+              '该列可编辑'
             );
           };
         }
@@ -108,14 +108,14 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
       const merged = mergeActionColumn();
       columnsRef.value = merged;
       cacheColumns = merged;
-    },
+    }
   );
 
   function mergeActionColumn(): BasicColumn[] {
     const { columns, actionColumn } = unref(propsRef);
     const result = [...columns];
     if (!actionColumn) return result;
-    if (!result.find((col) => col.key === "action")) {
+    if (!result.find(col => col.key === 'action')) {
       result.push({ ...(actionColumn as any) });
     }
     return result;
@@ -130,14 +130,14 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
       columnsRef.value = [];
       return;
     }
-    const cacheKeys = cacheColumns?.map((item) => item.key) || [];
+    const cacheKeys = cacheColumns?.map(item => item.key) || [];
     //针对拖拽排序
     if (!isString(columns[0])) {
       columnsRef.value = columns;
     } else {
       const keyList = columnList as string[];
       const newColumns: any[] = [];
-      cacheColumns?.forEach((item) => {
+      cacheColumns?.forEach(item => {
         if (keyList.includes(String(item.key))) {
           newColumns.push({ ...item });
         }
@@ -154,30 +154,30 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
   //获取
   function getColumns(): BasicColumn[] {
     const columns = toRaw(unref(getColumnsRef));
-    return columns.map((item) => {
+    return columns.map(item => {
       return {
         ...item,
         title: item.title,
         key: item.key,
-        fixed: item.fixed || undefined,
+        fixed: item.fixed || undefined
       };
     });
   }
 
   //获取原始
   function getCacheColumns(isKey?: boolean): any[] {
-    return isKey ? cacheColumns?.map((item) => item.key) : cacheColumns;
+    return isKey ? cacheColumns?.map(item => item.key) : cacheColumns;
   }
 
   //更新原始数据单个字段
   function setCacheColumnsField(
     key: string | undefined,
-    value: Partial<BasicColumn>,
+    value: Partial<BasicColumn>
   ) {
     if (!key || !value) {
       return;
     }
-    cacheColumns.forEach((item) => {
+    cacheColumns.forEach(item => {
       if (item.key === key) {
         Object.assign(item, value);
         return;
@@ -192,6 +192,6 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
     setColumns,
     getColumns,
     getPageColumns,
-    getScrollX,
+    getScrollX
   };
 }

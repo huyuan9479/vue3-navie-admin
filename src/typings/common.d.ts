@@ -16,7 +16,7 @@ declare namespace CommonType {
    */
   type Option<K = string, M = string> = { value: K; label: M };
 
-  type YesOrNo = "Y" | "N";
+  type YesOrNo = 'Y' | 'N';
 
   /** add null to all properties */
   type RecordNullable<T> = {
@@ -40,7 +40,7 @@ declare type LabelValueOptions = {
 
 declare type EmitType = (event: string, ...args: any[]) => void;
 
-declare type TargetContext = "_self" | "_blank";
+declare type TargetContext = '_self' | '_blank';
 
 declare interface ComponentElRef<T extends HTMLElement = HTMLDivElement> {
   $el: T;

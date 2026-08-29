@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
-import SettingItem from "../../../components/SettingItem.vue";
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
+import SettingItem from '../../../components/SettingItem.vue';
 
 defineOptions({
-  name: "HeaderSettings",
+  name: 'HeaderSettings'
 });
 
 const themeStore = useThemeStore();
@@ -14,7 +14,7 @@ const themeStore = useThemeStore();
   <NCard
     :title="$t('theme.layout.header.title')"
     :segmented="{
-      content: true,
+      content: true
     }"
     size="small"
   >

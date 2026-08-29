@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/store/modules/auth";
+import { useAuthStore } from '@/store/modules/auth';
 
 export function usePermission() {
   const authStore = useAuthStore();
@@ -10,7 +10,7 @@ export function usePermission() {
    */
   function somePermissions(accesses: string[]) {
     return (
-      userInfo.permissions?.some((item) => {
+      userInfo.permissions?.some(item => {
         return accesses.includes(item);
       }) || false
     );
@@ -46,7 +46,7 @@ export function usePermission() {
     const permissionsList = userInfo.permissions || [];
     if (Array.isArray(accesses)) {
       return permissionsList.some((access: any) =>
-        accesses.includes(access.value),
+        accesses.includes(access.value)
       );
     }
     throw new Error(`[hasSomePermission]: ${accesses} should be a array !`);

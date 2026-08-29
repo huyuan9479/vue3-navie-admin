@@ -1,4 +1,4 @@
-import { inject, provide } from "vue";
+import { inject, provide } from 'vue';
 
 type ContextName = string | { name: string; key: string | symbol };
 
@@ -7,10 +7,10 @@ type ContextValue<T> = T extends (...args: any[]) => any ? ReturnType<T> : T;
 type ContextProvider<T> = T extends (...args: any[]) => any ? T : (arg: T) => T;
 
 type ContextConsumer<Context> = <
-  N extends string | null | undefined = undefined,
+  N extends string | null | undefined = undefined
 >(
   consumerName?: N,
-  defaultValue?: Context,
+  defaultValue?: Context
 ) => N extends null | undefined ? Context | null : Context;
 
 /**
@@ -21,14 +21,14 @@ type ContextConsumer<Context> = <
  */
 export default function useContext<T>(
   contextName: ContextName,
-  composable?: T extends (...args: any[]) => any ? T : never,
+  composable?: T extends (...args: any[]) => any ? T : never
 ) {
   type Context = ContextValue<T>;
 
-  const name = typeof contextName === "string" ? contextName : contextName.name;
+  const name = typeof contextName === 'string' ? contextName : contextName.name;
 
   const key =
-    typeof contextName === "string" ? Symbol(contextName) : contextName.key;
+    typeof contextName === 'string' ? Symbol(contextName) : contextName.key;
 
   /**
    * Injects the context value.
@@ -58,6 +58,6 @@ export default function useContext<T>(
 
   return [useProvide, useInject] as [
     ContextProvider<T>,
-    ContextConsumer<Context>,
+    ContextConsumer<Context>
   ];
 }

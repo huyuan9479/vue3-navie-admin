@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { themeSchemaRecord } from "@/constants/app";
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
-import SettingItem from "../../../components/SettingItem.vue";
+import { computed } from 'vue';
+import { themeSchemaRecord } from '@/constants/app';
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
+import SettingItem from '../../../components/SettingItem.vue';
 
 defineOptions({
-  name: "ThemeSchema",
+  name: 'ThemeSchema'
 });
 
 const themeStore = useThemeStore();
 
 const icons: Record<UnionKey.ThemeScheme, string> = {
-  light: "material-symbols:sunny-outline-rounded",
-  dark: "material-symbols:dark-mode-outline-rounded",
+  light: 'material-symbols:sunny-outline-rounded',
+  dark: 'material-symbols:dark-mode-outline-rounded'
 };
 
 function handleSegmentChange(value: string | number) {
@@ -29,7 +29,7 @@ function handleColourWeaknessChange(value: boolean) {
 }
 
 const showSiderInverted = computed(
-  () => !themeStore.darkMode && themeStore.layout.mode.includes("vertical"),
+  () => !themeStore.darkMode && themeStore.layout.mode.includes('vertical')
 );
 </script>
 
@@ -37,7 +37,7 @@ const showSiderInverted = computed(
   <NCard
     :title="$t('theme.appearance.themeSchema.title')"
     :segmented="{
-      content: true,
+      content: true
     }"
     size="small"
   >

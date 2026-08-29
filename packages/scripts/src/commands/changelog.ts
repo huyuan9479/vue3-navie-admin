@@ -1,12 +1,12 @@
 import {
   generateChangelog,
-  generateTotalChangelog,
-} from "@soybeanjs/changelog";
-import type { ChangelogOption } from "@soybeanjs/changelog";
+  generateTotalChangelog
+} from '@soybeanjs/changelog';
+import type { ChangelogOption } from '@soybeanjs/changelog';
 
 export async function genChangelog(
   options?: Partial<ChangelogOption>,
-  total = false,
+  total = false
 ) {
   if (total) {
     await generateTotalChangelog(options);

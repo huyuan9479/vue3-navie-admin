@@ -1,13 +1,14 @@
-import { NButton } from "naive-ui";
-import type { Component } from "vue";
+import { NButton } from 'naive-ui';
+import type { Component } from 'vue';
 
-export interface ActionItem
-  extends Partial<Omit<InstanceType<typeof NButton>, "icon">> {
+export interface ActionItem extends Partial<
+  Omit<InstanceType<typeof NButton>, 'icon'>
+> {
   onClick?: Fn;
   label?: string;
   key?: string | number;
   text?: boolean;
-  type?: "success" | "error" | "warning" | "info" | "primary" | "default";
+  type?: 'success' | 'error' | 'warning' | 'info' | 'primary' | 'default';
   // 设定 color 后会覆盖 type 的样式
   color?: string;
   icon?: Component | string;

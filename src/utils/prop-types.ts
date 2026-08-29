@@ -1,4 +1,4 @@
-import { createTypes } from "vue-types";
+import { createTypes } from 'vue-types';
 
 const propTypes = createTypes({
   func: undefined,
@@ -6,7 +6,7 @@ const propTypes = createTypes({
   string: undefined,
   number: undefined,
   object: undefined,
-  integer: undefined,
+  integer: undefined
 });
 
 export { propTypes };

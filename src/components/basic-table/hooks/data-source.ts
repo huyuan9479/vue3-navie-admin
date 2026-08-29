@@ -5,24 +5,24 @@ import {
   computed,
   onMounted,
   watchEffect,
-  watch,
-} from "vue";
-import type { BasicTableProps } from "../types/table";
-import type { PaginationProps } from "../types/index";
-import { isBoolean, isFunction } from "@/utils/is";
-import { APISETTING } from "../utils/const";
+  watch
+} from 'vue';
+import type { BasicTableProps } from '../types/table';
+import type { PaginationProps } from '../types/index';
+import { isBoolean, isFunction } from '@/utils/is';
+import { APISETTING } from '../utils/const';
 
 export function useDataSource(
   propsRef: ComputedRef<BasicTableProps>,
   { getPaginationInfo, setPagination, setLoading, tableData }: any,
   emit: {
-    (e: "fetch-success", result: { items: any[]; pageCount: number }): void;
-    (e: "fetch-error", error: unknown): void;
+    (e: 'fetch-success', result: { items: any[]; pageCount: number }): void;
+    (e: 'fetch-error', error: unknown): void;
     // (e: 'edit-end'): void;
     // (e: 'edit-cancel'): void;
     // (e: 'edit-row-end'): void;
     // (e: 'edit-change'): void;
-  },
+  }
 ) {
   const dataSourceRef = ref<Recordable[]>([]);
 
@@ -39,8 +39,8 @@ export function useDataSource(
       }
     },
     {
-      immediate: true,
-    },
+      immediate: true
+    }
   );
 
   const getRowKey = computed(() => {
@@ -48,7 +48,7 @@ export function useDataSource(
     return rowKey
       ? rowKey
       : () => {
-          return "key";
+          return 'key';
         };
   });
 
@@ -75,7 +75,7 @@ export function useDataSource(
       const pageSizeFetchField = APISETTING.pageSizeFetchField;
       let pageParams = {};
       const { current = 1, pageSize = 10 } = unref(
-        getPaginationInfo,
+        getPaginationInfo
       ) as PaginationProps;
 
       if (
@@ -91,7 +91,7 @@ export function useDataSource(
 
       let params = {
         ...pageParams,
-        ...opt,
+        ...opt
       };
       if (beforeRequest && isFunction(beforeRequest)) {
         // The params parameter can be modified by outsiders
@@ -108,7 +108,7 @@ export function useDataSource(
         if (currentPage > currentTotalPage) {
           setPagination({
             page: currentTotalPage,
-            total: total,
+            total: total
           });
           return await fetch(opt);
         }
@@ -122,22 +122,22 @@ export function useDataSource(
       setPagination({
         page: currentPage,
         pageCount: pageCount,
-        itemCount: total,
+        itemCount: total
       });
       if (opt && opt[currentField]) {
         setPagination({
-          current: opt[currentField] || 1,
+          current: opt[currentField] || 1
         });
       }
-      emit("fetch-success", {
+      emit('fetch-success', {
         items: unref(resultInfo),
-        pageCount: pageCount,
+        pageCount: pageCount
       });
     } catch (error) {
-      emit("fetch-error", error);
+      emit('fetch-error', error);
       dataSourceRef.value = [];
       setPagination({
-        pages: 0,
+        pages: 0
       });
     } finally {
       setLoading(false);
@@ -168,6 +168,6 @@ export function useDataSource(
     getDataSourceRef,
     getDataSource,
     setTableData,
-    reload,
+    reload
   };
 }

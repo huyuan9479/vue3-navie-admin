@@ -1,7 +1,5 @@
 {
-  "ignorePatterns": [
-    "src/typings/components.d.ts"
-  ],
+  "ignorePatterns": ["src/typings/components.d.ts"],
   "printWidth": 80,
   "singleQuote": true,
   "trailingComma": "none",

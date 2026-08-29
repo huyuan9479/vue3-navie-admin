@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import type { Component } from "vue";
-import { loginModuleRecord } from "@/constants/app";
-import { useAppStore } from "@/store/modules/app";
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
-import PwdLogin from "./components/PwdLogin.vue";
-import Register from "./components/Register.vue";
-import ResetPwd from "./components/ResetPwd.vue";
-import ExpressLogin from "./components/ExpressLogin.vue";
+import { computed } from 'vue';
+import type { Component } from 'vue';
+import { loginModuleRecord } from '@/constants/app';
+import { useAppStore } from '@/store/modules/app';
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
+import PwdLogin from './components/PwdLogin.vue';
+import Register from './components/Register.vue';
+import ResetPwd from './components/ResetPwd.vue';
+import ExpressLogin from './components/ExpressLogin.vue';
 
 interface Props {
   /** The login module */
@@ -26,16 +26,16 @@ interface LoginModule {
 }
 
 const moduleMap: Record<UnionKey.LoginModule, LoginModule> = {
-  "pwd-login": { label: loginModuleRecord["pwd-login"], component: PwdLogin },
+  'pwd-login': { label: loginModuleRecord['pwd-login'], component: PwdLogin },
   register: { label: loginModuleRecord.register, component: Register },
-  "reset-pwd": { label: loginModuleRecord["reset-pwd"], component: ResetPwd },
-  "express-login": {
-    label: loginModuleRecord["express-login"],
-    component: ExpressLogin,
-  },
+  'reset-pwd': { label: loginModuleRecord['reset-pwd'], component: ResetPwd },
+  'express-login': {
+    label: loginModuleRecord['express-login'],
+    component: ExpressLogin
+  }
 };
 
-const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
+const activeModule = computed(() => moduleMap[props.module || 'pwd-login']);
 </script>
 
 <template>
@@ -48,7 +48,7 @@ const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
     >
       <SystemLogo class="size-36px mr-6px lt-sm:size-32px" />
       <h3 class="text-20px text-primary font-500 lt-sm:text-20px">
-        {{ $t("system.title") }}
+        {{ $t('system.title') }}
       </h3>
     </div>
     <!-- 左侧登录 -->
@@ -99,7 +99,8 @@ const activeModule = computed(() => moduleMap[props.module || "pwd-login"]);
 <style scoped lang="scss">
 .login-container {
   .login-bg {
-    background: radial-gradient(600px at 80% 20%, #90caf933, #0000 70%),
+    background:
+      radial-gradient(600px at 80% 20%, #90caf933, #0000 70%),
       radial-gradient(700px at 50% 80%, #611df133, #0000 60%), oklch(98% 0 0);
   }
 

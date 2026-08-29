@@ -1,7 +1,7 @@
-import { h } from "vue";
-import type { App } from "vue";
-import { NButton } from "naive-ui";
-import { $t } from "@/locales";
+import { h } from 'vue';
+import type { App } from 'vue';
+import { NButton } from 'naive-ui';
+import { $t } from '@/locales';
 
 export function setupAppErrorHandle(app: App) {
   app.config.errorHandler = (err, vm, info) => {
@@ -15,7 +15,7 @@ export function setupAppVersionNotification() {
   const UPDATE_CHECK_INTERVAL = 3 * 60 * 1000;
 
   const canAutoUpdateApp =
-    import.meta.env.VITE_AUTOMATICALLY_DETECT_UPDATE === "Y" &&
+    import.meta.env.VITE_AUTOMATICALLY_DETECT_UPDATE === 'Y' &&
     import.meta.env.PROD;
   if (!canAutoUpdateApp) return;
 
@@ -36,18 +36,18 @@ export function setupAppVersionNotification() {
 
     // Show update notification
     const n = window.$notification?.create({
-      title: $t("system.updateTitle"),
-      content: $t("system.updateContent"),
+      title: $t('system.updateTitle'),
+      content: $t('system.updateContent'),
       action() {
         return h(
-          "div",
+          'div',
           {
             style: {
-              display: "flex",
-              justifyContent: "end",
-              gap: "12px",
-              width: "325px",
-            },
+              display: 'flex',
+              justifyContent: 'end',
+              gap: '12px',
+              width: '325px'
+            }
           },
           [
             h(
@@ -56,26 +56,26 @@ export function setupAppVersionNotification() {
                 onClick() {
                   n?.destroy();
                   isShow = false;
-                },
+                }
               },
-              () => $t("system.updateCancel"),
+              () => $t('system.updateCancel')
             ),
             h(
               NButton,
               {
-                type: "primary",
+                type: 'primary',
                 onClick() {
                   location.reload();
-                },
+                }
               },
-              () => $t("system.updateConfirm"),
-            ),
-          ],
+              () => $t('system.updateConfirm')
+            )
+          ]
         );
       },
       onClose() {
         isShow = false;
-      },
+      }
     });
   };
 
@@ -87,10 +87,10 @@ export function setupAppVersionNotification() {
   };
 
   // If updates should be checked, set up the visibility change listener and start the update interval
-  if (!isShow && document.visibilityState === "visible") {
+  if (!isShow && document.visibilityState === 'visible') {
     // Check for updates when the document is visible
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") {
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
         checkForUpdates();
         startUpdateInterval();
       }
@@ -102,7 +102,7 @@ export function setupAppVersionNotification() {
 }
 
 async function getHtmlBuildTime(): Promise<string | null> {
-  const baseUrl = import.meta.env.VITE_BASE_URL || "/";
+  const baseUrl = import.meta.env.VITE_BASE_URL || '/';
 
   try {
     const res = await fetch(`${baseUrl}index.html?time=${Date.now()}`);
@@ -115,7 +115,7 @@ async function getHtmlBuildTime(): Promise<string | null> {
     const match = html.match(/<meta name="buildTime" content="(.*)">/);
     return match?.[1] || null;
   } catch (error) {
-    window.console.error("getHtmlBuildTime error:", error);
+    window.console.error('getHtmlBuildTime error:', error);
     return null;
   }
 }

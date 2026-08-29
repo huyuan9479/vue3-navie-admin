@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import type { VNode } from "vue";
-import { useAuthStore } from "@/store/modules/auth";
-import { useRouterPush } from "@/hooks/common/router";
-import { useSvgIcon } from "@/hooks/common/icon";
-import { $t } from "@/locales";
+import { computed } from 'vue';
+import type { VNode } from 'vue';
+import { useAuthStore } from '@/store/modules/auth';
+import { useRouterPush } from '@/hooks/common/router';
+import { useSvgIcon } from '@/hooks/common/icon';
+import { $t } from '@/locales';
 
 defineOptions({
-  name: "UserAvatar",
+  name: 'UserAvatar'
 });
 
 const authStore = useAuthStore();
@@ -18,7 +18,7 @@ function loginOrRegister() {
   toLogin();
 }
 
-type DropdownKey = "logout";
+type DropdownKey = 'logout';
 
 type DropdownOption =
   | {
@@ -27,7 +27,7 @@ type DropdownOption =
       icon?: () => VNode;
     }
   | {
-      type: "divider";
+      type: 'divider';
       key: string;
     };
 
@@ -39,10 +39,10 @@ const options = computed(() => {
     //   icon: SvgIconVNode({ icon: "ant-design:user", fontSize: 18 }),
     // },
     {
-      label: $t("common.logout"),
-      key: "logout",
-      icon: SvgIconVNode({ icon: "ant-design:logout-outlined", fontSize: 18 }),
-    },
+      label: $t('common.logout'),
+      key: 'logout',
+      icon: SvgIconVNode({ icon: 'ant-design:logout-outlined', fontSize: 18 })
+    }
   ];
 
   return opts;
@@ -50,18 +50,18 @@ const options = computed(() => {
 
 function logout() {
   window.$dialog?.info({
-    title: $t("common.tip"),
-    content: $t("common.logoutConfirm"),
-    positiveText: $t("common.confirm"),
-    negativeText: $t("common.cancel"),
+    title: $t('common.tip'),
+    content: $t('common.logoutConfirm'),
+    positiveText: $t('common.confirm'),
+    negativeText: $t('common.cancel'),
     onPositiveClick: () => {
       authStore.resetStore();
-    },
+    }
   });
 }
 
 function handleDropdown(key: DropdownKey) {
-  if (key === "logout") {
+  if (key === 'logout') {
     logout();
   } else {
     // If your other options are jumps from other routes, they will be directly supported here
@@ -72,7 +72,7 @@ function handleDropdown(key: DropdownKey) {
 
 <template>
   <NButton v-if="!authStore.isLogin" quaternary @click="loginOrRegister">
-    {{ $t("page.login.common.loginOrRegister") }}
+    {{ $t('page.login.common.loginOrRegister') }}
   </NButton>
   <NDropdown
     v-else
@@ -87,9 +87,9 @@ function handleDropdown(key: DropdownKey) {
           src="@/assets/imgs/avatar.png"
           class="w-26px h-26px rounded-full object-cover"
         />
-        <span class="text-16px font-medium">{{
-          authStore.userInfo.userName
-        }}</span>
+        <span class="text-16px font-medium">
+          {{ authStore.userInfo.userName }}
+        </span>
       </ButtonIcon>
     </div>
   </NDropdown>

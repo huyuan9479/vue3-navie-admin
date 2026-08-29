@@ -132,7 +132,7 @@ export interface AdminLayoutFooterConfig {
  * - Horizontal
  * - Vertical
  */
-export type LayoutMode = "horizontal" | "vertical";
+export type LayoutMode = 'horizontal' | 'vertical';
 
 /**
  * The scroll mode when content overflow
@@ -142,11 +142,12 @@ export type LayoutMode = "horizontal" | "vertical";
  *
  * @default 'wrapper'
  */
-export type LayoutScrollMode = "wrapper" | "content";
+export type LayoutScrollMode = 'wrapper' | 'content';
 
 /** Admin layout props */
 export interface AdminLayoutProps
-  extends AdminLayoutHeaderConfig,
+  extends
+    AdminLayoutHeaderConfig,
     AdminLayoutTabConfig,
     AdminLayoutSiderConfig,
     AdminLayoutContentConfig,
@@ -215,15 +216,15 @@ type KebabCase<S extends string> = S extends `${infer Start}${infer End}`
   ? `${Uncapitalize<Start>}${KebabCase<Kebab<End>>}`
   : S;
 
-type Prefix = "--soy-";
+type Prefix = '--soy-';
 
 export type LayoutCssVarsProps = Pick<
   AdminLayoutProps,
-  | "headerHeight"
-  | "tabHeight"
-  | "siderWidth"
-  | "siderCollapsedWidth"
-  | "footerHeight"
+  | 'headerHeight'
+  | 'tabHeight'
+  | 'siderWidth'
+  | 'siderCollapsedWidth'
+  | 'footerHeight'
 > & {
   headerZIndex?: number;
   tabZIndex?: number;
@@ -246,7 +247,7 @@ export type LayoutCssVars = {
  *
  * @default chrome
  */
-export type PageTabMode = "button" | "chrome" | "slider";
+export type PageTabMode = 'button' | 'chrome' | 'slider';
 
 export interface PageTabProps {
   /** Whether is dark mode */

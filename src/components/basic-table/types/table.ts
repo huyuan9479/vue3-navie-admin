@@ -1,15 +1,15 @@
 import type {
   InternalRowData,
-  TableColumn,
-} from "naive-ui/lib/data-table/src/interface";
-import { ComponentType } from "./index";
-import type { VNode, VNodeChild } from "vue";
+  TableColumn
+} from 'naive-ui/lib/data-table/src/interface';
+import { ComponentType } from './index';
+import type { VNode, VNodeChild } from 'vue';
 
 export type BasicColumn<T = InternalRowData> = TableColumn<T> & {
   //编辑表格
   title?: string | (() => VNodeChild);
   key: string | number;
-  type?: "selection" | "index";
+  type?: 'selection' | 'index';
   edit?: boolean;
   editRow?: boolean;
   editable?: boolean;

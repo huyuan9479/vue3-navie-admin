@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { computed } from "vue";
-import { $t } from "@/locales";
+import { computed } from 'vue';
+import { $t } from '@/locales';
 
-defineOptions({ name: "PinToggler" });
+defineOptions({ name: 'PinToggler' });
 
 interface Props {
   pin?: boolean;
@@ -11,7 +11,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const icon = computed(() =>
-  props.pin ? "material-symbols:keep" : "material-symbols:keep-off",
+  props.pin ? 'material-symbols:keep' : 'material-symbols:keep-off'
 );
 </script>
 

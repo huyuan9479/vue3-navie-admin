@@ -127,7 +127,11 @@ defineExpose({
 </script>
 
 <template>
-  <NScrollbar ref="wrapperRef" class="modal-scrollbar__content" :style="scrollbarStyle">
+  <NScrollbar
+    ref="wrapperRef"
+    class="modal-scrollbar__content"
+    :style="scrollbarStyle"
+  >
     <div class="px-24px">
       <slot name="default"></slot>
     </div>
@@ -136,7 +140,7 @@ defineExpose({
 
 <style lang="scss">
 .modal-scrollbar__content {
-  >.n-scrollbar-container {
+  > .n-scrollbar-container {
     min-height: inherit;
   }
 }

@@ -1,10 +1,10 @@
-import { useAuthStore } from "@/store/modules/auth";
-import { localStg } from "@/utils/storage";
-import { fetchRefreshToken } from "../api";
-import type { RequestInstanceState } from "./type";
+import { useAuthStore } from '@/store/modules/auth';
+import { localStg } from '@/utils/storage';
+import { fetchRefreshToken } from '../api';
+import type { RequestInstanceState } from './type';
 
 export function getAuthorization() {
-  const token = JSON.parse(localStg.get("token") || "{}");
+  const token = JSON.parse(localStg.get('token') || '{}');
   const Authorization = token.access_token
     ? `${token.token_type} ${token.access_token}`
     : null;
@@ -16,10 +16,10 @@ export function getAuthorization() {
 async function handleRefreshToken() {
   const { resetStore } = useAuthStore();
 
-  const token = JSON.parse(localStg.get("token") || "{}");
+  const token = JSON.parse(localStg.get('token') || '{}');
   const { error, data } = await fetchRefreshToken(token.refresh_token);
   if (!error) {
-    localStg.set("token", JSON.stringify(data));
+    localStg.set('token', JSON.stringify(data));
     return true;
   }
 
@@ -54,12 +54,12 @@ export function showErrorMsg(state: RequestInstanceState, message: string) {
 
     window.$message?.error(message, {
       onLeave: () => {
-        state.errMsgStack = state.errMsgStack.filter((msg) => msg !== message);
+        state.errMsgStack = state.errMsgStack.filter(msg => msg !== message);
 
         setTimeout(() => {
           state.errMsgStack = [];
         }, 5000);
-      },
+      }
     });
   }
 }

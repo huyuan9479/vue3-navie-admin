@@ -3,16 +3,16 @@ import {
   getDeltaE,
   getHsl,
   isValidColor,
-  transformHslToHex,
-} from "../shared";
-import { colorPalettes } from "../constant";
+  transformHslToHex
+} from '../shared';
+import { colorPalettes } from '../constant';
 import type {
   ColorPalette,
   ColorPaletteFamily,
   ColorPaletteFamilyWithNearestPalette,
   ColorPaletteMatch,
-  ColorPaletteNumber,
-} from "../types";
+  ColorPaletteNumber
+} from '../types';
 
 /**
  * get recommended color palette by provided color
@@ -24,20 +24,20 @@ export function getRecommendedColorPalette(color: string) {
 
   const colorMap = new Map<ColorPaletteNumber, ColorPalette>();
 
-  colorPaletteFamily.palettes.forEach((palette) => {
+  colorPaletteFamily.palettes.forEach(palette => {
     colorMap.set(palette.number, palette);
   });
 
   const mainColor = colorMap.get(500)!;
   const matchColor = colorPaletteFamily.palettes.find(
-    (palette) => palette.hex === color,
+    palette => palette.hex === color
   )!;
 
   const colorPalette: ColorPaletteMatch = {
     ...colorPaletteFamily,
     colorMap,
     main: mainColor,
-    match: matchColor,
+    match: matchColor
   };
 
   return colorPalette;
@@ -51,7 +51,7 @@ export function getRecommendedColorPalette(color: string) {
  */
 export function getRecommendedPaletteColorByNumber(
   color: string,
-  number: ColorPaletteNumber,
+  number: ColorPaletteNumber
 ) {
   const colorPalette = getRecommendedColorPalette(color);
 
@@ -67,18 +67,18 @@ export function getRecommendedPaletteColorByNumber(
  */
 export function getRecommendedColorPaletteFamily(color: string) {
   if (!isValidColor(color)) {
-    throw new Error("Invalid color, please check color value!");
+    throw new Error('Invalid color, please check color value!');
   }
 
   let colorName = getColorName(color);
 
-  colorName = colorName.toLowerCase().replace(/\s/g, "-");
+  colorName = colorName.toLowerCase().replace(/\s/g, '-');
 
   const { h: h1, s: s1 } = getHsl(color);
 
   const { nearestLightnessPalette, palettes } = getNearestColorPaletteFamily(
     color,
-    colorPalettes,
+    colorPalettes
   );
 
   const { number, hex } = nearestLightnessPalette;
@@ -91,7 +91,7 @@ export function getRecommendedColorPaletteFamily(color: string) {
 
   const colorPaletteFamily: ColorPaletteFamily = {
     name: colorName,
-    palettes: palettes.map((palette) => {
+    palettes: palettes.map(palette => {
       let hexValue = color;
 
       const isSame = number === palette.number;
@@ -105,15 +105,15 @@ export function getRecommendedColorPaletteFamily(color: string) {
         hexValue = transformHslToHex({
           h: newH,
           s: newS,
-          l,
+          l
         });
       }
 
       return {
         hex: hexValue,
-        number: palette.number,
+        number: palette.number
       };
-    }),
+    })
   };
 
   return colorPaletteFamily;
@@ -127,29 +127,29 @@ export function getRecommendedColorPaletteFamily(color: string) {
  */
 function getNearestColorPaletteFamily(
   color: string,
-  families: ColorPaletteFamily[],
+  families: ColorPaletteFamily[]
 ) {
-  const familyWithConfig = families.map((family) => {
-    const palettes = family.palettes.map((palette) => {
+  const familyWithConfig = families.map(family => {
+    const palettes = family.palettes.map(palette => {
       return {
         ...palette,
-        delta: getDeltaE(color, palette.hex),
+        delta: getDeltaE(color, palette.hex)
       };
     });
 
     const nearestPalette = palettes.reduce((prev, curr) =>
-      prev.delta < curr.delta ? prev : curr,
+      prev.delta < curr.delta ? prev : curr
     );
 
     return {
       ...family,
       palettes,
-      nearestPalette,
+      nearestPalette
     };
   });
 
   const nearestPaletteFamily = familyWithConfig.reduce((prev, curr) =>
-    prev.nearestPalette.delta < curr.nearestPalette.delta ? prev : curr,
+    prev.nearestPalette.delta < curr.nearestPalette.delta ? prev : curr
   );
 
   const { l } = getHsl(color);
@@ -165,8 +165,8 @@ function getNearestColorPaletteFamily(
         const deltaCurr = Math.abs(currLightness - l);
 
         return deltaPrev < deltaCurr ? prev : curr;
-      },
-    ),
+      }
+    )
   };
 
   return paletteFamily;

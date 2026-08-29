@@ -1,11 +1,11 @@
 import type {
   FormProps,
   FormActionType,
-  UseFormReturnType,
-} from "../types/form";
-import { ref, onUnmounted, unref, nextTick, watch } from "vue";
-import { getDynamicProps } from "../utils/helper";
-import { isProdMode } from "@/utils/common";
+  UseFormReturnType
+} from '../types/form';
+import { ref, onUnmounted, unref, nextTick, watch } from 'vue';
+import { getDynamicProps } from '../utils/helper';
+import { isProdMode } from '@/utils/common';
 
 type Props = Partial<DynamicProps<FormProps>>;
 
@@ -17,7 +17,7 @@ export function useForm(props?: Props): UseFormReturnType {
     const form = unref(formRef);
     if (!form) {
       console.error(
-        "The form instance has not been obtained, please make sure that the form has been rendered when performing the form operation!",
+        'The form instance has not been obtained, please make sure that the form has been rendered when performing the form operation!'
       );
     }
     await nextTick();
@@ -46,8 +46,8 @@ export function useForm(props?: Props): UseFormReturnType {
       },
       {
         immediate: true,
-        deep: true,
-      },
+        deep: true
+      }
     );
   }
 
@@ -58,7 +58,7 @@ export function useForm(props?: Props): UseFormReturnType {
     },
 
     resetFields: async () => {
-      getForm().then(async (form) => {
+      getForm().then(async form => {
         await form.resetFields();
       });
     },
@@ -91,10 +91,10 @@ export function useForm(props?: Props): UseFormReturnType {
       loadedRef.value = value;
     },
 
-    setSchema: async (values) => {
+    setSchema: async values => {
       const form = await getForm();
       form.setSchema(values);
-    },
+    }
   };
 
   return [register, methods];

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed, reactive } from "vue";
-import { useRouterPush } from "@/hooks/common/router";
-import { useFormRules, useNaiveForm } from "@/hooks/common/form";
-import { useCaptcha } from "@/hooks/business/captcha";
-import { $t } from "@/locales";
+import { computed, reactive } from 'vue';
+import { useRouterPush } from '@/hooks/common/router';
+import { useFormRules, useNaiveForm } from '@/hooks/common/form';
+import { useCaptcha } from '@/hooks/business/captcha';
+import { $t } from '@/locales';
 
 defineOptions({
-  name: "Register",
+  name: 'Register'
 });
 
 const { toggleLoginModule } = useRouterPush();
@@ -21,10 +21,10 @@ interface FormModel {
 }
 
 const model: FormModel = reactive({
-  phone: "",
-  code: "",
-  password: "",
-  confirmPassword: "",
+  phone: '',
+  code: '',
+  password: '',
+  confirmPassword: ''
 });
 
 const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
@@ -34,21 +34,21 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
     phone: formRules.phone,
     code: formRules.code,
     password: formRules.pwd,
-    confirmPassword: createConfirmPwdRule(model.password),
+    confirmPassword: createConfirmPwdRule(model.password)
   };
 });
 
 async function handleSubmit() {
   await validate();
   // request to register
-  window.$message?.success($t("page.login.common.validateSuccess"));
+  window.$message?.success($t('page.login.common.validateSuccess'));
 }
 </script>
 
 <template>
   <div>
     <h3 class="text-26px font-bold mb-24px">
-      {{ $t("page.login.register.title") }}
+      {{ $t('page.login.register.title') }}
     </h3>
     <NForm
       ref="formRef"
@@ -98,7 +98,7 @@ async function handleSubmit() {
       </NFormItem>
       <NSpace vertical :size="18" class="w-full">
         <NButton type="primary" size="large" round block @click="handleSubmit">
-          {{ $t("common.confirm") }}
+          {{ $t('common.confirm') }}
         </NButton>
         <NButton
           size="large"
@@ -106,7 +106,7 @@ async function handleSubmit() {
           block
           @click="toggleLoginModule('pwd-login')"
         >
-          {{ $t("page.login.common.back") }}
+          {{ $t('page.login.common.back') }}
         </NButton>
       </NSpace>
     </NForm>

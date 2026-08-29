@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { themeTabModeOptions } from "@/constants/app";
-import { useThemeStore } from "@/store/modules/theme";
-import { translateOptions } from "@/utils/common";
-import { $t } from "@/locales";
-import SettingItem from "../../../components/SettingItem.vue";
+import { themeTabModeOptions } from '@/constants/app';
+import { useThemeStore } from '@/store/modules/theme';
+import { translateOptions } from '@/utils/common';
+import { $t } from '@/locales';
+import SettingItem from '../../../components/SettingItem.vue';
 
 defineOptions({
-  name: "TabSettings",
+  name: 'TabSettings'
 });
 
 const themeStore = useThemeStore();
@@ -16,7 +16,7 @@ const themeStore = useThemeStore();
   <NCard
     :title="$t('theme.layout.tab.title')"
     :segmented="{
-      content: true,
+      content: true
     }"
     size="small"
   >

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { useThemeStore } from "@/store/modules/theme";
-import LayoutMode from "./components/LayoutMode.vue";
-import TabSettings from "./components/TabSettings.vue";
-import HeaderSettings from "./components/HeaderSettings.vue";
-import SiderSettings from "./components/SiderSettings.vue";
-import FooterSettings from "./components/FooterSettings.vue";
-import ContentSettings from "./components/ContentSettings.vue";
+import { useThemeStore } from '@/store/modules/theme';
+import LayoutMode from './components/LayoutMode.vue';
+import TabSettings from './components/TabSettings.vue';
+import HeaderSettings from './components/HeaderSettings.vue';
+import SiderSettings from './components/SiderSettings.vue';
+import FooterSettings from './components/FooterSettings.vue';
+import ContentSettings from './components/ContentSettings.vue';
 
 defineOptions({
-  name: "LayoutSettings",
+  name: 'LayoutSettings'
 });
 
 const themeStore = useThemeStore();

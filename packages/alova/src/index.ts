@@ -1,24 +1,24 @@
-import { createAlova } from "alova";
+import { createAlova } from 'alova';
 import type {
   AlovaDefaultCacheAdapter,
   AlovaGenerics,
   AlovaGlobalCacheAdapter,
-  AlovaRequestAdapter,
-} from "alova";
-import VueHook from "alova/vue";
-import type { VueHookType } from "alova/vue";
-import adapterFetch from "alova/fetch";
-import { createServerTokenAuthentication } from "alova/client";
-import type { FetchRequestInit } from "alova/fetch";
-import { BACKEND_ERROR_CODE } from "./constant";
-import type { CustomAlovaConfig, RequestOptions } from "./type";
+  AlovaRequestAdapter
+} from 'alova';
+import VueHook from 'alova/vue';
+import type { VueHookType } from 'alova/vue';
+import adapterFetch from 'alova/fetch';
+import { createServerTokenAuthentication } from 'alova/client';
+import type { FetchRequestInit } from 'alova/fetch';
+import { BACKEND_ERROR_CODE } from './constant';
+import type { CustomAlovaConfig, RequestOptions } from './type';
 
 export const createAlovaRequest = <
   RequestConfig = FetchRequestInit,
   ResponseType = Response,
   ResponseHeader = Headers,
   L1Cache extends AlovaGlobalCacheAdapter = AlovaDefaultCacheAdapter,
-  L2Cache extends AlovaGlobalCacheAdapter = AlovaDefaultCacheAdapter,
+  L2Cache extends AlovaGlobalCacheAdapter = AlovaDefaultCacheAdapter
 >(
   customConfig: CustomAlovaConfig<
     AlovaGenerics<
@@ -43,7 +43,7 @@ export const createAlovaRequest = <
       L2Cache,
       any
     >
-  >,
+  >
 ) => {
   const { tokenRefresher } = options;
   const { onAuthRequired, onResponseRefreshToken } =
@@ -55,14 +55,14 @@ export const createAlovaRequest = <
         isExpired: (response, method) =>
           tokenRefresher?.isExpired(response, method) || false,
         handler: async (response, method) =>
-          tokenRefresher?.handler(response, method),
+          tokenRefresher?.handler(response, method)
       },
       refreshTokenOnError: {
         isExpired: (response, method) =>
           tokenRefresher?.isExpired(response, method) || false,
         handler: async (response, method) =>
-          tokenRefresher?.handler(response, method),
-      },
+          tokenRefresher?.handler(response, method)
+      }
     });
 
   const instance = createAlova({
@@ -80,7 +80,7 @@ export const createAlovaRequest = <
           if (await options.isBackendSuccess(response)) {
             transformedData = await options.transformBackendResponse(response);
           } else {
-            error = new Error("the backend request error");
+            error = new Error('the backend request error');
             error.code = BACKEND_ERROR_CODE;
           }
         } catch (err) {
@@ -95,13 +95,13 @@ export const createAlovaRequest = <
         return transformedData;
       },
       onComplete: options.onComplete,
-      onError: (error, method) => options.onError?.(error, null, method),
-    }),
+      onError: (error, method) => options.onError?.(error, null, method)
+    })
   });
 
   return instance;
 };
 
 export { BACKEND_ERROR_CODE };
-export type * from "./type";
-export type * from "alova";
+export type * from './type';
+export type * from 'alova';

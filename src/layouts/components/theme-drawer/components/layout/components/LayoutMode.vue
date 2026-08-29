@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useAppStore } from "@/store/modules/app";
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
-import LayoutModeCard from "../../../components/LayoutModeCard.vue";
+import { useAppStore } from '@/store/modules/app';
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
+import LayoutModeCard from '../../../components/LayoutModeCard.vue';
 
 defineOptions({
-  name: "LayoutMode",
+  name: 'LayoutMode'
 });
 
 const appStore = useAppStore();
@@ -16,7 +16,7 @@ const themeStore = useThemeStore();
   <NCard
     :title="$t('theme.layout.layoutMode.title')"
     :segmented="{
-      content: true,
+      content: true
     }"
     size="small"
   >

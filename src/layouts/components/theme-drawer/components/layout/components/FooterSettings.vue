@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { useThemeStore } from "@/store/modules/theme";
-import { $t } from "@/locales";
-import SettingItem from "../../../components/SettingItem.vue";
+import { computed } from 'vue';
+import { useThemeStore } from '@/store/modules/theme';
+import { $t } from '@/locales';
+import SettingItem from '../../../components/SettingItem.vue';
 
 defineOptions({
-  name: "FooterSettings",
+  name: 'FooterSettings'
 });
 
 const themeStore = useThemeStore();
 
 const layoutMode = computed(() => themeStore.layout.mode);
 const isWrapperScrollMode = computed(
-  () => themeStore.layout.scrollMode === "wrapper",
+  () => themeStore.layout.scrollMode === 'wrapper'
 );
 const isMixHorizontalMode = computed(() =>
-  ["top-hybrid-sidebar-first", "top-hybrid-header-first"].includes(
-    layoutMode.value,
-  ),
+  ['top-hybrid-sidebar-first', 'top-hybrid-header-first'].includes(
+    layoutMode.value
+  )
 );
 </script>
 
@@ -25,7 +25,7 @@ const isMixHorizontalMode = computed(() =>
   <NCard
     :title="$t('theme.layout.footer.title')"
     :segmented="{
-      content: true,
+      content: true
     }"
     size="small"
   >

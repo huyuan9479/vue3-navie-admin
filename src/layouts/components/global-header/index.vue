@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { useFullscreen } from "@vueuse/core";
-import { GLOBAL_HEADER_MENU_ID } from "@/constants/app";
-import { useAppStore } from "@/store/modules/app";
-import { useThemeStore } from "@/store/modules/theme";
-import GlobalLogo from "../global-logo/index.vue";
-import GlobalBreadcrumb from "../global-breadcrumb/index.vue";
-import GlobalSearch from "../global-search/index.vue";
-import ThemeButton from "./components/ThemeButton.vue";
-import UserAvatar from "./components/UserAvatar.vue";
+import { useFullscreen } from '@vueuse/core';
+import { GLOBAL_HEADER_MENU_ID } from '@/constants/app';
+import { useAppStore } from '@/store/modules/app';
+import { useThemeStore } from '@/store/modules/theme';
+import GlobalLogo from '../global-logo/index.vue';
+import GlobalBreadcrumb from '../global-breadcrumb/index.vue';
+import GlobalSearch from '../global-search/index.vue';
+import ThemeButton from './components/ThemeButton.vue';
+import UserAvatar from './components/UserAvatar.vue';
 
 defineOptions({
-  name: "GlobalHeader",
+  name: 'GlobalHeader'
 });
 
 interface Props {
   /** Whether to show the logo */
-  showLogo?: App.Global.HeaderProps["showLogo"];
+  showLogo?: App.Global.HeaderProps['showLogo'];
   /** Whether to show the menu toggler */
-  showMenuToggler?: App.Global.HeaderProps["showMenuToggler"];
+  showMenuToggler?: App.Global.HeaderProps['showMenuToggler'];
   /** Whether to show the menu */
-  showMenu?: App.Global.HeaderProps["showMenu"];
+  showMenu?: App.Global.HeaderProps['showMenu'];
 }
 
 defineProps<Props>();

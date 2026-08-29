@@ -64,7 +64,9 @@ const getBindValue = computed(() => {
 });
 
 const getModalBindValue = computed(() => {
-  const { title, tipMessage, showAction, ...bindValue } = unref(getBindValue) as any;
+  const { title, tipMessage, showAction, ...bindValue } = unref(
+    getBindValue
+  ) as any;
   return {
     ...bindValue,
     // 解决警告：Blocked aria-hidden on an element because its descendant retained focus.
@@ -124,7 +126,7 @@ function onCloseModal() {
         isModal.value = false;
         emit('onClose');
       }
-    })
+    });
     return false;
   } else {
     isModal.value = false;
@@ -167,20 +169,36 @@ defineExpose(modalMethods);
 </script>
 
 <template>
-  <NModal v-bind="getModalBindValue" v-model:show="isModal" :style="modalStyle" :class="getWrapClassName"
-    header-class="basic-modal-header" content-class="basic-modal-content" @close="onCloseModal"
-    @after-enter="modalWrapperRef?.setModalHeight()">
+  <NModal
+    v-bind="getModalBindValue"
+    v-model:show="isModal"
+    :style="modalStyle"
+    :class="getWrapClassName"
+    header-class="basic-modal-header"
+    content-class="basic-modal-content"
+    @close="onCloseModal"
+    @after-enter="modalWrapperRef?.setModalHeight()"
+  >
     <template #header-extra>
       <div class="modal-header-extra">
-        <button v-if="canFullscreen" class="extra-action-item" @click="handleFullScreen">
+        <button
+          v-if="canFullscreen"
+          class="extra-action-item"
+          @click="handleFullScreen"
+        >
           <icon-mdi-fullscreen v-if="!fullScreenRef" />
           <icon-mdi-fullscreen-exit v-else />
         </button>
       </div>
     </template>
     <template #default>
-      <ModalWrapper ref="modalWrapperRef" :full-screen="fullScreenRef" :min-height="getProps.minHeight" :open="isModal"
-        show-action>
+      <ModalWrapper
+        ref="modalWrapperRef"
+        :full-screen="fullScreenRef"
+        :min-height="getProps.minHeight"
+        :open="isModal"
+        show-action
+      >
         <slot></slot>
       </ModalWrapper>
       <div v-if="modalLoading" class="basic-modal-loading">
@@ -189,8 +207,15 @@ defineExpose(modalMethods);
     </template>
     <template v-if="!$slots.action" #action>
       <NSpace v-if="getProps.showAction" justify="end">
-        <NButton v-if="getProps.showCancelBtn" @click="closeModal">{{ getProps.cancelBtnText }}</NButton>
-        <NButton v-if="getProps.showOkBtn" type="primary" :loading="subLoading" @click="handleSubmit">
+        <NButton v-if="getProps.showCancelBtn" @click="closeModal">
+          {{ getProps.cancelBtnText }}
+        </NButton>
+        <NButton
+          v-if="getProps.showOkBtn"
+          type="primary"
+          :loading="subLoading"
+          @click="handleSubmit"
+        >
           {{ submitBtnText }}
         </NButton>
       </NSpace>

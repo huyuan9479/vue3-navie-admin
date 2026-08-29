@@ -1,5 +1,5 @@
-import { tryOnMounted, tryOnUnmounted } from "@vueuse/core";
-import { useDebounceFn } from "@vueuse/core";
+import { tryOnMounted, tryOnUnmounted } from '@vueuse/core';
+import { useDebounceFn } from '@vueuse/core';
 
 interface WindowSizeOptions {
   once?: boolean;
@@ -10,7 +10,7 @@ interface WindowSizeOptions {
 export function useWindowSizeFn<T>(
   fn: Fn<T>,
   wait = 150,
-  options?: WindowSizeOptions,
+  options?: WindowSizeOptions
 ) {
   let handler = () => {
     fn();
@@ -22,11 +22,11 @@ export function useWindowSizeFn<T>(
     if (options && options.immediate) {
       handler();
     }
-    window.addEventListener("resize", handler);
+    window.addEventListener('resize', handler);
   };
 
   const stop = () => {
-    window.removeEventListener("resize", handler);
+    window.removeEventListener('resize', handler);
   };
 
   tryOnMounted(() => {

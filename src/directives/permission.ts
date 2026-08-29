@@ -1,5 +1,5 @@
-import { ObjectDirective } from "vue";
-import { usePermission } from "@/hooks/common/permission";
+import { ObjectDirective } from 'vue';
+import { usePermission } from '@/hooks/common/permission';
 
 export const permission: ObjectDirective = {
   mounted(el: HTMLButtonElement, binding) {
@@ -7,13 +7,13 @@ export const permission: ObjectDirective = {
     const { action, effect } = binding.value;
     const { hasPermission } = usePermission();
     if (!hasPermission(action)) {
-      if (effect === "disabled") {
+      if (effect === 'disabled') {
         el.disabled = true;
-        el.style.setProperty("disabled", "disabled");
-        el.classList.add("n-button--disabled");
+        el.style.setProperty('disabled', 'disabled');
+        el.classList.add('n-button--disabled');
       } else {
         el.remove();
       }
     }
-  },
+  }
 };

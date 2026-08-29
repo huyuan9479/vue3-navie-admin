@@ -1,8 +1,8 @@
-import { colord, extend } from "colord";
-import namesPlugin from "colord/plugins/names";
-import mixPlugin from "colord/plugins/mix";
-import labPlugin from "colord/plugins/lab";
-import type { AnyColor, HslColor, RgbColor } from "colord";
+import { colord, extend } from 'colord';
+import namesPlugin from 'colord/plugins/names';
+import mixPlugin from 'colord/plugins/mix';
+import labPlugin from 'colord/plugins/lab';
+import type { AnyColor, HslColor, RgbColor } from 'colord';
 
 extend([namesPlugin, mixPlugin, labPlugin]);
 
@@ -54,7 +54,7 @@ export function addColorAlpha(color: AnyColor, alpha: number) {
 export function mixColor(
   firstColor: AnyColor,
   secondColor: AnyColor,
-  ratio: number,
+  ratio: number
 ) {
   return colord(firstColor).mix(secondColor, ratio).toHex();
 }
@@ -69,7 +69,7 @@ export function mixColor(
 export function transformColorWithOpacity(
   color: AnyColor,
   alpha: number,
-  bgColor = "#ffffff",
+  bgColor = '#ffffff'
 ) {
   const originColor = addColorAlpha(color, alpha);
   const { r: oR, g: oG, b: oB } = colord(originColor).toRgb();
@@ -83,7 +83,7 @@ export function transformColorWithOpacity(
   const resultRgb: RgbColor = {
     r: calRgb(oR, bgR, alpha),
     g: calRgb(oG, bgG, alpha),
-    b: calRgb(oB, bgB, alpha),
+    b: calRgb(oB, bgB, alpha)
   };
 
   return colord(resultRgb).toHex();
@@ -95,7 +95,7 @@ export function transformColorWithOpacity(
  * @param color - Color
  */
 export function isWhiteColor(color: AnyColor) {
-  return colord(color).isEqual("#ffffff");
+  return colord(color).isEqual('#ffffff');
 }
 
 export { colord };
