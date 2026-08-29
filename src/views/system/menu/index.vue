@@ -1,194 +1,184 @@
 <script lang="ts" setup>
-import { ref, reactive, h } from "vue";
-import { BasicForm, useForm, type FormSchema } from "@/components/basic-form";
+import { ref, reactive, h } from 'vue';
+import { BasicForm, useForm, type FormSchema } from '@/components/basic-form';
 import {
   BasicTable,
   TableAction,
-  type BasicColumn,
-} from "@/components/basic-table";
-import { fetchGetMenuList } from "@/service/api/system";
-import { NTag, NButton } from "naive-ui";
-import SvgIcon from "@/components/custom/SvgIcon.vue";
+  type BasicColumn
+} from '@/components/basic-table';
+import { fetchGetMenuList } from '@/service/api/system';
+import { NTag, NButton } from 'naive-ui';
+import SvgIcon from '@/components/custom/SvgIcon.vue';
 
 const actionRef = ref();
-const currentEditKeyRef = ref("");
+const currentEditKeyRef = ref('');
 const schemas: FormSchema[] = [
   {
-    field: "id",
-    component: "NInput",
-    label: "用户Id",
+    field: 'id',
+    component: 'NInput',
+    label: '用户Id',
     componentProps: {
-      placeholder: "请输入用户Id",
-    },
+      placeholder: '请输入用户Id'
+    }
   },
   {
-    field: "name",
-    component: "NInput",
-    label: "用户名",
+    field: 'name',
+    component: 'NInput',
+    label: '用户名',
     componentProps: {
-      placeholder: "请输入用户名",
+      placeholder: '请输入用户名',
       onInput: (e: any) => {
         console.log(e);
-      },
-    },
-  },
+      }
+    }
+  }
 ];
 
 const columns: BasicColumn[] = [
   {
-    title: "菜单Id",
-    key: "id",
-    width: 150,
-    render(record: any) {
-      return h(
-        NTag,
-        {
-          type: "primary",
-          size: "small",
-        },
-        record.id,
-      );
-    },
+    title: '菜单Id',
+    key: 'id',
+    width: 150
   },
   {
-    title: "菜单名称",
-    key: "menuName",
+    title: '菜单名称',
+    key: 'menuName',
     width: 130,
-    editComponent: "NInput",
+    editComponent: 'NInput',
     editRow: true,
     editRule: true,
-    edit: true,
+    edit: true
   },
   {
-    title: "菜单类型",
-    key: "menuType",
+    title: '菜单类型',
+    key: 'menuType',
     width: 120,
     render(record: any) {
-      return record.menuType === "1" ? "目录" : "菜单";
+      return record.menuType === '1' ? '目录' : '菜单';
     },
-    editComponent: "NSelect",
+    editComponent: 'NSelect',
     editComponentProps: {
       options: [
         {
-          label: "目录",
-          value: "1",
+          label: '目录',
+          value: '1'
         },
         {
-          label: "菜单",
-          value: "2",
-        },
-      ],
+          label: '菜单',
+          value: '2'
+        }
+      ]
     },
     editRow: true,
-    edit: true,
+    edit: true
   },
   {
-    title: "父级ID",
-    key: "parentId",
+    title: '父级ID',
+    key: 'parentId'
   },
   {
-    title: "路由名称",
-    key: "routeName",
-    width: 120,
+    title: '路由名称',
+    key: 'routeName',
+    width: 120
   },
   {
-    title: "路由路径",
-    key: "routePath",
-    width: 140,
+    title: '路由路径',
+    key: 'routePath',
+    width: 140
   },
   {
-    title: "图标",
-    key: "icon",
+    title: '图标',
+    key: 'icon',
     width: 80,
     render(record: any) {
       return h(
-        "div",
+        'div',
         {
-          class: "flex items-center justify-center text-18px",
+          class: 'flex items-center justify-center text-18px'
         },
         h(SvgIcon, {
-          icon: record.icon,
-        }),
+          icon: record.icon
+        })
       );
-    },
+    }
   },
   {
-    title: "状态",
-    key: "status",
+    title: '状态',
+    key: 'status',
     width: 80,
     render(record: any) {
       return h(
         NTag,
         {
-          type: record.status === 1 ? "success" : "error",
-          size: "small",
+          type: record.status === 1 ? 'success' : 'error',
+          size: 'small'
         },
-        record.status === 1 ? "启用" : "禁用",
+        record.status === 1 ? '启用' : '禁用'
       );
-    },
+    }
   },
   {
-    title: "隐藏菜单",
-    key: "hideInMenu",
+    title: '隐藏菜单',
+    key: 'hideInMenu',
     render(record: any) {
-      return record.hideInMenu ? "是" : "否";
-    },
+      return record.hideInMenu ? '是' : '否';
+    }
   },
   {
-    title: "排序",
-    key: "order",
-  },
+    title: '排序',
+    key: 'order'
+  }
 ];
 
 const [register, { getFieldsValue }] = useForm({
   labelWidth: 60,
-  schemas,
+  schemas
 });
 
 const actionColumn = reactive({
   width: 180,
-  title: "操作",
-  key: "action",
-  fixed: "right" as const,
+  title: '操作',
+  key: 'action',
+  fixed: 'right' as const,
   render(record: any) {
     return h(TableAction as any, {
-      style: "text",
+      style: 'text',
       actions: [
         ...createActions(record),
         {
-          label: "删除",
-          type: "error",
-          icon: "material-symbols:delete-rounded",
+          label: '删除',
+          type: 'error',
+          icon: 'material-symbols:delete-rounded',
           onClick: handleDelete.bind(null, record),
           // 根据业务控制是否显示 isShow 和 auth 是并且关系
           ifShow: () => {
             return true;
-          },
+          }
           // 根据权限控制是否显示: 有权限，会显示，支持多个
-        },
-      ],
+        }
+      ]
     });
-  },
+  }
 });
 
 function createActions(record: any) {
   if (!record.editable) {
     return [
       {
-        label: "编辑",
-        onClick: handleEdit.bind(null, record),
-      },
+        label: '编辑',
+        onClick: handleEdit.bind(null, record)
+      }
     ];
   } else {
     return [
       {
-        label: "保存",
-        onClick: handleSave.bind(null, record),
+        label: '保存',
+        onClick: handleSave.bind(null, record)
       },
       {
-        label: "取消",
-        onClick: handleCancel.bind(null, record),
-      },
+        label: '取消',
+        onClick: handleCancel.bind(null, record)
+      }
     ];
   }
 }
@@ -222,12 +212,12 @@ function onCheckedRow(keys: (string | number)[]) {
 async function handleSave(record: any) {
   const pass = await record.onEdit?.(false, true);
   if (pass) {
-    currentEditKeyRef.value = "";
+    currentEditKeyRef.value = '';
   }
 }
 
 function handleCancel(record: any) {
-  currentEditKeyRef.value = "";
+  currentEditKeyRef.value = '';
   record.onEdit?.(false, false);
 }
 

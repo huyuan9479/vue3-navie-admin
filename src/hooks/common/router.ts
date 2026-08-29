@@ -1,6 +1,6 @@
 import { useRouter } from "vue-router";
 import type { RouteLocationRaw } from "vue-router";
-import type { RouteKey } from "@elegant-router/types";
+import type { RouteKey } from "@page-router/types";
 import { router as globalRouter } from "@/router";
 
 /**

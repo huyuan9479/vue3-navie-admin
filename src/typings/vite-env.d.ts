@@ -85,7 +85,7 @@ declare namespace Env {
      * It only has effect when the auth route mode is static, if the route mode is dynamic, the home route key is
      * defined in the back-end
      */
-    readonly VITE_ROUTE_HOME: import("@elegant-router/types").LastLevelRouteKey;
+    readonly VITE_ROUTE_HOME: import("@page-router/types").LastLevelRouteKey;
     /**
      * Default menu icon if menu icon is not set
      *

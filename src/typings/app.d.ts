@@ -2,10 +2,10 @@
 declare namespace App {
   /** Theme namespace */
   namespace Theme {
-    type ColorPaletteNumber = import("@sa/color").ColorPaletteNumber;
+    type ColorPaletteNumber = import('@sa/color').ColorPaletteNumber;
 
     /** NaiveUI theme overrides that can be specified in preset */
-    type NaiveUIThemeOverride = import("naive-ui").GlobalThemeOverrides;
+    type NaiveUIThemeOverride = import('naive-ui').GlobalThemeOverrides;
 
     /** Theme setting */
     interface ThemeSetting {
@@ -160,7 +160,7 @@ declare namespace App {
       container: string;
       layout: string;
       inverted: string;
-      "base-text": string;
+      'base-text': string;
     }
 
     interface ThemeSettingTokenBoxShadow {
@@ -185,13 +185,13 @@ declare namespace App {
 
   /** Global namespace */
   namespace Global {
-    type VNode = import("vue").VNode;
+    type VNode = import('vue').VNode;
     type RouteLocationNormalizedLoaded =
-      import("vue-router").RouteLocationNormalizedLoaded;
-    type RouteKey = import("@elegant-router/types").RouteKey;
-    type RouteMap = import("@elegant-router/types").RouteMap;
-    type RoutePath = import("@elegant-router/types").RoutePath;
-    type LastLevelRouteKey = import("@elegant-router/types").LastLevelRouteKey;
+      import('vue-router').RouteLocationNormalizedLoaded;
+    type RouteKey = import('@page-router/types').RouteKey;
+    type RouteMap = import('@page-router/types').RouteMap;
+    type RoutePath = import('@page-router/types').RoutePath;
+    type LastLevelRouteKey = import('@page-router/types').LastLevelRouteKey;
 
     /** The router push options */
     type RouterPushOptions = {
@@ -225,24 +225,24 @@ declare namespace App {
       /** The route key */
       routeKey: RouteKey;
       /** The route path */
-      routePath: RoutePath;
+      routePath: string;
       /** The menu icon */
       icon?: () => VNode;
       /** The menu children */
       children?: Menu[];
     };
 
-    type Breadcrumb = Omit<Menu, "children"> & {
+    type Breadcrumb = Omit<Menu, 'children'> & {
       options?: Breadcrumb[];
     };
 
     /** Tab route */
     type TabRoute = Pick<
       RouteLocationNormalizedLoaded,
-      "name" | "path" | "meta"
+      'name' | 'path' | 'meta'
     > &
       Partial<
-        Pick<RouteLocationNormalizedLoaded, "fullPath" | "query" | "matched">
+        Pick<RouteLocationNormalizedLoaded, 'fullPath' | 'query' | 'matched'>
       >;
 
     /** The global tab */
@@ -288,17 +288,17 @@ declare namespace App {
     };
 
     /** Form rule */
-    type FormRule = import("naive-ui").FormItemRule;
+    type FormRule = import('naive-ui').FormItemRule;
 
     /** The global dropdown key */
     type DropdownKey =
-      | "closeCurrent"
-      | "closeOther"
-      | "closeLeft"
-      | "closeRight"
-      | "closeAll"
-      | "pin"
-      | "unpin";
+      | 'closeCurrent'
+      | 'closeOther'
+      | 'closeLeft'
+      | 'closeRight'
+      | 'closeAll'
+      | 'pin'
+      | 'unpin';
   }
 
   /**
@@ -307,16 +307,16 @@ declare namespace App {
    * Locales type
    */
   namespace I18n {
-    type RouteKey = import("@elegant-router/types").RouteKey;
+    type RouteKey = import('@page-router/types').RouteKey;
 
-    type LangType = "en-US" | "zh-CN";
+    type LangType = 'en-US' | 'zh-CN';
 
     type LangOption = {
       label: string;
       key: LangType;
     };
 
-    type I18nRouteKey = Exclude<RouteKey, "root" | "not-found">;
+    type I18nRouteKey = Exclude<RouteKey, 'root' | 'not-found'>;
 
     type FormMsg = {
       required: string;
@@ -614,7 +614,7 @@ declare namespace App {
 
     type GetI18nKey<
       T extends Record<string, unknown>,
-      K extends keyof T = keyof T,
+      K extends keyof T = keyof T
     > = K extends string
       ? T[K] extends Record<string, unknown>
         ? `${K}.${GetI18nKey<T[K]>}`
@@ -624,37 +624,37 @@ declare namespace App {
     type I18nKey = GetI18nKey<Schema>;
 
     type TranslateOptions<Locales extends string> =
-      import("vue-i18n").TranslateOptions<Locales>;
+      import('vue-i18n').TranslateOptions<Locales>;
 
     interface $T {
       (key: I18nKey): string;
       (
         key: I18nKey,
         plural: number,
-        options?: TranslateOptions<LangType>,
+        options?: TranslateOptions<LangType>
       ): string;
       (
         key: I18nKey,
         defaultMsg: string,
-        options?: TranslateOptions<I18nKey>,
+        options?: TranslateOptions<I18nKey>
       ): string;
       (
         key: I18nKey,
         list: unknown[],
-        options?: TranslateOptions<I18nKey>,
+        options?: TranslateOptions<I18nKey>
       ): string;
       (key: I18nKey, list: unknown[], plural: number): string;
       (key: I18nKey, list: unknown[], defaultMsg: string): string;
       (
         key: I18nKey,
         named: Record<string, unknown>,
-        options?: TranslateOptions<LangType>,
+        options?: TranslateOptions<LangType>
       ): string;
       (key: I18nKey, named: Record<string, unknown>, plural: number): string;
       (
         key: I18nKey,
         named: Record<string, unknown>,
-        defaultMsg: string,
+        defaultMsg: string
       ): string;
     }
   }
@@ -662,7 +662,7 @@ declare namespace App {
   /** Service namespace */
   namespace Service {
     /** Other baseURL key */
-    type OtherBaseURLKey = "demo";
+    type OtherBaseURLKey = 'demo';
 
     interface ServiceConfigItem {
       /** The backend service base url */
@@ -681,7 +681,7 @@ declare namespace App {
       other: OtherServiceConfigItem[];
     }
 
-    interface SimpleServiceConfig extends Pick<ServiceConfigItem, "baseURL"> {
+    interface SimpleServiceConfig extends Pick<ServiceConfigItem, 'baseURL'> {
       other: Record<OtherBaseURLKey, string>;
     }
 

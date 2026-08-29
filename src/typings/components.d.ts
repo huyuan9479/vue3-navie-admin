@@ -9,7 +9,6 @@ import { GlobalComponents } from 'vue'
 
 export {}
 
-/* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
     AdminAvatar: typeof import('./../components/custom/AdminAvatar.vue')['default']
@@ -40,7 +39,7 @@ declare module 'vue' {
     IconMaterialSymbolsRefresh: typeof import('~icons/material-symbols/refresh')['default']
     IconMaterialSymbolsRefreshRounded: typeof import('~icons/material-symbols/refresh-rounded')['default']
     IconMaterialSymbolsSearch: typeof import('~icons/material-symbols/search')['default']
-    'IconMdi:fullscreen': typeof import('~icons/mdi/fullscreen')['default']
+    IconMdiFullscreen: typeof import('~icons/mdi/fullscreen')['default']
     IconMdiArrowDownThin: typeof import('~icons/mdi/arrow-down-thin')['default']
     IconMdiArrowExpandVertical: typeof import('~icons/mdi/arrow-expand-vertical')['default']
     IconMdiArrowUpThin: typeof import('~icons/mdi/arrow-up-thin')['default']
@@ -155,7 +154,6 @@ declare global {
   const IconMaterialSymbolsRefresh: typeof import('~icons/material-symbols/refresh')['default']
   const IconMaterialSymbolsRefreshRounded: typeof import('~icons/material-symbols/refresh-rounded')['default']
   const IconMaterialSymbolsSearch: typeof import('~icons/material-symbols/search')['default']
-  const 'IconMdi:fullscreen': typeof import('~icons/mdi/fullscreen')['default']
   const IconMdiArrowDownThin: typeof import('~icons/mdi/arrow-down-thin')['default']
   const IconMdiArrowExpandVertical: typeof import('~icons/mdi/arrow-expand-vertical')['default']
   const IconMdiArrowUpThin: typeof import('~icons/mdi/arrow-up-thin')['default']

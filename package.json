@@ -28,7 +28,7 @@
     "commit:zh": "sa git-commit -l=zh-cn",
     "dev": "vite --mode sit",
     "dev:prod": "vite --mode prod",
-    "fmt": "prettier --write .",
+    "fmt": "oxfmt",
     "gen-route": "sa gen-route",
     "lint": "oxlint --fix && eslint --fix .",
     "prepare": "simple-git-hooks",
@@ -65,7 +65,6 @@
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
-    "@elegant-router/vue": "0.3.8",
     "@iconify/json": "2.2.472",
     "@sa/scripts": "workspace:*",
     "@sa/uno-preset": "workspace:*",

@@ -1,43 +1,54 @@
-import type {
-  CustomRoute,
-  ElegantConstRoute,
-  ElegantRoute,
-} from "@elegant-router/types";
-import { generatedRoutes } from "../elegant/routes";
-import { layouts, views } from "../elegant/imports";
-import { transformElegantRoutesToVueRoutes } from "../elegant/transform";
+import type { RouteRecordRaw } from 'vue-router';
 
 /**
- * custom routes
- *
+ * custom routes (manually defined additional routes)
  */
-const customRoutes: CustomRoute[] = [];
+const customRoutes: RouteRecordRaw[] = [];
+
+/** Get constant routes (with meta.constant === true) */
+function getConstantRoutes(routes: RouteRecordRaw[]) {
+  return routes.filter(route => route.meta?.constant);
+}
+
+/** Get auth routes (without meta.constant) */
+function getAuthRoutes(routes: RouteRecordRaw[]) {
+  return routes.filter(route => !route.meta?.constant);
+}
+
+// Dynamically scan and import all route modules under the "modules" directory
+const modules = import.meta.glob('./modules/*.ts', { eager: true });
+
+const routeModules: RouteRecordRaw[] = [];
+
+Object.keys(modules).forEach(key => {
+  const module = (modules[key] as any).default;
+  if (module) {
+    if (Array.isArray(module)) {
+      routeModules.push(...module);
+    } else {
+      routeModules.push(module);
+    }
+  }
+});
 
 /** create routes when the auth route mode is static */
 export function createStaticRoutes() {
-  const constantRoutes: ElegantRoute[] = [];
+  const allRoutes = [...customRoutes, ...routeModules];
 
-  const authRoutes: ElegantRoute[] = [];
-
-  [...customRoutes, ...generatedRoutes].forEach((item) => {
-    if (item.meta?.constant) {
-      constantRoutes.push(item);
-    } else {
-      authRoutes.push(item);
-    }
-  });
+  const constantRoutes = getConstantRoutes(allRoutes);
+  const authRoutes = getAuthRoutes(allRoutes);
 
   return {
     constantRoutes,
-    authRoutes,
+    authRoutes
   };
 }
 
 /**
  * Get auth vue routes
  *
- * @param routes Elegant routes
+ * @param routes RouteRecordRaw routes
  */
-export function getAuthVueRoutes(routes: ElegantConstRoute[]) {
-  return transformElegantRoutesToVueRoutes(routes, layouts, views);
+export function getAuthVueRoutes(routes: RouteRecordRaw[]) {
+  return routes;
 }
