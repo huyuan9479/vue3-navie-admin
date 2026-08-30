@@ -78,10 +78,7 @@ declare namespace Env {
      * - Static: the auth routes is generated in front-end
      * - Dynamic: the auth routes is generated in back-end
      */
-    readonly VITE_AUTH_ROUTE_MODE:
-      | 'static_role'
-      | 'static_permission'
-      | 'dynamic';
+    readonly VITE_AUTH_ROUTE_MODE: 'static_role' | 'static_perm' | 'dynamic';
     /**
      * The home route key
      *

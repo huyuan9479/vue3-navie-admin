@@ -1,13 +1,24 @@
-"*.vue"    eol=lf
-"*.js"     eol=lf
-"*.ts"     eol=lf
-"*.jsx"    eol=lf
-"*.tsx"    eol=lf
-"*.mjs"    eol=lf
-"*.json"   eol=lf
-"*.html"   eol=lf
-"*.css"    eol=lf
-"*.scss"   eol=lf
-"*.md"     eol=lf
-"*.yaml"   eol=lf
-"*.yml"    eol=lf
+# Force all text files to utilize LF line endings upon checkout/commit
+* text=auto eol=lf
+
+*.vue    eol=lf
+*.js     eol=lf
+*.ts     eol=lf
+*.jsx    eol=lf
+*.tsx    eol=lf
+*.mjs    eol=lf
+*.json   eol=lf
+*.html   eol=lf
+*.css    eol=lf
+*.scss   eol=lf
+*.md     eol=lf
+*.yaml   eol=lf
+*.yml    eol=lf
+.env*    eol=lf
+
+# Denote all binary files that should not undergo line-ending conversion
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary

@@ -5,7 +5,7 @@ import { useBoolean } from '@sa/hooks';
 import type { LastLevelRouteKey, RouteKey, RouteMap } from '@page-router/types';
 import { router } from '@/router';
 import {
-  fetchGetConstantRoutes,
+  // fetchGetConstantRoutes,
   fetchGetUserRoutes,
   fetchIsRouteExist
 } from '@/service/api';
@@ -17,6 +17,7 @@ import { useAuthStore } from '../auth';
 import { useTabStore } from '../tab';
 import {
   filterAuthRoutesByRoles,
+  filterAuthRoutesByPerms,
   filterRoutesByDev,
   getBreadcrumbsByRoute,
   getCacheRouteNames,
@@ -160,20 +161,22 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     if (isInitConstantRoute.value) return;
 
     const staticRoute = createStaticRoutes();
+    // 这里默认静态路由写在项目中
+    addConstantRoutes(staticRoute.constantRoutes);
+    // 如果是动态路由模式，且静态路由如login、404等也需要从服务器获取，注释上面一行解开下面注释即可
+    // if (['static_role', 'static_perm'].includes(authRouteMode.value)) {
+    //   addConstantRoutes(staticRoute.constantRoutes);
+    // } else {
+    //   // if dynamic mode, fetch constant routes from server
+    //   const { data, error } = await fetchGetConstantRoutes();
 
-    if (authRouteMode.value === 'static_role') {
-      addConstantRoutes(staticRoute.constantRoutes);
-    } else {
-      const { data, error } = await fetchGetConstantRoutes();
-
-      if (!error) {
-        addConstantRoutes(data as unknown as RouteRecordRaw[]);
-      } else {
-        // if fetch constant routes failed, use static constant routes
-        addConstantRoutes(staticRoute.constantRoutes);
-      }
-    }
-
+    //   if (!error) {
+    //     addConstantRoutes(data as unknown as RouteRecordRaw[]);
+    //   } else {
+    //     // if fetch constant routes failed, use static constant routes
+    //     addConstantRoutes(staticRoute.constantRoutes);
+    //   }
+    // }
     handleConstantAndAuthRoutes();
     setIsInitConstantRoute(true);
     tabStore.initHomeTab();
@@ -187,7 +190,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     }
 
     if (authRouteMode.value === 'static_role') {
-      initStaticAuthRoute();
+      initStaticAuthRoleRoute();
+    } else if (authRouteMode.value === 'static_perm') {
+      initStaticAuthPermRoute();
     } else {
       await initDynamicAuthRoute();
     }
@@ -196,11 +201,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   }
 
   /** Init static auth route */
-  function initStaticAuthRoute() {
+  function initStaticAuthRoleRoute() {
     const { authRoutes: staticAuthRoutes } = createStaticRoutes();
     // 如果是超级管理员，添加所有路由
-    console.log('authStore.isStaticSuper', authStore.isStaticSuper);
-    console.log('authStore.userInfo.roles', authStore.userInfo.roles);
     if (authStore.isStaticSuper) {
       addAuthRoutes(staticAuthRoutes);
     } else {
@@ -211,6 +214,24 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
       addAuthRoutes(filteredAuthRoutes);
     }
+
+    handleConstantAndAuthRoutes();
+
+    setIsInitAuthRoute(true);
+  }
+
+  /** Init static auth perm route */
+  function initStaticAuthPermRoute() {
+    if (!authStore.userInfo?.menus) {
+      return;
+    }
+    const { authRoutes: staticAuthRoutes } = createStaticRoutes();
+    const filteredAuthRoutes = filterAuthRoutesByPerms(
+      staticAuthRoutes,
+      authStore.userInfo?.menus || []
+    );
+
+    addAuthRoutes(filteredAuthRoutes);
 
     handleConstantAndAuthRoutes();
 
@@ -301,6 +322,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    *
    * @param routePath Route path
    */
+  // 智能区分究竟是“页面敲错了(404)” 还是 “角色不够(403)”，并在越权时将用户拦截重定向到 403 页面
   async function getIsAuthRouteExist(routePath: RouteMap[RouteKey]) {
     const routeName = getRouteName(routePath);
 
@@ -308,7 +330,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       return false;
     }
 
-    if (authRouteMode.value === 'static_role') {
+    if (['static_role', 'static_perm'].includes(authRouteMode.value)) {
       const { authRoutes: staticAuthRoutes } = createStaticRoutes();
       return isRouteExistByRouteName(routeName, staticAuthRoutes);
     }

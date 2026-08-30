@@ -10,7 +10,8 @@ const systemRoute: RouteRecordRaw = {
     i18nKey: 'route.system',
     icon: 'mdi:cog-outline',
     order: 2,
-    roles: ['R_SUPER', 'R_ADMIN']
+    roles: ['R_SUPER', 'R_ADMIN'],
+    permissions: ['system:*']
   },
   children: [
     {
@@ -21,7 +22,8 @@ const systemRoute: RouteRecordRaw = {
         title: 'system_user',
         i18nKey: 'route.system_user',
         order: 1,
-        roles: ['R_SUPER', 'R_ADMIN']
+        roles: ['R_SUPER', 'R_ADMIN'],
+        permissions: ['system:user']
       }
     },
     {
@@ -32,7 +34,8 @@ const systemRoute: RouteRecordRaw = {
         title: 'system_role',
         i18nKey: 'route.system_role',
         order: 2,
-        roles: ['R_ADMIN']
+        roles: ['R_ADMIN'],
+        permissions: ['system:role']
       }
     },
     {
@@ -43,7 +46,8 @@ const systemRoute: RouteRecordRaw = {
         title: 'system_menu',
         i18nKey: 'route.system_menu',
         order: 3,
-        roles: ['R_USER']
+        roles: ['R_USER'],
+        permissions: ['system:menu1']
       }
     }
   ]

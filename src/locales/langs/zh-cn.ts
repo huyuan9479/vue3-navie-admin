@@ -249,7 +249,9 @@ const local: App.I18n.Schema = {
         back: '返回',
         validateSuccess: '验证成功',
         loginSuccess: '登录成功',
-        welcomeBack: '欢迎回来，{userName} ！'
+        welcomeBack: '欢迎回来，{userName} ！',
+        noRole: '该账号未分配角色，请联系管理员！',
+        noPerm: '该账号未分配权限，请联系管理员！'
       },
       pwdLogin: {
         title: 'Hi, 欢迎登录',

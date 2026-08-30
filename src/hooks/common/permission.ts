@@ -2,19 +2,7 @@ import { useAuthStore } from '@/store/modules/auth';
 
 export function usePermission() {
   const authStore = useAuthStore();
-  const { userInfo } = authStore;
-
-  /**
-   * 检查权限
-   * @param accesses
-   */
-  function somePermissions(accesses: string[]) {
-    return (
-      userInfo.permissions?.some(item => {
-        return accesses.includes(item);
-      }) || false
-    );
-  }
+  const { buttons } = authStore.userInfo;
 
   /**
    * 判断是否存在权限
@@ -22,7 +10,11 @@ export function usePermission() {
    * */
   function hasPermission(accesses: string[]): boolean {
     if (!accesses || !accesses.length) return true;
-    return somePermissions(accesses);
+    return (
+      buttons?.some(item => {
+        return accesses.includes(item);
+      }) || false
+    );
   }
 
   /**
@@ -30,7 +22,7 @@ export function usePermission() {
    * @param accesses
    */
   function hasEveryPermission(accesses: string[]): boolean {
-    const permissionsList = userInfo.permissions || [];
+    const permissionsList = buttons || [];
     if (Array.isArray(accesses)) {
       return permissionsList.every((access: any) => accesses.includes(access));
     }
@@ -43,11 +35,9 @@ export function usePermission() {
    * @param accessMap
    */
   function hasSomePermission(accesses: string[]): boolean {
-    const permissionsList = userInfo.permissions || [];
+    const permissionsList = buttons || [];
     if (Array.isArray(accesses)) {
-      return permissionsList.some((access: any) =>
-        accesses.includes(access.value)
-      );
+      return permissionsList.some((access: any) => accesses.includes(access));
     }
     throw new Error(`[hasSomePermission]: ${accesses} should be a array !`);
   }

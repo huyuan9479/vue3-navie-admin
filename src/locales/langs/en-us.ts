@@ -253,7 +253,11 @@ const local: App.I18n.Schema = {
         back: 'Back',
         validateSuccess: 'Verification passed',
         loginSuccess: 'Login successfully',
-        welcomeBack: 'Welcome back, {userName} !'
+        welcomeBack: 'Welcome back, {userName} !',
+        noRole:
+          'This account has no been assigned a role, please contact the administrator!',
+        noPerm:
+          'This account has no been assigned a permission, please contact the administrator!'
       },
       pwdLogin: {
         title: 'Hi, Welcome Login',

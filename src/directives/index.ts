@@ -9,8 +9,8 @@ import clickOutside from './click-outside';
  * @param app
  */
 export function setupDirectives(app: App) {
-  // 权限控制指令（演示）
-  app.directive('permission', permission);
+  // 权限控制指令（v-perm）
+  app.directive('perm', permission);
   // 点击外部指令
   app.directive('click-outside', clickOutside);
   // 防抖指令

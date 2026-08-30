@@ -18,10 +18,12 @@ declare namespace Api {
       userName: string;
       /** 角色 */
       roles?: string[];
-      /** 权限 */
-      permissions?: string[];
-      /** 路由 */
-      routes?: CommonType.Option[];
+      /** 菜单权限 */
+      menus?: string[];
+      /** 按钮权限 */
+      buttons?: string[];
+      /** 动态路由 */
+      routes?: import('@page-router/types').PageConstRoute[];
     }
   }
 }

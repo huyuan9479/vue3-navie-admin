@@ -50,6 +50,8 @@ declare module 'vue-router' {
     href?: string | null;
     /** Whether to hide the route in the menu */
     hideInMenu?: boolean | null;
+    /** Permissions of the route */
+    permissions?: string[];
     /**
      * The menu key will be activated when entering the route
      *

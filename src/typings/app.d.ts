@@ -517,6 +517,8 @@ declare namespace App {
             validateSuccess: string;
             loginSuccess: string;
             welcomeBack: string;
+            noRole: string;
+            noPerm: string;
           };
           pwdLogin: {
             title: string;

@@ -8,7 +8,8 @@ const homeRoute: RouteRecordRaw = {
     i18nKey: 'route.home',
     iconFontSize: 20,
     icon: 'mdi:home-outline',
-    order: 1
+    order: 1,
+    permissions: ['home:*']
   },
   children: [
     {
@@ -19,7 +20,8 @@ const homeRoute: RouteRecordRaw = {
         title: 'home',
         i18nKey: 'route.home',
         icon: 'mdi:home-outline',
-        order: 1
+        order: 1,
+        permissions: ['home:workbench']
       }
     }
   ]

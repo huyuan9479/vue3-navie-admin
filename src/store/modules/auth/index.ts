@@ -9,7 +9,7 @@ import { SetupStoreId } from '@/enum';
 import { $t } from '@/locales';
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
-import { clearAuthStorage, getToken } from './shared';
+import { clearAuthStorage, getToken, noPermissionCheck } from './shared';
 
 export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const route = useRoute();
@@ -26,9 +26,11 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     userName: '',
     /** 角色 */
     roles: [],
-    /** 权限 */
-    permissions: [],
-    /** 路由 */
+    /** 菜单权限 */
+    menus: [],
+    /** 按钮权限 */
+    buttons: [],
+    /** 动态路由 */
     routes: []
   });
 
@@ -157,7 +159,12 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     const { data: info, error } = await fetchGetUserInfo();
 
     if (!error) {
-      // update store
+      // 3. check permission
+      const pass = noPermissionCheck(info);
+      if (!pass) {
+        return false;
+      }
+
       Object.assign(userInfo, info);
 
       return true;

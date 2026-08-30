@@ -31,12 +31,30 @@ export function createRouteGuard(router: Router) {
 
     const isLogin = Boolean(localStg.get('token'));
     const needLogin = !to.meta.constant;
-    const routeRoles = to.meta.roles || [];
 
-    const hasRole = authStore.userInfo.roles?.some(role =>
-      routeRoles.includes(role)
-    );
-    const hasAuth = authStore.isStaticSuper || !routeRoles.length || hasRole;
+    // 根据不同的路由模式校验用户访问该路由的权限
+    const { VITE_AUTH_ROUTE_MODE } = import.meta.env;
+    let hasAuth = true;
+
+    if (VITE_AUTH_ROUTE_MODE === 'static_role') {
+      // static_role 模式：根据路由角色校验用户访问该路由的权限
+      const routeRoles = to.meta.roles || [];
+      const hasRole = authStore.userInfo.roles?.some(role =>
+        routeRoles.includes(role)
+      );
+      hasAuth =
+        authStore.isStaticSuper || !routeRoles.length || Boolean(hasRole);
+    } else if (VITE_AUTH_ROUTE_MODE === 'static_perm') {
+      // static_perm 模式：根据路由权限校验用户访问该路由的权限
+      const routePermissions = to.meta.permissions || [];
+      const hasPermission = authStore.userInfo.menus?.some(perm =>
+        routePermissions.includes(perm)
+      );
+      hasAuth = !routePermissions.length || Boolean(hasPermission);
+    } else {
+      // dynamic 模式：路由是后端动态生成的，能进入 beforeEach 说明路由已注册，直接放行
+      hasAuth = true;
+    }
 
     // if it is login route when logged in, then switch to the root page
     if (to.name === loginRoute && isLogin) {

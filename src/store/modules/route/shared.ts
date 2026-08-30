@@ -51,6 +51,47 @@ function filterAuthRouteByRoles(
 }
 
 /**
+ * Filter auth routes by perms recursively
+ * @param routes routes
+ * @param perms perms
+ */
+export function filterAuthRoutesByPerms(
+  routes: RouteRecordRaw[],
+  perms: string[]
+): RouteRecordRaw[] {
+  return routes.flatMap(route => filterAuthRouteByPerms(route, perms));
+}
+
+/**
+ * Filter auth route by perms
+ *
+ * @param route Auth route
+ * @param perms Perms
+ */
+function filterAuthRouteByPerms(
+  route: RouteRecordRaw,
+  perms: string[]
+): RouteRecordRaw[] {
+  const routePerms = (route.meta && route.meta.permissions) || [];
+  const hasPermission = routePerms.some(perm => perms.includes(perm));
+
+  const filterRoute = { ...route };
+
+  if (filterRoute.children?.length) {
+    filterRoute.children = filterRoute.children.flatMap(item =>
+      filterAuthRouteByPerms(item, perms)
+    );
+  }
+
+  // Exclude the route if it has no children after filtering
+  if (filterRoute.children?.length === 0) {
+    return [];
+  }
+
+  return hasPermission ? [filterRoute] : [];
+}
+
+/**
  * Filter routes by dev environment
  * @param routes routes
  */
