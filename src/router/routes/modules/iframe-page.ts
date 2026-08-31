@@ -1,6 +1,4 @@
-import type { RouteRecordRaw } from 'vue-router';
-
-const iframePageRoute: RouteRecordRaw = {
+const iframePageRoute: AppRouteRecordRaw = {
   path: '/iframe-page/:url',
   component: () => import('@/layouts/base-layout/index.vue'),
   props: true,

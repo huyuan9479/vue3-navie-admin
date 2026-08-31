@@ -15,6 +15,8 @@ declare module '@page-router/types' {
     '404': '/404';
     '500': '/500';
     home: '/home';
+    home_workbench: '/home/workbench';
+    home_analytics: '/home/analytics';
     'iframe-page': '/iframe-page/:url';
     login: '/login/:module(pwd-login|register|reset-pwd|express-login)?';
     system: '/system';
@@ -70,6 +72,8 @@ declare module '@page-router/types' {
     | 'iframe-page'
     | 'login'
     | 'home'
+    | 'home_workbench'
+    | 'home_analytics'
     | 'system_menu'
     | 'system_role'
     | 'system_user'

@@ -354,7 +354,7 @@ defineExpose(tableAction);
       align-items: center;
       justify-content: flex-start;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 
@@ -362,38 +362,6 @@ defineExpose(tableAction);
     display: flex;
     justify-content: flex-end;
     padding-left: 12px;
-  }
-}
-
-.custome-basic-table {
-  :deep(.n-data-table) {
-    .n-data-table-thead {
-      .n-data-table-th__title {
-        font-weight: bold;
-      }
-
-      .table-header-edit-icon {
-        color: #666;
-      }
-    }
-
-    .n-data-table-base-table-body {
-      .n-data-table-table {
-        .n-data-table-expand-trigger {
-          margin-right: 2px;
-        }
-      }
-    }
-  }
-}
-
-.dark .custome-basic-table {
-  :deep(.n-data-table) {
-    .n-data-table-thead {
-      .table-header-edit-icon {
-        color: #fff;
-      }
-    }
   }
 }
 </style>

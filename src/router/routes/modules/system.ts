@@ -1,6 +1,4 @@
-import type { RouteRecordRaw } from 'vue-router';
-
-const systemRoute: RouteRecordRaw = {
+const systemRoute: AppRouteRecordRaw = {
   name: 'system',
   path: '/system',
   component: () => import('@/layouts/base-layout/index.vue'),
@@ -8,7 +6,7 @@ const systemRoute: RouteRecordRaw = {
   meta: {
     title: 'system',
     i18nKey: 'route.system',
-    icon: 'mdi:cog-outline',
+    icon: 'mdi-light:settings',
     order: 2,
     roles: ['R_SUPER', 'R_ADMIN'],
     permissions: ['system:*']
@@ -46,7 +44,7 @@ const systemRoute: RouteRecordRaw = {
         title: 'system_menu',
         i18nKey: 'route.system_menu',
         order: 3,
-        roles: ['R_USER'],
+        roles: ['R_SUPER'],
         permissions: ['system:menu1']
       }
     }

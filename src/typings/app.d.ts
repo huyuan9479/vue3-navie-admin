@@ -554,7 +554,6 @@ declare namespace App {
           };
         };
         home: {
-          branchDesc: string;
           greeting: string;
           weatherDesc: string;
           projectCount: string;

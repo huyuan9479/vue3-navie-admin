@@ -1,9 +1,4 @@
-import type { RouteRecordRaw } from 'vue-router';
-
-/**
- * Built-in routes (constant routes, accessible without login)
- */
-const builtinRoutes: RouteRecordRaw[] = [
+const exceptionRoutes: AppRouteRecordRaw[] = [
   {
     name: '403',
     path: '/403',
@@ -39,4 +34,4 @@ const builtinRoutes: RouteRecordRaw[] = [
   }
 ];
 
-export default builtinRoutes;
+export default exceptionRoutes;

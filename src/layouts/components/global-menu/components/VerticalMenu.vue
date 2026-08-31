@@ -52,7 +52,6 @@ watch(
         :value="selectedKey"
         :collapsed="appStore.siderCollapse"
         :collapsed-width="themeStore.sider.collapsedWidth"
-        :icon-size="18"
         :collapsed-icon-size="22"
         :options="routeStore.menus"
         :inverted="inverted"

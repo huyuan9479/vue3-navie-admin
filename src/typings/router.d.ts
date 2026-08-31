@@ -79,3 +79,32 @@ declare module 'vue-router' {
     isDev?: boolean;
   }
 }
+
+declare global {
+  /** Strict Meta configuration for route record */
+  interface AppRouteMeta {
+    title: string;
+    i18nKey?: App.I18n.I18nKey | null;
+    roles?: string[];
+    keepAlive?: boolean | null;
+    constant?: boolean | null;
+    icon?: string;
+    localIcon?: string;
+    iconFontSize?: number;
+    order?: number | null;
+    href?: string | null;
+    hideInMenu?: boolean | null;
+    permissions?: string[];
+    activeMenu?: import('@page-router/types').RouteKey | null;
+    multiTab?: boolean | null;
+    fixedIndexInTab?: number | null;
+    query?: { key: string; value: string }[] | null;
+    isDev?: boolean;
+  }
+
+  /** Strict Route record type without loose Record<string, any> index signature inside route meta */
+  type AppRouteRecordRaw = Omit<import('vue-router').RouteRecordRaw, 'meta' | 'children'> & {
+    meta: AppRouteMeta;
+    children?: AppRouteRecordRaw[];
+  };
+}

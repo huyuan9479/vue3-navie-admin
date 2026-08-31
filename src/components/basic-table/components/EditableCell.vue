@@ -338,23 +338,17 @@ if (props.record) {
           title="保存"
           @click="() => handleSubmit()"
         >
-          <icon-mdi-check-circle-outline
-            class="text-18px! text-#666 dark:text-#fff"
-          />
+          <icon-mdi-check-circle-outline class="text-18px!" />
         </div>
         <div class="ml-4px cursor-pointer" title="取消" @click="handleCancel">
-          <icon-mdi-close-circle-outline
-            class="text-18px! text-#666 dark:text-#fff"
-          />
+          <icon-mdi-close-circle-outline class="text-18px!" />
         </div>
       </div>
     </div>
     <div v-else class="flex-center editable-cell-content" @click="handleEdit">
       {{ getValues }}
       <div class="edit-icon" v-if="!column.editRow">
-        <icon-mdi-square-edit-outline
-          class="text-16px! text-#666 dark:text-#fff"
-        />
+        <icon-mdi-square-edit-outline class="text-16px!" />
       </div>
     </div>
   </div>

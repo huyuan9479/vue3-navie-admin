@@ -4,7 +4,7 @@ import { getRoutePath } from '../route-map';
 const RootRoute: RouteRecordRaw = {
   name: 'root',
   path: '/',
-  redirect: getRoutePath(import.meta.env.VITE_ROUTE_HOME) || '/home',
+  redirect: getRoutePath(import.meta.env.VITE_ROUTE_HOME) || '/home/workbench',
   meta: {
     title: 'root',
     constant: true
