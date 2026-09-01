@@ -6,7 +6,7 @@ const systemRoute: AppRouteRecordRaw = {
   meta: {
     title: 'system',
     i18nKey: 'route.system',
-    icon: 'mdi-light:settings',
+    icon: 'ant-design:setting-outlined',
     order: 2,
     roles: ['R_SUPER', 'R_ADMIN'],
     permissions: ['system:*']

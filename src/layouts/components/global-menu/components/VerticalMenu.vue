@@ -46,18 +46,10 @@ watch(
 <template>
   <Teleport :to="`#${GLOBAL_SIDER_MENU_ID}`">
     <SimpleScrollbar>
-      <NMenu
-        v-model:expanded-keys="expandedKeys"
-        mode="vertical"
-        :value="selectedKey"
-        :collapsed="appStore.siderCollapse"
-        :collapsed-width="themeStore.sider.collapsedWidth"
-        :collapsed-icon-size="22"
-        :options="routeStore.menus"
-        :inverted="inverted"
-        :indent="18"
-        @update:value="routerPushByKeyWithMetaQuery"
-      />
+      <NMenu v-model:expanded-keys="expandedKeys" mode="vertical" :value="selectedKey"
+        :collapsed="appStore.siderCollapse" :collapsed-width="themeStore.sider.collapsedWidth" :icon-size="18"
+        :collapsed-icon-size="22" :options="routeStore.menus" :inverted="inverted" :indent="18"
+        @update:value="routerPushByKeyWithMetaQuery" />
     </SimpleScrollbar>
   </Teleport>
 </template>

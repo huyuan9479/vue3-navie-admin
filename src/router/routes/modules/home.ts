@@ -6,7 +6,7 @@ const homeRoute: AppRouteRecordRaw = {
   meta: {
     title: 'home',
     i18nKey: 'route.home',
-    icon: 'mdi-light:home',
+    icon: 'ant-design:home-outlined',
     order: 1,
     permissions: ['home:*']
   },
@@ -18,7 +18,6 @@ const homeRoute: AppRouteRecordRaw = {
       meta: {
         title: 'home_workbench',
         i18nKey: 'route.home_workbench',
-        icon: 'mdi:home-outline',
         order: 1,
         permissions: ['home:workbench']
       }
@@ -30,7 +29,7 @@ const homeRoute: AppRouteRecordRaw = {
       meta: {
         title: 'home_analytics',
         i18nKey: 'route.home_analytics',
-        icon: 'mdi:home-outline',
+        icon: 'ant-design:bar-chart-outlined',
         order: 1,
         permissions: ['home:analytics']
       }
