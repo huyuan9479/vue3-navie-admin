@@ -19,6 +19,7 @@ const homeRoute: AppRouteRecordRaw = {
         title: 'home_workbench',
         i18nKey: 'route.home_workbench',
         order: 1,
+        localIcon: 'workbench',
         permissions: ['home:workbench']
       }
     },

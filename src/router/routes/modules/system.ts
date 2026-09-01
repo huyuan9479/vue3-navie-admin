@@ -20,6 +20,7 @@ const systemRoute: AppRouteRecordRaw = {
         title: 'system_user',
         i18nKey: 'route.system_user',
         order: 1,
+        icon: 'ant-design:user-outlined',
         roles: ['R_SUPER', 'R_ADMIN'],
         permissions: ['system:user']
       }
@@ -32,6 +33,7 @@ const systemRoute: AppRouteRecordRaw = {
         title: 'system_role',
         i18nKey: 'route.system_role',
         order: 2,
+        icon: 'ant-design:user-switch-outlined',
         roles: ['R_ADMIN'],
         permissions: ['system:role']
       }
@@ -44,6 +46,7 @@ const systemRoute: AppRouteRecordRaw = {
         title: 'system_menu',
         i18nKey: 'route.system_menu',
         order: 3,
+        icon: 'ant-design:profile-outlined',
         roles: ['R_SUPER'],
         permissions: ['system:menu1']
       }
