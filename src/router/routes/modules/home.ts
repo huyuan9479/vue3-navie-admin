@@ -14,7 +14,7 @@ const homeRoute: AppRouteRecordRaw = {
     {
       name: 'home_workbench',
       path: '/home/workbench',
-      component: () => import('@/views/home/index.vue'),
+      component: () => import('@/views/home/workbench/index.vue'),
       meta: {
         title: 'home_workbench',
         i18nKey: 'route.home_workbench',
@@ -26,7 +26,7 @@ const homeRoute: AppRouteRecordRaw = {
     {
       name: 'home_analytics',
       path: '/home/analytics',
-      component: () => import('@/views/home/index.vue'),
+      component: () => import('@/views/home/analysis/index.vue'),
       meta: {
         title: 'home_analytics',
         i18nKey: 'route.home_analytics',
