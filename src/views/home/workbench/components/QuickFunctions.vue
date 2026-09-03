@@ -7,7 +7,7 @@ const functionList = ref([
   { title: '菜单管理', icon: 'menu' },
   { title: '组织管理', icon: 'organization' },
   { title: '评估分析', icon: 'evaluation' },
-  { title: '场景向导', icon: 'up-guide' }
+  { title: '权限管理', icon: 'up-guide' }
 ]);
 </script>
 
@@ -15,7 +15,7 @@ const functionList = ref([
   <NGrid cols="3" x-gap="12px" y-gap="12px">
     <NGridItem v-for="item in functionList" :key="item.title">
       <div class="function-item">
-        <SvgIcon :local-icon="item.icon" class="text-36px" />
+        <SvgIcon :local-icon="item.icon" class="text-32px" />
         <div class="mt-2">{{ item.title }}</div>
       </div>
     </NGridItem>
@@ -24,6 +24,18 @@ const functionList = ref([
 
 <style scoped lang="scss">
 .function-item {
-  @apply flex-col-center border border-solid border-gray-200 rounded-md p-3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--n-border-color);
+  border-radius: 4px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.function-item:hover {
+  border-color: rgb(var(--primary-color));
 }
 </style>

@@ -113,7 +113,7 @@ async function handleCodeLoginSubmit() {
               >
                 <template #prefix>
                   <SvgIcon
-                    icon="material-symbols:person-outline"
+                    icon="ant-design:user-outlined"
                     class="text-18px color-#999"
                   />
                 </template>
@@ -128,7 +128,7 @@ async function handleCodeLoginSubmit() {
               >
                 <template #prefix>
                   <SvgIcon
-                    icon="material-symbols:lock-outline"
+                    icon="ant-design:lock-outlined"
                     class="text-18px color-#999"
                   />
                 </template>
@@ -177,7 +177,7 @@ async function handleCodeLoginSubmit() {
               >
                 <template #prefix>
                   <SvgIcon
-                    icon="material-symbols:mobile-outline"
+                    icon="ant-design:mobile-outlined"
                     class="text-18px color-#999"
                   />
                 </template>
@@ -191,7 +191,7 @@ async function handleCodeLoginSubmit() {
                 >
                   <template #prefix>
                     <SvgIcon
-                      icon="material-symbols:mail-outline"
+                      icon="ant-design:mail-outlined"
                       class="text-18px color-#999"
                     />
                   </template>
