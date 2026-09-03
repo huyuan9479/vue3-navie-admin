@@ -12,7 +12,7 @@ const functionList = ref([
 </script>
 
 <template>
-  <NGrid cols="3" x-gap="12px" y-gap="12px">
+  <NGrid cols="3 s:3 m:3 l:4 xl:5 2xl:5" responsive="screen" x-gap="12px" y-gap="12px">
     <NGridItem v-for="item in functionList" :key="item.title">
       <div class="function-item">
         <SvgIcon :local-icon="item.icon" class="text-32px" />

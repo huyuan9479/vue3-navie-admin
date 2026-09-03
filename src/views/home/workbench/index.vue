@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import HeaderBanner from './components/HeaderBanner.vue';
-import CardData from './components/CardData.vue';
+// import CardData from './components/CardData.vue';
 import LineChart from './components/LineChart.vue';
 import PieChart from './components/PieChart.vue';
 import ProjectNews from './components/ProjectNews.vue';
@@ -21,20 +21,12 @@ const gap = computed(() => (appStore.isMobile ? 0 : 10));
     <!-- <CardData /> -->
     <NGrid :x-gap="gap" :y-gap="10" responsive="screen" item-responsive>
       <NGi span="24 s:24 m:14">
-        <NCard :bordered="false" size="small">
-          <MessageNotice />
-        </NCard>
+        <MessageNotice />
       </NGi>
       <NGi span="24 s:24 m:10">
-        <NCard
-          title="快捷功能"
-          :bordered="false"
-          size="small"
-          :segmented="{
-            content: true
-          }"
-          class="shadow-sm"
-        >
+        <NCard title="快捷功能" :bordered="false" size="small" :segmented="{
+          content: true
+        }" class="shadow-sm h-320px">
           <QuickFunctions />
         </NCard>
       </NGi>
