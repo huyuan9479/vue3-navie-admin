@@ -47,7 +47,7 @@ const newses = computed<NewsItem[]>(() => [
     :bordered="false"
     size="small"
     segmented
-    class="card-wrapper"
+    class="shadow-sm"
   >
     <template #header-extra>
       <a class="text-primary" href="javascript:;">
@@ -55,11 +55,17 @@ const newses = computed<NewsItem[]>(() => [
       </a>
     </template>
     <NList>
-      <NListItem v-for="item in newses" :key="item.id">
-        <template #prefix>
-          <AdminAvatar class="size-48px!" />
-        </template>
-        <NThing :title="item.content" :description="item.time" />
+      <NListItem v-for="item in newses" :key="item.id" class="!py-8px">
+        <div class="flex flex-col gap-6px pl-4px">
+          <p
+            class="text-14px font-medium leading-relaxed text-neutral-800 dark:text-neutral-200"
+          >
+            {{ item.content }}
+          </p>
+          <span class="text-12px text-neutral-400 dark:text-neutral-500">
+            {{ item.time }}
+          </span>
+        </div>
       </NListItem>
     </NList>
   </NCard>

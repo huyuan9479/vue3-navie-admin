@@ -39,6 +39,10 @@
   },
   "dependencies": {
     "@better-scroll/core": "2.5.1",
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/vue3": "^6.1.15",
     "@iconify/vue": "5.0.1",
     "@sa/axios": "workspace:*",
     "@sa/color": "workspace:*",

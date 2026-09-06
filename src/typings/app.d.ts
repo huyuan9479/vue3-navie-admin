@@ -559,6 +559,9 @@ declare namespace App {
           projectCount: string;
           todo: string;
           message: string;
+          notice: string;
+          quickFunctions: string;
+          calendar: string;
           downloadCount: string;
           registerCount: string;
           schedule: string;

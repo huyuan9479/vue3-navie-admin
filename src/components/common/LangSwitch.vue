@@ -57,7 +57,7 @@ function changeLang(lang: App.I18n.LangType) {
   >
     <div>
       <ButtonIcon :tooltip-content="tooltipContent" tooltip-placement="left">
-        <SvgIcon icon="material-symbols:translate-rounded" />
+        <SvgIcon local-icon="translate" />
       </ButtonIcon>
     </div>
   </NDropdown>

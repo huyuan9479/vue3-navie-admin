@@ -103,8 +103,9 @@ const { domRef, updateOptions } = useEcharts(() => ({
 }));
 
 async function mockData() {
+  // 模拟接口数据加载
   await new Promise(resolve => {
-    setTimeout(resolve, 1000);
+    setTimeout(resolve, 500);
   });
 
   updateOptions(opts => {
@@ -159,7 +160,7 @@ init();
 </script>
 
 <template>
-  <NCard :bordered="false" class="card-wrapper">
+  <NCard :bordered="false" size="small" class="shadow-sm">
     <div ref="domRef" class="h-360px overflow-hidden"></div>
   </NCard>
 </template>
