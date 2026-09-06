@@ -369,7 +369,7 @@ declare namespace App {
         trigger: string;
         update: string;
         updateSuccess: string;
-        userCenter: string;
+        accountSetting: string;
         yesOrNo: {
           yes: string;
           no: string;
@@ -581,6 +581,10 @@ declare namespace App {
             desc4: string;
             desc5: string;
           };
+        };
+        setting: {
+          title: string;
+          setting_account: string;
         };
       };
       form: {

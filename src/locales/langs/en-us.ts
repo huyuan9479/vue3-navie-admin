@@ -45,7 +45,7 @@ const local: App.I18n.Schema = {
     trigger: 'Trigger',
     update: 'Update',
     updateSuccess: 'Update Success',
-    userCenter: 'User Center',
+    accountSetting: 'Account Settings',
     yesOrNo: {
       yes: 'Yes',
       no: 'No'
@@ -239,7 +239,9 @@ const local: App.I18n.Schema = {
     system: 'System Management',
     system_role: 'Role Management',
     system_user: 'User Management',
-    system_menu: 'Menu Management'
+    system_menu: 'Menu Management',
+    setting: 'Settings',
+    setting_account: 'Account Settings'
   },
   page: {
     login: {
@@ -328,6 +330,10 @@ const local: App.I18n.Schema = {
         desc5:
           'Vue3NavieAdmin just wrote some of the workbench pages casually, and it was enough to see!'
       }
+    },
+    setting: {
+      title: '',
+      setting_account: 'Account Settings'
     }
   },
   form: {

@@ -18,7 +18,7 @@ function loginOrRegister() {
   toLogin();
 }
 
-type DropdownKey = 'logout';
+type DropdownKey = 'logout' | 'setting_account';
 
 type DropdownOption =
   | {
@@ -33,11 +33,15 @@ type DropdownOption =
 
 const options = computed(() => {
   const opts: DropdownOption[] = [
-    // {
-    //   label: $t("common.userCenter"),
-    //   key: "userCenter",
-    //   icon: SvgIconVNode({ icon: "ant-design:user", fontSize: 18 }),
-    // },
+    {
+      label: $t('common.accountSetting'),
+      key: 'setting_account',
+      icon: SvgIconVNode({ icon: 'ant-design:user', fontSize: 18 })
+    },
+    {
+      type: 'divider',
+      key: 'divider'
+    },
     {
       label: $t('common.logout'),
       key: 'logout',

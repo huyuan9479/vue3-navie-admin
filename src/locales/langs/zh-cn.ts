@@ -44,7 +44,7 @@ const local: App.I18n.Schema = {
     trigger: '触发',
     update: '更新',
     updateSuccess: '更新成功',
-    userCenter: '个人中心',
+    accountSetting: '个人设置',
     yesOrNo: {
       yes: '是',
       no: '否'
@@ -235,7 +235,9 @@ const local: App.I18n.Schema = {
     system: '系统管理',
     system_role: '角色管理',
     system_user: '用户管理',
-    system_menu: '菜单管理'
+    system_menu: '菜单管理',
+    setting: '设置',
+    setting_account: '个人设置'
   },
   page: {
     login: {
@@ -316,6 +318,10 @@ const local: App.I18n.Schema = {
         desc4: 'Soybean 正在忙于为soybean-admin写项目说明文档！',
         desc5: 'Soybean 刚才把工作台页面随便写了一些，凑合能看了！'
       }
+    },
+    setting: {
+      title: '设置',
+      setting_account: '个人设置'
     }
   },
   form: {

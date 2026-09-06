@@ -23,6 +23,8 @@ declare module '@page-router/types' {
     system_menu: '/system/menu';
     system_role: '/system/role';
     system_user: '/system/user';
+    setting: '/setting';
+    setting_account: '/setting/account';
   };
 
   /**
@@ -77,6 +79,8 @@ declare module '@page-router/types' {
     | 'system_menu'
     | 'system_role'
     | 'system_user'
+    | 'setting'
+    | 'setting_account'
   >;
 
   /**
