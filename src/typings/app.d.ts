@@ -581,7 +581,6 @@ declare namespace App {
             desc4: string;
             desc5: string;
           };
-          creativity: string;
         };
       };
       form: {

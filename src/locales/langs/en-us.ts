@@ -315,7 +315,7 @@ const local: App.I18n.Schema = {
       turnover: 'Turnover',
       dealCount: 'Deal Count',
       projectNews: {
-        title: 'Project News',
+        title: 'News',
         moreNews: 'More News',
         desc1:
           'Vue3NavieAdmin created the open source project vue3-navie-admin on May 28, 2021!',
@@ -327,8 +327,7 @@ const local: App.I18n.Schema = {
           'Vue3NavieAdmin is busy writing project documentation for vue3-navie-admin!',
         desc5:
           'Vue3NavieAdmin just wrote some of the workbench pages casually, and it was enough to see!'
-      },
-      creativity: 'Creativity'
+      }
     }
   },
   form: {
