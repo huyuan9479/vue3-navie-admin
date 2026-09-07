@@ -10,7 +10,9 @@
           </template>
           <NThing title="修改密码">
             <template #description>
-              <span class="text-gray-400">定时修改密码，帐号更安全</span>
+              <span class="text-gray-400">
+                定时修改密码，帐号更安全，当前密码强度：中
+              </span>
             </template>
           </NThing>
         </NListItem>

@@ -370,6 +370,7 @@ declare namespace App {
         update: string;
         updateSuccess: string;
         accountSetting: string;
+        messageNotice: string;
         yesOrNo: {
           yes: string;
           no: string;

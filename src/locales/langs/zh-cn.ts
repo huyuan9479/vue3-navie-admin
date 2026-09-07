@@ -45,6 +45,7 @@ const local: App.I18n.Schema = {
     update: '更新',
     updateSuccess: '更新成功',
     accountSetting: '个人设置',
+    messageNotice: '消息通知',
     yesOrNo: {
       yes: '是',
       no: '否'
@@ -237,7 +238,8 @@ const local: App.I18n.Schema = {
     system_user: '用户管理',
     system_menu: '菜单管理',
     setting: '设置',
-    setting_account: '个人设置'
+    setting_account: '个人设置',
+    setting_notice: '消息通知'
   },
   page: {
     login: {

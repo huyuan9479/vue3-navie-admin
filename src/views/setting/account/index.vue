@@ -2,6 +2,7 @@
 import { reactive, computed } from 'vue';
 import BasicInfo from './components/BasicInfo.vue';
 import SafetySetting from './components/SafetySetting.vue';
+import ModifyPassword from './components/ModifyPassword.vue';
 
 const typeTabList = [
   {
@@ -13,6 +14,11 @@ const typeTabList = [
     name: '安全设置',
     desc: '密码，邮箱等设置',
     key: 2
+  },
+  {
+    name: '修改密码',
+    desc: '修改登录密码',
+    key: 3
   }
 ];
 
@@ -22,7 +28,8 @@ const state = reactive({
 
 const componentMap = {
   1: BasicInfo,
-  2: SafetySetting
+  2: SafetySetting,
+  3: ModifyPassword
 };
 
 const currentComponent = computed(
@@ -39,6 +46,23 @@ function switchType(e: any) {
     <NGrid :x-gap="10" class="h-full">
       <NGridItem span="6">
         <NCard :bordered="false" size="small" class="h-full">
+          <div class="flex-col justify-center items-center mb-4">
+            <NAvatar
+              round
+              :size="100"
+              src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+            />
+            <div class="flex justify-center mt-3">
+              <NUpload
+                action="#"
+                accept=".jpg,.png,.jpeg"
+                :max="1"
+                :show-file-list="false"
+              >
+                <NButton size="small">修改头像</NButton>
+              </NUpload>
+            </div>
+          </div>
           <NThing
             v-for="item in typeTabList"
             :key="item.key"
@@ -47,8 +71,12 @@ function switchType(e: any) {
             @click="switchType(item)"
           >
             <template #header>{{ item.name }}</template>
+
             <template #description>
-              <span :class="{ 'text-gray-400': state.type !== item.key }">
+              <span
+                class="text-12px"
+                :class="{ 'text-gray-400': state.type !== item.key }"
+              >
                 {{ item.desc }}
               </span>
             </template>
@@ -66,8 +94,8 @@ function switchType(e: any) {
 
 <style lang="scss" scoped>
 .thing-cell {
-  margin: 0 -16px 10px;
-  padding: 5px 16px;
+  margin: 0 -10px 6px;
+  padding: 6px 16px;
   border-radius: 6px;
   cursor: pointer;
 

@@ -25,6 +25,7 @@ declare module '@page-router/types' {
     system_user: '/system/user';
     setting: '/setting';
     setting_account: '/setting/account';
+    setting_notice: '/setting/notice';
   };
 
   /**
@@ -81,6 +82,7 @@ declare module '@page-router/types' {
     | 'system_user'
     | 'setting'
     | 'setting_account'
+    | 'setting_notice'
   >;
 
   /**

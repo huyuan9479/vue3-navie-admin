@@ -46,6 +46,7 @@ const local: App.I18n.Schema = {
     update: 'Update',
     updateSuccess: 'Update Success',
     accountSetting: 'Account Settings',
+    messageNotice: 'Message Notification',
     yesOrNo: {
       yes: 'Yes',
       no: 'No'
@@ -241,7 +242,8 @@ const local: App.I18n.Schema = {
     system_user: 'User Management',
     system_menu: 'Menu Management',
     setting: 'Settings',
-    setting_account: 'Account Settings'
+    setting_account: 'Account Settings',
+    setting_notice: 'Message Notification'
   },
   page: {
     login: {

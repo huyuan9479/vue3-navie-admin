@@ -18,7 +18,7 @@ function loginOrRegister() {
   toLogin();
 }
 
-type DropdownKey = 'logout' | 'setting_account';
+type DropdownKey = 'logout' | 'setting_account' | 'setting_notice';
 
 type DropdownOption =
   | {
@@ -37,6 +37,14 @@ const options = computed(() => {
       label: $t('common.accountSetting'),
       key: 'setting_account',
       icon: SvgIconVNode({ icon: 'ant-design:user', fontSize: 18 })
+    },
+    {
+      label: $t('common.messageNotice'),
+      key: 'setting_notice',
+      icon: SvgIconVNode({
+        icon: 'ant-design:notification-outlined',
+        fontSize: 18
+      })
     },
     {
       type: 'divider',

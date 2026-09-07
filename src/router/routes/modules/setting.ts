@@ -16,7 +16,19 @@ const settingRoute: AppRouteRecordRaw = {
       meta: {
         title: 'setting_account',
         i18nKey: 'route.setting_account',
-        order: 1
+        order: 1,
+        hideInMenu: true
+      }
+    },
+    {
+      name: 'setting_notice',
+      path: '/setting/notice',
+      component: () => import('@/views/setting/notice/index.vue'),
+      meta: {
+        title: 'setting_notice',
+        i18nKey: 'route.setting_notice',
+        order: 2,
+        hideInMenu: true
       }
     }
   ]
