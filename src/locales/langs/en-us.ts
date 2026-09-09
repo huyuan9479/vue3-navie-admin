@@ -10,6 +10,9 @@ const local: App.I18n.Schema = {
   common: {
     action: 'Action',
     add: 'Add',
+    save: 'Save',
+    submit: 'Submit',
+    more: 'More',
     addSuccess: 'Add Success',
     backToHome: 'Back to home',
     batchDelete: 'Batch Delete',
@@ -19,11 +22,13 @@ const local: App.I18n.Schema = {
     selectAll: 'Select All',
     expandColumn: 'Expand Column',
     columnSetting: 'Column Setting',
+    enable: 'Enable',
     config: 'Config',
     confirm: 'Confirm',
     delete: 'Delete',
     deleteSuccess: 'Delete Success',
     confirmDelete: 'Are you sure you want to delete?',
+    confirmClose: 'Are you sure you want to close?',
     edit: 'Edit',
     warning: 'Warning',
     error: 'Error',
@@ -39,6 +44,7 @@ const local: App.I18n.Schema = {
     pleaseCheckValue: 'Please check whether the value is valid',
     refresh: 'Refresh',
     reset: 'Reset',
+    query: 'Query',
     search: 'Search',
     switch: 'Switch',
     tip: 'Tip',
@@ -50,7 +56,18 @@ const local: App.I18n.Schema = {
     yesOrNo: {
       yes: 'Yes',
       no: 'No'
-    }
+    },
+    collapse: 'Collapse',
+    expand: 'Expand',
+    compact: 'Compact',
+    default: 'Default',
+    loose: 'Loose'
+  },
+  time: {
+    day: 'Day',
+    week: 'Week',
+    month: 'Month',
+    year: 'Year'
   },
   request: {
     logout: 'Logout user after request failed',
@@ -340,6 +357,8 @@ const local: App.I18n.Schema = {
   },
   form: {
     required: 'Cannot be empty',
+    placeholder: 'Please enter',
+    selectPlaceholder: 'Please select',
     userName: {
       required: 'Please enter user name',
       invalid: 'User name format is incorrect'
@@ -392,7 +411,8 @@ const local: App.I18n.Schema = {
       left: 'Left Fixed',
       right: 'Right Fixed',
       unFixed: 'Unfixed'
-    }
+    },
+    columnEdit: 'This column is editable'
   }
 };
 

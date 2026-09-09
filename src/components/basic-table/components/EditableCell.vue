@@ -335,12 +335,16 @@ if (props.record) {
       <div class="editable-cell-action" v-if="!getRowEditable">
         <div
           class="ml-4px cursor-pointer"
-          title="保存"
+          title="{{ $t('common.save') }}"
           @click="() => handleSubmit()"
         >
           <icon-mdi-check-circle-outline class="text-18px!" />
         </div>
-        <div class="ml-4px cursor-pointer" title="取消" @click="handleCancel">
+        <div
+          class="ml-4px cursor-pointer"
+          title="{{ $t('common.cancel') }}"
+          @click="handleCancel"
+        >
           <icon-mdi-close-circle-outline class="text-18px!" />
         </div>
       </div>

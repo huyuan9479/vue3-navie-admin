@@ -1,5 +1,5 @@
 import type { PiniaPluginContext } from 'pinia';
-import { jsonClone } from '@sa/utils';
+import { klona as jsonClone } from 'klona/json';
 import { SetupStoreId } from '@/enum';
 
 /**

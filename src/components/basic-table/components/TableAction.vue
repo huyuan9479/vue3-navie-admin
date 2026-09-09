@@ -135,7 +135,7 @@ const getActions = computed(() => {
                   icon-placement="right"
                 >
                   <div class="flex items-center">
-                    <span>更多</span>
+                    <span>{{ $t('common.more') }}</span>
                     <icon-mdi-chevron-down class="text-20px" />
                   </div>
                 </NButton>

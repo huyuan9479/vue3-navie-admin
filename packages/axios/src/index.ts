@@ -5,7 +5,7 @@ import type {
   InternalAxiosRequestConfig
 } from 'axios';
 import axiosRetry from 'axios-retry';
-import { nanoid } from '@sa/utils';
+import { nanoid } from 'nanoid';
 import {
   createAxiosConfig,
   createDefaultOptions,

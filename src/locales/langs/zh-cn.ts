@@ -9,10 +9,14 @@ const local: App.I18n.Schema = {
   common: {
     action: '操作',
     add: '新增',
+    save: '保存',
+    submit: '提交',
+    more: '更多',
     addSuccess: '添加成功',
     backToHome: '返回首页',
     batchDelete: '批量删除',
     cancel: '取消',
+    enable: '开启',
     close: '关闭',
     check: '勾选',
     selectAll: '全选',
@@ -23,6 +27,7 @@ const local: App.I18n.Schema = {
     delete: '删除',
     deleteSuccess: '删除成功',
     confirmDelete: '确认删除吗？',
+    confirmClose: '确认关闭吗？',
     edit: '编辑',
     warning: '警告',
     error: '错误',
@@ -38,6 +43,7 @@ const local: App.I18n.Schema = {
     pleaseCheckValue: '请检查输入的值是否合法',
     refresh: '刷新',
     reset: '重置',
+    query: '查询',
     search: '搜索',
     switch: '切换',
     tip: '提示',
@@ -49,7 +55,18 @@ const local: App.I18n.Schema = {
     yesOrNo: {
       yes: '是',
       no: '否'
-    }
+    },
+    collapse: '收起',
+    expand: '展开',
+    compact: '紧凑',
+    default: '默认',
+    loose: '宽松'
+  },
+  time: {
+    day: '日',
+    week: '周',
+    month: '月',
+    year: '年'
   },
   request: {
     logout: '请求失败后登出用户',
@@ -327,6 +344,8 @@ const local: App.I18n.Schema = {
     }
   },
   form: {
+    placeholder: '请输入',
+    selectPlaceholder: '请选择',
     required: '不能为空',
     userName: {
       required: '请输入用户名',
@@ -380,7 +399,8 @@ const local: App.I18n.Schema = {
       left: '左固定',
       right: '右固定',
       unFixed: '取消固定'
-    }
+    },
+    columnEdit: '该列可编辑'
   }
 };
 

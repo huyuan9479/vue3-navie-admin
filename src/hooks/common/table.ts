@@ -15,7 +15,7 @@ import type {
   UseTableOptions
 } from '@sa/hooks';
 import type { FlatResponseData } from '@sa/axios';
-import { jsonClone } from '@sa/utils';
+import { klona as jsonClone } from 'klona/json';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
 

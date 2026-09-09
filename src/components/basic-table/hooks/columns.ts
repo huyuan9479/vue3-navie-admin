@@ -8,6 +8,7 @@ import { renderEditCell } from '../utils/edit-cell';
 import { NTooltip, NIcon } from 'naive-ui';
 import { isNumber } from '@/utils/is';
 import SvgIcon from '@/components/custom/SvgIcon.vue';
+import { $t } from '@/locales';
 
 export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
   // 初始化时和 watch 中合并 actionColumn
@@ -82,7 +83,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
                   }
                 )
               ]),
-              '该列可编辑'
+              $t('datatable.columnEdit')
             );
           };
         }

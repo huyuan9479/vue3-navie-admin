@@ -10,6 +10,7 @@ import type { BasicTableProps } from './types/table';
 import { getViewportOffset } from '@/utils/dom';
 import { useWindowSizeFn } from '@/hooks/common/window-size';
 import { isBoolean } from '@/utils/is';
+import { $t } from '@/locales';
 
 const props = withDefaults(defineProps<BasicTableProps>(), {
   dataSource: () => [],
@@ -45,29 +46,29 @@ const emit = defineEmits<{
 const densityOptions = [
   {
     type: 'menu',
-    label: '紧凑',
+    label: $t('common.compact'),
     key: 'small'
   },
   {
     type: 'menu',
-    label: '默认',
+    label: $t('common.default'),
     key: 'medium'
   },
   {
     type: 'menu',
-    label: '宽松',
+    label: $t('common.loose'),
     key: 'large'
   }
 ];
 const stripedOptions = [
   {
     type: 'menu',
-    label: '开启',
+    label: $t('common.enable'),
     key: 'Y'
   },
   {
     type: 'menu',
-    label: '关闭',
+    label: $t('common.close'),
     key: 'N'
   }
 ];
@@ -292,7 +293,7 @@ defineExpose(tableAction);
               </template>
             </NButton>
           </template>
-          <span>刷新</span>
+          <span>{{ $t('common.refresh') }}</span>
         </NTooltip>
         <!--密度-->
         <NDropdown

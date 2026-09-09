@@ -18,6 +18,7 @@ import type { FormSchema, FormProps, FormActionType } from './types/form';
 import type { ComponentType } from './types/form';
 import { isArray } from '@/utils/is';
 import { deepMerge } from '@/utils/common';
+import { $t } from '@/locales';
 
 defineOptions({ name: 'BasicForm' });
 
@@ -47,9 +48,9 @@ const props = withDefaults(defineProps<FormProps>(), {
   // 是否展开收起按钮
   showAdvancedButton: true,
   // 查询按钮文本
-  submitButtonText: '查询',
+  submitButtonText: $t('common.query'),
   // 重置按钮文本
-  resetButtonText: '重置',
+  resetButtonText: $t('common.reset'),
   // 重置按钮配置
   resetButtonOptions: (): Partial<ButtonProps> => ({
     size: 'medium',
@@ -341,7 +342,7 @@ onMounted(() => {
             type="default"
             @click="unfoldToggle"
           >
-            {{ overflow ? '展开' : '收起' }}
+            {{ overflow ? $t('common.expand') : $t('common.collapse') }}
             <icon-mdi-chevron-down v-if="overflow" class="unfold-icon" />
             <icon-mdi-chevron-up v-else class="unfold-icon" />
           </NButton>

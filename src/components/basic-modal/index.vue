@@ -5,6 +5,7 @@ import type { BasicModalProps, ModalMethods } from './types';
 import ModalHeader from './components/ModalHeader.vue';
 import ModalWrapper from './components/ModalWrapper.vue';
 import { useFullScreen } from './hooks/modal-fullscreen';
+import { $t } from '@/locales';
 
 const attrs = useAttrs();
 const props = withDefaults(defineProps<BasicModalProps>(), {
@@ -12,8 +13,8 @@ const props = withDefaults(defineProps<BasicModalProps>(), {
   showCancelBtn: true,
   showAction: true,
   showCancelTip: false,
-  okBtnText: '确定',
-  cancelBtnText: '取消',
+  okBtnText: $t('common.confirm'),
+  cancelBtnText: $t('common.cancel'),
   title: '',
   width: 500,
   tipMessage: '',
@@ -116,12 +117,12 @@ function onCloseModal() {
   // 如果不显示提示，直接关闭弹窗
   if (getBindValue.value.showCancelTip) {
     window.$dialog?.warning({
-      title: '提示',
-      content: '确定要关闭吗？',
+      title: $t('common.tip'),
+      content: $t('common.confirmClose'),
       type: 'warning',
       maskClosable: false,
-      positiveText: '确定',
-      negativeText: '取消',
+      positiveText: $t('common.confirm'),
+      negativeText: $t('common.cancel'),
       onPositiveClick: () => {
         isModal.value = false;
         emit('onClose');

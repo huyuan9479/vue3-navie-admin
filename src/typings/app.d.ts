@@ -334,10 +334,14 @@ declare namespace App {
       common: {
         action: string;
         add: string;
+        save: string;
+        submit: string;
+        more: string;
         addSuccess: string;
         backToHome: string;
         batchDelete: string;
         cancel: string;
+        enable: string;
         close: string;
         check: string;
         selectAll: string;
@@ -348,6 +352,7 @@ declare namespace App {
         delete: string;
         deleteSuccess: string;
         confirmDelete: string;
+        confirmClose: string;
         edit: string;
         warning: string;
         error: string;
@@ -363,6 +368,7 @@ declare namespace App {
         pleaseCheckValue: string;
         refresh: string;
         reset: string;
+        query: string;
         search: string;
         switch: string;
         tip: string;
@@ -375,6 +381,17 @@ declare namespace App {
           yes: string;
           no: string;
         };
+        collapse: string;
+        expand: string;
+        compact: string;
+        default: string;
+        loose: string;
+      };
+      time: {
+        day: string;
+        week: string;
+        month: string;
+        year: string;
       };
       request: {
         logout: string;
@@ -590,6 +607,8 @@ declare namespace App {
       };
       form: {
         required: string;
+        placeholder: string;
+        selectPlaceholder: string;
         userName: FormMsg;
         phone: FormMsg;
         pwd: FormMsg;
@@ -617,6 +636,7 @@ declare namespace App {
           right: string;
           unFixed: string;
         };
+        columnEdit: string;
       };
     };
 

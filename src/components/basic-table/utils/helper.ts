@@ -1,10 +1,11 @@
 import type { ComponentType } from '../types/index';
+import { $t } from '@/locales';
 
 /**
  * @description: 生成placeholder
  */
 export function createPlaceholderMessage(component: ComponentType) {
-  if (component === 'NInput') return '请输入';
+  if (component === 'NInput') return $t('form.placeholder');
   if (
     [
       'NPicker',
@@ -16,6 +17,6 @@ export function createPlaceholderMessage(component: ComponentType) {
       'NTimePicker'
     ].includes(component)
   )
-    return '请选择';
+    return $t('form.selectPlaceholder');
   return '';
 }

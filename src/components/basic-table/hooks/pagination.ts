@@ -1,7 +1,7 @@
 import type { PaginationProps } from '../types/index';
 import type { BasicTableProps } from '../types/table';
 import { computed, unref, ref, ComputedRef, watch } from 'vue';
-
+import { $t } from '@/locales';
 import { isBoolean } from '@/utils/is';
 import { DEFAULTPAGESIZE, PAGESIZES } from '../utils/const';
 
@@ -34,7 +34,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
       showQuickJumper: true,
       pageSlot: 7,
       prefix: (pagingInfo: PaginationProps) =>
-        `共 ${pagingInfo.itemCount || 0} 条`, // 不需要可以通过 pagination 重置或者删除
+        $t('datatable.itemCount', { total: pagingInfo.itemCount || 0 }), // 不需要可以通过 pagination 重置或者删除
       ...(isBoolean(pagination) ? {} : pagination),
       ...unref(configRef)
     };

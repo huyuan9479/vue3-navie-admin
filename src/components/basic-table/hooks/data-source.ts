@@ -18,10 +18,6 @@ export function useDataSource(
   emit: {
     (e: 'fetch-success', result: { items: any[]; pageCount: number }): void;
     (e: 'fetch-error', error: unknown): void;
-    // (e: 'edit-end'): void;
-    // (e: 'edit-cancel'): void;
-    // (e: 'edit-row-end'): void;
-    // (e: 'edit-change'): void;
   }
 ) {
   const dataSourceRef = ref<Recordable[]>([]);

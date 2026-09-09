@@ -25,7 +25,7 @@ const cardData = computed<CardData[]>(() => [
     value: 6000,
     unit: '',
     icon: 'visit',
-    period: '日',
+    period: $t('time.day'),
     periodType: 'primary',
     percent1: 16.2,
     percent2: -7.2
@@ -36,7 +36,7 @@ const cardData = computed<CardData[]>(() => [
     value: 36126,
     unit: '￥',
     icon: 'trans-amount',
-    period: '日',
+    period: $t('time.day'),
     periodType: 'error',
     percent1: 12,
     percent2: 6
@@ -47,7 +47,7 @@ const cardData = computed<CardData[]>(() => [
     value: 97098,
     unit: '',
     icon: 'download-volume',
-    period: '月',
+    period: $t('time.month'),
     periodType: 'success',
     percent1: -10.1,
     percent2: -18
@@ -58,7 +58,7 @@ const cardData = computed<CardData[]>(() => [
     value: 868,
     unit: '',
     icon: 'trans-volume',
-    period: '日',
+    period: $t('time.day'),
     periodType: 'warning',
     percent1: 5.6,
     percent2: -1.2

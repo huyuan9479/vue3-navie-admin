@@ -157,7 +157,7 @@ function fixedColumn(
                   class="ml-4px"
                   @update:checked="onCheckAll"
                 >
-                  列展示
+                  {{ $t('common.selectAll') }}
                 </NCheckbox>
                 <NButton
                   text
@@ -166,7 +166,7 @@ function fixedColumn(
                   class="mt-1"
                   @click="resetColumns"
                 >
-                  重置
+                  {{ $t('common.reset') }}
                 </NButton>
               </NSpace>
             </div>
@@ -232,7 +232,7 @@ function fixedColumn(
                                 />
                               </NIcon>
                             </template>
-                            <span>固定到左侧</span>
+                            <span>{{ $t('datatable.fixed.left') }}</span>
                           </NTooltip>
                           <NTooltip
                             trigger="hover"
@@ -259,7 +259,7 @@ function fixedColumn(
                                 />
                               </NIcon>
                             </template>
-                            <span>固定到右侧</span>
+                            <span>{{ $t('datatable.fixed.right') }}</span>
                           </NTooltip>
                         </NSpace>
                       </div>
@@ -272,7 +272,7 @@ function fixedColumn(
         </NPopover>
       </div>
     </template>
-    <span>列设置</span>
+    <span>{{ $t('common.columnSetting') }}</span>
   </NTooltip>
 </template>
 

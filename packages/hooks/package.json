@@ -12,7 +12,6 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@sa/axios": "workspace:*",
-    "@sa/utils": "workspace:*"
+    "@sa/axios": "workspace:*"
   }
 }
