@@ -90,63 +90,61 @@ const iconName = computed(() => {
 <template>
   <NCard
     :bordered="false"
+    :segmented="true"
     size="small"
-    class="h-278px flex flex-col shadow-sm"
-    content-class="message-notice"
+    class="h-278px flex flex-col shadow-sm message-notice"
   >
-    <div class="flex-1 flex flex-col overflow-hidden">
+    <template #header>
       <NTabs
-        type="line"
-        size="large"
+        type="segment"
+        size="small"
         animated
+        class="w-120px"
         @update:value="activeTab = $event"
       >
         <NTabPane name="notice" :tab="$t('page.home.notice')"></NTabPane>
         <NTabPane name="message" :tab="$t('page.home.message')"></NTabPane>
       </NTabs>
-      <NScrollbar>
-        <div
-          v-for="item in messageNoticeList"
-          :key="item.id"
-          class="message-notice-item"
-        >
-          <div class="flex-y-center justify-between">
-            <div class="flex-y-center flex-1 truncate pr-8px">
-              <SvgIcon :local-icon="iconName" class="size-22px! mr-8px" />
-              <div class="truncate flex-1 font-medium">
-                {{ item.title }}
-              </div>
-            </div>
-            <div class="text-gray-500 text-12px">
-              {{ item.time }}
+    </template>
+    <NScrollbar class="max-h-204px">
+      <div
+        v-for="item in messageNoticeList"
+        :key="item.id"
+        class="message-notice-item"
+      >
+        <div class="flex-y-center justify-between">
+          <div class="flex-y-center flex-1 truncate pr-8px">
+            <SvgIcon :local-icon="iconName" class="size-22px! mr-8px" />
+            <div class="truncate flex-1 font-medium">
+              {{ item.title }}
             </div>
           </div>
-          <div class="message-content mt-6px text-gray-500">
-            {{ item.content }}
+          <div class="text-gray-500 text-12px">
+            {{ item.time }}
           </div>
         </div>
-        <div
-          v-if="messageNoticeList.length === 0"
-          class="h-full flex-center py-40px"
-        >
-          <NEmpty :description="$t('common.noData')" />
+        <div class="message-content mt-6px text-gray-500">
+          {{ item.content }}
         </div>
-      </NScrollbar>
-    </div>
+      </div>
+      <div
+        v-if="messageNoticeList.length === 0"
+        class="h-full flex-center py-40px"
+      >
+        <NEmpty :description="$t('common.noData')" />
+      </div>
+    </NScrollbar>
   </NCard>
 </template>
 
 <style scoped lang="scss">
-:deep(.message-notice) {
+.message-notice {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding-top: 0px !important;
-
-  .n-tabs {
-    .n-tabs-tab {
-      padding: 12px 0 13px !important;
-    }
+  :deep(.n-card-header) {
+    padding-top: 7px;
+    padding-bottom: 7px;
     .n-tab-pane {
       padding: 0 !important;
     }

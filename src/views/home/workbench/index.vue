@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import HeaderBanner from './components/HeaderBanner.vue';
-import ProjectNews from './components/ProjectNews.vue';
+import ProjectNews from './components/News.vue';
 import CreativityBanner from './components/Calendar.vue';
 import QuickFunctions from './components/QuickFunctions.vue';
 import MessageNotice from './components/MessageNotice.vue';
