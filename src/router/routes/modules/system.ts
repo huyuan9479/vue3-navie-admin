@@ -2,12 +2,11 @@ const systemRoute: AppRouteRecordRaw = {
   name: 'system',
   path: '/system',
   component: () => import('@/layouts/base-layout/index.vue'),
-  redirect: { name: 'system_user' },
   meta: {
     title: 'system',
     i18nKey: 'route.system',
     icon: 'ant-design:setting-outlined',
-    order: 2,
+    order: 6,
     roles: ['R_SUPER', 'R_ADMIN'],
     permissions: ['system:*']
   },
@@ -19,6 +18,7 @@ const systemRoute: AppRouteRecordRaw = {
       meta: {
         title: 'system_user',
         i18nKey: 'route.system_user',
+        keepAlive: true,
         order: 1,
         roles: ['R_SUPER', 'R_ADMIN'],
         permissions: ['system:user']
@@ -32,6 +32,7 @@ const systemRoute: AppRouteRecordRaw = {
         title: 'system_role',
         i18nKey: 'route.system_role',
         order: 2,
+        keepAlive: true,
         roles: ['R_ADMIN'],
         permissions: ['system:role']
       }

@@ -26,6 +26,15 @@ declare module '@page-router/types' {
     setting: '/setting';
     setting_account: '/setting/account';
     setting_notice: '/setting/notice';
+    'external-link': '/external-link';
+    'external-link_github': '/external-link/github';
+    'external-link_vue': '/external-link/vue';
+    'multi-menu': '/multi-menu';
+    'multi-menu_first': '/multi-menu/first';
+    'multi-menu_first_one': '/multi-menu/first/one';
+    'multi-menu_second': '/multi-menu/second';
+    'multi-menu_second_one': '/multi-menu/second/one';
+    'multi-menu_second_two': '/multi-menu/second/two';
   };
 
   /**

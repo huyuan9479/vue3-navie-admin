@@ -260,7 +260,16 @@ const local: App.I18n.Schema = {
     system_menu: 'Menu Management',
     setting: 'Settings',
     setting_account: 'Account Settings',
-    setting_notice: 'Message Notification'
+    setting_notice: 'Message Notification',
+    'external-link': 'External Link',
+    'external-link_github': 'GitHub Repository',
+    'external-link_vue': 'Vue Documentation',
+    'multi-menu': 'Multi Menu',
+    'multi-menu_first': 'First Level Menu',
+    'multi-menu_first_one': 'First Level Menu - One',
+    'multi-menu_second': 'Second Level Menu',
+    'multi-menu_second_one': 'Second Level Menu - One',
+    'multi-menu_second_two': 'Second Level Menu - Two'
   },
   page: {
     login: {

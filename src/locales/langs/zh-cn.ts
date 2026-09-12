@@ -256,7 +256,16 @@ const local: App.I18n.Schema = {
     system_menu: '菜单管理',
     setting: '设置',
     setting_account: '个人设置',
-    setting_notice: '消息通知'
+    setting_notice: '消息通知',
+    'external-link': '外部链接',
+    'external-link_github': 'GitHub仓库',
+    'external-link_vue': 'Vue文档',
+    'multi-menu': '多级菜单',
+    'multi-menu_first': '一级菜单',
+    'multi-menu_first_one': '一级菜单-一级',
+    'multi-menu_second': '二级菜单',
+    'multi-menu_second_one': '二级菜单-一级',
+    'multi-menu_second_two': '二级菜单-子菜单'
   },
   page: {
     login: {

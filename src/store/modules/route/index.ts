@@ -98,8 +98,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     menus.value = updateLocaleOfGlobalMenus(menus.value);
   }
 
-  /** Cache routes */
-  const cacheRoutes = ref<RouteKey[]>([]);
+  /** Cache routes (PascalCase component names for KeepAlive :include) */
+  const cacheRoutes = ref<string[]>([]);
 
   /**
    * Exclude cache routes

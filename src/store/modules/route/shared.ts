@@ -132,36 +132,46 @@ function getGlobalMenuByBaseRoute(
 
   if (!meta || meta.hideInMenu) return null;
 
-  const isSingleLevel =
-    children && children.length === 1 && children[0].path === '';
-  const effectiveName = name || (isSingleLevel ? children[0].name : undefined);
+  // 如果父路由只有一个子路由，自动折叠为单级菜单，直接使用子路由的信息
+  const isSingleLevel = children && children.length === 1;
+
+  // 单级时使用子路由的数据，否则使用本级数据
+  const effectiveRoute = isSingleLevel ? children[0] : route;
+  const effectiveName = isSingleLevel ? effectiveRoute.name : name;
 
   if (!effectiveName) return null;
 
+  const effectiveMeta = effectiveRoute.meta as Record<string, any> | undefined;
+
+  if (!effectiveMeta) return null;
+
   const menu: App.Global.Menu = {
     key: effectiveName as string,
-    label: meta.i18nKey ? $t(meta.i18nKey) : meta.title,
+    label: effectiveMeta.i18nKey
+      ? $t(effectiveMeta.i18nKey)
+      : effectiveMeta.title,
     routeKey: effectiveName as RouteKey,
-    routePath: route.path || '',
-    i18nKey: meta.i18nKey
+    routePath: effectiveRoute.path || '',
+    i18nKey: effectiveMeta.i18nKey
   };
 
-  if (meta.icon || meta.localIcon) {
-    const icon = meta.localIcon || meta.icon;
-    const prop = meta.localIcon ? 'localIcon' : 'icon';
-    const style = meta.iconFontSize
-      ? { fontSize: `${meta.iconFontSize}px` }
+  if (effectiveMeta.icon || effectiveMeta.localIcon) {
+    const icon = effectiveMeta.localIcon || effectiveMeta.icon;
+    const prop = effectiveMeta.localIcon ? 'localIcon' : 'icon';
+    const style = effectiveMeta.iconFontSize
+      ? { fontSize: `${effectiveMeta.iconFontSize}px` }
       : undefined;
 
     menu.icon = () => h(SvgIcon, { [prop]: icon as string, style });
   } else if (import.meta.env.VITE_MENU_ICON) {
-    const style = meta.iconFontSize
-      ? { fontSize: `${meta.iconFontSize}px` }
+    const style = effectiveMeta.iconFontSize
+      ? { fontSize: `${effectiveMeta.iconFontSize}px` }
       : undefined;
     menu.icon = () =>
       h(SvgIcon, { icon: import.meta.env.VITE_MENU_ICON, style });
   }
 
+  // 只有非单级菜单才递归处理子菜单
   if (children && children.length > 0 && !isSingleLevel) {
     const childMenus = children
       .map(child => getGlobalMenuByBaseRoute(child))
@@ -182,26 +192,15 @@ function getGlobalMenuByBaseRoute(
 export function getCacheRouteNames(routes: RouteRecordRaw[]) {
   const cacheNames: RouteKey[] = [];
 
-  function getCacheName(route: RouteRecordRaw) {
-    const { meta, children, name } = route;
-
-    const effectiveName =
-      name ||
-      (children && children.length === 1 && children[0].path === ''
-        ? children[0].name
-        : undefined);
-
-    if (meta?.keepAlive && effectiveName) {
-      cacheNames.push(effectiveName as RouteKey);
-    }
-
-    if (children) {
-      children.forEach(child => getCacheName(child));
-    }
-  }
-
-  routes.forEach(route => getCacheName(route));
-
+  routes.forEach(route => {
+    // only get last two level route, which has component
+    route.children?.forEach(child => {
+      if (child.component && child.meta?.keepAlive) {
+        cacheNames.push(child.name as RouteKey);
+      }
+    });
+  });
+  console.log(cacheNames);
   return cacheNames;
 }
 

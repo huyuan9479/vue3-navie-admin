@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { useEcharts } from '@/hooks/common/echarts';
 
-defineOptions({
-  name: 'TransVolume'
-});
-
 const { domRef, updateOptions } = useEcharts(() => ({
   tooltip: {
     trigger: 'axis',
@@ -15,7 +11,7 @@ const { domRef, updateOptions } = useEcharts(() => ({
       }
     }
   },
-  grid: { left: 0, right: 0, top: '2%', bottom: 0, containLabel: true },
+  grid: { left: 40, right: 20, top: '2%', bottom: 30 },
   xAxis: {
     type: 'category',
     data: [

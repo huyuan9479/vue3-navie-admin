@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup name="SystemRole">
 import { ref, reactive, h } from 'vue';
 import { BasicForm, useForm, type FormSchema } from '@/components/basic-form';
 import {

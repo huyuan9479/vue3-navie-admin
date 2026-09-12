@@ -6,8 +6,7 @@ const iframePageRoute: AppRouteRecordRaw = {
     title: 'iframe-page',
     i18nKey: 'route.iframe-page',
     constant: true,
-    hideInMenu: true,
-    keepAlive: true
+    hideInMenu: true
   },
   children: [
     {

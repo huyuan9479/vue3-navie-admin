@@ -2,7 +2,6 @@ const settingRoute: AppRouteRecordRaw = {
   name: 'setting',
   path: '/setting',
   component: () => import('@/layouts/base-layout/index.vue'),
-  redirect: { name: 'setting_workbench' },
   meta: {
     title: 'setting.title',
     i18nKey: 'route.setting',

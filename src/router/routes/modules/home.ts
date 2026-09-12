@@ -2,7 +2,6 @@ const homeRoute: AppRouteRecordRaw = {
   name: 'home',
   path: '/home',
   component: () => import('@/layouts/base-layout/index.vue'),
-  redirect: { name: 'home_workbench' },
   meta: {
     title: 'home',
     i18nKey: 'route.home',
