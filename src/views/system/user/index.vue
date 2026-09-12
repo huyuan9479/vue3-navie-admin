@@ -1,4 +1,4 @@
-<script lang="ts" setup name="SystemUser">
+<script lang="ts" setup>
 import { ref, reactive, h } from 'vue';
 import { BasicForm, useForm, type FormSchema } from '@/components/basic-form';
 import {
@@ -9,6 +9,7 @@ import {
 import { fetchGetUserList } from '@/service/api';
 import { NTag, NButton } from 'naive-ui';
 import AddUser from './components/AddUser.vue';
+defineOptions({ name: 'SystemUser' });
 
 const actionRef = ref();
 const addUserRef = ref();

@@ -1,4 +1,4 @@
-<script lang="ts" setup name="SystemRole">
+<script lang="ts" setup>
 import { ref, reactive, h } from 'vue';
 import { BasicForm, useForm, type FormSchema } from '@/components/basic-form';
 import {
@@ -9,6 +9,7 @@ import {
 import { fetchGetRoleList } from '@/service/api';
 import { NTag, NButton } from 'naive-ui';
 import SvgIcon from '@/components/custom/SvgIcon.vue';
+defineOptions({ name: 'SystemRole' });
 
 const actionRef = ref();
 const schemas: FormSchema[] = [

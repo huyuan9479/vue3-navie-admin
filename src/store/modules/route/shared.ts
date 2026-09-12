@@ -186,21 +186,31 @@ function getGlobalMenuByBaseRoute(
 }
 
 /**
- * Get cache route names
+ * Convert snake_case/kebab-case to PascalCase
+ * e.g. system_user → SystemUser, iframe-page → IframePage
+ */
+function toPascalCase(name: string): string {
+  return name
+    .split(/[_-]/)
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+}
+
+/**
+ * Get cache route component names (PascalCase) for KeepAlive :include matching
  * @param routes vue routes
  */
 export function getCacheRouteNames(routes: RouteRecordRaw[]) {
-  const cacheNames: RouteKey[] = [];
+  const cacheNames: string[] = [];
 
   routes.forEach(route => {
     // only get last two level route, which has component
     route.children?.forEach(child => {
       if (child.component && child.meta?.keepAlive) {
-        cacheNames.push(child.name as RouteKey);
+        cacheNames.push(toPascalCase(child.name as string));
       }
     });
   });
-  console.log(cacheNames);
   return cacheNames;
 }
 
