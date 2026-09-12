@@ -120,6 +120,7 @@ declare module 'vue' {
     SystemLogo: typeof import('./../components/common/SystemLogo.vue')['default']
     TableAction: typeof import('./../components/basic-table/components/TableAction.vue')['default']
     ThemeSchemaSwitch: typeof import('./../components/common/ThemeSchemaSwitch.vue')['default']
+    TiptapEditor: typeof import('./../components/custom/TiptapEditor.vue')['default']
   }
 }
 
@@ -233,4 +234,5 @@ declare global {
   const SystemLogo: typeof import('./../components/common/SystemLogo.vue')['default']
   const TableAction: typeof import('./../components/basic-table/components/TableAction.vue')['default']
   const ThemeSchemaSwitch: typeof import('./../components/common/ThemeSchemaSwitch.vue')['default']
+  const TiptapEditor: typeof import('./../components/custom/TiptapEditor.vue')['default']
 }
