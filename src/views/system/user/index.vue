@@ -1,11 +1,15 @@
 <script lang="ts" setup>
 import { ref, reactive, h } from 'vue';
-import { BasicForm, useForm, type FormSchema } from '@/components/basic-form';
+import {
+  BasicForm,
+  useForm,
+  type FormSchema
+} from '@/components/advanced/basic-form';
 import {
   BasicTable,
   TableAction,
   type BasicColumn
-} from '@/components/basic-table';
+} from '@/components/advanced/basic-table';
 import { fetchGetUserList } from '@/service/api';
 import { NTag, NButton } from 'naive-ui';
 import AddUser from './components/AddUser.vue';

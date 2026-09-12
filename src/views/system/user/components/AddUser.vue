@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BasicModal, useModal } from '@/components/basic-modal';
+import { BasicModal, useModal } from '@/components/advanced/basic-modal';
 import { ref } from 'vue';
 
 const [modalRegister, { openModal, closeModal, setModalLoading }] = useModal({
